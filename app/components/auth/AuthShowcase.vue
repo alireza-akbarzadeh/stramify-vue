@@ -1,16 +1,15 @@
-<script setup lang="ts">
-import { Download, MonitorPlay, Sparkles } from '@lucide/vue'
+<script lang="ts" setup>
+import {Download, MonitorPlay, Sparkles} from '@lucide/vue'
 
 const features = [
-  { icon: MonitorPlay, title: 'Premium streaming', body: '4K60 ingest with adaptive playback' },
-  { icon: Download, title: 'Every stream saved', body: 'Automatic VOD and one-click clips' },
-  { icon: Sparkles, title: 'Built for creators', body: 'Chat, moderation and analytics included' }
+  {icon: MonitorPlay, title: 'Premium streaming', body: '4K60 ingest with adaptive playback'},
+  {icon: Download, title: 'Every stream saved', body: 'Automatic VOD and one-click clips'},
+  {icon: Sparkles, title: 'Built for creators', body: 'Chat, moderation and analytics included'}
 ]
 </script>
 
 <template>
-  <div class="relative hidden flex-col justify-between overflow-hidden p-10 lg:flex xl:p-14">
-    <BrandMark />
+  <div class="relative hidden flex-col justify-between overflow-hidden p-10 lg:flex xl:p-14 lg:mt-9">
 
     <div class="relative isolate py-10">
       <!--
@@ -19,8 +18,9 @@ const features = [
         context — without it the layer drops behind the page background and
         disappears entirely.
       -->
-      <div class="pointer-events-none absolute inset-0 -z-10 flex translate-x-28 items-center justify-center opacity-25">
-        <ChannelCarousel />
+      <div
+          class="pointer-events-none absolute inset-0 -z-10 flex translate-x-28 items-center justify-center opacity-25">
+        <ChannelCarousel/>
       </div>
 
       <Reveal>
@@ -38,8 +38,9 @@ const features = [
       <Reveal :delay="0.1">
         <ul class="mt-9 space-y-5">
           <li v-for="f in features" :key="f.title" class="flex items-start gap-3.5">
-            <span class="grid size-10 shrink-0 place-items-center rounded-xl border border-border bg-glass text-primary backdrop-blur">
-              <component :is="f.icon" class="size-5" aria-hidden="true" />
+            <span
+                class="grid size-10 shrink-0 place-items-center rounded-xl border border-border bg-glass text-primary backdrop-blur">
+              <component :is="f.icon" aria-hidden="true" class="size-5"/>
             </span>
             <span>
               <span class="block text-sm font-semibold text-foreground">{{ f.title }}</span>

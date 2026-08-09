@@ -1,12 +1,12 @@
-import { defineStore } from 'pinia'
-import { authClient } from '@/lib/auth-client'
+import {defineStore} from 'pinia'
+import {authClient} from '@/lib/auth-client'
 
 export interface SessionUser {
-  name: string
-  email: string
-  image?: string | null
-  emailVerified?: boolean
-  twoFactorEnabled?: boolean | null
+    name: string
+    email: string
+    image?: string | null
+    emailVerified?: boolean
+    twoFactorEnabled?: boolean | null
 }
 
 /**
@@ -18,25 +18,36 @@ export interface SessionUser {
  * resolved and the header never flashes a signed-out state.
  */
 export const useAuthStore = defineStore('auth', () => {
-  const session = ref<{ user?: SessionUser } | null>(null)
+    const session = ref<{ user?: SessionUser } | null>(null)
 
-  const user = computed(() => session.value?.user ?? null)
-  const isAuthenticated = computed(() => !!session.value?.user)
+    const user = computed(() => session.value?.user ?? null)
+    const isAuthenticated = computed(() => !!session.value?.user)
 
-  async function refresh() {
-    // Cast: the generated type for this catch-all auth route is the generic
-    // fetch envelope, not better-auth's session payload.
-    const result = (await useRequestFetch()('/api/auth/get-session').catch(() => null)) as
-      | { user?: SessionUser }
-      | null
-    session.value = result?.user ? result : null
-  }
+    async function refresh() {
+        // Cast: the generated type for this catch-all auth route is the generic
+        // fetch envelope, not better-auth's session payload.
+        const result = (await useRequestFetch()('/api/auth/get-session').catch(() => null)) as
+            | { user?: SessionUser }
+            | null
+        session.value = result?.user ? result : null
+    }
 
-  async function signOut() {
-    await authClient.signOut()
-    session.value = null
-    await navigateTo('/login')
-  }
+    /**
+     * Hand-off after any successful client-side sign-in. The SSR plugin only runs
+     * on a full page load, so a `navigateTo` straight from a sign-in form would
+     * leave this store holding the signed-out session and the header showing the
+     * login buttons until a manual refresh — pull the fresh session in first.
+     */
+    async function completeSignIn(to = '/') {
+        await refresh()
+        await navigateTo(to)
+    }
 
-  return { session, user, isAuthenticated, refresh, signOut }
+    async function signOut() {
+        await authClient.signOut()
+        session.value = null
+        await navigateTo('/login')
+    }
+
+    return {session, user, isAuthenticated, refresh, completeSignIn, signOut}
 })

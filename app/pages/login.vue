@@ -1,10 +1,13 @@
-<script setup lang="ts">
-import { Lock, Mail, ShieldCheck } from '@lucide/vue'
-import { Button } from '@/components/ui/button'
-import { toast } from '@/components/ui/sonner'
-import { authClient } from '@/lib/auth-client'
+<script lang="ts" setup>
+import {Lock, Mail, ShieldCheck} from '@lucide/vue'
+import {Button} from '@/components/ui/button'
+import {toast} from '@/components/ui/sonner'
+import {authClient} from '@/lib/auth-client'
+import {useAuthStore} from '@/stores/auth'
 
-useHead({ title: 'Log in — Streamify' })
+useHead({title: 'Log in — Streamify'})
+
+const auth = useAuthStore()
 
 const email = ref('')
 const password = ref('')
@@ -21,7 +24,7 @@ const backupCode = ref('')
 async function onSubmit() {
   error.value = ''
   pending.value = true
-  const { data, error: authError } = await authClient.signIn.email({
+  const {data, error: authError} = await authClient.signIn.email({
     email: email.value,
     password: password.value,
     rememberMe: remember.value
@@ -38,13 +41,13 @@ async function onSubmit() {
     step.value = 'twoFactor'
     return
   }
-  await navigateTo('/')
+  await auth.completeSignIn()
 }
 
 async function verifyTotp(code: string) {
   error.value = ''
   pending.value = true
-  const { error: authError } = await authClient.twoFactor.verifyTotp({ code })
+  const {error: authError} = await authClient.twoFactor.verifyTotp({code})
   pending.value = false
   if (authError) {
     error.value = authError.message || 'That code was not valid. Try the next one.'
@@ -52,75 +55,75 @@ async function verifyTotp(code: string) {
     otp.value = []
     return
   }
-  await navigateTo('/')
+  await auth.completeSignIn()
 }
 
 async function verifyBackup() {
   error.value = ''
   pending.value = true
-  const { error: authError } = await authClient.twoFactor.verifyBackupCode({ code: backupCode.value })
+  const {error: authError} = await authClient.twoFactor.verifyBackupCode({code: backupCode.value})
   pending.value = false
   if (authError) {
     error.value = authError.message || 'That backup code was not valid.'
     toast.error(error.value)
     return
   }
-  await navigateTo('/')
+  await auth.completeSignIn()
 }
 </script>
 
 <template>
   <AuthLayout
-    :title="step === 'credentials' ? 'Welcome back' : 'Two-factor verification'"
-    :subtitle="
+      :subtitle="
       step === 'credentials'
         ? 'Log in to keep streaming.'
         : 'Enter the 6-digit code from your authenticator app.'
     "
+      :title="step === 'credentials' ? 'Welcome back' : 'Two-factor verification'"
   >
     <!-- Step 1 — credentials -->
     <form v-if="step === 'credentials'" class="space-y-5" @submit.prevent="onSubmit">
-      <SocialAuthButtons @error="error = $event; toast.error($event)" />
+      <SocialAuthButtons @error="error = $event; toast.error($event)"/>
 
       <AuthFormField
-        id="email"
-        v-model="email"
-        label="Email"
-        type="email"
-        autocomplete="email"
-        placeholder="you@example.com"
-        :icon="Mail"
+          id="email"
+          v-model="email"
+          :icon="Mail"
+          autocomplete="email"
+          label="Email"
+          placeholder="you@example.com"
+          type="email"
       />
       <AuthFormField
-        id="password"
-        v-model="password"
-        label="Password"
-        type="password"
-        autocomplete="current-password"
-        placeholder="••••••••"
-        :icon="Lock"
+          id="password"
+          v-model="password"
+          :icon="Lock"
+          autocomplete="current-password"
+          label="Password"
+          placeholder="••••••••"
+          type="password"
       />
 
       <div class="flex items-center justify-between">
         <label class="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
           <input
-            v-model="remember"
-            type="checkbox"
-            class="size-4 cursor-pointer rounded border-border accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              v-model="remember"
+              class="size-4 cursor-pointer rounded border-border accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              type="checkbox"
           >
           Remember me
         </label>
         <NuxtLink
-          to="/forgot-password"
-          class="rounded text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            class="rounded text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            to="/forgot-password"
         >
           Forgot password?
         </NuxtLink>
       </div>
 
-      <AuthAlert v-if="error" :message="error" />
+      <AuthAlert v-if="error" :message="error"/>
 
-      <Button type="submit" size="lg" class="w-full" :disabled="pending">
+      <Button :disabled="pending" class="w-full" size="lg" type="submit">
         {{ pending ? 'Logging in…' : 'Log in' }}
       </Button>
     </form>
@@ -128,15 +131,15 @@ async function verifyBackup() {
     <!-- Step 2 — TOTP / backup code -->
     <div v-else class="space-y-5">
       <template v-if="!useBackupCode">
-        <OtpInput v-model="otp" @complete="verifyTotp" />
-        <AuthAlert v-if="error" :message="error" />
-        <Button size="lg" class="w-full" :disabled="pending || otp.length < 6" @click="verifyTotp(otp.join(''))">
+        <OtpInput v-model="otp" @complete="verifyTotp"/>
+        <AuthAlert v-if="error" :message="error"/>
+        <Button :disabled="pending || otp.length < 6" class="w-full" size="lg" @click="verifyTotp(otp.join(''))">
           {{ pending ? 'Verifying…' : 'Verify' }}
         </Button>
         <button
-          type="button"
-          class="w-full cursor-pointer rounded text-sm text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          @click="useBackupCode = true; error = ''"
+            class="w-full cursor-pointer rounded text-sm text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            type="button"
+            @click="useBackupCode = true; error = ''"
         >
           Lost your device? Use a backup code
         </button>
@@ -144,21 +147,21 @@ async function verifyBackup() {
 
       <form v-else class="space-y-5" @submit.prevent="verifyBackup">
         <AuthFormField
-          id="backup"
-          v-model="backupCode"
-          label="Backup code"
-          autocomplete="one-time-code"
-          placeholder="xxxxx-xxxxx"
-          :icon="ShieldCheck"
+            id="backup"
+            v-model="backupCode"
+            :icon="ShieldCheck"
+            autocomplete="one-time-code"
+            label="Backup code"
+            placeholder="xxxxx-xxxxx"
         />
-        <AuthAlert v-if="error" :message="error" />
-        <Button type="submit" size="lg" class="w-full" :disabled="pending">
+        <AuthAlert v-if="error" :message="error"/>
+        <Button :disabled="pending" class="w-full" size="lg" type="submit">
           {{ pending ? 'Verifying…' : 'Verify backup code' }}
         </Button>
         <button
-          type="button"
-          class="w-full cursor-pointer rounded text-sm text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          @click="useBackupCode = false; error = ''"
+            class="w-full cursor-pointer rounded text-sm text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            type="button"
+            @click="useBackupCode = false; error = ''"
         >
           Use your authenticator app instead
         </button>
@@ -167,7 +170,7 @@ async function verifyBackup() {
 
     <template #footer>
       Don't have an account?
-      <NuxtLink to="/signup" class="font-medium text-primary hover:underline">Sign up</NuxtLink>
+      <NuxtLink class="font-medium text-primary hover:underline" to="/signup">Sign up</NuxtLink>
     </template>
   </AuthLayout>
 </template>

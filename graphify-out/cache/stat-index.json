@@ -1,1 +1,2995 @@
-{".claude/CLAUDE.md":{"size":226,"mtime_ns":1785958700536687021,"word_count":29,"hashes":{".claude/claude.md":"c6f7fc2f062904d246b700d446ba3ad03e77f41809b12eccfb5e090a11f4fad2"}},".claude/settings.json":{"size":2112,"mtime_ns":1786039715742207829,"word_count":169,"hashes":{".claude/settings.json":"ad8f4a8737a494fdcca3b485dff2dc17c4bf281cdf67deebe585689fa2d4001c"}},".claude/skills/banner-design/SKILL.md":{"size":8326,"mtime_ns":1785958700537253493,"word_count":1115,"hashes":{".claude/skills/banner-design/skill.md":"c34877abbbd863cb1fb51e070943ee16306b5a8c594b9b625644d172b5cbd997"}},".claude/skills/banner-design/references/banner-sizes-and-styles.md":{"size":4993,"mtime_ns":1785958700537514938,"word_count":851,"hashes":{".claude/skills/banner-design/references/banner-sizes-and-styles.md":"8827b7818e0950485c99d40b01a62c64774beb0ebf3012093a96ef6f6d52a0e8"}},".claude/skills/brand/SKILL.md":{"size":2939,"mtime_ns":1785958700537712428,"word_count":343,"hashes":{".claude/skills/brand/skill.md":"fc28f63fde4d98d13043b859f3c24f2c67a8d4884edb95873d1f49e239e8e50a"}},".claude/skills/brand/references/approval-checklist.md":{"size":4245,"mtime_ns":1785958700537941209,"word_count":783,"hashes":{".claude/skills/brand/references/approval-checklist.md":"1ad4e97fe98ecc05eaf2dafc471eb585f2d6411b80d507a7137da2ebca923f4c"}},".claude/skills/brand/references/asset-organization.md":{"size":5110,"mtime_ns":1785958700538098951,"word_count":579,"hashes":{".claude/skills/brand/references/asset-organization.md":"d0f981ea18d75cc6e2c2ccdee297a5b5cbed263f72ad508fe11fb1fa5916709e"}},".claude/skills/brand/references/brand-guideline-template.md":{"size":3572,"mtime_ns":1785958700538224111,"word_count":580,"hashes":{".claude/skills/brand/references/brand-guideline-template.md":"bdc3f4b1a3b882ce7e7de4ddee11efa7b2d4af3260f908147a63f7e89254ea9a"}},".claude/skills/brand/references/color-palette-management.md":{"size":4254,"mtime_ns":1785958700538376062,"word_count":590,"hashes":{".claude/skills/brand/references/color-palette-management.md":"86fc46aa7e07ca7b747ca6c741c0bd3ae45fbe78f838117358faf05e26dd4dbb"}},".claude/skills/brand/references/consistency-checklist.md":{"size":1926,"mtime_ns":1785958700538497223,"word_count":370,"hashes":{".claude/skills/brand/references/consistency-checklist.md":"e3bf1935a933897529b59b6e05412c64b6a0dd2968967385452fcf4f18d51c53"}},".claude/skills/brand/references/logo-usage-rules.md":{"size":5464,"mtime_ns":1785958700538645715,"word_count":797,"hashes":{".claude/skills/brand/references/logo-usage-rules.md":"bd936bdb3502a251ed580c17b6167a3ad293ac9430f98af9f4e168bb0aee7c10"}},".claude/skills/brand/references/messaging-framework.md":{"size":1763,"mtime_ns":1785958700538765418,"word_count":268,"hashes":{".claude/skills/brand/references/messaging-framework.md":"97ce1518dea36d09635a676294ba1a6a616575cb35779affccec60385118f989"}},".claude/skills/brand/references/typography-specifications.md":{"size":5042,"mtime_ns":1785958700538913660,"word_count":805,"hashes":{".claude/skills/brand/references/typography-specifications.md":"72ce4ffaf94eb858606442e2ad0923ace05d05b7c1b1785901dce259419e6f74"}},".claude/skills/brand/references/update.md":{"size":3365,"mtime_ns":1785958700539045445,"word_count":463,"hashes":{".claude/skills/brand/references/update.md":"5c7f6f7b3299de4714157a08b8db30ddebd850b6e1711672e314d5f72df5b9c4"}},".claude/skills/brand/references/visual-identity.md":{"size":1884,"mtime_ns":1785958700539162856,"word_count":309,"hashes":{".claude/skills/brand/references/visual-identity.md":"5f96567d23787474e8fc915892ddc13cb13f64ac98aa0f4230b97a59676dc2db"}},".claude/skills/brand/references/voice-framework.md":{"size":1997,"mtime_ns":1785958700539284184,"word_count":281,"hashes":{".claude/skills/brand/references/voice-framework.md":"053839b4447fd53c5b03c41d908247b2176bd0a2682436aa886591c6df8283f8"}},".claude/skills/brand/scripts/extract-colors.cjs":{"size":9328,"mtime_ns":1785958700539510214,"word_count":1014},".claude/skills/brand/scripts/inject-brand-context.cjs":{"size":9677,"mtime_ns":1785958700539654540,"word_count":944},".claude/skills/brand/scripts/sync-brand-to-tokens.cjs":{"size":9545,"mtime_ns":1785958700539804199,"word_count":1004},".claude/skills/brand/scripts/tests/test_sync_brand_to_tokens.py":{"size":1970,"mtime_ns":1785958700539990565,"word_count":213,"hashes":{".claude/skills/brand/scripts/tests/test_sync_brand_to_tokens.py":"b490263ea8c26076723590126afdcf69e5a68cbafe2907c2d408e9a582d24629"}},".claude/skills/brand/scripts/validate-asset.cjs":{"size":10173,"mtime_ns":1785958700540133766,"word_count":1048},".claude/skills/brand/templates/brand-guidelines-starter.md":{"size":6638,"mtime_ns":1785958700540367171,"word_count":1114,"hashes":{".claude/skills/brand/templates/brand-guidelines-starter.md":"f475af5524638455ccdab6ea748f1529fec80ff47895e79b4ac4bcb9a586178f"}},".claude/skills/claude-automation-recommender/SKILL.md":{"size":10994,"mtime_ns":1785958700540611826,"word_count":1529,"hashes":{".claude/skills/claude-automation-recommender/skill.md":"752048088430c8d561a566eabbb58dcee0fe79967117793c11460bca3de8a266"}},".claude/skills/claude-automation-recommender/references/hooks-patterns.md":{"size":6315,"mtime_ns":1785958700540848231,"word_count":881,"hashes":{".claude/skills/claude-automation-recommender/references/hooks-patterns.md":"0f0e208685903c4568604b5ada057dd29455f9652c41dbdb96fb1a7fbd8111c9"}},".claude/skills/claude-automation-recommender/references/mcp-servers.md":{"size":8291,"mtime_ns":1785958700540997348,"word_count":1276,"hashes":{".claude/skills/claude-automation-recommender/references/mcp-servers.md":"6debc45721f31f1df07e6aa79d14edf9c4a5e760199f53d498672507f29442a2"}},".claude/skills/claude-automation-recommender/references/plugins-reference.md":{"size":3016,"mtime_ns":1785958700541101426,"word_count":436,"hashes":{".claude/skills/claude-automation-recommender/references/plugins-reference.md":"823672353eef85e74f1714e8b6d01d96ee3646e9628d60314ebdf1c276b0ae64"}},".claude/skills/claude-automation-recommender/references/skills-reference.md":{"size":9612,"mtime_ns":1785958700541249252,"word_count":1221,"hashes":{".claude/skills/claude-automation-recommender/references/skills-reference.md":"621d0f19c4ca655b58b51a688dd6476721a0539f590d367d3f736703b0977192"}},".claude/skills/claude-automation-recommender/references/subagent-templates.md":{"size":5048,"mtime_ns":1785958700541381912,"word_count":717,"hashes":{".claude/skills/claude-automation-recommender/references/subagent-templates.md":"eb631c57fedbda9e898ec206ceef359a897cbab0e19f3ad5d0a9118e2102d473"}},".claude/skills/design-system/SKILL.md":{"size":6875,"mtime_ns":1785958700541590902,"word_count":838,"hashes":{".claude/skills/design-system/skill.md":"f4e5ae9f786191edb96410b86ce17a73a70202b96623ec31d6b24a10b70823a3"}},".claude/skills/design-system/references/component-specs.md":{"size":6914,"mtime_ns":1785958700542819966,"word_count":936,"hashes":{".claude/skills/design-system/references/component-specs.md":"59d0bfaaf5fb47c34fef22b71b8fdc727ec7a8c1414cf290d1b46397789e0466"}},".claude/skills/design-system/references/component-tokens.md":{"size":4986,"mtime_ns":1785958700542953417,"word_count":369,"hashes":{".claude/skills/design-system/references/component-tokens.md":"bf68968abf7573a17de60344bbacc88b246ff594a54f9c5a49428f3cdb08de4c"}},".claude/skills/design-system/references/primitive-tokens.md":{"size":4562,"mtime_ns":1785958700543083328,"word_count":556,"hashes":{".claude/skills/design-system/references/primitive-tokens.md":"c884da550b1fd0593648be23b364515128d1e6bf3b565f469d5ddfdc601aea03"}},".claude/skills/design-system/references/semantic-tokens.md":{"size":4245,"mtime_ns":1785958700543226154,"word_count":350,"hashes":{".claude/skills/design-system/references/semantic-tokens.md":"4bd0bb616d92f9df9736e0b15317baaa081de198ee0e9c395f6f44d8391640e2"}},".claude/skills/design-system/references/states-and-variants.md":{"size":4771,"mtime_ns":1785958700543368188,"word_count":644,"hashes":{".claude/skills/design-system/references/states-and-variants.md":"4cc807373b83f9706177057edc582ec32a2c1ea00d5536d1b6cdf0b618c936f2"}},".claude/skills/design-system/references/tailwind-integration.md":{"size":5633,"mtime_ns":1785958700543509723,"word_count":584,"hashes":{".claude/skills/design-system/references/tailwind-integration.md":"a3db6b7279a637b51a229c526698e3f92177c753ac5763f27be324e3ad16a50e"}},".claude/skills/design-system/references/token-architecture.md":{"size":5365,"mtime_ns":1785958700543646758,"word_count":536,"hashes":{".claude/skills/design-system/references/token-architecture.md":"a4538a03e42223e1fbcb7f365e9f4a4d1a37a0b4f43cdb86d053c00fd584d4de"}},".claude/skills/design-system/scripts/embed-tokens.cjs":{"size":2558,"mtime_ns":1785958700543829249,"word_count":271},".claude/skills/design-system/scripts/fetch-background.py":{"size":12287,"mtime_ns":1785958700543967867,"word_count":862,"hashes":{".claude/skills/design-system/scripts/fetch-background.py":"cc2b7f91922f3e65e14480aa5dfe32d293bdd0f0a04f35a391a2f80842ad6af3"}},".claude/skills/design-system/scripts/generate-slide.py":{"size":28595,"mtime_ns":1785958700544119651,"word_count":1978,"hashes":{".claude/skills/design-system/scripts/generate-slide.py":"304fd3f97e3b2110b0afd1e4558ab467f77b0925bfe59a9037338df8c8f3b293"}},".claude/skills/design-system/scripts/generate-tokens.cjs":{"size":4968,"mtime_ns":1785958700544301184,"word_count":620},".claude/skills/design-system/scripts/html-token-validator.py":{"size":11894,"mtime_ns":1785958700544435677,"word_count":1131,"hashes":{".claude/skills/design-system/scripts/html-token-validator.py":"0f5838f4261b7fd874a203884f4a910e462b6eda84637b9101b3a75d7190ceff"}},".claude/skills/design-system/scripts/search-slides.py":{"size":9210,"mtime_ns":1785958700544570962,"word_count":618,"hashes":{".claude/skills/design-system/scripts/search-slides.py":"db9fd0f6fde85152e7789c609998bf03c185ff60a1bb76a23cd60e568ec701de"}},".claude/skills/design-system/scripts/slide-token-validator.py":{"size":973,"mtime_ns":1785958700544675957,"word_count":105,"hashes":{".claude/skills/design-system/scripts/slide-token-validator.py":"d065da0156f8fdb49e268b829998e7ddf9c5d4c4af61e1eb5fd1526004342b2c"}},".claude/skills/design-system/scripts/slide_search_core.py":{"size":14756,"mtime_ns":1785958700544842032,"word_count":1375,"hashes":{".claude/skills/design-system/scripts/slide_search_core.py":"440f149c3bba56db7897b295078ce307c8c2506fe3567394a9ed7ab2a460b7e5"}},".claude/skills/design-system/scripts/tests/test_validate_tokens.py":{"size":1619,"mtime_ns":1785958700545032147,"word_count":183,"hashes":{".claude/skills/design-system/scripts/tests/test_validate_tokens.py":"afded16b414165c168271dd1d25bb1ad8029e223ce85f85a7b3776f8e16d07d0"}},".claude/skills/design-system/scripts/validate-tokens.cjs":{"size":5942,"mtime_ns":1785958700545165849,"word_count":689},".claude/skills/design-system/templates/design-tokens-starter.json":{"size":7184,"mtime_ns":1785958700545363839,"word_count":801,"hashes":{".claude/skills/design-system/templates/design-tokens-starter.json":"272ef2ab482bd2660d2bfb511ef2eb239d0c386e92893f2014f89dda4a60470d"}},".claude/skills/design/SKILL.md":{"size":12322,"mtime_ns":1785958700545550205,"word_count":1546,"hashes":{".claude/skills/design/skill.md":"9c47e561256a87a59e7f4775ee0e5bbe450885acdd8ba1d44ede5cef079e542e"}},".claude/skills/design/references/banner-sizes-and-styles.md":{"size":4993,"mtime_ns":1785958700546962009,"word_count":851,"hashes":{".claude/skills/design/references/banner-sizes-and-styles.md":"3726a21828204025342db983456205fddc123cc2958008edde75b5e2bfe62875"}},".claude/skills/design/references/cip-deliverable-guide.md":{"size":1735,"mtime_ns":1785958700547056380,"word_count":276,"hashes":{".claude/skills/design/references/cip-deliverable-guide.md":"4ae58cb487f2100f0c02a9b15baa17094e6d789d338beab91dcdd87bc227fd29"}},".claude/skills/design/references/cip-design.md":{"size":4589,"mtime_ns":1785958700547175790,"word_count":554,"hashes":{".claude/skills/design/references/cip-design.md":"e3cde387df2658a23566f3c0dde9602f2a80ee2d3417dea6715128e8b6e1ac42"}},".claude/skills/design/references/cip-prompt-engineering.md":{"size":2493,"mtime_ns":1785958700547267869,"word_count":329,"hashes":{".claude/skills/design/references/cip-prompt-engineering.md":"65e14623e6ea4a05dbc1e0987a09bbaa84a39ea50faa787bd1ec0ae60f2e349b"}},".claude/skills/design/references/cip-style-guide.md":{"size":2357,"mtime_ns":1785958700547362406,"word_count":297,"hashes":{".claude/skills/design/references/cip-style-guide.md":"adafe257458dd551abaef3e4cb1a50251d6c5e04df516cc1e4815dc613c90372"}},".claude/skills/design/references/design-routing.md":{"size":5826,"mtime_ns":1785958700547483442,"word_count":885,"hashes":{".claude/skills/design/references/design-routing.md":"ade1fd505a8f3eea6a687b9d768257ac67e6c2a39a90098a38192190ff78d695"}},".claude/skills/design/references/icon-design.md":{"size":4343,"mtime_ns":1785958700547610061,"word_count":669,"hashes":{".claude/skills/design/references/icon-design.md":"9b609ed0a1f9513da7d8d700ae377d3f4324e418806464afdd1be3c00a059c71"}},".claude/skills/design/references/logo-color-psychology.md":{"size":3341,"mtime_ns":1785958700547711805,"word_count":468,"hashes":{".claude/skills/design/references/logo-color-psychology.md":"3da0d1a7094cd4854e292c1e43a00cd4383f952aa269d74879c9b8bc056574e7"}},".claude/skills/design/references/logo-design.md":{"size":3163,"mtime_ns":1785958700547807051,"word_count":410,"hashes":{".claude/skills/design/references/logo-design.md":"855cdea9fa18e46b4db13394d2f2c08a572b3849d4a2e19e73b663490e2ce7b3"}},".claude/skills/design/references/logo-prompt-engineering.md":{"size":4314,"mtime_ns":1785958700547930086,"word_count":556,"hashes":{".claude/skills/design/references/logo-prompt-engineering.md":"78df7bec56b379a941fea784e29d9fa827f3d577c7d8c8d3a10eb7380f753b2e"}},".claude/skills/design/references/logo-style-guide.md":{"size":3435,"mtime_ns":1785958700548032290,"word_count":502,"hashes":{".claude/skills/design/references/logo-style-guide.md":"9a8cd5cada0362a1e078b42f40c53ec53dccbe60e2dfbb63e3e2d07998705fb3"}},".claude/skills/design/references/slides-copywriting-formulas.md":{"size":2604,"mtime_ns":1785958700548134951,"word_count":378,"hashes":{".claude/skills/design/references/slides-copywriting-formulas.md":"69dd4c9da46023360604e72ec0ef9c4a068483fff7158c7d5471be119c9ca841"}},".claude/skills/design/references/slides-create.md":{"size":153,"mtime_ns":1785958700548220405,"word_count":20,"hashes":{".claude/skills/design/references/slides-create.md":"674c9dd34dab02c84a706ccf5febef490444e3100af8fdea11f734dbfb970e4f"}},".claude/skills/design/references/slides-html-template.md":{"size":9004,"mtime_ns":1785958700548334108,"word_count":883,"hashes":{".claude/skills/design/references/slides-html-template.md":"98ff2ba239130dc17e5239b64acec3e2f0c02629127f82419abd973c285e0ddc"}},".claude/skills/design/references/slides-layout-patterns.md":{"size":3691,"mtime_ns":1785958700548437936,"word_count":522,"hashes":{".claude/skills/design/references/slides-layout-patterns.md":"04a30fe12f9cfda6e071b5aa2744a9b0f2ba3b2a917e1c98791af6c04eb5b4a9"}},".claude/skills/design/references/slides-strategies.md":{"size":2715,"mtime_ns":1785958700548541556,"word_count":426,"hashes":{".claude/skills/design/references/slides-strategies.md":"8cf8cd48fc148f4194427b7c538069e7861a7572a822b16107921d4be744ec96"}},".claude/skills/design/references/slides.md":{"size":1742,"mtime_ns":1785958700548642342,"word_count":216,"hashes":{".claude/skills/design/references/slides.md":"5b900ba97bc125876140e898f8e49bfc26b6d3ddb879f6b73c2189935cd2dc31"}},".claude/skills/design/references/social-photos-design.md":{"size":11251,"mtime_ns":1785958700548770753,"word_count":1566,"hashes":{".claude/skills/design/references/social-photos-design.md":"caea9f43c09d24ef8de7da778ed8734b736a81a2eefe926025a83b251393c954"}},".claude/skills/design/scripts/cip/core.py":{"size":8062,"mtime_ns":1785958700549043156,"word_count":810,"hashes":{".claude/skills/design/scripts/cip/core.py":"d46d051ef435e1adb7dde54d634dbe8c42a461066f53706c2c1a5777d0ca4ce4"}},".claude/skills/design/scripts/cip/generate.py":{"size":19430,"mtime_ns":1785958700549175358,"word_count":1773,"hashes":{".claude/skills/design/scripts/cip/generate.py":"b487e2078ed35e7630e7aad849b5ad05a9408e214d74c25fd77796a513c3adcc"}},".claude/skills/design/scripts/cip/render-html.py":{"size":13941,"mtime_ns":1785958700549331600,"word_count":1180,"hashes":{".claude/skills/design/scripts/cip/render-html.py":"6dccaa603a8841315bb817b23b97638a1d002cb7bc6eb5ea5fbc82efdf6afafb"}},".claude/skills/design/scripts/cip/search.py":{"size":4524,"mtime_ns":1785958700549456177,"word_count":342,"hashes":{".claude/skills/design/scripts/cip/search.py":"307aeb1fe36160373222f8eaa46e9f6928a53bf0303630e9c9b152bc5db0ded1"}},".claude/skills/design/scripts/icon/generate.py":{"size":17151,"mtime_ns":1785958700549620335,"word_count":1624,"hashes":{".claude/skills/design/scripts/icon/generate.py":"23f629199cac7bbbbe5feb973bef10bd2296c7e8a1a48a90952a8f120e71cc33"}},".claude/skills/design/scripts/logo/core.py":{"size":6023,"mtime_ns":1785958700549814242,"word_count":649,"hashes":{".claude/skills/design/scripts/logo/core.py":"7256fc25fc827389c4090989c1230dd1b57847681b1f4425b1666bfa5c327871"}},".claude/skills/design/scripts/logo/generate.py":{"size":14630,"mtime_ns":1785958700549943236,"word_count":1307,"hashes":{".claude/skills/design/scripts/logo/generate.py":"b840eeb13691722f52320881b5d2abfea0dad23a666e1c1c1c96da21e37dfd5b"}},".claude/skills/design/scripts/logo/search.py":{"size":4745,"mtime_ns":1785958700550060313,"word_count":375,"hashes":{".claude/skills/design/scripts/logo/search.py":"3cd83e6525c12cf53533a4a5d60ed8b4f1769678bfc7054c12b2ebf93d18f6aa"}},".claude/skills/graphify/SKILL.md":{"size":40495,"mtime_ns":1785958700550371965,"word_count":5109,"hashes":{".claude/skills/graphify/skill.md":"e48618b55951799755c8f4807bcfe39d428269537034f8d63214ca304e93302f"}},".claude/skills/graphify/references/add-watch.md":{"size":2486,"mtime_ns":1785958700550534540,"word_count":366,"hashes":{".claude/skills/graphify/references/add-watch.md":"cb5e2f3284265c08c88c08f445b96958b13a9115c0afc0a33206c293d1b1c187"}},".claude/skills/graphify/references/exports.md":{"size":3362,"mtime_ns":1785958700550634493,"word_count":470,"hashes":{".claude/skills/graphify/references/exports.md":"7aa8b606e5c19334b6c9fe62a12fc30eb46c0320d1dbb5726cfda0becdd04a5a"}},".claude/skills/graphify/references/extraction-spec.md":{"size":7960,"mtime_ns":1785958700550762278,"word_count":1038,"hashes":{".claude/skills/graphify/references/extraction-spec.md":"9cf5d515d0d8584aeef36708df34f560078772a568ed599cac5ba20b089e563d"}},".claude/skills/graphify/references/github-and-merge.md":{"size":2177,"mtime_ns":1785958700550865148,"word_count":271,"hashes":{".claude/skills/graphify/references/github-and-merge.md":"609de4b1331ddb2f8c80e97aac0a5de782a373d6f5af858e10a731c20b35c0e2"}},".claude/skills/graphify/references/hooks.md":{"size":1267,"mtime_ns":1785958700550955602,"word_count":193,"hashes":{".claude/skills/graphify/references/hooks.md":"7c7827f2f29d6e2cb6cc6902558dac08380f60c414b4968f83e1bc4e61b3e268"}},".claude/skills/graphify/references/query.md":{"size":13456,"mtime_ns":1785958700551087804,"word_count":1763,"hashes":{".claude/skills/graphify/references/query.md":"54526cc3e2392922d344f14767f09037ef85fb7ec5cc7911b749b35bcb004fbf"}},".claude/skills/graphify/references/transcribe.md":{"size":3173,"mtime_ns":1785958700551179799,"word_count":418,"hashes":{".claude/skills/graphify/references/transcribe.md":"1d5afbaccf36e952e71082591edfc9e4fbd9946eb85b01855a1d0bd810b7623d"}},".claude/skills/graphify/references/update.md":{"size":10425,"mtime_ns":1785958700551309918,"word_count":1196,"hashes":{".claude/skills/graphify/references/update.md":"0249cd6ceae6effdfc7371b51d00c462f51d95700101dcedd36255bab1b4ce7a"}},".claude/skills/ponytail-audit/SKILL.md":{"size":1652,"mtime_ns":1785958700551450578,"word_count":234,"hashes":{".claude/skills/ponytail-audit/skill.md":"c0f47f58e716807998e6b31ee2ad0df1c79474004378991d309ca4f334a00aa6"}},".claude/skills/ponytail-debt/SKILL.md":{"size":1703,"mtime_ns":1785958700551611070,"word_count":261,"hashes":{".claude/skills/ponytail-debt/skill.md":"4888032d7beba84f68022216613806dc25d0d72f5559b8bf411f2c120904861d"}},".claude/skills/ponytail-gain/SKILL.md":{"size":1973,"mtime_ns":1785958700551765479,"word_count":246,"hashes":{".claude/skills/ponytail-gain/skill.md":"10b76f7b4a581ba705f6c569740445738135059205334edbb1a24cde66ab6070"}},".claude/skills/ponytail-help/SKILL.md":{"size":2796,"mtime_ns":1785958700551910721,"word_count":379,"hashes":{".claude/skills/ponytail-help/skill.md":"e2119513a894ccf10f6e7e9edc1ec6949d712d73643c141332df20eabbedf337"}},".claude/skills/ponytail-review/SKILL.md":{"size":2383,"mtime_ns":1785958700552065422,"word_count":339,"hashes":{".claude/skills/ponytail-review/skill.md":"f22930872f2f0f984390d71b5a5f6d777b573cddfe340dd2f991bc4aa594bf26"}},".claude/skills/ponytail/SKILL.md":{"size":6637,"mtime_ns":1785958700552253913,"word_count":1079,"hashes":{".claude/skills/ponytail/skill.md":"4bd2017a37fd57dc2be3b9da060a274dd0f1ffa974f2aee4de1515b556dd13eb"}},".claude/skills/slides/SKILL.md":{"size":1137,"mtime_ns":1785958700552461944,"word_count":136,"hashes":{".claude/skills/slides/skill.md":"b3b7367bb764abb8612f4a117fb390158c34d82732de36ae600e23171a1bb1c6"}},".claude/skills/slides/references/copywriting-formulas.md":{"size":2604,"mtime_ns":1785958700552649143,"word_count":378,"hashes":{".claude/skills/slides/references/copywriting-formulas.md":"8e267b2fcdabef4b2c055617421f8f43c7d8aa31a7c5c916fe14d2f55323394a"}},".claude/skills/slides/references/create.md":{"size":153,"mtime_ns":1785958700552747596,"word_count":20,"hashes":{".claude/skills/slides/references/create.md":"df8d3b872fbc3646e03b3f5cb6bb34e8f198bc7352d3d5b31072ab36e69d9ef1"}},".claude/skills/slides/references/html-template.md":{"size":9004,"mtime_ns":1785958700552874757,"word_count":883,"hashes":{".claude/skills/slides/references/html-template.md":"3c950deabe8fae92068bb9fb62fddba87630fc9b84eb2f16572660cf6a056643"}},".claude/skills/slides/references/layout-patterns.md":{"size":3691,"mtime_ns":1785958700552975377,"word_count":522,"hashes":{".claude/skills/slides/references/layout-patterns.md":"230405c08043c7939fc3465a5c91541b4c18754f6069717a5165c222b0d84def"}},".claude/skills/slides/references/slide-strategies.md":{"size":2715,"mtime_ns":1785958700553072497,"word_count":426,"hashes":{".claude/skills/slides/references/slide-strategies.md":"971370eee4359d8141f0d04c1877c2ae41a44d8ac53753b421bd2445b2ba3de9"}},".claude/skills/ui-styling/LICENSE.txt":{"size":11357,"mtime_ns":1785958700553254863,"word_count":1581,"hashes":{".claude/skills/ui-styling/license.txt":"a6b3a3302b19e83951db0b9ba67cb06fb2d2c27707f6c5cedef5889f41220e5a"}},".claude/skills/ui-styling/SKILL.md":{"size":10045,"mtime_ns":1785958700553395772,"word_count":1149,"hashes":{".claude/skills/ui-styling/skill.md":"bd792fa4913b859623877841349838a868529bf397237ee611cf8a82e7a64c68"}},".claude/skills/ui-styling/references/canvas-design-system.md":{"size":7888,"mtime_ns":1785958700553593804,"word_count":1146,"hashes":{".claude/skills/ui-styling/references/canvas-design-system.md":"edecdc720ba6bbf4668c27f3139bdfeaf9ddbbac4d675089d2cdd73223059dc0"}},".claude/skills/ui-styling/references/shadcn-accessibility.md":{"size":9976,"mtime_ns":1785958700553730297,"word_count":1083,"hashes":{".claude/skills/ui-styling/references/shadcn-accessibility.md":"bdbfee5f33135acb6d577904fe708ce6cf0af2b05d80e7a00bec7d92a526aff6"}},".claude/skills/ui-styling/references/shadcn-components.md":{"size":11155,"mtime_ns":1785958700553854499,"word_count":959,"hashes":{".claude/skills/ui-styling/references/shadcn-components.md":"0e5995a39a81e96f2e3ba8fc222ef9ae5537248139b40e29d09ab3e6b868fb42"}},".claude/skills/ui-styling/references/shadcn-theming.md":{"size":8672,"mtime_ns":1785958700553974410,"word_count":956,"hashes":{".claude/skills/ui-styling/references/shadcn-theming.md":"377c644c5a00867c24e589a37bc8ce24a2ee50d507628cc5bfbd2c413db1e93c"}},".claude/skills/ui-styling/references/tailwind-customization.md":{"size":10171,"mtime_ns":1785958700554204690,"word_count":1026,"hashes":{".claude/skills/ui-styling/references/tailwind-customization.md":"9df5f5f0fa3d81f39917236c92175707db666a891ee470d63438d2bf0dd132fb"}},".claude/skills/ui-styling/references/tailwind-responsive.md":{"size":8270,"mtime_ns":1785958700554370599,"word_count":1031,"hashes":{".claude/skills/ui-styling/references/tailwind-responsive.md":"f161caaab831f2956fc7cbd58e88e84048bca0241e269a46d9e1dbaff5040514"}},".claude/skills/ui-styling/references/tailwind-utilities.md":{"size":9980,"mtime_ns":1785958700554502926,"word_count":914,"hashes":{".claude/skills/ui-styling/references/tailwind-utilities.md":"2f07435f943fa59e2c20dea33133301023e2d3e0d235cef668d5a9d630c90a86"}},".claude/skills/ui-styling/scripts/requirements.txt":{"size":444,"mtime_ns":1785958700554677917,"word_count":64,"hashes":{".claude/skills/ui-styling/scripts/requirements.txt":"7ef1f9ff1007a9463aecf19fc141692089f3bd2e3e200591640f1ac04c91479a"}},".claude/skills/ui-styling/scripts/shadcn_add.py":{"size":8799,"mtime_ns":1785958700554804494,"word_count":773,"hashes":{".claude/skills/ui-styling/scripts/shadcn_add.py":"8e9442aa5facfa30bdc4c8d9f426c8ea120922590ca463c3fe92f934d19f3970"}},".claude/skills/ui-styling/scripts/tailwind_config_gen.py":{"size":14418,"mtime_ns":1785958700554938737,"word_count":1163,"hashes":{".claude/skills/ui-styling/scripts/tailwind_config_gen.py":"92ff2948188812542ae72aac7eae144f55636b960e060102518af3a7f53b0065"}},".claude/skills/ui-styling/scripts/tests/coverage-ui.json":{"size":35121,"mtime_ns":1785958700555123061,"word_count":3752,"hashes":{".claude/skills/ui-styling/scripts/tests/coverage-ui.json":"526f25a9af420b06078a085e0716a4705e3ed64eaad015c63f9669efbdb9a037"}},".claude/skills/ui-styling/scripts/tests/requirements.txt":{"size":52,"mtime_ns":1785958700555233306,"word_count":3,"hashes":{".claude/skills/ui-styling/scripts/tests/requirements.txt":"c1f476f9689ac0c9732e4b02bf15d7309b0cd1572fc52abfd3ba790e11a21653"}},".claude/skills/ui-styling/scripts/tests/test_shadcn_add.py":{"size":9919,"mtime_ns":1785958700555353675,"word_count":809,"hashes":{".claude/skills/ui-styling/scripts/tests/test_shadcn_add.py":"469136a1e156852978eb4a3427c6db0d2e5c4ef07ba3bd2190d9ca80c4465238"}},".claude/skills/ui-styling/scripts/tests/test_tailwind_config_gen.py":{"size":14658,"mtime_ns":1785958700555495209,"word_count":1127,"hashes":{".claude/skills/ui-styling/scripts/tests/test_tailwind_config_gen.py":"dab915389fa6b662b0a674872b6dc3e448dcff2ecff3b061c99a36ca020d8ba6"}},".claude/skills/ui-ux-pro-max/SKILL.md":{"size":47540,"mtime_ns":1785958700555751697,"word_count":6639,"hashes":{".claude/skills/ui-ux-pro-max/skill.md":"6db723d77955c68ac815bd2c44b286ab8e2151b5c4442d3c14b4d7ad5f1e7d93"}},".claude/skills/ui-ux-pro-max/scripts/core.py":{"size":18801,"mtime_ns":1785958700562823761,"word_count":1938,"hashes":{".claude/skills/ui-ux-pro-max/scripts/core.py":"9130396d96f0e449e5414acac6dfc6629a08a9712c9fad80dab6241c3cc1fd60"}},".claude/skills/ui-ux-pro-max/scripts/design_system.py":{"size":63694,"mtime_ns":1785958700563015543,"word_count":5760,"hashes":{".claude/skills/ui-ux-pro-max/scripts/design_system.py":"66b554b1fac8301f73852226da5e429d328ed37b09cae41922bda2c4911559af"}},".claude/skills/ui-ux-pro-max/scripts/search.py":{"size":8687,"mtime_ns":1785958700563146412,"word_count":749,"hashes":{".claude/skills/ui-ux-pro-max/scripts/search.py":"d26759dca8c0c811ea0fd41e6d4cac207b5dc5b43db47475f073b75072fdf3d7"}},".claude/skills/ui-ux-pro-max/scripts/tests/test_core.py":{"size":5901,"mtime_ns":1785958700563318736,"word_count":442,"hashes":{".claude/skills/ui-ux-pro-max/scripts/tests/test_core.py":"72a0b4511eca9c0838db4b79ec85d1954e516d9127792ac10c1492abde11ddfb"}},".claude/skills/ui-ux-pro-max/scripts/tests/test_design_system_mode.py":{"size":6345,"mtime_ns":1785958700563438439,"word_count":420,"hashes":{".claude/skills/ui-ux-pro-max/scripts/tests/test_design_system_mode.py":"56ad54821f6ebd96daad4119dc472dd3637743d9909eabe23156268d7faf89f7"}},".claude/skills/ui-ux-pro-max/scripts/validate_data.py":{"size":4185,"mtime_ns":1785958700563553391,"word_count":451,"hashes":{".claude/skills/ui-ux-pro-max/scripts/validate_data.py":"d606b3a9585c8b4d6026e4dea00ad9a747d5d7106f00c98005e30aaed88574d7"}},"CLAUDE.md":{"size":6860,"mtime_ns":1786041478300915985,"word_count":962,"hashes":{"claude.md":"162634e102f4f04a2636ed299c5b361f4e60f5e80760149d245f4435e8af2715"}},"README.md":{"size":822,"mtime_ns":1785958700564445597,"word_count":125,"hashes":{"readme.md":"cfbfdb2b1dce7ccc54a4f10dcb0fe14731b0cee909af3ebc751a46fed402180a"}},"app/app.vue":{"size":477,"mtime_ns":1786039081726888668,"word_count":42},"app/components/AppFooter.vue":{"size":2116,"mtime_ns":1786000322800745916,"word_count":184},"app/components/AppHeader.vue":{"size":3841,"mtime_ns":1786017680494016906,"word_count":318},"app/pages/index.vue":{"size":687,"mtime_ns":1786000336519864380,"word_count":77},"design-system/streamify/MASTER.md":{"size":5415,"mtime_ns":1785958700565432798,"word_count":757,"hashes":{"design-system/streamify/master.md":"9f28cf49b64c3fb2b117b0e6e84bc3e3be35bdfc018b9f067523c4a47e8be766"}},"docs/ARCHITECTURE_RESEARCH.md":{"size":12118,"mtime_ns":1785958700565616039,"word_count":1752,"hashes":{"docs/architecture_research.md":"073241ea4658ac86cdfe89b57ba2d5102bda66211c78fbc32b7df912609c8ea1"}},"docs/DECISIONS.md":{"size":28230,"mtime_ns":1786111458653157326,"hashes":{"docs/decisions.md":"6b31035e393a6b9a1bdc67ba1d19ae2ed80abf30afa11c3a72a8219e7033f4f5"},"word_count":3882},"docs/PROGRESS.md":{"size":13614,"mtime_ns":1786112636151268776,"hashes":{"docs/progress.md":"e09060225d2073e6c4381c03c903974a877d1966d27c69cc6dc223e61116caef"},"word_count":1778},"docs/PROMPT.md":{"size":18210,"mtime_ns":1785958700565994562,"word_count":2293,"hashes":{"docs/prompt.md":"6316a25d65b61fcef21a2369e07feb043d00f3f6a5d3620a3574e9f307526a1b"}},"nuxt.config.ts":{"size":2049,"mtime_ns":1786040332283089205,"word_count":186},"package.json":{"size":2328,"mtime_ns":1786110899337787995,"word_count":185,"hashes":{"package.json":"8459ada0f97922d430bf937cfb05c923c9130dcc91966e606d1894a85feb769f"}},"public/robots.txt":{"size":24,"mtime_ns":1785958700575260350,"word_count":3,"hashes":{"public/robots.txt":"99088c6d32cf18278afc89ba5ecba4a4405390b806ce984379b0e645706f1af0"}},"skills-lock.json":{"size":3501,"mtime_ns":1786016586033817568,"word_count":161,"hashes":{"skills-lock.json":"a8aec8ffff169a3d7bd3e74edc83ab662ebfa968596f2c72bf60443727b99b73"}},"tsconfig.json":{"size":320,"mtime_ns":1785958700575432883,"word_count":25,"hashes":{"tsconfig.json":"8e06670e2a0f2cac82c125a2d0bcef04a24a35d316100751b21b9b6c4b9b31d1"}},".vscode/settings.json":{"size":3342,"mtime_ns":1786090164539533409,"word_count":237,"hashes":{".vscode/settings.json":"423edddca4c53ad29be8b83a76ee368cc34af27ef2696f2d590914af1f7f723b"}},".claude/settings.local.json":{"size":686,"mtime_ns":1786039443155905886,"word_count":70,"hashes":{".claude/settings.local.json":"ed981a415ab2c903b8fca9bbcdf264a0c5a1f9073645e734fb7cc9566462c190"}},".prettierrc.json":{"size":108,"mtime_ns":1785968140370983367,"word_count":12,"hashes":{".prettierrc.json":"48882ccf756d2950622623e9cb492e3df9ab76cfecd74f2b60f0107a811ff009"}},"app/components/ComingSoon.vue":{"size":701,"mtime_ns":1785969579400260500,"word_count":58},"app/components/auth/AuthCard.vue":{"size":1528,"mtime_ns":1785970564643368416,"word_count":122},"app/components/auth/AuthFormField.vue":{"size":2262,"mtime_ns":1786003540956352773,"word_count":188},"app/components/motion/Reveal.vue":{"size":1306,"mtime_ns":1785998868072473987,"word_count":156},"app/components/ui/button/Button.spec.ts":{"size":765,"mtime_ns":1785968888500927218,"word_count":94},"app/components/ui/button/Button.vue":{"size":598,"mtime_ns":1785968738808299762,"word_count":65},"app/components/ui/button/index.ts":{"size":1771,"mtime_ns":1785970498954139252,"word_count":122},"app/components/ui/input/Input.vue":{"size":1047,"mtime_ns":1785970539071702518,"word_count":92},"app/components/ui/input/index.ts":{"size":47,"mtime_ns":1785968034183925303,"word_count":8},"app/error.vue":{"size":1002,"mtime_ns":1785969866897587395,"word_count":116},"app/lib/auth-client.ts":{"size":266,"mtime_ns":1786002982488848759,"word_count":33},"app/lib/utils.spec.ts":{"size":324,"mtime_ns":1785968429913816762,"word_count":42},"app/lib/utils.ts":{"size":166,"mtime_ns":1785967950514290923,"word_count":22},"app/pages/about.vue":{"size":279,"mtime_ns":1785969629913108588,"word_count":32},"app/pages/careers.vue":{"size":277,"mtime_ns":1785969638872419137,"word_count":32},"app/pages/category/index.vue":{"size":278,"mtime_ns":1786042650391070794,"word_count":29},"app/pages/clips.vue":{"size":196,"mtime_ns":1786031466725367528,"word_count":21},"app/pages/dashboard/analytics.vue":{"size":346,"mtime_ns":1786031503482828931,"word_count":39},"app/pages/dashboard/index.vue":{"size":867,"mtime_ns":1786042019563170743,"word_count":66},"app/pages/dashboard/stream.vue":{"size":360,"mtime_ns":1786031511325884359,"word_count":42},"app/pages/following.vue":{"size":299,"mtime_ns":1785969609762470791,"word_count":35},"app/pages/live.vue":{"size":195,"mtime_ns":1786042757319605627,"word_count":21},"app/pages/login.vue":{"size":5612,"mtime_ns":1786039197019050183,"word_count":518},"app/pages/security.vue":{"size":316,"mtime_ns":1785969650368804587,"word_count":35},"app/pages/signup.vue":{"size":2723,"mtime_ns":1786039190174881635,"word_count":260},"app/plugins/vue-query.ts":{"size":296,"mtime_ns":1785968485221848767,"word_count":31},"components.json":{"size":440,"mtime_ns":1786044220837346615,"word_count":36,"hashes":{"components.json":"fe3c3de3d873f982f887c6582230af0ab0d082afd6a1fde77562a7e7fda94370"}},"docs/ARCHITECTURE.md":{"size":18745,"mtime_ns":1785965195202697471,"word_count":2352,"hashes":{"docs/architecture.md":"ad7212378f1cf63a596d95ef0a2c385f1326c9a25b4f4e141092510efb73235b"}},"drizzle.config.ts":{"size":239,"mtime_ns":1785968337206377718,"word_count":23},"e2e/home.spec.ts":{"size":286,"mtime_ns":1785968456810715671,"word_count":33},"eslint.config.mjs":{"size":225,"mtime_ns":1785968749027048805,"word_count":19},"playwright.config.ts":{"size":520,"mtime_ns":1785968448962384297,"word_count":55},"server/api/auth/[...all].ts":{"size":155,"mtime_ns":1785968348919646180,"word_count":17},"server/db/client.ts":{"size":477,"mtime_ns":1785968264854875840,"word_count":75},"server/db/schema/auth.ts":{"size":2911,"mtime_ns":1786002624667404964,"word_count":233},"server/db/schema/index.ts":{"size":191,"mtime_ns":1786109771740121976,"word_count":28},"server/plugins/error-logger.ts":{"size":530,"mtime_ns":1785970091568929925,"word_count":78},"server/utils/auth.ts":{"size":2739,"mtime_ns":1786015793901147576,"word_count":326},"server/utils/logger.ts":{"size":248,"mtime_ns":1785968367890592301,"word_count":34},"vitest.config.ts":{"size":194,"mtime_ns":1785968421746144087,"word_count":18},".claude/skills/motion/SKILL.md":{"size":10599,"mtime_ns":1786041341500803092,"word_count":1324,"hashes":{".claude/skills/motion/skill.md":"1a8c8baa00643625c54269c6931a5e12226d6fb5c17a71c67edff3f64e5c9716"}},".claude/skills/motion/references/recipes.md":{"size":6016,"mtime_ns":1786041380555371166,"word_count":720,"hashes":{".claude/skills/motion/references/recipes.md":"0b44bdd4fffad599f12659a50427becf00307a79cd15762c58b5e57bafc30804"}},".scratch/dbg.cjs":{"size":1197,"mtime_ns":1786027643707606659,"word_count":123},".scratch/discovery-check.cjs":{"size":1692,"mtime_ns":1786039596637570948,"word_count":130},".scratch/feed.png":{"size":1553908,"mtime_ns":1786039605341083474,"word_count":57089,"hashes":{".scratch/feed.png":"3394e086e5cd7c1af7a887723aa937238fb90fcd09c0349e0796641a24d29799"}},".scratch/interact.cjs":{"size":2074,"mtime_ns":1786001323340612078,"word_count":186},".scratch/modal.png":{"size":908594,"mtime_ns":1786039605629691571,"word_count":33364,"hashes":{".scratch/modal.png":"0412dc79b584c0e8d96a0347441fc412c1f8354aec00e1078ec3e882ec7d4c8a"}},".scratch/scroll.cjs":{"size":1128,"mtime_ns":1786000421446772391,"word_count":124},".scratch/shot.cjs":{"size":893,"mtime_ns":1785998727660366218,"word_count":100},".scratch/watchlist.png":{"size":370027,"mtime_ns":1786039606121531568,"word_count":13624,"hashes":{".scratch/watchlist.png":"efe4b8e054ed7437ed5a5d782f687b18e9c5a8044c5142d68af515341c8fa7bb"}},"app/components/BrandMark.vue":{"size":837,"mtime_ns":1785998132120523016,"word_count":71},"app/components/SectionHeading.vue":{"size":668,"mtime_ns":1785998148690077551,"word_count":66},"app/components/ThemeToggle.vue":{"size":854,"mtime_ns":1785998034878886388,"word_count":83},"app/components/UserMenu.vue":{"size":4051,"mtime_ns":1786041164600779811,"word_count":302},"app/components/auth/AuthAlert.vue":{"size":745,"mtime_ns":1786003606504949784,"word_count":84},"app/components/auth/AuthBackdrop.vue":{"size":1105,"mtime_ns":1786003140903297822,"word_count":72},"app/components/auth/AuthLayout.vue":{"size":1333,"mtime_ns":1786003456504528234,"word_count":105},"app/components/auth/AuthProviderIcon.vue":{"size":2448,"mtime_ns":1786016440738981987,"word_count":277},"app/components/auth/AuthShowcase.vue":{"size":2799,"mtime_ns":1786028383175469687,"word_count":280},"app/components/auth/BackupCodeList.vue":{"size":1864,"mtime_ns":1786004439816142044,"word_count":173},"app/components/auth/ChannelCard.vue":{"size":1189,"mtime_ns":1786003217269057173,"word_count":108},"app/components/auth/ChannelCarousel.vue":{"size":1825,"mtime_ns":1786028331018227816,"word_count":195},"app/components/auth/OtpInput.vue":{"size":1058,"mtime_ns":1786029192472824121,"word_count":102},"app/components/auth/SocialAuthButtons.vue":{"size":2937,"mtime_ns":1786026883072528034,"word_count":302},"app/components/dashboard/AppSidebar.vue":{"size":3621,"mtime_ns":1786044816928891141,"word_count":273},"app/components/dashboard/DashboardShell.vue":{"size":1113,"mtime_ns":1786044855158678552,"word_count":97},"app/components/dashboard/DashboardWelcome.vue":{"size":1291,"mtime_ns":1786030762916209066,"word_count":147},"app/components/dashboard/PhaseLockedNotice.vue":{"size":845,"mtime_ns":1786044912659786519,"word_count":78},"app/components/dashboard/RoadmapCard.vue":{"size":2065,"mtime_ns":1786042006990671624,"word_count":195},"app/components/dashboard/SecurityStatusCard.vue":{"size":3736,"mtime_ns":1786041990045714867,"word_count":343},"app/components/dashboard/SidebarUserMenu.vue":{"size":3660,"mtime_ns":1786044678446426752,"word_count":258},"app/components/dashboard/StatTile.vue":{"size":1088,"mtime_ns":1786044896369954989,"word_count":106},"app/components/discovery/CategoryCard.spec.ts":{"size":1794,"mtime_ns":1786042677779994699,"word_count":178},"app/components/discovery/CategoryCard.vue":{"size":1842,"mtime_ns":1786042848718685674,"word_count":144},"app/components/discovery/CategoryDetail.vue":{"size":3823,"mtime_ns":1786110521599316857,"word_count":338},"app/components/discovery/CategoryGrid.vue":{"size":2013,"mtime_ns":1786042848741039073,"word_count":180},"app/components/discovery/ClipCard.vue":{"size":2046,"mtime_ns":1786030698469727509,"word_count":160},"app/components/discovery/ClipGrid.vue":{"size":2114,"mtime_ns":1786030698493434600,"word_count":178},"app/components/discovery/DiscoveryFeed.vue":{"size":6010,"mtime_ns":1786110449499401991,"word_count":510},"app/components/discovery/FeaturedClip.vue":{"size":3731,"mtime_ns":1786030698568602397,"word_count":284},"app/components/discovery/LiveChannelCard.vue":{"size":2502,"mtime_ns":1786090424626331410,"word_count":194},"app/components/discovery/LiveChannelGrid.vue":{"size":2145,"mtime_ns":1786042733395181431,"word_count":173},"app/components/discovery/LiveDirectory.vue":{"size":3736,"mtime_ns":1786090477823259606,"word_count":315},"app/components/discovery/LiveSignalsRail.vue":{"size":3376,"mtime_ns":1786030698582550078,"word_count":246},"app/components/discovery/SaveButton.vue":{"size":839,"mtime_ns":1786030698590054708,"word_count":89},"app/components/discovery/WatchlistCard.vue":{"size":2188,"mtime_ns":1786030698600227491,"word_count":168},"app/components/discovery/WatchlistPanel.vue":{"size":2997,"mtime_ns":1786030698617591947,"word_count":251},"app/components/landing/AreaChart.vue":{"size":1331,"mtime_ns":1786000063231704065,"word_count":140},"app/components/landing/BentoCard.vue":{"size":1275,"mtime_ns":1785999293863081310,"word_count":108},"app/components/landing/BentoFeatures.vue":{"size":4159,"mtime_ns":1786000907604277856,"word_count":399},"app/components/landing/ChatMessageRow.vue":{"size":317,"mtime_ns":1785998256736605155,"word_count":32},"app/components/landing/ChatShowcase.vue":{"size":4310,"mtime_ns":1786000518554700578,"word_count":423},"app/components/landing/DashboardShowcase.vue":{"size":3805,"mtime_ns":1786000093522774449,"word_count":341},"app/components/landing/FaqSection.vue":{"size":3181,"mtime_ns":1786000240923934861,"word_count":375},"app/components/landing/FinalCta.vue":{"size":1716,"mtime_ns":1786000298563774061,"word_count":137},"app/components/landing/GlassPanel.vue":{"size":350,"mtime_ns":1785998245556523720,"word_count":35},"app/components/landing/HeroStudio.vue":{"size":3768,"mtime_ns":1786001378362784345,"word_count":330},"app/components/landing/LandingHero.vue":{"size":3170,"mtime_ns":1785998309076855574,"word_count":242},"app/components/landing/LiveBadge.vue":{"size":567,"mtime_ns":1786030698641354497,"word_count":52},"app/components/landing/PricingCard.vue":{"size":1719,"mtime_ns":1786001026569048932,"word_count":152},"app/components/landing/PricingSection.vue":{"size":2826,"mtime_ns":1786000907610842481,"word_count":278},"app/components/landing/StatsBand.vue":{"size":1008,"mtime_ns":1786000118546587459,"word_count":126},"app/components/landing/Testimonials.vue":{"size":2886,"mtime_ns":1786000777775165369,"word_count":319},"app/components/landing/TrustedBy.vue":{"size":999,"mtime_ns":1786001391547198002,"word_count":104},"app/components/motion/CountUp.vue":{"size":786,"mtime_ns":1785998116940628306,"word_count":91},"app/components/motion/Magnetic.vue":{"size":962,"mtime_ns":1785998090199626845,"word_count":114},"app/components/motion/Marquee.vue":{"size":1007,"mtime_ns":1785998061552361323,"word_count":79},"app/components/ui/separator/Separator.vue":{"size":768,"mtime_ns":1786044287977736912,"word_count":75},"app/components/ui/separator/index.ts":{"size":55,"mtime_ns":1786044287986540289,"word_count":8},"app/components/ui/sheet/Sheet.vue":{"size":461,"mtime_ns":1786044252540512390,"word_count":43},"app/components/ui/sheet/SheetClose.vue":{"size":288,"mtime_ns":1786044252554617600,"word_count":30},"app/components/ui/sheet/SheetContent.vue":{"size":2316,"mtime_ns":1786044252584168313,"word_count":190},"app/components/ui/sheet/SheetDescription.vue":{"size":605,"mtime_ns":1786044252600851649,"word_count":62},"app/components/ui/sheet/SheetFooter.vue":{"size":331,"mtime_ns":1786044252612572276,"word_count":39},"app/components/ui/sheet/SheetHeader.vue":{"size":320,"mtime_ns":1786044252623774652,"word_count":37},"app/components/ui/sheet/SheetOverlay.vue":{"size":702,"mtime_ns":1786044252637849488,"word_count":68},"app/components/ui/sheet/SheetTitle.vue":{"size":569,"mtime_ns":1786044252649601198,"word_count":62},"app/components/ui/sheet/SheetTrigger.vue":{"size":300,"mtime_ns":1786044252662811283,"word_count":30},"app/components/ui/sheet/index.ts":{"size":470,"mtime_ns":1786044252673285827,"word_count":64},"app/components/ui/sidebar/Sidebar.vue":{"size":3440,"mtime_ns":1786044288058640425,"word_count":242},"app/components/ui/sidebar/SidebarContent.vue":{"size":421,"mtime_ns":1786044288072312427,"word_count":41},"app/components/ui/sidebar/SidebarFooter.vue":{"size":348,"mtime_ns":1786044288084289096,"word_count":38},"app/components/ui/sidebar/SidebarGroup.vue":{"size":364,"mtime_ns":1786044288096208389,"word_count":40},"app/components/ui/sidebar/SidebarGroupAction.vue":{"size":887,"mtime_ns":1786044288109035558,"word_count":76},"app/components/ui/sidebar/SidebarGroupContent.vue":{"size":353,"mtime_ns":1786044288120182518,"word_count":36},"app/components/ui/sidebar/SidebarGroupLabel.vue":{"size":905,"mtime_ns":1786044288131539686,"word_count":73},"app/components/ui/sidebar/SidebarHeader.vue":{"size":348,"mtime_ns":1786044288143513438,"word_count":38},"app/components/ui/sidebar/SidebarInput.vue":{"size":428,"mtime_ns":1786044288156913440,"word_count":46},"app/components/ui/sidebar/SidebarInset.vue":{"size":586,"mtime_ns":1786044288168191359,"word_count":46},"app/components/ui/sidebar/SidebarMenu.vue":{"size":353,"mtime_ns":1786044288180043569,"word_count":39},"app/components/ui/sidebar/SidebarMenuAction.vue":{"size":1365,"mtime_ns":1786044288192329904,"word_count":93},"app/components/ui/sidebar/SidebarMenuBadge.vue":{"size":844,"mtime_ns":1786044288204538323,"word_count":57},"app/components/ui/sidebar/SidebarMenuButton.vue":{"size":1310,"mtime_ns":1786044288221228367,"word_count":125},"app/components/ui/sidebar/SidebarMenuButtonChild.vue":{"size":951,"mtime_ns":1786044288235978453,"word_count":89},"app/components/ui/sidebar/SidebarMenuItem.vue":{"size":353,"mtime_ns":1786044288246636121,"word_count":36},"app/components/ui/sidebar/SidebarMenuSkeleton.vue":{"size":831,"mtime_ns":1786044288260540707,"word_count":81},"app/components/ui/sidebar/SidebarMenuSub.vue":{"size":488,"mtime_ns":1786044288270394875,"word_count":47},"app/components/ui/sidebar/SidebarMenuSubButton.vue":{"size":1349,"mtime_ns":1786044288282773085,"word_count":105},"app/components/ui/sidebar/SidebarMenuSubItem.vue":{"size":365,"mtime_ns":1786044288294358670,"word_count":36},"app/components/ui/sidebar/SidebarProvider.vue":{"size":2378,"mtime_ns":1786044288318883716,"word_count":241},"app/components/ui/sidebar/SidebarRail.vue":{"size":1270,"mtime_ns":1786044288329967176,"word_count":79},"app/components/ui/sidebar/SidebarSeparator.vue":{"size":426,"mtime_ns":1786044288340436011,"word_count":43},"app/components/ui/sidebar/SidebarTrigger.vue":{"size":621,"mtime_ns":1786044288352005888,"word_count":66},"app/components/ui/sidebar/index.ts":{"size":3422,"mtime_ns":1786044288364296473,"word_count":315},"app/components/ui/sidebar/utils.ts":{"size":666,"mtime_ns":1786044288374604891,"word_count":81},"app/components/ui/skeleton/Skeleton.vue":{"size":349,"mtime_ns":1786044287951966325,"word_count":36},"app/components/ui/skeleton/index.ts":{"size":53,"mtime_ns":1786044287960764035,"word_count":8},"app/components/ui/sonner/Sonner.vue":{"size":953,"mtime_ns":1786039064009002210,"word_count":64},"app/components/ui/sonner/index.ts":{"size":85,"mtime_ns":1786039070069609614,"word_count":14},"app/components/ui/tooltip/Tooltip.vue":{"size":470,"mtime_ns":1786044287885536106,"word_count":43},"app/components/ui/tooltip/TooltipContent.vue":{"size":1381,"mtime_ns":1786044287900714900,"word_count":114},"app/components/ui/tooltip/TooltipProvider.vue":{"size":312,"mtime_ns":1786044287914522569,"word_count":32},"app/components/ui/tooltip/TooltipTrigger.vue":{"size":307,"mtime_ns":1786044287926906363,"word_count":30},"app/components/ui/tooltip/index.ts":{"size":248,"mtime_ns":1786044287939315115,"word_count":32},"app/composables/useAuth.ts":{"size":1035,"mtime_ns":1786029588494950520,"word_count":142},"app/composables/useCountUp.ts":{"size":922,"mtime_ns":1785998104384543280,"word_count":133},"app/composables/useDiscoveryCategories.ts":{"size":298,"mtime_ns":1786042507652465776,"word_count":28},"app/composables/useDiscoveryCategoryClips.ts":{"size":751,"mtime_ns":1786042511148551781,"word_count":91},"app/composables/useDiscoveryClips.ts":{"size":348,"mtime_ns":1786029778295383050,"word_count":36},"app/composables/useLiveSignals.ts":{"size":268,"mtime_ns":1786029779346837013,"word_count":28},"app/composables/usePointerParallax.ts":{"size":931,"mtime_ns":1785998207789925970,"word_count":127},"app/composables/useScrollHeader.ts":{"size":438,"mtime_ns":1785998165710941939,"word_count":71},"app/composables/useTickingList.ts":{"size":806,"mtime_ns":1786001685569085146,"word_count":114},"app/composables/useWatchlist.ts":{"size":1099,"mtime_ns":1786030698628733434,"word_count":138},"app/middleware/auth.ts":{"size":686,"mtime_ns":1786015036329993628,"word_count":94},"app/pages/category/[slug].vue":{"size":425,"mtime_ns":1786042661451045147,"word_count":47},"app/pages/forgot-password.vue":{"size":1825,"mtime_ns":1786029154856736178,"word_count":205},"app/pages/reset-password.vue":{"size":2918,"mtime_ns":1786004207467174410,"word_count":311},"app/pages/settings/security.vue":{"size":4905,"mtime_ns":1786028902711738354,"word_count":404},"app/pages/settings/two-factor.vue":{"size":4221,"mtime_ns":1786029508183323424,"word_count":472},"app/pages/verify-email.vue":{"size":2157,"mtime_ns":1786016727630853670,"word_count":238},"app/pages/zz-discovery-preview.vue":{"size":201,"mtime_ns":1786039308092470097,"word_count":21},"app/plugins/auth-session.ts":{"size":205,"mtime_ns":1786017063792307011,"word_count":28},"app/plugins/vidstack.client.ts":{"size":137,"mtime_ns":1786040315896686227,"word_count":11},"app/utils/live.spec.ts":{"size":1194,"mtime_ns":1786042791540593510,"word_count":131},"app/utils/live.ts":{"size":892,"mtime_ns":1786042689987603490,"word_count":104},"app/utils/watchlist.ts":{"size":1648,"mtime_ns":1786110293421213539,"word_count":183},"docs/video-streaming.md":{"size":5375,"mtime_ns":1786043275422758149,"word_count":678,"hashes":{"docs/video-streaming.md":"306503a0557c257dd000b61fd9c48f256e47e2644db71493497519011768498c"}},"e2e/category.spec.ts":{"size":1035,"mtime_ns":1786042687278910051,"word_count":113},"e2e/live.spec.ts":{"size":621,"mtime_ns":1786042794161248327,"word_count":60},"scripts/seed-clips.mjs":{"size":5341,"mtime_ns":1786110746285104359,"word_count":569},"scripts/seed-live-streams.mjs":{"size":5044,"mtime_ns":1786110881846670136,"word_count":499},"server/api/auth-providers.get.ts":{"size":411,"mtime_ns":1786016138229667069,"word_count":56},"server/api/discovery/categories.get.ts":{"size":329,"mtime_ns":1786042493065416121,"word_count":38},"server/api/discovery/categories/[slug].get.ts":{"size":1036,"mtime_ns":1786042501392128589,"word_count":107},"server/api/discovery/clips.get.ts":{"size":582,"mtime_ns":1786042487298010970,"word_count":68},"server/api/discovery/live.get.ts":{"size":481,"mtime_ns":1786042673086102341,"word_count":55},"server/db/migrations/0000_white_the_spike.sql":{"size":2253,"mtime_ns":1786014495644507223,"word_count":267,"hashes":{"server/db/migrations/0000_white_the_spike.sql":"13ac074c091526dc98f3cdb18fd130149e5b3fe002554e247e9952d945de3475"}},"server/db/migrations/0001_mature_gambit.sql":{"size":474,"mtime_ns":1786040152281769229,"word_count":61,"hashes":{"server/db/migrations/0001_mature_gambit.sql":"e86a9253fd6ca99e505b73049e8bdedbd29030a3f0ca9f36ee77c0307e28dec3"}},"server/db/migrations/0002_noisy_lady_deathstrike.sql":{"size":359,"mtime_ns":1786042549638630588,"word_count":49,"hashes":{"server/db/migrations/0002_noisy_lady_deathstrike.sql":"d86d0e17a201a6aae07e9d1d2bd1eb569984424e022d252ae89ed347bc7fc552"}},"server/db/migrations/meta/0000_snapshot.json":{"size":9929,"mtime_ns":1786014495644259518,"word_count":733,"hashes":{"server/db/migrations/meta/0000_snapshot.json":"bd9d95fab1577deb8ef0e7233f781290a80e9d52fbad6a909ab60e5f854e3c89"}},"server/db/migrations/meta/0001_snapshot.json":{"size":11999,"mtime_ns":1786040152281032976,"word_count":889,"hashes":{"server/db/migrations/meta/0001_snapshot.json":"f9dcb736857a0a6293077eca8afd1595d280f3fd80714f856a531b00aa1fb82f"}},"server/db/migrations/meta/0002_snapshot.json":{"size":13776,"mtime_ns":1786042549638187630,"word_count":1020,"hashes":{"server/db/migrations/meta/0002_snapshot.json":"4290904495f82208d6f5e1b281adfee19f73cc4ae0a87dcbcd463474c69529ad"}},"server/db/migrations/meta/_journal.json":{"size":650,"mtime_ns":1786112579207944375,"word_count":57,"hashes":{"server/db/migrations/meta/_journal.json":"ae90d0e4d3abc320f2f3e29e6129d30fe67257c8f4c653ee053b7a18b747c9e4"}},"server/db/schema/clips.ts":{"size":1207,"mtime_ns":1786109832655967213,"word_count":126},"server/db/schema/live-streams.ts":{"size":1163,"mtime_ns":1786109833030540670,"word_count":125},"server/utils/discovery.ts":{"size":2829,"mtime_ns":1786042743543210045,"word_count":302},"server/utils/format.spec.ts":{"size":521,"mtime_ns":1786042785894438903,"word_count":66},"server/utils/format.ts":{"size":1522,"mtime_ns":1786111993765703901,"word_count":211},"server/utils/mailer.ts":{"size":765,"mtime_ns":1786002827737219605,"word_count":117},"shared/types/discovery.ts":{"size":1872,"mtime_ns":1786042620086932224,"word_count":271},"shared/types/vidstack.d.ts":{"size":182,"mtime_ns":1786040469305793518,"word_count":21},"shared/utils/category.spec.ts":{"size":975,"mtime_ns":1786042848679966861,"word_count":91},"shared/utils/category.ts":{"size":1272,"mtime_ns":1786042848670145721,"word_count":168},"app/components/watch/ChannelAvatar.vue":{"size":1348,"mtime_ns":1786109332983882005,"word_count":184},"app/components/watch/WatchActions.vue":{"size":2130,"mtime_ns":1786109313491750937,"word_count":187},"app/components/watch/WatchChannelBar.vue":{"size":1372,"mtime_ns":1786109353048588100,"word_count":129},"app/components/watch/WatchChat.spec.ts":{"size":2222,"mtime_ns":1786111912183727156,"word_count":251},"app/components/watch/WatchChat.vue":{"size":3754,"mtime_ns":1786111902183984683,"word_count":330},"app/components/watch/WatchChatMessage.vue":{"size":836,"mtime_ns":1786109451378240507,"word_count":76},"app/components/watch/WatchCommentItem.vue":{"size":1357,"mtime_ns":1786109504185016127,"word_count":112},"app/components/watch/WatchComments.vue":{"size":2984,"mtime_ns":1786111914185550492,"word_count":298},"app/components/watch/WatchDescription.vue":{"size":1396,"mtime_ns":1786109395517211991,"word_count":143},"app/components/watch/WatchLayout.vue":{"size":3920,"mtime_ns":1786109593565067160,"word_count":331},"app/components/watch/WatchMeta.vue":{"size":1605,"mtime_ns":1786109256880683720,"word_count":131},"app/components/watch/WatchPlayer.vue":{"size":953,"mtime_ns":1786109222444902682,"word_count":80},"app/components/watch/WatchSkeleton.vue":{"size":815,"mtime_ns":1786109237671027946,"word_count":78},"app/components/watch/WatchUpNext.vue":{"size":1767,"mtime_ns":1786109440262155039,"word_count":154},"app/components/watch/WatchUpNextCard.spec.ts":{"size":2231,"mtime_ns":1786111053165663246,"word_count":235},"app/components/watch/WatchUpNextCard.vue":{"size":1915,"mtime_ns":1786109426225129286,"word_count":143},"app/components/watch/WatchView.vue":{"size":5201,"mtime_ns":1786111917175266611,"word_count":488},"app/components/watch/__fixtures__/watch.ts":{"size":5055,"mtime_ns":1786109201516901999,"word_count":550},"app/components/watch/types.ts":{"size":1038,"mtime_ns":1786109566016760128,"word_count":133},"app/composables/useLiveChannel.ts":{"size":699,"mtime_ns":1786088916547054806,"word_count":84},"app/composables/useStickyScroll.ts":{"size":952,"mtime_ns":1786109467165461903,"word_count":142},"app/composables/useViewCounter.ts":{"size":1264,"mtime_ns":1786110218640281773,"word_count":177},"app/composables/useWatchChat.ts":{"size":2381,"mtime_ns":1786110151524907348,"word_count":323},"app/composables/useWatchComments.ts":{"size":1018,"mtime_ns":1786110100757209110,"word_count":127},"app/composables/useWatchEngagement.ts":{"size":2763,"mtime_ns":1786112013488657424,"word_count":302},"app/composables/useWatchTarget.ts":{"size":1111,"mtime_ns":1786110082254765054,"word_count":127},"app/pages/live/[username].vue":{"size":529,"mtime_ns":1786110321252077879,"word_count":66},"app/pages/watch/[slug].vue":{"size":249,"mtime_ns":1786110308656951980,"word_count":28},"app/pages/zz-watch-preview.vue":{"size":2023,"mtime_ns":1786109609304608211,"word_count":224},"app/utils/chat.spec.ts":{"size":1818,"mtime_ns":1786110986773519170,"word_count":209},"app/utils/chat.ts":{"size":961,"mtime_ns":1786110126839628193,"word_count":131},"app/utils/reactions.spec.ts":{"size":1324,"mtime_ns":1786112041292598191,"word_count":169},"app/utils/reactions.ts":{"size":907,"mtime_ns":1786111997577729011,"word_count":139},"docs/watch-page.md":{"size":6026,"mtime_ns":1786111614352427367,"word_count":885,"hashes":{"docs/watch-page.md":"8d2c842fbe3a3ca82f4593ed41f4abdff84568865935f4b98194b04a31a54dae"}},"e2e/watch.spec.ts":{"size":3020,"mtime_ns":1786111166489994264,"word_count":322},"scripts/seed-chat.mjs":{"size":2701,"mtime_ns":1786110598172986205,"word_count":316},"scripts/seed-comments.mjs":{"size":4016,"mtime_ns":1786110572417000693,"word_count":469},"server/api/channels/[name]/follow.post.ts":{"size":1545,"mtime_ns":1786110067610256427,"word_count":178},"server/api/channels/[name]/index.get.ts":{"size":798,"mtime_ns":1786110047221443373,"word_count":95},"server/api/discovery/live/[streamer].get.ts":{"size":990,"mtime_ns":1786088900276508156,"word_count":121},"server/api/watch/[slug]/chat.get.ts":{"size":1936,"mtime_ns":1786112414527526455,"word_count":243},"server/api/watch/[slug]/chat.post.ts":{"size":1925,"mtime_ns":1786112438802053385,"word_count":235},"server/api/watch/[slug]/comments.get.ts":{"size":2441,"mtime_ns":1786109923903857698,"word_count":300},"server/api/watch/[slug]/index.get.ts":{"size":865,"mtime_ns":1786109847460467349,"word_count":114},"server/api/watch/[slug]/reaction.get.ts":{"size":971,"mtime_ns":1786109997333530458,"word_count":111},"server/api/watch/[slug]/reaction.post.ts":{"size":2334,"mtime_ns":1786110011679347507,"word_count":260},"server/api/watch/[slug]/related.get.ts":{"size":1891,"mtime_ns":1786109869832274154,"word_count":203},"server/api/watch/[slug]/view.post.ts":{"size":1517,"mtime_ns":1786109885946947619,"word_count":209},"server/db/migrations/0003_overconfident_lilandra.sql":{"size":2970,"mtime_ns":1786112579208049499,"word_count":316,"hashes":{"server/db/migrations/0003_overconfident_lilandra.sql":"b53a4c107368c0195c5878245a408b8fd75832c396a181f05bb01f808121d956"}},"server/db/migrations/meta/0003_snapshot.json":{"size":23658,"mtime_ns":1786112579207519379,"word_count":1716,"hashes":{"server/db/migrations/meta/0003_snapshot.json":"9d8f8ae3f054352f03f8f292a5340b2ed0cc928b56ff1458ec0e8cb071decbf2"}},"server/db/schema/chat-messages.ts":{"size":1219,"mtime_ns":1786109710865190982,"word_count":154},"server/db/schema/comments.ts":{"size":1356,"mtime_ns":1786109703865328855,"word_count":162},"server/db/schema/follows.ts":{"size":1074,"mtime_ns":1786109732125620975,"word_count":137},"server/db/schema/reactions.ts":{"size":1273,"mtime_ns":1786109727468067490,"word_count":149},"server/utils/channels.ts":{"size":1364,"mtime_ns":1786110028560999456,"word_count":150},"server/utils/reactions.ts":{"size":1204,"mtime_ns":1786109978636884654,"word_count":143},"server/utils/session.ts":{"size":931,"mtime_ns":1786109788988944231,"word_count":136},"server/utils/watch.ts":{"size":3748,"mtime_ns":1786112395531481568,"word_count":441},"shared/types/watch.ts":{"size":3170,"mtime_ns":1786111900667872897,"word_count":476},"shared/utils/format.ts":{"size":1248,"mtime_ns":1786109278852641278,"word_count":193}}
+{
+  ".claude/CLAUDE.md": {
+    "size": 229,
+    "mtime_ns": 1785932071770636400,
+    "word_count": 29
+  },
+  ".claude/settings.json": {
+    "size": 2172,
+    "mtime_ns": 1786169015685346200,
+    "word_count": 169,
+    "hashes": {
+      ".claude/settings.json": "e830523bfc2a665fa5fcb1b1ccb3fd73531ccc08f135f413947d846febbc49f2"
+    }
+  },
+  ".claude/skills/banner-design/SKILL.md": {
+    "size": 8326,
+    "mtime_ns": 1785928239318606900,
+    "word_count": 1115
+  },
+  ".claude/skills/banner-design/references/banner-sizes-and-styles.md": {
+    "size": 4993,
+    "mtime_ns": 1785928239262958600,
+    "word_count": 851
+  },
+  ".claude/skills/brand/SKILL.md": {
+    "size": 2939,
+    "mtime_ns": 1785928239318606900,
+    "word_count": 343
+  },
+  ".claude/skills/brand/references/approval-checklist.md": {
+    "size": 4245,
+    "mtime_ns": 1785928239253395500,
+    "word_count": 783
+  },
+  ".claude/skills/brand/references/asset-organization.md": {
+    "size": 5110,
+    "mtime_ns": 1785928239259681200,
+    "word_count": 579
+  },
+  ".claude/skills/brand/references/brand-guideline-template.md": {
+    "size": 3572,
+    "mtime_ns": 1785928239266054700,
+    "word_count": 580
+  },
+  ".claude/skills/brand/references/color-palette-management.md": {
+    "size": 4254,
+    "mtime_ns": 1785928239266054700,
+    "word_count": 590
+  },
+  ".claude/skills/brand/references/consistency-checklist.md": {
+    "size": 1926,
+    "mtime_ns": 1785928239280010500,
+    "word_count": 370
+  },
+  ".claude/skills/brand/references/logo-usage-rules.md": {
+    "size": 5464,
+    "mtime_ns": 1785928239296599900,
+    "word_count": 797
+  },
+  ".claude/skills/brand/references/messaging-framework.md": {
+    "size": 1763,
+    "mtime_ns": 1785928239301130000,
+    "word_count": 268
+  },
+  ".claude/skills/brand/references/typography-specifications.md": {
+    "size": 5042,
+    "mtime_ns": 1785928239670029200,
+    "word_count": 805
+  },
+  ".claude/skills/brand/references/update.md": {
+    "size": 3365,
+    "mtime_ns": 1785928239672051900,
+    "word_count": 463
+  },
+  ".claude/skills/brand/references/visual-identity.md": {
+    "size": 1884,
+    "mtime_ns": 1785928239673148500,
+    "word_count": 309
+  },
+  ".claude/skills/brand/references/voice-framework.md": {
+    "size": 1997,
+    "mtime_ns": 1785928239675580900,
+    "word_count": 281
+  },
+  ".claude/skills/brand/scripts/extract-colors.cjs": {
+    "size": 9328,
+    "mtime_ns": 1785928237001793600,
+    "word_count": 1014
+  },
+  ".claude/skills/brand/scripts/inject-brand-context.cjs": {
+    "size": 9677,
+    "mtime_ns": 1785928237018044200,
+    "word_count": 944
+  },
+  ".claude/skills/brand/scripts/sync-brand-to-tokens.cjs": {
+    "size": 9545,
+    "mtime_ns": 1785928237020371600,
+    "word_count": 1004
+  },
+  ".claude/skills/brand/scripts/tests/test_sync_brand_to_tokens.py": {
+    "size": 1970,
+    "mtime_ns": 1785928240049235200,
+    "word_count": 213,
+    "hashes": {
+      ".claude/skills/brand/scripts/tests/test_sync_brand_to_tokens.py": "b490263ea8c26076723590126afdcf69e5a68cbafe2907c2d408e9a582d24629"
+    }
+  },
+  ".claude/skills/brand/scripts/validate-asset.cjs": {
+    "size": 10173,
+    "mtime_ns": 1785928237020371600,
+    "word_count": 1048
+  },
+  ".claude/skills/brand/templates/brand-guidelines-starter.md": {
+    "size": 6638,
+    "mtime_ns": 1785928239266054700,
+    "word_count": 1114
+  },
+  ".claude/skills/claude-automation-recommender/SKILL.md": {
+    "size": 11282,
+    "mtime_ns": 1785928529926665900,
+    "word_count": 1529
+  },
+  ".claude/skills/claude-automation-recommender/references/hooks-patterns.md": {
+    "size": 6540,
+    "mtime_ns": 1785928597410053500,
+    "word_count": 881
+  },
+  ".claude/skills/claude-automation-recommender/references/mcp-servers.md": {
+    "size": 8566,
+    "mtime_ns": 1785928596511519400,
+    "word_count": 1276
+  },
+  ".claude/skills/claude-automation-recommender/references/plugins-reference.md": {
+    "size": 3113,
+    "mtime_ns": 1785928595197098200,
+    "word_count": 436
+  },
+  ".claude/skills/claude-automation-recommender/references/skills-reference.md": {
+    "size": 10020,
+    "mtime_ns": 1785928613482373400,
+    "word_count": 1221
+  },
+  ".claude/skills/claude-automation-recommender/references/subagent-templates.md": {
+    "size": 5228,
+    "mtime_ns": 1785928663680269400,
+    "word_count": 717
+  },
+  ".claude/skills/design-system/SKILL.md": {
+    "size": 6875,
+    "mtime_ns": 1785928239320510300,
+    "word_count": 838
+  },
+  ".claude/skills/design-system/references/component-specs.md": {
+    "size": 6914,
+    "mtime_ns": 1785928239266054700,
+    "word_count": 936
+  },
+  ".claude/skills/design-system/references/component-tokens.md": {
+    "size": 4986,
+    "mtime_ns": 1785928239280010500,
+    "word_count": 369
+  },
+  ".claude/skills/design-system/references/primitive-tokens.md": {
+    "size": 4562,
+    "mtime_ns": 1785928239304091100,
+    "word_count": 556
+  },
+  ".claude/skills/design-system/references/semantic-tokens.md": {
+    "size": 4245,
+    "mtime_ns": 1785928239304091100,
+    "word_count": 350
+  },
+  ".claude/skills/design-system/references/states-and-variants.md": {
+    "size": 4771,
+    "mtime_ns": 1785928239338531400,
+    "word_count": 644
+  },
+  ".claude/skills/design-system/references/tailwind-integration.md": {
+    "size": 5633,
+    "mtime_ns": 1785928239340846000,
+    "word_count": 584
+  },
+  ".claude/skills/design-system/references/token-architecture.md": {
+    "size": 5365,
+    "mtime_ns": 1785928239666826600,
+    "word_count": 536
+  },
+  ".claude/skills/design-system/scripts/embed-tokens.cjs": {
+    "size": 2558,
+    "mtime_ns": 1785928236829745000,
+    "word_count": 271
+  },
+  ".claude/skills/design-system/scripts/fetch-background.py": {
+    "size": 12287,
+    "mtime_ns": 1785928239688205900,
+    "word_count": 862,
+    "hashes": {
+      ".claude/skills/design-system/scripts/fetch-background.py": "cc2b7f91922f3e65e14480aa5dfe32d293bdd0f0a04f35a391a2f80842ad6af3"
+    }
+  },
+  ".claude/skills/design-system/scripts/generate-slide.py": {
+    "size": 28595,
+    "mtime_ns": 1785928239881298400,
+    "word_count": 1978,
+    "hashes": {
+      ".claude/skills/design-system/scripts/generate-slide.py": "304fd3f97e3b2110b0afd1e4558ab467f77b0925bfe59a9037338df8c8f3b293"
+    }
+  },
+  ".claude/skills/design-system/scripts/generate-tokens.cjs": {
+    "size": 4968,
+    "mtime_ns": 1785928237006205600,
+    "word_count": 620
+  },
+  ".claude/skills/design-system/scripts/html-token-validator.py": {
+    "size": 11894,
+    "mtime_ns": 1785928240016842700,
+    "word_count": 1131,
+    "hashes": {
+      ".claude/skills/design-system/scripts/html-token-validator.py": "0f5838f4261b7fd874a203884f4a910e462b6eda84637b9101b3a75d7190ceff"
+    }
+  },
+  ".claude/skills/design-system/scripts/search-slides.py": {
+    "size": 9210,
+    "mtime_ns": 1785928240031072800,
+    "word_count": 618,
+    "hashes": {
+      ".claude/skills/design-system/scripts/search-slides.py": "db9fd0f6fde85152e7789c609998bf03c185ff60a1bb76a23cd60e568ec701de"
+    }
+  },
+  ".claude/skills/design-system/scripts/slide-token-validator.py": {
+    "size": 973,
+    "mtime_ns": 1785928240041844300,
+    "word_count": 105,
+    "hashes": {
+      ".claude/skills/design-system/scripts/slide-token-validator.py": "d065da0156f8fdb49e268b829998e7ddf9c5d4c4af61e1eb5fd1526004342b2c"
+    }
+  },
+  ".claude/skills/design-system/scripts/slide_search_core.py": {
+    "size": 14756,
+    "mtime_ns": 1785928240041844300,
+    "word_count": 1375,
+    "hashes": {
+      ".claude/skills/design-system/scripts/slide_search_core.py": "440f149c3bba56db7897b295078ce307c8c2506fe3567394a9ed7ab2a460b7e5"
+    }
+  },
+  ".claude/skills/design-system/scripts/tests/test_validate_tokens.py": {
+    "size": 1619,
+    "mtime_ns": 1785928240049235200,
+    "word_count": 183,
+    "hashes": {
+      ".claude/skills/design-system/scripts/tests/test_validate_tokens.py": "afded16b414165c168271dd1d25bb1ad8029e223ce85f85a7b3776f8e16d07d0"
+    }
+  },
+  ".claude/skills/design-system/scripts/validate-tokens.cjs": {
+    "size": 5942,
+    "mtime_ns": 1785928237020371600,
+    "word_count": 689
+  },
+  ".claude/skills/design-system/templates/design-tokens-starter.json": {
+    "size": 7184,
+    "mtime_ns": 1785928239240332600,
+    "word_count": 801,
+    "hashes": {
+      ".claude/skills/design-system/templates/design-tokens-starter.json": "272ef2ab482bd2660d2bfb511ef2eb239d0c386e92893f2014f89dda4a60470d"
+    }
+  },
+  ".claude/skills/design/SKILL.md": {
+    "size": 12322,
+    "mtime_ns": 1785928239320510300,
+    "word_count": 1546
+  },
+  ".claude/skills/design/references/banner-sizes-and-styles.md": {
+    "size": 4993,
+    "mtime_ns": 1785928239263841500,
+    "word_count": 851
+  },
+  ".claude/skills/design/references/cip-deliverable-guide.md": {
+    "size": 1735,
+    "mtime_ns": 1785928239266054700,
+    "word_count": 276
+  },
+  ".claude/skills/design/references/cip-design.md": {
+    "size": 4589,
+    "mtime_ns": 1785928239266054700,
+    "word_count": 554
+  },
+  ".claude/skills/design/references/cip-prompt-engineering.md": {
+    "size": 2493,
+    "mtime_ns": 1785928239266054700,
+    "word_count": 329
+  },
+  ".claude/skills/design/references/cip-style-guide.md": {
+    "size": 2357,
+    "mtime_ns": 1785928239266054700,
+    "word_count": 297
+  },
+  ".claude/skills/design/references/design-routing.md": {
+    "size": 5826,
+    "mtime_ns": 1785928239280010500,
+    "word_count": 885
+  },
+  ".claude/skills/design/references/icon-design.md": {
+    "size": 4343,
+    "mtime_ns": 1785928239280010500,
+    "word_count": 669
+  },
+  ".claude/skills/design/references/logo-color-psychology.md": {
+    "size": 3341,
+    "mtime_ns": 1785928239280010500,
+    "word_count": 468
+  },
+  ".claude/skills/design/references/logo-design.md": {
+    "size": 3163,
+    "mtime_ns": 1785928239280010500,
+    "word_count": 410
+  },
+  ".claude/skills/design/references/logo-prompt-engineering.md": {
+    "size": 4314,
+    "mtime_ns": 1785928239280010500,
+    "word_count": 556
+  },
+  ".claude/skills/design/references/logo-style-guide.md": {
+    "size": 3435,
+    "mtime_ns": 1785928239296599900,
+    "word_count": 502
+  },
+  ".claude/skills/design/references/slides-copywriting-formulas.md": {
+    "size": 2604,
+    "mtime_ns": 1785928239320510300,
+    "word_count": 378
+  },
+  ".claude/skills/design/references/slides-create.md": {
+    "size": 153,
+    "mtime_ns": 1785928239320510300,
+    "word_count": 20
+  },
+  ".claude/skills/design/references/slides-html-template.md": {
+    "size": 9004,
+    "mtime_ns": 1785928239320510300,
+    "word_count": 883
+  },
+  ".claude/skills/design/references/slides-layout-patterns.md": {
+    "size": 3691,
+    "mtime_ns": 1785928239330888600,
+    "word_count": 522
+  },
+  ".claude/skills/design/references/slides-strategies.md": {
+    "size": 2715,
+    "mtime_ns": 1785928239334066100,
+    "word_count": 426
+  },
+  ".claude/skills/design/references/slides.md": {
+    "size": 1742,
+    "mtime_ns": 1785928239335613200,
+    "word_count": 216
+  },
+  ".claude/skills/design/references/social-photos-design.md": {
+    "size": 11251,
+    "mtime_ns": 1785928239336457800,
+    "word_count": 1566
+  },
+  ".claude/skills/design/scripts/cip/core.py": {
+    "size": 8062,
+    "mtime_ns": 1785928239679484900,
+    "word_count": 810,
+    "hashes": {
+      ".claude/skills/design/scripts/cip/core.py": "d46d051ef435e1adb7dde54d634dbe8c42a461066f53706c2c1a5777d0ca4ce4"
+    }
+  },
+  ".claude/skills/design/scripts/cip/generate.py": {
+    "size": 19430,
+    "mtime_ns": 1785928239881298400,
+    "word_count": 1773,
+    "hashes": {
+      ".claude/skills/design/scripts/cip/generate.py": "b487e2078ed35e7630e7aad849b5ad05a9408e214d74c25fd77796a513c3adcc"
+    }
+  },
+  ".claude/skills/design/scripts/cip/render-html.py": {
+    "size": 13941,
+    "mtime_ns": 1785928240029787100,
+    "word_count": 1180,
+    "hashes": {
+      ".claude/skills/design/scripts/cip/render-html.py": "6dccaa603a8841315bb817b23b97638a1d002cb7bc6eb5ea5fbc82efdf6afafb"
+    }
+  },
+  ".claude/skills/design/scripts/cip/search.py": {
+    "size": 4524,
+    "mtime_ns": 1785928240037160000,
+    "word_count": 342,
+    "hashes": {
+      ".claude/skills/design/scripts/cip/search.py": "307aeb1fe36160373222f8eaa46e9f6928a53bf0303630e9c9b152bc5db0ded1"
+    }
+  },
+  ".claude/skills/design/scripts/icon/generate.py": {
+    "size": 17151,
+    "mtime_ns": 1785928239896744400,
+    "word_count": 1624,
+    "hashes": {
+      ".claude/skills/design/scripts/icon/generate.py": "23f629199cac7bbbbe5feb973bef10bd2296c7e8a1a48a90952a8f120e71cc33"
+    }
+  },
+  ".claude/skills/design/scripts/logo/core.py": {
+    "size": 6023,
+    "mtime_ns": 1785928239682530000,
+    "word_count": 649,
+    "hashes": {
+      ".claude/skills/design/scripts/logo/core.py": "7256fc25fc827389c4090989c1230dd1b57847681b1f4425b1666bfa5c327871"
+    }
+  },
+  ".claude/skills/design/scripts/logo/generate.py": {
+    "size": 14630,
+    "mtime_ns": 1785928240016842700,
+    "word_count": 1307,
+    "hashes": {
+      ".claude/skills/design/scripts/logo/generate.py": "b840eeb13691722f52320881b5d2abfea0dad23a666e1c1c1c96da21e37dfd5b"
+    }
+  },
+  ".claude/skills/design/scripts/logo/search.py": {
+    "size": 4745,
+    "mtime_ns": 1785928240037160000,
+    "word_count": 375,
+    "hashes": {
+      ".claude/skills/design/scripts/logo/search.py": "3cd83e6525c12cf53533a4a5d60ed8b4f1769678bfc7054c12b2ebf93d18f6aa"
+    }
+  },
+  ".claude/skills/graphify/SKILL.md": {
+    "size": 40495,
+    "mtime_ns": 1785932071769634500,
+    "word_count": 5109
+  },
+  ".claude/skills/graphify/references/add-watch.md": {
+    "size": 2486,
+    "mtime_ns": 1785566256559326100,
+    "word_count": 366
+  },
+  ".claude/skills/graphify/references/exports.md": {
+    "size": 3362,
+    "mtime_ns": 1785566256559326100,
+    "word_count": 470
+  },
+  ".claude/skills/graphify/references/extraction-spec.md": {
+    "size": 7960,
+    "mtime_ns": 1785566256991052200,
+    "word_count": 1038
+  },
+  ".claude/skills/graphify/references/github-and-merge.md": {
+    "size": 2177,
+    "mtime_ns": 1785566257000796500,
+    "word_count": 271
+  },
+  ".claude/skills/graphify/references/hooks.md": {
+    "size": 1267,
+    "mtime_ns": 1785566257001989000,
+    "word_count": 193
+  },
+  ".claude/skills/graphify/references/query.md": {
+    "size": 13456,
+    "mtime_ns": 1785566257002989900,
+    "word_count": 1763
+  },
+  ".claude/skills/graphify/references/transcribe.md": {
+    "size": 3173,
+    "mtime_ns": 1785566257004004600,
+    "word_count": 418
+  },
+  ".claude/skills/graphify/references/update.md": {
+    "size": 10425,
+    "mtime_ns": 1785566257208929900,
+    "word_count": 1196
+  },
+  ".claude/skills/ponytail-audit/SKILL.md": {
+    "size": 1693,
+    "mtime_ns": 1785930565654057600,
+    "word_count": 234
+  },
+  ".claude/skills/ponytail-debt/SKILL.md": {
+    "size": 1747,
+    "mtime_ns": 1785930565654057600,
+    "word_count": 261
+  },
+  ".claude/skills/ponytail-gain/SKILL.md": {
+    "size": 2023,
+    "mtime_ns": 1785930565655741000,
+    "word_count": 246
+  },
+  ".claude/skills/ponytail-help/SKILL.md": {
+    "size": 2867,
+    "mtime_ns": 1785930565655741000,
+    "word_count": 379
+  },
+  ".claude/skills/ponytail-review/SKILL.md": {
+    "size": 2440,
+    "mtime_ns": 1785930565656763400,
+    "word_count": 339
+  },
+  ".claude/skills/ponytail/SKILL.md": {
+    "size": 6757,
+    "mtime_ns": 1785930565656763400,
+    "word_count": 1079
+  },
+  ".claude/skills/slides/SKILL.md": {
+    "size": 1137,
+    "mtime_ns": 1785928239320510300,
+    "word_count": 136
+  },
+  ".claude/skills/slides/references/copywriting-formulas.md": {
+    "size": 2604,
+    "mtime_ns": 1785928239280010500,
+    "word_count": 378
+  },
+  ".claude/skills/slides/references/create.md": {
+    "size": 153,
+    "mtime_ns": 1785928239280010500,
+    "word_count": 20
+  },
+  ".claude/skills/slides/references/html-template.md": {
+    "size": 9004,
+    "mtime_ns": 1785928239280010500,
+    "word_count": 883
+  },
+  ".claude/skills/slides/references/layout-patterns.md": {
+    "size": 3691,
+    "mtime_ns": 1785928239280010500,
+    "word_count": 522
+  },
+  ".claude/skills/slides/references/slide-strategies.md": {
+    "size": 2715,
+    "mtime_ns": 1785928239320510300,
+    "word_count": 426
+  },
+  ".claude/skills/ui-styling/LICENSE.txt": {
+    "size": 11357,
+    "mtime_ns": 1785928240049235200,
+    "word_count": 1581
+  },
+  ".claude/skills/ui-styling/SKILL.md": {
+    "size": 10045,
+    "mtime_ns": 1785928239320510300,
+    "word_count": 1149
+  },
+  ".claude/skills/ui-styling/references/canvas-design-system.md": {
+    "size": 7888,
+    "mtime_ns": 1785928239266054700,
+    "word_count": 1146
+  },
+  ".claude/skills/ui-styling/references/shadcn-accessibility.md": {
+    "size": 9976,
+    "mtime_ns": 1785928239304091100,
+    "word_count": 1083
+  },
+  ".claude/skills/ui-styling/references/shadcn-components.md": {
+    "size": 11155,
+    "mtime_ns": 1785928239304091100,
+    "word_count": 959
+  },
+  ".claude/skills/ui-styling/references/shadcn-theming.md": {
+    "size": 8672,
+    "mtime_ns": 1785928239312767900,
+    "word_count": 956
+  },
+  ".claude/skills/ui-styling/references/tailwind-customization.md": {
+    "size": 10171,
+    "mtime_ns": 1785928239339538500,
+    "word_count": 1026
+  },
+  ".claude/skills/ui-styling/references/tailwind-responsive.md": {
+    "size": 8270,
+    "mtime_ns": 1785928239341868800,
+    "word_count": 1031
+  },
+  ".claude/skills/ui-styling/references/tailwind-utilities.md": {
+    "size": 9980,
+    "mtime_ns": 1785928239663833000,
+    "word_count": 914
+  },
+  ".claude/skills/ui-styling/scripts/requirements.txt": {
+    "size": 444,
+    "mtime_ns": 1785928240062719500,
+    "word_count": 64
+  },
+  ".claude/skills/ui-styling/scripts/shadcn_add.py": {
+    "size": 8799,
+    "mtime_ns": 1785928240039603700,
+    "word_count": 773,
+    "hashes": {
+      ".claude/skills/ui-styling/scripts/shadcn_add.py": "8e9442aa5facfa30bdc4c8d9f426c8ea120922590ca463c3fe92f934d19f3970"
+    }
+  },
+  ".claude/skills/ui-styling/scripts/tailwind_config_gen.py": {
+    "size": 14418,
+    "mtime_ns": 1785928240044848200,
+    "word_count": 1163,
+    "hashes": {
+      ".claude/skills/ui-styling/scripts/tailwind_config_gen.py": "92ff2948188812542ae72aac7eae144f55636b960e060102518af3a7f53b0065"
+    }
+  },
+  ".claude/skills/ui-styling/scripts/tests/coverage-ui.json": {
+    "size": 35121,
+    "mtime_ns": 1785928239237415100,
+    "word_count": 3752,
+    "hashes": {
+      ".claude/skills/ui-styling/scripts/tests/coverage-ui.json": "526f25a9af420b06078a085e0716a4705e3ed64eaad015c63f9669efbdb9a037"
+    }
+  },
+  ".claude/skills/ui-styling/scripts/tests/requirements.txt": {
+    "size": 52,
+    "mtime_ns": 1785928240065405500,
+    "word_count": 3
+  },
+  ".claude/skills/ui-styling/scripts/tests/test_shadcn_add.py": {
+    "size": 9919,
+    "mtime_ns": 1785928240049235200,
+    "word_count": 809,
+    "hashes": {
+      ".claude/skills/ui-styling/scripts/tests/test_shadcn_add.py": "469136a1e156852978eb4a3427c6db0d2e5c4ef07ba3bd2190d9ca80c4465238"
+    }
+  },
+  ".claude/skills/ui-styling/scripts/tests/test_tailwind_config_gen.py": {
+    "size": 14658,
+    "mtime_ns": 1785928240049235200,
+    "word_count": 1127,
+    "hashes": {
+      ".claude/skills/ui-styling/scripts/tests/test_tailwind_config_gen.py": "dab915389fa6b662b0a674872b6dc3e448dcff2ecff3b061c99a36ca020d8ba6"
+    }
+  },
+  ".claude/skills/ui-ux-pro-max/SKILL.md": {
+    "size": 47540,
+    "mtime_ns": 1785928251597778900,
+    "word_count": 6639
+  },
+  ".claude/skills/ui-ux-pro-max/scripts/core.py": {
+    "size": 18801,
+    "mtime_ns": 1785928239676598500,
+    "word_count": 1938,
+    "hashes": {
+      ".claude/skills/ui-ux-pro-max/scripts/core.py": "9130396d96f0e449e5414acac6dfc6629a08a9712c9fad80dab6241c3cc1fd60"
+    }
+  },
+  ".claude/skills/ui-ux-pro-max/scripts/design_system.py": {
+    "size": 63694,
+    "mtime_ns": 1785928239684512400,
+    "word_count": 5760,
+    "hashes": {
+      ".claude/skills/ui-ux-pro-max/scripts/design_system.py": "66b554b1fac8301f73852226da5e429d328ed37b09cae41922bda2c4911559af"
+    }
+  },
+  ".claude/skills/ui-ux-pro-max/scripts/search.py": {
+    "size": 8687,
+    "mtime_ns": 1785928240033562700,
+    "word_count": 749,
+    "hashes": {
+      ".claude/skills/ui-ux-pro-max/scripts/search.py": "d26759dca8c0c811ea0fd41e6d4cac207b5dc5b43db47475f073b75072fdf3d7"
+    }
+  },
+  ".claude/skills/ui-ux-pro-max/scripts/tests/test_core.py": {
+    "size": 5901,
+    "mtime_ns": 1785928240047209500,
+    "word_count": 442,
+    "hashes": {
+      ".claude/skills/ui-ux-pro-max/scripts/tests/test_core.py": "72a0b4511eca9c0838db4b79ec85d1954e516d9127792ac10c1492abde11ddfb"
+    }
+  },
+  ".claude/skills/ui-ux-pro-max/scripts/tests/test_design_system_mode.py": {
+    "size": 6345,
+    "mtime_ns": 1785928240049235200,
+    "word_count": 420,
+    "hashes": {
+      ".claude/skills/ui-ux-pro-max/scripts/tests/test_design_system_mode.py": "56ad54821f6ebd96daad4119dc472dd3637743d9909eabe23156268d7faf89f7"
+    }
+  },
+  ".claude/skills/ui-ux-pro-max/scripts/validate_data.py": {
+    "size": 4185,
+    "mtime_ns": 1785928240049235200,
+    "word_count": 451,
+    "hashes": {
+      ".claude/skills/ui-ux-pro-max/scripts/validate_data.py": "d606b3a9585c8b4d6026e4dea00ad9a747d5d7106f00c98005e30aaed88574d7"
+    }
+  },
+  "CLAUDE.md": {
+    "size": 6975,
+    "mtime_ns": 1786169015722737000,
+    "word_count": 962
+  },
+  "README.md": {
+    "size": 822,
+    "mtime_ns": 1785155088000000000,
+    "word_count": 125
+  },
+  "app/app.vue": {
+    "size": 852,
+    "mtime_ns": 1786269285744440000,
+    "word_count": 83
+  },
+  "app/components/AppFooter.vue": {
+    "size": 2164,
+    "mtime_ns": 1786268800523234800,
+    "word_count": 184
+  },
+  "app/components/AppHeader.vue": {
+    "size": 3577,
+    "mtime_ns": 1786268800524233800,
+    "word_count": 338
+  },
+  "app/pages/index.vue": {
+    "size": 617,
+    "mtime_ns": 1786268800529234300,
+    "word_count": 70
+  },
+  "design-system/streamify/MASTER.md": {
+    "size": 5623,
+    "mtime_ns": 1785932174449649200,
+    "word_count": 757
+  },
+  "docs/ARCHITECTURE_RESEARCH.md": {
+    "size": 12118,
+    "mtime_ns": 1785928841589120200,
+    "word_count": 1752
+  },
+  "docs/DECISIONS.md": {
+    "size": 45964,
+    "mtime_ns": 1786169015897994800,
+    "word_count": 6293
+  },
+  "docs/PROGRESS.md": {
+    "size": 30973,
+    "mtime_ns": 1786268800534233500,
+    "word_count": 4025
+  },
+  "docs/PROMPT.md": {
+    "size": 18210,
+    "mtime_ns": 1785926254607230700,
+    "word_count": 2293
+  },
+  "nuxt.config.ts": {
+    "size": 2328,
+    "mtime_ns": 1786169016010202600,
+    "word_count": 224
+  },
+  "package.json": {
+    "size": 2606,
+    "mtime_ns": 1786169016013707700,
+    "word_count": 201,
+    "hashes": {
+      "package.json": "245f8e9db930f2ab342c332f0c0e5d23e1fad9ba6c883f1fcb2e90c8c1eea85b"
+    }
+  },
+  "public/robots.txt": {
+    "size": 24,
+    "mtime_ns": 1785155088000000000,
+    "word_count": 3
+  },
+  "skills-lock.json": {
+    "size": 3839,
+    "mtime_ns": 1786268800534233500,
+    "word_count": 172,
+    "hashes": {
+      "skills-lock.json": "39ec96ca9be1306127084ec93016928ba16e3bd8ebc26228a3b121a13dac33ee"
+    }
+  },
+  "tsconfig.json": {
+    "size": 320,
+    "mtime_ns": 1785155088000000000,
+    "word_count": 25,
+    "hashes": {
+      "tsconfig.json": "8e06670e2a0f2cac82c125a2d0bcef04a24a35d316100751b21b9b6c4b9b31d1"
+    }
+  },
+  ".vscode/settings.json": {
+    "size": 3525,
+    "mtime_ns": 1786170778252642600,
+    "word_count": 238,
+    "hashes": {
+      ".vscode/settings.json": "df4a2aa3ef7a76969de4b9b278504c8822a7e6ca8f36b79bff07fe80c0d598ab"
+    }
+  },
+  ".claude/settings.local.json": {
+    "size": 718,
+    "mtime_ns": 1786277693114574100,
+    "word_count": 73,
+    "hashes": {
+      ".claude/settings.local.json": "c386a0b8277e290712daf868e8623ac39e37432a8e27184c6eebdc7afccddb6d"
+    }
+  },
+  ".prettierrc.json": {
+    "size": 115,
+    "mtime_ns": 1786169015689411400,
+    "word_count": 12,
+    "hashes": {
+      ".prettierrc.json": "405d8c9bbed143928bc5ccc427bc29c4ca4461b46f03a827413044aafb0f6f44"
+    }
+  },
+  "app/components/ComingSoon.vue": {
+    "size": 726,
+    "mtime_ns": 1786268800525234300,
+    "word_count": 59
+  },
+  "app/components/auth/AuthCard.vue": {
+    "size": 1564,
+    "mtime_ns": 1786169015736448900,
+    "word_count": 122
+  },
+  "app/components/auth/AuthFormField.vue": {
+    "size": 2323,
+    "mtime_ns": 1786169015738127800,
+    "word_count": 188
+  },
+  "app/components/motion/Reveal.vue": {
+    "size": 1352,
+    "mtime_ns": 1786169015804696900,
+    "word_count": 156
+  },
+  "app/components/ui/button/Button.spec.ts": {
+    "size": 786,
+    "mtime_ns": 1786169015812648400,
+    "word_count": 94
+  },
+  "app/components/ui/button/Button.vue": {
+    "size": 622,
+    "mtime_ns": 1786169015812648400,
+    "word_count": 65
+  },
+  "app/components/ui/button/index.ts": {
+    "size": 2066,
+    "mtime_ns": 1786268800528234100,
+    "word_count": 156
+  },
+  "app/components/ui/input/Input.vue": {
+    "size": 1078,
+    "mtime_ns": 1786169015815035900,
+    "word_count": 92
+  },
+  "app/components/ui/input/index.ts": {
+    "size": 48,
+    "mtime_ns": 1786169015815035900,
+    "word_count": 8
+  },
+  "app/error.vue": {
+    "size": 1029,
+    "mtime_ns": 1786169015868434400,
+    "word_count": 116
+  },
+  "app/lib/auth-client.ts": {
+    "size": 273,
+    "mtime_ns": 1786169015870466100,
+    "word_count": 33
+  },
+  "app/lib/utils.spec.ts": {
+    "size": 336,
+    "mtime_ns": 1786169015871203700,
+    "word_count": 42
+  },
+  "app/lib/utils.ts": {
+    "size": 172,
+    "mtime_ns": 1786169976047633600,
+    "word_count": 22
+  },
+  "app/pages/about.vue": {
+    "size": 211,
+    "mtime_ns": 1786268800529234300,
+    "word_count": 25
+  },
+  "app/pages/careers.vue": {
+    "size": 250,
+    "mtime_ns": 1786268800529234300,
+    "word_count": 29
+  },
+  "app/pages/category/index.vue": {
+    "size": 243,
+    "mtime_ns": 1786169015873731200,
+    "word_count": 25
+  },
+  "app/pages/clips.vue": {
+    "size": 169,
+    "mtime_ns": 1786169015875878500,
+    "word_count": 18
+  },
+  "app/pages/following.vue": {
+    "size": 285,
+    "mtime_ns": 1786169015876954600,
+    "word_count": 32
+  },
+  "app/pages/live.vue": {
+    "size": 168,
+    "mtime_ns": 1786169015878269800,
+    "word_count": 18
+  },
+  "app/pages/login.vue": {
+    "size": 5880,
+    "mtime_ns": 1786277763926297000,
+    "word_count": 528
+  },
+  "app/pages/security.vue": {
+    "size": 248,
+    "mtime_ns": 1786268800530234900,
+    "word_count": 28
+  },
+  "app/pages/signup.vue": {
+    "size": 2898,
+    "mtime_ns": 1786277763927305400,
+    "word_count": 270
+  },
+  "app/plugins/vue-query.ts": {
+    "size": 309,
+    "mtime_ns": 1786169015889073900,
+    "word_count": 31
+  },
+  "components.json": {
+    "size": 460,
+    "mtime_ns": 1786169015897390000,
+    "word_count": 36,
+    "hashes": {
+      "components.json": "bd0bf5ed19563713d2b312ad285552b57cda57b5a56666977d9ef7e1adaaffab"
+    }
+  },
+  "docs/ARCHITECTURE.md": {
+    "size": 19074,
+    "mtime_ns": 1786169015897994800,
+    "word_count": 2352
+  },
+  "drizzle.config.ts": {
+    "size": 249,
+    "mtime_ns": 1786169015902885800,
+    "word_count": 23
+  },
+  "e2e/home.spec.ts": {
+    "size": 293,
+    "mtime_ns": 1786169015902885800,
+    "word_count": 33
+  },
+  "eslint.config.mjs": {
+    "size": 232,
+    "mtime_ns": 1786169015902885800,
+    "word_count": 19
+  },
+  "playwright.config.ts": {
+    "size": 540,
+    "mtime_ns": 1786169016013707700,
+    "word_count": 55
+  },
+  "server/api/auth/[...all].ts": {
+    "size": 159,
+    "mtime_ns": 1786169016017465600,
+    "word_count": 17
+  },
+  "server/db/client.ts": {
+    "size": 489,
+    "mtime_ns": 1786169016034108400,
+    "word_count": 75
+  },
+  "server/db/schema/auth.ts": {
+    "size": 2986,
+    "mtime_ns": 1786169016039937800,
+    "word_count": 233
+  },
+  "server/db/schema/index.ts": {
+    "size": 297,
+    "mtime_ns": 1786169016042284900,
+    "word_count": 40
+  },
+  "server/plugins/error-logger.ts": {
+    "size": 541,
+    "mtime_ns": 1786169016043475100,
+    "word_count": 78
+  },
+  "server/utils/auth.ts": {
+    "size": 2816,
+    "mtime_ns": 1786169016044755100,
+    "word_count": 326
+  },
+  "server/utils/logger.ts": {
+    "size": 255,
+    "mtime_ns": 1786169016048656100,
+    "word_count": 34
+  },
+  "vitest.config.ts": {
+    "size": 202,
+    "mtime_ns": 1786169016067128100,
+    "word_count": 18
+  },
+  ".claude/skills/motion/SKILL.md": {
+    "size": 10795,
+    "mtime_ns": 1786169015689411400,
+    "word_count": 1324
+  },
+  ".claude/skills/motion/references/recipes.md": {
+    "size": 6187,
+    "mtime_ns": 1786169015689411400,
+    "word_count": 720
+  },
+  ".scratch/dbg.cjs": {
+    "size": 1222,
+    "mtime_ns": 1786169015689411400,
+    "word_count": 123
+  },
+  ".scratch/discovery-check.cjs": {
+    "size": 1720,
+    "mtime_ns": 1786169015689411400,
+    "word_count": 130
+  },
+  ".scratch/feed.png": {
+    "size": 1553908,
+    "mtime_ns": 1786169015709130500,
+    "word_count": 57089
+  },
+  ".scratch/interact.cjs": {
+    "size": 2116,
+    "mtime_ns": 1786169015711136400,
+    "word_count": 186
+  },
+  ".scratch/modal.png": {
+    "size": 908594,
+    "mtime_ns": 1786169015716367400,
+    "word_count": 33364
+  },
+  ".scratch/scroll.cjs": {
+    "size": 1150,
+    "mtime_ns": 1786169015716367400,
+    "word_count": 124
+  },
+  ".scratch/shot.cjs": {
+    "size": 908,
+    "mtime_ns": 1786169015716367400,
+    "word_count": 100
+  },
+  ".scratch/watchlist.png": {
+    "size": 370027,
+    "mtime_ns": 1786169015718760600,
+    "word_count": 13624
+  },
+  "app/components/BrandMark.vue": {
+    "size": 856,
+    "mtime_ns": 1786169015729321800,
+    "word_count": 71
+  },
+  "app/components/SectionHeading.vue": {
+    "size": 685,
+    "mtime_ns": 1786169015732032700,
+    "word_count": 66
+  },
+  "app/components/ThemeToggle.vue": {
+    "size": 878,
+    "mtime_ns": 1786169015732551500,
+    "word_count": 83
+  },
+  "app/components/UserMenu.vue": {
+    "size": 1437,
+    "mtime_ns": 1786268800525234300,
+    "word_count": 141
+  },
+  "app/components/auth/AuthAlert.vue": {
+    "size": 770,
+    "mtime_ns": 1786169015734768500,
+    "word_count": 84
+  },
+  "app/components/auth/AuthBackdrop.vue": {
+    "size": 1125,
+    "mtime_ns": 1786169015735852700,
+    "word_count": 72
+  },
+  "app/components/auth/AuthLayout.vue": {
+    "size": 1376,
+    "mtime_ns": 1786275731631933300,
+    "word_count": 105
+  },
+  "app/components/auth/AuthProviderIcon.vue": {
+    "size": 2474,
+    "mtime_ns": 1786169015739208200,
+    "word_count": 277
+  },
+  "app/components/auth/AuthShowcase.vue": {
+    "size": 2871,
+    "mtime_ns": 1786275779394914300,
+    "word_count": 269
+  },
+  "app/components/auth/BackupCodeList.vue": {
+    "size": 1912,
+    "mtime_ns": 1786169015740820100,
+    "word_count": 173
+  },
+  "app/components/auth/ChannelCard.vue": {
+    "size": 1212,
+    "mtime_ns": 1786169015741950100,
+    "word_count": 108
+  },
+  "app/components/auth/ChannelCarousel.vue": {
+    "size": 1864,
+    "mtime_ns": 1786169015742477600,
+    "word_count": 195
+  },
+  "app/components/auth/OtpInput.vue": {
+    "size": 1088,
+    "mtime_ns": 1786169015743033100,
+    "word_count": 102
+  },
+  "app/components/auth/SocialAuthButtons.vue": {
+    "size": 3014,
+    "mtime_ns": 1786169015744152600,
+    "word_count": 302
+  },
+  "app/components/dashboard/AppSidebar.vue": {
+    "size": 3534,
+    "mtime_ns": 1786169015757972800,
+    "word_count": 300
+  },
+  "app/components/dashboard/DashboardShell.vue": {
+    "size": 988,
+    "mtime_ns": 1786169015762106600,
+    "word_count": 119
+  },
+  "app/components/dashboard/DashboardWelcome.vue": {
+    "size": 1379,
+    "mtime_ns": 1786169015764286700,
+    "word_count": 153
+  },
+  "app/components/dashboard/PhaseLockedNotice.vue": {
+    "size": 867,
+    "mtime_ns": 1786169015765966000,
+    "word_count": 78
+  },
+  "app/components/dashboard/RoadmapCard.vue": {
+    "size": 2127,
+    "mtime_ns": 1786169015767542700,
+    "word_count": 194
+  },
+  "app/components/dashboard/SecurityStatusCard.vue": {
+    "size": 3891,
+    "mtime_ns": 1786169015768637600,
+    "word_count": 349
+  },
+  "app/components/dashboard/SidebarUserMenu.vue": {
+    "size": 2980,
+    "mtime_ns": 1786268800527233600,
+    "word_count": 246
+  },
+  "app/components/dashboard/StatTile.vue": {
+    "size": 1118,
+    "mtime_ns": 1786169015769703600,
+    "word_count": 106
+  },
+  "app/components/discovery/CategoryCard.spec.ts": {
+    "size": 1840,
+    "mtime_ns": 1786169015772760700,
+    "word_count": 178
+  },
+  "app/components/discovery/CategoryCard.vue": {
+    "size": 1890,
+    "mtime_ns": 1786169015773767300,
+    "word_count": 144
+  },
+  "app/components/discovery/CategoryDetail.vue": {
+    "size": 3928,
+    "mtime_ns": 1786169015778999800,
+    "word_count": 335
+  },
+  "app/components/discovery/CategoryGrid.vue": {
+    "size": 2066,
+    "mtime_ns": 1786169015780004400,
+    "word_count": 180
+  },
+  "app/components/discovery/ClipCard.vue": {
+    "size": 2106,
+    "mtime_ns": 1786169015781030400,
+    "word_count": 160
+  },
+  "app/components/discovery/ClipGrid.vue": {
+    "size": 2285,
+    "mtime_ns": 1786169015781030400,
+    "word_count": 186
+  },
+  "app/components/discovery/DiscoveryFeed.vue": {
+    "size": 5680,
+    "mtime_ns": 1786170764110922300,
+    "word_count": 477
+  },
+  "app/components/discovery/FeaturedClip.vue": {
+    "size": 3838,
+    "mtime_ns": 1786169015783033700,
+    "word_count": 284
+  },
+  "app/components/discovery/LiveChannelCard.vue": {
+    "size": 2570,
+    "mtime_ns": 1786169015784038200,
+    "word_count": 194
+  },
+  "app/components/discovery/LiveChannelGrid.vue": {
+    "size": 2315,
+    "mtime_ns": 1786169015785043600,
+    "word_count": 181
+  },
+  "app/components/discovery/LiveDirectory.vue": {
+    "size": 3613,
+    "mtime_ns": 1786169015785043600,
+    "word_count": 294
+  },
+  "app/components/discovery/LiveSignalsRail.vue": {
+    "size": 3585,
+    "mtime_ns": 1786169015786879700,
+    "word_count": 254
+  },
+  "app/components/discovery/SaveButton.vue": {
+    "size": 869,
+    "mtime_ns": 1786169015786879700,
+    "word_count": 89
+  },
+  "app/components/discovery/WatchlistCard.vue": {
+    "size": 2250,
+    "mtime_ns": 1786169015787959700,
+    "word_count": 168
+  },
+  "app/components/discovery/WatchlistPanel.vue": {
+    "size": 3374,
+    "mtime_ns": 1786169015787959700,
+    "word_count": 299
+  },
+  "app/components/landing/AreaChart.vue": {
+    "size": 1361,
+    "mtime_ns": 1786169015789788100,
+    "word_count": 140
+  },
+  "app/components/landing/BentoCard.vue": {
+    "size": 1311,
+    "mtime_ns": 1786169015789788100,
+    "word_count": 108
+  },
+  "app/components/landing/BentoFeatures.vue": {
+    "size": 4257,
+    "mtime_ns": 1786169015790933100,
+    "word_count": 399
+  },
+  "app/components/landing/ChatMessageRow.vue": {
+    "size": 327,
+    "mtime_ns": 1786169015791933400,
+    "word_count": 32
+  },
+  "app/components/landing/ChatShowcase.vue": {
+    "size": 4404,
+    "mtime_ns": 1786169015792943600,
+    "word_count": 423
+  },
+  "app/components/landing/DashboardShowcase.vue": {
+    "size": 3889,
+    "mtime_ns": 1786169015792943600,
+    "word_count": 341
+  },
+  "app/components/landing/FaqSection.vue": {
+    "size": 3243,
+    "mtime_ns": 1786169015793970100,
+    "word_count": 375
+  },
+  "app/components/landing/FinalCta.vue": {
+    "size": 1753,
+    "mtime_ns": 1786169015793970100,
+    "word_count": 137
+  },
+  "app/components/landing/GlassPanel.vue": {
+    "size": 368,
+    "mtime_ns": 1786169015794970600,
+    "word_count": 35
+  },
+  "app/components/landing/HeroStudio.vue": {
+    "size": 3850,
+    "mtime_ns": 1786169015794970600,
+    "word_count": 330
+  },
+  "app/components/landing/LandingHero.vue": {
+    "size": 3236,
+    "mtime_ns": 1786169015796223300,
+    "word_count": 242
+  },
+  "app/components/landing/LiveBadge.vue": {
+    "size": 589,
+    "mtime_ns": 1786169015796223300,
+    "word_count": 52
+  },
+  "app/components/landing/PricingCard.vue": {
+    "size": 1769,
+    "mtime_ns": 1786169015797264300,
+    "word_count": 152
+  },
+  "app/components/landing/PricingSection.vue": {
+    "size": 2912,
+    "mtime_ns": 1786169015798447400,
+    "word_count": 278
+  },
+  "app/components/landing/StatsBand.vue": {
+    "size": 1031,
+    "mtime_ns": 1786169015799449600,
+    "word_count": 126
+  },
+  "app/components/landing/Testimonials.vue": {
+    "size": 2947,
+    "mtime_ns": 1786169015799449600,
+    "word_count": 319
+  },
+  "app/components/landing/TrustedBy.vue": {
+    "size": 1031,
+    "mtime_ns": 1786169015800702900,
+    "word_count": 104
+  },
+  "app/components/motion/CountUp.vue": {
+    "size": 815,
+    "mtime_ns": 1786169015801704000,
+    "word_count": 91
+  },
+  "app/components/motion/Magnetic.vue": {
+    "size": 994,
+    "mtime_ns": 1786169015802699500,
+    "word_count": 114
+  },
+  "app/components/motion/Marquee.vue": {
+    "size": 1030,
+    "mtime_ns": 1786169015803697500,
+    "word_count": 79
+  },
+  "app/components/ui/separator/Separator.vue": {
+    "size": 797,
+    "mtime_ns": 1786169015816248600,
+    "word_count": 75
+  },
+  "app/components/ui/separator/index.ts": {
+    "size": 56,
+    "mtime_ns": 1786169015816248600,
+    "word_count": 8
+  },
+  "app/components/ui/sheet/Sheet.vue": {
+    "size": 480,
+    "mtime_ns": 1786169015817535200,
+    "word_count": 43
+  },
+  "app/components/ui/sheet/SheetClose.vue": {
+    "size": 303,
+    "mtime_ns": 1786169015817535200,
+    "word_count": 30
+  },
+  "app/components/ui/sheet/SheetContent.vue": {
+    "size": 2378,
+    "mtime_ns": 1786169015817535200,
+    "word_count": 190
+  },
+  "app/components/ui/sheet/SheetDescription.vue": {
+    "size": 626,
+    "mtime_ns": 1786169015818994200,
+    "word_count": 62
+  },
+  "app/components/ui/sheet/SheetFooter.vue": {
+    "size": 347,
+    "mtime_ns": 1786169015818994200,
+    "word_count": 39
+  },
+  "app/components/ui/sheet/SheetHeader.vue": {
+    "size": 335,
+    "mtime_ns": 1786169015820319100,
+    "word_count": 37
+  },
+  "app/components/ui/sheet/SheetOverlay.vue": {
+    "size": 723,
+    "mtime_ns": 1786169015820319100,
+    "word_count": 68
+  },
+  "app/components/ui/sheet/SheetTitle.vue": {
+    "size": 590,
+    "mtime_ns": 1786169015820319100,
+    "word_count": 62
+  },
+  "app/components/ui/sheet/SheetTrigger.vue": {
+    "size": 315,
+    "mtime_ns": 1786169015821567600,
+    "word_count": 30
+  },
+  "app/components/ui/sheet/index.ts": {
+    "size": 478,
+    "mtime_ns": 1786169015821567600,
+    "word_count": 64
+  },
+  "app/components/ui/sidebar/Sidebar.vue": {
+    "size": 3536,
+    "mtime_ns": 1786169015821567600,
+    "word_count": 242
+  },
+  "app/components/ui/sidebar/SidebarContent.vue": {
+    "size": 439,
+    "mtime_ns": 1786169015822820200,
+    "word_count": 41
+  },
+  "app/components/ui/sidebar/SidebarFooter.vue": {
+    "size": 366,
+    "mtime_ns": 1786169015822820200,
+    "word_count": 38
+  },
+  "app/components/ui/sidebar/SidebarGroup.vue": {
+    "size": 382,
+    "mtime_ns": 1786169015823811400,
+    "word_count": 40
+  },
+  "app/components/ui/sidebar/SidebarGroupAction.vue": {
+    "size": 914,
+    "mtime_ns": 1786169015823811400,
+    "word_count": 76
+  },
+  "app/components/ui/sidebar/SidebarGroupContent.vue": {
+    "size": 371,
+    "mtime_ns": 1786169015824809900,
+    "word_count": 36
+  },
+  "app/components/ui/sidebar/SidebarGroupLabel.vue": {
+    "size": 930,
+    "mtime_ns": 1786169015824809900,
+    "word_count": 73
+  },
+  "app/components/ui/sidebar/SidebarHeader.vue": {
+    "size": 366,
+    "mtime_ns": 1786169015824809900,
+    "word_count": 38
+  },
+  "app/components/ui/sidebar/SidebarInput.vue": {
+    "size": 450,
+    "mtime_ns": 1786169015825930000,
+    "word_count": 46
+  },
+  "app/components/ui/sidebar/SidebarInset.vue": {
+    "size": 607,
+    "mtime_ns": 1786169015825930000,
+    "word_count": 46
+  },
+  "app/components/ui/sidebar/SidebarMenu.vue": {
+    "size": 371,
+    "mtime_ns": 1786169015826940700,
+    "word_count": 39
+  },
+  "app/components/ui/sidebar/SidebarMenuAction.vue": {
+    "size": 1400,
+    "mtime_ns": 1786169015827930500,
+    "word_count": 93
+  },
+  "app/components/ui/sidebar/SidebarMenuBadge.vue": {
+    "size": 870,
+    "mtime_ns": 1786169015828936300,
+    "word_count": 57
+  },
+  "app/components/ui/sidebar/SidebarMenuButton.vue": {
+    "size": 1358,
+    "mtime_ns": 1786169015828936300,
+    "word_count": 125
+  },
+  "app/components/ui/sidebar/SidebarMenuButtonChild.vue": {
+    "size": 987,
+    "mtime_ns": 1786169015829821600,
+    "word_count": 89
+  },
+  "app/components/ui/sidebar/SidebarMenuItem.vue": {
+    "size": 371,
+    "mtime_ns": 1786169015829821600,
+    "word_count": 36
+  },
+  "app/components/ui/sidebar/SidebarMenuSkeleton.vue": {
+    "size": 866,
+    "mtime_ns": 1786169015830865000,
+    "word_count": 81
+  },
+  "app/components/ui/sidebar/SidebarMenuSub.vue": {
+    "size": 510,
+    "mtime_ns": 1786169015831869100,
+    "word_count": 47
+  },
+  "app/components/ui/sidebar/SidebarMenuSubButton.vue": {
+    "size": 1385,
+    "mtime_ns": 1786169015832864800,
+    "word_count": 105
+  },
+  "app/components/ui/sidebar/SidebarMenuSubItem.vue": {
+    "size": 383,
+    "mtime_ns": 1786169015832864800,
+    "word_count": 36
+  },
+  "app/components/ui/sidebar/SidebarProvider.vue": {
+    "size": 2460,
+    "mtime_ns": 1786169015833865500,
+    "word_count": 241
+  },
+  "app/components/ui/sidebar/SidebarRail.vue": {
+    "size": 1303,
+    "mtime_ns": 1786169015834867700,
+    "word_count": 79
+  },
+  "app/components/ui/sidebar/SidebarSeparator.vue": {
+    "size": 445,
+    "mtime_ns": 1786169015834867700,
+    "word_count": 43
+  },
+  "app/components/ui/sidebar/SidebarTrigger.vue": {
+    "size": 648,
+    "mtime_ns": 1786169015834867700,
+    "word_count": 66
+  },
+  "app/components/ui/sidebar/index.ts": {
+    "size": 3482,
+    "mtime_ns": 1786169015835865400,
+    "word_count": 315
+  },
+  "app/components/ui/sidebar/utils.ts": {
+    "size": 685,
+    "mtime_ns": 1786169015835865400,
+    "word_count": 81
+  },
+  "app/components/ui/skeleton/Skeleton.vue": {
+    "size": 366,
+    "mtime_ns": 1786169015836900600,
+    "word_count": 36
+  },
+  "app/components/ui/skeleton/index.ts": {
+    "size": 54,
+    "mtime_ns": 1786169015836900600,
+    "word_count": 8
+  },
+  "app/components/ui/sonner/Sonner.vue": {
+    "size": 1030,
+    "mtime_ns": 1786169310560053600,
+    "word_count": 70
+  },
+  "app/components/ui/sonner/index.ts": {
+    "size": 87,
+    "mtime_ns": 1786169015839098700,
+    "word_count": 14
+  },
+  "app/components/ui/tooltip/Tooltip.vue": {
+    "size": 489,
+    "mtime_ns": 1786169015839098700,
+    "word_count": 43
+  },
+  "app/components/ui/tooltip/TooltipContent.vue": {
+    "size": 1415,
+    "mtime_ns": 1786169015840101400,
+    "word_count": 114
+  },
+  "app/components/ui/tooltip/TooltipProvider.vue": {
+    "size": 326,
+    "mtime_ns": 1786169015840101400,
+    "word_count": 32
+  },
+  "app/components/ui/tooltip/TooltipTrigger.vue": {
+    "size": 322,
+    "mtime_ns": 1786169015841100500,
+    "word_count": 30
+  },
+  "app/components/ui/tooltip/index.ts": {
+    "size": 252,
+    "mtime_ns": 1786169015841100500,
+    "word_count": 32
+  },
+  "app/composables/useCountUp.ts": {
+    "size": 948,
+    "mtime_ns": 1786169015857830600,
+    "word_count": 133
+  },
+  "app/composables/useDiscoveryCategories.ts": {
+    "size": 307,
+    "mtime_ns": 1786169015858846300,
+    "word_count": 28
+  },
+  "app/composables/useDiscoveryCategoryClips.ts": {
+    "size": 773,
+    "mtime_ns": 1786169015859829800,
+    "word_count": 91
+  },
+  "app/composables/useDiscoveryClips.ts": {
+    "size": 362,
+    "mtime_ns": 1786169015859829800,
+    "word_count": 36
+  },
+  "app/composables/useLiveSignals.ts": {
+    "size": 277,
+    "mtime_ns": 1786169015861830000,
+    "word_count": 28
+  },
+  "app/composables/usePointerParallax.ts": {
+    "size": 956,
+    "mtime_ns": 1786169015862834700,
+    "word_count": 127
+  },
+  "app/composables/useScrollHeader.ts": {
+    "size": 454,
+    "mtime_ns": 1786169015862834700,
+    "word_count": 71
+  },
+  "app/composables/useTickingList.ts": {
+    "size": 835,
+    "mtime_ns": 1786169015864202100,
+    "word_count": 114
+  },
+  "app/middleware/auth.ts": {
+    "size": 701,
+    "mtime_ns": 1786169015871795100,
+    "word_count": 94
+  },
+  "app/pages/category/[slug].vue": {
+    "size": 406,
+    "mtime_ns": 1786169015873731200,
+    "word_count": 44
+  },
+  "app/pages/forgot-password.vue": {
+    "size": 1892,
+    "mtime_ns": 1786169015876954600,
+    "word_count": 205
+  },
+  "app/pages/reset-password.vue": {
+    "size": 3010,
+    "mtime_ns": 1786169015880487600,
+    "word_count": 311
+  },
+  "app/pages/settings/security.vue": {
+    "size": 5071,
+    "mtime_ns": 1786268800531235300,
+    "word_count": 414
+  },
+  "app/pages/settings/two-factor.vue": {
+    "size": 4343,
+    "mtime_ns": 1786169015883717900,
+    "word_count": 472
+  },
+  "app/pages/verify-email.vue": {
+    "size": 2222,
+    "mtime_ns": 1786169015884730800,
+    "word_count": 238
+  },
+  "app/pages/zz-discovery-preview.vue": {
+    "size": 133,
+    "mtime_ns": 1786268800531235300,
+    "word_count": 14
+  },
+  "app/plugins/auth-session.ts": {
+    "size": 213,
+    "mtime_ns": 1786169015888044300,
+    "word_count": 28
+  },
+  "app/plugins/vidstack.client.ts": {
+    "size": 472,
+    "mtime_ns": 1786169015888044300,
+    "word_count": 60
+  },
+  "app/utils/live.spec.ts": {
+    "size": 1229,
+    "mtime_ns": 1786169015891647300,
+    "word_count": 131
+  },
+  "app/utils/live.ts": {
+    "size": 913,
+    "mtime_ns": 1786169015891647300,
+    "word_count": 104
+  },
+  "app/utils/watchlist.ts": {
+    "size": 1705,
+    "mtime_ns": 1786169015894573100,
+    "word_count": 183
+  },
+  "docs/video-streaming.md": {
+    "size": 5472,
+    "mtime_ns": 1786169015900192900,
+    "word_count": 678
+  },
+  "e2e/category.spec.ts": {
+    "size": 1060,
+    "mtime_ns": 1786169015902885800,
+    "word_count": 113
+  },
+  "e2e/live.spec.ts": {
+    "size": 635,
+    "mtime_ns": 1786169015902885800,
+    "word_count": 60
+  },
+  "scripts/seed-clips.mjs": {
+    "size": 6171,
+    "mtime_ns": 1786169016017465600,
+    "word_count": 689
+  },
+  "scripts/seed-live-streams.mjs": {
+    "size": 5178,
+    "mtime_ns": 1786169016017465600,
+    "word_count": 499
+  },
+  "server/api/auth-providers.get.ts": {
+    "size": 422,
+    "mtime_ns": 1786169016017465600,
+    "word_count": 56
+  },
+  "server/api/discovery/categories.get.ts": {
+    "size": 336,
+    "mtime_ns": 1786169016023185700,
+    "word_count": 38
+  },
+  "server/api/discovery/categories/[slug].get.ts": {
+    "size": 1064,
+    "mtime_ns": 1786169016023185700,
+    "word_count": 107
+  },
+  "server/api/discovery/clips.get.ts": {
+    "size": 600,
+    "mtime_ns": 1786169016025964500,
+    "word_count": 68
+  },
+  "server/api/discovery/live.get.ts": {
+    "size": 492,
+    "mtime_ns": 1786169016025964500,
+    "word_count": 55
+  },
+  "server/db/migrations/0000_white_the_spike.sql": {
+    "size": 2314,
+    "mtime_ns": 1786169016034108400,
+    "word_count": 267,
+    "hashes": {
+      "server/db/migrations/0000_white_the_spike.sql": "e21cbfd35aa2bd880c309a0df64765841be913aeeae905d04824dc5e64cbcee9"
+    }
+  },
+  "server/db/migrations/0001_mature_gambit.sql": {
+    "size": 487,
+    "mtime_ns": 1786169016035108200,
+    "word_count": 61,
+    "hashes": {
+      "server/db/migrations/0001_mature_gambit.sql": "8da168705e1e662f2c60a28989abb1d5aa9fb73d96495ac45594c81bb0049293"
+    }
+  },
+  "server/db/migrations/0002_noisy_lady_deathstrike.sql": {
+    "size": 370,
+    "mtime_ns": 1786169016035108200,
+    "word_count": 49,
+    "hashes": {
+      "server/db/migrations/0002_noisy_lady_deathstrike.sql": "70207b12ebe4a7b4487dd154fb8598c5a4e1c6e394758ad7d6d63c6c6f9f5fff"
+    }
+  },
+  "server/db/migrations/meta/0000_snapshot.json": {
+    "size": 10334,
+    "mtime_ns": 1786169016036521100,
+    "word_count": 733,
+    "hashes": {
+      "server/db/migrations/meta/0000_snapshot.json": "6e6ba85995a4970440e86964256563c4a3bced23391e0cf2e830e45dd1262879"
+    }
+  },
+  "server/db/migrations/meta/0001_snapshot.json": {
+    "size": 12491,
+    "mtime_ns": 1786169016037616700,
+    "word_count": 889,
+    "hashes": {
+      "server/db/migrations/meta/0001_snapshot.json": "cfee4ab67190b30c3c0acecaa13e6b3b4e5264ba03babd793b5448cc9c41bbcc"
+    }
+  },
+  "server/db/migrations/meta/0002_snapshot.json": {
+    "size": 14339,
+    "mtime_ns": 1786169016037616700,
+    "word_count": 1020,
+    "hashes": {
+      "server/db/migrations/meta/0002_snapshot.json": "d57307335c1e8c47fba264d34f22c9fc053e82a4056fd0bc3423608d26cb6ec8"
+    }
+  },
+  "server/db/migrations/meta/_journal.json": {
+    "size": 838,
+    "mtime_ns": 1786169016038935800,
+    "word_count": 69,
+    "hashes": {
+      "server/db/migrations/meta/_journal.json": "37263833146e47e4fc5934d5829e3fcfd0e06c0fbac07e3e5fa9cf3e8df02f51"
+    }
+  },
+  "server/db/schema/clips.ts": {
+    "size": 1233,
+    "mtime_ns": 1786169016040936800,
+    "word_count": 126
+  },
+  "server/db/schema/live-streams.ts": {
+    "size": 1187,
+    "mtime_ns": 1786169016042284900,
+    "word_count": 125
+  },
+  "server/utils/discovery.ts": {
+    "size": 2912,
+    "mtime_ns": 1786169016047181900,
+    "word_count": 302
+  },
+  "server/utils/format.spec.ts": {
+    "size": 539,
+    "mtime_ns": 1786169016047623700,
+    "word_count": 66
+  },
+  "server/utils/format.ts": {
+    "size": 1557,
+    "mtime_ns": 1786169016048656100,
+    "word_count": 211
+  },
+  "server/utils/mailer.ts": {
+    "size": 786,
+    "mtime_ns": 1786169016048656100,
+    "word_count": 117
+  },
+  "shared/types/discovery.ts": {
+    "size": 1935,
+    "mtime_ns": 1786169016053855500,
+    "word_count": 271
+  },
+  "shared/types/vidstack.d.ts": {
+    "size": 185,
+    "mtime_ns": 1786169016058948300,
+    "word_count": 21
+  },
+  "shared/utils/category.spec.ts": {
+    "size": 1010,
+    "mtime_ns": 1786169016059946400,
+    "word_count": 91
+  },
+  "shared/utils/category.ts": {
+    "size": 1305,
+    "mtime_ns": 1786169016060948400,
+    "word_count": 168
+  },
+  "app/components/watch/WatchActions.vue": {
+    "size": 2195,
+    "mtime_ns": 1786169015841100500,
+    "word_count": 187
+  },
+  "app/components/watch/WatchChannelBar.vue": {
+    "size": 1997,
+    "mtime_ns": 1786169015842498300,
+    "word_count": 208
+  },
+  "app/components/watch/WatchChat.spec.ts": {
+    "size": 2581,
+    "mtime_ns": 1786169015842498300,
+    "word_count": 291
+  },
+  "app/components/watch/WatchChat.vue": {
+    "size": 3942,
+    "mtime_ns": 1786169015843919000,
+    "word_count": 338
+  },
+  "app/components/watch/WatchChatMessage.vue": {
+    "size": 868,
+    "mtime_ns": 1786169015843919000,
+    "word_count": 76
+  },
+  "app/components/watch/WatchCommentItem.vue": {
+    "size": 3885,
+    "mtime_ns": 1786169015844916600,
+    "word_count": 308
+  },
+  "app/components/watch/WatchComments.vue": {
+    "size": 3580,
+    "mtime_ns": 1786169015846342200,
+    "word_count": 320
+  },
+  "app/components/watch/WatchDescription.vue": {
+    "size": 1433,
+    "mtime_ns": 1786169015846342200,
+    "word_count": 143
+  },
+  "app/components/watch/WatchLayout.vue": {
+    "size": 4501,
+    "mtime_ns": 1786169015847341000,
+    "word_count": 395
+  },
+  "app/components/watch/WatchMeta.vue": {
+    "size": 1650,
+    "mtime_ns": 1786169015847341000,
+    "word_count": 131
+  },
+  "app/components/watch/WatchPlayer.vue": {
+    "size": 1936,
+    "mtime_ns": 1786169015848356000,
+    "word_count": 192
+  },
+  "app/components/watch/WatchSkeleton.vue": {
+    "size": 834,
+    "mtime_ns": 1786169015848356000,
+    "word_count": 78
+  },
+  "app/components/watch/WatchUpNext.vue": {
+    "size": 1912,
+    "mtime_ns": 1786169015849470700,
+    "word_count": 159
+  },
+  "app/components/watch/WatchUpNextCard.spec.ts": {
+    "size": 2288,
+    "mtime_ns": 1786169015849470700,
+    "word_count": 235
+  },
+  "app/components/watch/WatchUpNextCard.vue": {
+    "size": 1964,
+    "mtime_ns": 1786169015850522000,
+    "word_count": 143
+  },
+  "app/components/watch/WatchView.vue": {
+    "size": 6112,
+    "mtime_ns": 1786169015850522000,
+    "word_count": 556
+  },
+  "app/components/watch/__fixtures__/watch.ts": {
+    "size": 5487,
+    "mtime_ns": 1786169015851785900,
+    "word_count": 579
+  },
+  "app/components/watch/types.ts": {
+    "size": 1315,
+    "mtime_ns": 1786169015854831600,
+    "word_count": 171
+  },
+  "app/composables/useLiveChannel.ts": {
+    "size": 716,
+    "mtime_ns": 1786169015860856500,
+    "word_count": 84
+  },
+  "app/composables/useStickyScroll.ts": {
+    "size": 983,
+    "mtime_ns": 1786169015864202100,
+    "word_count": 142
+  },
+  "app/composables/useViewCounter.ts": {
+    "size": 1303,
+    "mtime_ns": 1786169015864202100,
+    "word_count": 177
+  },
+  "app/composables/useWatchChat.ts": {
+    "size": 2440,
+    "mtime_ns": 1786169015864202100,
+    "word_count": 323
+  },
+  "app/composables/useWatchComments.ts": {
+    "size": 1045,
+    "mtime_ns": 1786169015864202100,
+    "word_count": 127
+  },
+  "app/composables/useWatchEngagement.ts": {
+    "size": 2128,
+    "mtime_ns": 1786169015864202100,
+    "word_count": 241
+  },
+  "app/composables/useWatchTarget.ts": {
+    "size": 1140,
+    "mtime_ns": 1786169015868434400,
+    "word_count": 127
+  },
+  "app/pages/live/[username].vue": {
+    "size": 547,
+    "mtime_ns": 1786169015879268800,
+    "word_count": 66
+  },
+  "app/pages/watch/[slug].vue": {
+    "size": 225,
+    "mtime_ns": 1786169015886045100,
+    "word_count": 25
+  },
+  "app/pages/zz-watch-preview.vue": {
+    "size": 2222,
+    "mtime_ns": 1786268800532234900,
+    "word_count": 256
+  },
+  "app/utils/chat.spec.ts": {
+    "size": 1864,
+    "mtime_ns": 1786169015890421100,
+    "word_count": 209
+  },
+  "app/utils/chat.ts": {
+    "size": 987,
+    "mtime_ns": 1786169015891647300,
+    "word_count": 131
+  },
+  "app/utils/reactions.spec.ts": {
+    "size": 1370,
+    "mtime_ns": 1786169015894573100,
+    "word_count": 169
+  },
+  "app/utils/reactions.ts": {
+    "size": 933,
+    "mtime_ns": 1786169015894573100,
+    "word_count": 139
+  },
+  "docs/watch-page.md": {
+    "size": 9375,
+    "mtime_ns": 1786169015902885800,
+    "word_count": 1335
+  },
+  "e2e/watch.spec.ts": {
+    "size": 4204,
+    "mtime_ns": 1786169015902885800,
+    "word_count": 458
+  },
+  "scripts/seed-chat.mjs": {
+    "size": 2749,
+    "mtime_ns": 1786169016016062300,
+    "word_count": 316
+  },
+  "scripts/seed-comments.mjs": {
+    "size": 8516,
+    "mtime_ns": 1786169016017465600,
+    "word_count": 979
+  },
+  "server/api/channels/[name]/follow.post.ts": {
+    "size": 1589,
+    "mtime_ns": 1786169016021962300,
+    "word_count": 178
+  },
+  "server/api/channels/[name]/index.get.ts": {
+    "size": 818,
+    "mtime_ns": 1786169016021962300,
+    "word_count": 95
+  },
+  "server/api/discovery/live/[streamer].get.ts": {
+    "size": 1017,
+    "mtime_ns": 1786169016025964500,
+    "word_count": 121
+  },
+  "server/api/watch/[slug]/chat.get.ts": {
+    "size": 1989,
+    "mtime_ns": 1786169016029405900,
+    "word_count": 243
+  },
+  "server/api/watch/[slug]/chat.post.ts": {
+    "size": 1982,
+    "mtime_ns": 1786169016029405900,
+    "word_count": 235
+  },
+  "server/api/watch/[slug]/comments.get.ts": {
+    "size": 1570,
+    "mtime_ns": 1786169016029405900,
+    "word_count": 196
+  },
+  "server/api/watch/[slug]/index.get.ts": {
+    "size": 889,
+    "mtime_ns": 1786169016031744800,
+    "word_count": 114
+  },
+  "server/api/watch/[slug]/reaction.get.ts": {
+    "size": 994,
+    "mtime_ns": 1786169016031744800,
+    "word_count": 111
+  },
+  "server/api/watch/[slug]/reaction.post.ts": {
+    "size": 2400,
+    "mtime_ns": 1786169016033109000,
+    "word_count": 260
+  },
+  "server/api/watch/[slug]/related.get.ts": {
+    "size": 1944,
+    "mtime_ns": 1786169016033109000,
+    "word_count": 203
+  },
+  "server/api/watch/[slug]/view.post.ts": {
+    "size": 1557,
+    "mtime_ns": 1786169016033109000,
+    "word_count": 209
+  },
+  "server/db/migrations/0003_overconfident_lilandra.sql": {
+    "size": 3021,
+    "mtime_ns": 1786169016035108200,
+    "word_count": 316,
+    "hashes": {
+      "server/db/migrations/0003_overconfident_lilandra.sql": "fa388819499e72711f94dc6ca188219f12c7e1c3048f06b3ccdffa2071e52505"
+    }
+  },
+  "server/db/migrations/meta/0003_snapshot.json": {
+    "size": 24618,
+    "mtime_ns": 1786169016037616700,
+    "word_count": 1716,
+    "hashes": {
+      "server/db/migrations/meta/0003_snapshot.json": "8e87ed3971045c90db1fec144d6e21f79959f61fba2fecd45db5ab2aba8d3691"
+    }
+  },
+  "server/db/schema/chat-messages.ts": {
+    "size": 1247,
+    "mtime_ns": 1786169016040936800,
+    "word_count": 154
+  },
+  "server/db/schema/comments.ts": {
+    "size": 1388,
+    "mtime_ns": 1786169016040936800,
+    "word_count": 162
+  },
+  "server/db/schema/follows.ts": {
+    "size": 1103,
+    "mtime_ns": 1786169016042284900,
+    "word_count": 137
+  },
+  "server/db/schema/reactions.ts": {
+    "size": 1303,
+    "mtime_ns": 1786169016043475100,
+    "word_count": 149
+  },
+  "server/utils/channels.ts": {
+    "size": 11862,
+    "mtime_ns": 1786169016044755100,
+    "word_count": 1356
+  },
+  "server/utils/reactions.ts": {
+    "size": 1236,
+    "mtime_ns": 1786169016050653600,
+    "word_count": 143
+  },
+  "server/utils/session.ts": {
+    "size": 961,
+    "mtime_ns": 1786169016051657000,
+    "word_count": 136
+  },
+  "server/utils/watch.ts": {
+    "size": 3863,
+    "mtime_ns": 1786169016051657000,
+    "word_count": 441
+  },
+  "shared/types/watch.ts": {
+    "size": 3736,
+    "mtime_ns": 1786169016059946400,
+    "word_count": 552
+  },
+  "shared/utils/format.ts": {
+    "size": 1278,
+    "mtime_ns": 1786169016063816200,
+    "word_count": 193
+  },
+  ".agents/skills/brandkit/SKILL.md": {
+    "size": 16790,
+    "mtime_ns": 1786268800497541600,
+    "word_count": 2600,
+    "hashes": {
+      ".agents/skills/brandkit/skill.md": "651129d8e6ef3600f66c49ed581bb0f644eb0ae7ca320732db07fb138f1c9ada"
+    }
+  },
+  ".agents/skills/defuddle/SKILL.md": {
+    "size": 1164,
+    "mtime_ns": 1786268800497541600,
+    "word_count": 184,
+    "hashes": {
+      ".agents/skills/defuddle/skill.md": "2a10d14e2e58cbf84f678cf066729fb4b0bcb33bb76e6544f434797e13875328"
+    }
+  },
+  ".agents/skills/design-taste-frontend-v1/SKILL.md": {
+    "size": 21421,
+    "mtime_ns": 1786268800498538900,
+    "word_count": 2937,
+    "hashes": {
+      ".agents/skills/design-taste-frontend-v1/skill.md": "995ce1242b2d843f30eab243a785571ebcbb7d18d074c24b9e5228c0f223e334"
+    }
+  },
+  ".agents/skills/design-taste-frontend/SKILL.md": {
+    "size": 88459,
+    "mtime_ns": 1786268800499539800,
+    "word_count": 12853,
+    "hashes": {
+      ".agents/skills/design-taste-frontend/skill.md": "189f35930de9df75b42e4824498ace85c865aa6c904a6ea03d3d1e551ce56f38"
+    }
+  },
+  ".agents/skills/full-output-enforcement/SKILL.md": {
+    "size": 2641,
+    "mtime_ns": 1786268800501610300,
+    "word_count": 412,
+    "hashes": {
+      ".agents/skills/full-output-enforcement/skill.md": "588765e7d55f8978d675cd489d0700329cbc0335371143300aa2448c69814cfc"
+    }
+  },
+  ".agents/skills/gpt-taste/SKILL.md": {
+    "size": 7931,
+    "mtime_ns": 1786268800502149900,
+    "word_count": 1134,
+    "hashes": {
+      ".agents/skills/gpt-taste/skill.md": "42af2db31233914c3fca9c8156b2caeb1d89268f7026237d17a295ed35336dd7"
+    }
+  },
+  ".agents/skills/high-end-visual-design/SKILL.md": {
+    "size": 10659,
+    "mtime_ns": 1786268800502149900,
+    "word_count": 1456,
+    "hashes": {
+      ".agents/skills/high-end-visual-design/skill.md": "4cd84b3adbbc7d19b1ea9daa3d3ae003953f7de638e0000014e97ded4d9d76f1"
+    }
+  },
+  ".agents/skills/image-to-code/SKILL.md": {
+    "size": 37670,
+    "mtime_ns": 1786268800503514700,
+    "word_count": 5820,
+    "hashes": {
+      ".agents/skills/image-to-code/skill.md": "666fd4d0f0ca36f8b2b2b2e008f02a13c7ad9525c37a056a7f3d28f1a684ac43"
+    }
+  },
+  ".agents/skills/imagegen-frontend-mobile/SKILL.md": {
+    "size": 41791,
+    "mtime_ns": 1786268800504673300,
+    "word_count": 6552,
+    "hashes": {
+      ".agents/skills/imagegen-frontend-mobile/skill.md": "411acdde3926552c7d4d6b3b8a0a73e69a0416562ba330966af7a9ab40a69927"
+    }
+  },
+  ".agents/skills/imagegen-frontend-web/SKILL.md": {
+    "size": 37841,
+    "mtime_ns": 1786268800505721400,
+    "word_count": 5819,
+    "hashes": {
+      ".agents/skills/imagegen-frontend-web/skill.md": "810797a9ca4f3646a32a71be1a7bf9a9cf8ae5a36af31378c046a80d7bc3e003"
+    }
+  },
+  ".agents/skills/industrial-brutalist-ui/SKILL.md": {
+    "size": 8548,
+    "mtime_ns": 1786268800505721400,
+    "word_count": 1075,
+    "hashes": {
+      ".agents/skills/industrial-brutalist-ui/skill.md": "de6d5877ece90ce6e0f855202baa84aeb008044295f4975c3da90ec19cc38a3f"
+    }
+  },
+  ".agents/skills/minimalist-ui/SKILL.md": {
+    "size": 7986,
+    "mtime_ns": 1786268800506745900,
+    "word_count": 1089,
+    "hashes": {
+      ".agents/skills/minimalist-ui/skill.md": "60bdeb62ab124f44e7014fcf6defcf8dcdc2bafbbacb45509d59fd094b6f495a"
+    }
+  },
+  ".agents/skills/redesign-existing-projects/SKILL.md": {
+    "size": 15238,
+    "mtime_ns": 1786268800507692700,
+    "word_count": 2210,
+    "hashes": {
+      ".agents/skills/redesign-existing-projects/skill.md": "9cd4248f362b04cc3aecb24ee183a40a3c59692b5c06b68f7fa3e35521a5057c"
+    }
+  },
+  ".agents/skills/stitch-design-taste/DESIGN.md": {
+    "size": 12174,
+    "mtime_ns": 1786268800508691400,
+    "word_count": 1721,
+    "hashes": {
+      ".agents/skills/stitch-design-taste/design.md": "d0d31f7282144eed4afef5cbf9ed2f5148daa28b577a8fe5e2ad7ecdf36b6196"
+    }
+  },
+  ".agents/skills/stitch-design-taste/SKILL.md": {
+    "size": 12035,
+    "mtime_ns": 1786268800508691400,
+    "word_count": 1662,
+    "hashes": {
+      ".agents/skills/stitch-design-taste/skill.md": "98ef1f5ce397cd3322ca4da90f3fbcc089805c7b1ee3d2749bdcf488e59916c8"
+    }
+  },
+  ".agents/skills/vue-best-practices/LICENSE.md": {
+    "size": 1119,
+    "mtime_ns": 1786268800509694100,
+    "word_count": 170,
+    "hashes": {
+      ".agents/skills/vue-best-practices/license.md": "37e384b05818d2cf3430901902f2aa77764218c0030300886b820ead76cb2d68"
+    }
+  },
+  ".agents/skills/vue-best-practices/SKILL.md": {
+    "size": 8957,
+    "mtime_ns": 1786268800509694100,
+    "word_count": 1086,
+    "hashes": {
+      ".agents/skills/vue-best-practices/skill.md": "e025caac5119b622eb7143b37269d082de393bebb0d0101e3cfec933d6a0b015"
+    }
+  },
+  ".agents/skills/vue-best-practices/SYNC.md": {
+    "size": 159,
+    "mtime_ns": 1786268800510687300,
+    "word_count": 13,
+    "hashes": {
+      ".agents/skills/vue-best-practices/sync.md": "83cc5ffbb56f3afc2af1cfb3b9599ca48366b53a21d0f8791f082a5ebbd5f88c"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/animation-class-based-technique.md": {
+    "size": 5280,
+    "mtime_ns": 1786268800510687300,
+    "word_count": 667,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/animation-class-based-technique.md": "c024a89543ba5ffa520ed5d0085ca7bd2f84868e8d90a0bbbbe09e56c40a7e01"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/animation-state-driven-technique.md": {
+    "size": 6120,
+    "mtime_ns": 1786268800511686900,
+    "word_count": 705,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/animation-state-driven-technique.md": "ae142a414c0c3e89843f660c54872fd294c5974889453c440220be93d5178c56"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/component-async.md": {
+    "size": 2629,
+    "mtime_ns": 1786268800512699400,
+    "word_count": 312,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/component-async.md": "94a82e98f0bb8c76185923d303d4eab49ef13c4365a405095ef37e0dea5e4a19"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/component-data-flow.md": {
+    "size": 7263,
+    "mtime_ns": 1786268800512699400,
+    "word_count": 926,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/component-data-flow.md": "19a83856ee4b01144dcf76fe4aad0e5ba4cea4b34430e2b263c32442e3c22328"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/component-fallthrough-attrs.md": {
+    "size": 4221,
+    "mtime_ns": 1786268800513807100,
+    "word_count": 507,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/component-fallthrough-attrs.md": "b5dae372935aca93053af26f872245f8b4fe539a5d9674101080c46db74568e0"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/component-keep-alive.md": {
+    "size": 3624,
+    "mtime_ns": 1786268800513807100,
+    "word_count": 458,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/component-keep-alive.md": "ca00e1052f2f69a4f99283650253d764c8e7d4d5f5d44a39d7a032fb7932c1ca"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/component-slots.md": {
+    "size": 4685,
+    "mtime_ns": 1786268800514859700,
+    "word_count": 525,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/component-slots.md": "c80e8a4b534391b7108e3e8a4513bf49defceff4e915208ffa46aafb4913ced7"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/component-suspense.md": {
+    "size": 5595,
+    "mtime_ns": 1786268800515874400,
+    "word_count": 608,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/component-suspense.md": "17a56f4a47f7f2c49aa0bac14f32d2a1cc1174ba9812ee2170e0831d090a0b29"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/component-teleport.md": {
+    "size": 3029,
+    "mtime_ns": 1786268800515874400,
+    "word_count": 361,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/component-teleport.md": "3111ecd5a9efd4c8b18fc189bef351060f6e86b505e80cdde85e3f36dd492a43"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/component-transition-group.md": {
+    "size": 3132,
+    "mtime_ns": 1786268800516885700,
+    "word_count": 354,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/component-transition-group.md": "787ec2b1dab1a04cd19680b892ffd9bc1f2fcfc2ea45062f042d374cfb17bc1b"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/component-transition.md": {
+    "size": 2847,
+    "mtime_ns": 1786268800516885700,
+    "word_count": 325,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/component-transition.md": "78ce625a5071f213b30af4599bd2aa9675f5b13ac324e284290229e012ed0051"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/composables.md": {
+    "size": 7301,
+    "mtime_ns": 1786268800516885700,
+    "word_count": 900,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/composables.md": "3ed252bea50d6a97214ad95041302d843a405bef6a1d8e4f894650eb97156165"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/directives.md": {
+    "size": 3965,
+    "mtime_ns": 1786268800518235600,
+    "word_count": 515,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/directives.md": "6d5ccc649c74e67a987c12e17a7eca7aaac27d480c0f41b34d6d33c4db915277"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/perf-avoid-component-abstraction-in-lists.md": {
+    "size": 4842,
+    "mtime_ns": 1786268800518235600,
+    "word_count": 650,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/perf-avoid-component-abstraction-in-lists.md": "3dcd4042baafd69209d11f400cf3540fbd219e749e99ce9277b677b4ad37356c"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/perf-v-once-v-memo-directives.md": {
+    "size": 4951,
+    "mtime_ns": 1786268800519236000,
+    "word_count": 638,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/perf-v-once-v-memo-directives.md": "b5ddfa7829e055a12e669aaabfdb4bf559c66232e3682546729489701ea81400"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/perf-virtualize-large-lists.md": {
+    "size": 5189,
+    "mtime_ns": 1786268800519236000,
+    "word_count": 620,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/perf-virtualize-large-lists.md": "31186da25d1f0100b5f81559da7fb89ecf24c5fb4eadc798018155663bc4b0d5"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/plugins.md": {
+    "size": 4048,
+    "mtime_ns": 1786268800520236300,
+    "word_count": 521,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/plugins.md": "2160ada86b2c898d188f4bb90f5f83b10c59391c719bcdf542108860a6b130e4"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/reactivity.md": {
+    "size": 8796,
+    "mtime_ns": 1786268800520236300,
+    "word_count": 1226,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/reactivity.md": "b1c85c6259286d0f8e78493709ddde59ba6c15fb946928833c66e87b034c286a"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/render-functions.md": {
+    "size": 4067,
+    "mtime_ns": 1786268800521234700,
+    "word_count": 562,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/render-functions.md": "b36b348ed0cf167c764f377abb73d6096c4b04f0d6a5833fc1d231551bbd71be"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/sfc.md": {
+    "size": 6526,
+    "mtime_ns": 1786268800521234700,
+    "word_count": 791,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/sfc.md": "75acad089f0db79880fa61fe5d1c07e2503cbea7a4b9e315ef1a2af500ed7e23"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/state-management.md": {
+    "size": 3515,
+    "mtime_ns": 1786268800522235900,
+    "word_count": 470,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/state-management.md": "7edb0b381cf227114a6619ec18808de3419247c363d2594432c6e7fb575391f2"
+    }
+  },
+  ".agents/skills/vue-best-practices/references/updated-hook-performance.md": {
+    "size": 4805,
+    "mtime_ns": 1786268800522235900,
+    "word_count": 625,
+    "hashes": {
+      ".agents/skills/vue-best-practices/references/updated-hook-performance.md": "0f91cccea0fdbc25c54f761490192cac4af2a388c97dd679f0faa67422404493"
+    }
+  },
+  ".claude/launch.json": {
+    "size": 191,
+    "mtime_ns": 1786169015671758400,
+    "word_count": 18,
+    "hashes": {
+      ".claude/launch.json": "3c487ef726738c88e39368da4767e076c615130012d05e63bffbd63317c18cd2"
+    }
+  },
+  "GLOBALCLAUDE.md": {
+    "size": 13699,
+    "mtime_ns": 1786268696480943900,
+    "word_count": 1883,
+    "hashes": {
+      "globalclaude.md": "683ee222abab27038b206aae7eaad801210c6a146781b6c8431faa76998042f1"
+    }
+  },
+  "app/app.config.ts": {
+    "size": 1144,
+    "mtime_ns": 1786269412746237500,
+    "word_count": 92
+  },
+  "app/components/AppHeaderMobileNav.vue": {
+    "size": 2688,
+    "mtime_ns": 1786268800524233800,
+    "word_count": 265
+  },
+  "app/components/ChannelAvatar.vue": {
+    "size": 1798,
+    "mtime_ns": 1786169015730404300,
+    "word_count": 251
+  },
+  "app/components/account/AccountAvatar.vue": {
+    "size": 822,
+    "mtime_ns": 1786268800526233800,
+    "word_count": 94
+  },
+  "app/components/account/AccountMenuContent.vue": {
+    "size": 3284,
+    "mtime_ns": 1786268800526233800,
+    "word_count": 272
+  },
+  "app/components/channel/ChannelAbout.vue": {
+    "size": 3445,
+    "mtime_ns": 1786169015745213100,
+    "word_count": 276
+  },
+  "app/components/channel/ChannelDirectory.vue": {
+    "size": 7529,
+    "mtime_ns": 1786169015746266700,
+    "word_count": 662
+  },
+  "app/components/channel/ChannelDirectoryCard.spec.ts": {
+    "size": 2641,
+    "mtime_ns": 1786169015747504600,
+    "word_count": 233
+  },
+  "app/components/channel/ChannelDirectoryCard.vue": {
+    "size": 4643,
+    "mtime_ns": 1786169015748717600,
+    "word_count": 391
+  },
+  "app/components/channel/ChannelHero.vue": {
+    "size": 4395,
+    "mtime_ns": 1786169015749738400,
+    "word_count": 355
+  },
+  "app/components/channel/ChannelHome.vue": {
+    "size": 2572,
+    "mtime_ns": 1786169015751051600,
+    "word_count": 215
+  },
+  "app/components/channel/ChannelLiveCard.vue": {
+    "size": 2344,
+    "mtime_ns": 1786169015751051600,
+    "word_count": 186
+  },
+  "app/components/channel/ChannelSkeleton.vue": {
+    "size": 1036,
+    "mtime_ns": 1786169015752406800,
+    "word_count": 107
+  },
+  "app/components/channel/ChannelSpotlight.vue": {
+    "size": 2260,
+    "mtime_ns": 1786169015753411100,
+    "word_count": 197
+  },
+  "app/components/channel/ChannelTabs.vue": {
+    "size": 2083,
+    "mtime_ns": 1786169015753411100,
+    "word_count": 211
+  },
+  "app/components/channel/ChannelVideoGrid.vue": {
+    "size": 3678,
+    "mtime_ns": 1786169015754409900,
+    "word_count": 338
+  },
+  "app/components/channel/ChannelView.vue": {
+    "size": 5506,
+    "mtime_ns": 1786169015755293100,
+    "word_count": 458
+  },
+  "app/components/dashboard/ActivityPanel.vue": {
+    "size": 857,
+    "mtime_ns": 1786169015756372400,
+    "word_count": 82
+  },
+  "app/components/dashboard/AnalyticsView.vue": {
+    "size": 3547,
+    "mtime_ns": 1786169015756900000,
+    "word_count": 335
+  },
+  "app/components/dashboard/CategoryMixBar.vue": {
+    "size": 1806,
+    "mtime_ns": 1786169015759103300,
+    "word_count": 159
+  },
+  "app/components/dashboard/ChannelPanel.spec.ts": {
+    "size": 1823,
+    "mtime_ns": 1786169015759648700,
+    "word_count": 193
+  },
+  "app/components/dashboard/ChannelPanel.vue": {
+    "size": 3537,
+    "mtime_ns": 1786169015760663300,
+    "word_count": 338
+  },
+  "app/components/dashboard/DashboardError.vue": {
+    "size": 566,
+    "mtime_ns": 1786169015761248900,
+    "word_count": 50
+  },
+  "app/components/dashboard/DashboardOverview.vue": {
+    "size": 1558,
+    "mtime_ns": 1786169015761804300,
+    "word_count": 124
+  },
+  "app/components/dashboard/DashboardSkeleton.vue": {
+    "size": 445,
+    "mtime_ns": 1786169015762630000,
+    "word_count": 47
+  },
+  "app/components/dashboard/DashboardTopBar.vue": {
+    "size": 1313,
+    "mtime_ns": 1786268800527233600,
+    "word_count": 165
+  },
+  "app/components/dashboard/MetricTile.vue": {
+    "size": 1007,
+    "mtime_ns": 1786169015765437000,
+    "word_count": 115
+  },
+  "app/components/dashboard/PulseStrip.vue": {
+    "size": 1570,
+    "mtime_ns": 1786169015766503700,
+    "word_count": 144
+  },
+  "app/components/dashboard/RangeTabs.vue": {
+    "size": 1230,
+    "mtime_ns": 1786169015767021800,
+    "word_count": 120
+  },
+  "app/components/dashboard/TopClipsTable.vue": {
+    "size": 2803,
+    "mtime_ns": 1786169015770244100,
+    "word_count": 227
+  },
+  "app/components/dashboard/TrendChart.spec.ts": {
+    "size": 1837,
+    "mtime_ns": 1786169015771166300,
+    "word_count": 204
+  },
+  "app/components/dashboard/TrendChart.vue": {
+    "size": 3437,
+    "mtime_ns": 1786169015771589000,
+    "word_count": 378
+  },
+  "app/components/notifications/NotificationBell.vue": {
+    "size": 4419,
+    "mtime_ns": 1786169015805701800,
+    "word_count": 357
+  },
+  "app/components/notifications/NotificationItem.vue": {
+    "size": 1888,
+    "mtime_ns": 1786169015806775200,
+    "word_count": 144
+  },
+  "app/components/search/AppSearch.vue": {
+    "size": 3590,
+    "mtime_ns": 1786169015807776800,
+    "word_count": 334
+  },
+  "app/components/search/SearchChannelRow.vue": {
+    "size": 1907,
+    "mtime_ns": 1786169015808777600,
+    "word_count": 178
+  },
+  "app/components/search/SearchResultsView.vue": {
+    "size": 4300,
+    "mtime_ns": 1786169015808777600,
+    "word_count": 388
+  },
+  "app/components/search/SearchSuggestions.vue": {
+    "size": 3476,
+    "mtime_ns": 1786169015810054800,
+    "word_count": 289
+  },
+  "app/components/watch/WatchCommentComposer.vue": {
+    "size": 3328,
+    "mtime_ns": 1786169015844916600,
+    "word_count": 341
+  },
+  "app/components/watch/player/PlayerControls.vue": {
+    "size": 2838,
+    "mtime_ns": 1786169015851785900,
+    "word_count": 219
+  },
+  "app/components/watch/player/PlayerScrubber.vue": {
+    "size": 870,
+    "mtime_ns": 1786169015852830900,
+    "word_count": 92
+  },
+  "app/components/watch/player/PlayerSettings.vue": {
+    "size": 1618,
+    "mtime_ns": 1786169015853833100,
+    "word_count": 174
+  },
+  "app/components/watch/player/PlayerTooltip.vue": {
+    "size": 598,
+    "mtime_ns": 1786169015853833100,
+    "word_count": 62
+  },
+  "app/components/watch/player/PlayerVolume.vue": {
+    "size": 991,
+    "mtime_ns": 1786169015853833100,
+    "word_count": 92
+  },
+  "app/composables/useAccountMenu.ts": {
+    "size": 826,
+    "mtime_ns": 1786268800528234100,
+    "word_count": 123
+  },
+  "app/composables/useAutoGrow.ts": {
+    "size": 761,
+    "mtime_ns": 1786169015855833000,
+    "word_count": 104
+  },
+  "app/composables/useChannel.ts": {
+    "size": 6019,
+    "mtime_ns": 1786169015856831000,
+    "word_count": 696
+  },
+  "app/composables/useChannelTab.ts": {
+    "size": 1014,
+    "mtime_ns": 1786169015856831000,
+    "word_count": 153
+  },
+  "app/composables/useDashboardAnalytics.ts": {
+    "size": 640,
+    "mtime_ns": 1786169015857830600,
+    "word_count": 77
+  },
+  "app/composables/useDashboardOverview.ts": {
+    "size": 485,
+    "mtime_ns": 1786169015858846300,
+    "word_count": 57
+  },
+  "app/composables/useListCursor.ts": {
+    "size": 1144,
+    "mtime_ns": 1786169015860856500,
+    "word_count": 186
+  },
+  "app/composables/useNotifications.ts": {
+    "size": 1422,
+    "mtime_ns": 1786169015862834700,
+    "word_count": 169
+  },
+  "app/composables/useSearch.ts": {
+    "size": 920,
+    "mtime_ns": 1786169015864202100,
+    "word_count": 123
+  },
+  "app/composables/useWatchCommentMutations.ts": {
+    "size": 3010,
+    "mtime_ns": 1786169015864202100,
+    "word_count": 372
+  },
+  "app/layouts/dashboard.vue": {
+    "size": 1038,
+    "mtime_ns": 1786169015869439800,
+    "word_count": 118
+  },
+  "app/layouts/default.vue": {
+    "size": 732,
+    "mtime_ns": 1786169015869439800,
+    "word_count": 106
+  },
+  "app/pages/analytics.vue": {
+    "size": 456,
+    "mtime_ns": 1786169015873308700,
+    "word_count": 36
+  },
+  "app/pages/channel/[handle].vue": {
+    "size": 235,
+    "mtime_ns": 1786169015875878500,
+    "word_count": 25
+  },
+  "app/pages/channels.vue": {
+    "size": 175,
+    "mtime_ns": 1786169015875878500,
+    "word_count": 18
+  },
+  "app/pages/dashboard.vue": {
+    "size": 491,
+    "mtime_ns": 1786169015876954600,
+    "word_count": 40
+  },
+  "app/pages/play-ground.vue": {
+    "size": 486,
+    "mtime_ns": 1786169015880487600,
+    "word_count": 60
+  },
+  "app/pages/search.vue": {
+    "size": 438,
+    "mtime_ns": 1786169015881595700,
+    "word_count": 44
+  },
+  "app/pages/shorts.vue": {
+    "size": 306,
+    "mtime_ns": 1786169015883717900,
+    "word_count": 35
+  },
+  "app/pages/stream.vue": {
+    "size": 519,
+    "mtime_ns": 1786169015884730800,
+    "word_count": 51
+  },
+  "app/pages/watchlist.vue": {
+    "size": 870,
+    "mtime_ns": 1786169015886045100,
+    "word_count": 109
+  },
+  "app/stores/auth.spec.ts": {
+    "size": 1960,
+    "mtime_ns": 1786277493218093000,
+    "word_count": 202
+  },
+  "app/stores/auth.ts": {
+    "size": 1885,
+    "mtime_ns": 1786277763928256500,
+    "word_count": 254
+  },
+  "app/stores/watchlist.ts": {
+    "size": 2270,
+    "mtime_ns": 1786169015890421100,
+    "word_count": 306
+  },
+  "app/utils/channel.ts": {
+    "size": 850,
+    "mtime_ns": 1786169015890421100,
+    "word_count": 129
+  },
+  "app/utils/comments.spec.ts": {
+    "size": 3623,
+    "mtime_ns": 1786169015891647300,
+    "word_count": 417
+  },
+  "app/utils/comments.ts": {
+    "size": 2466,
+    "mtime_ns": 1786169015891647300,
+    "word_count": 340
+  },
+  "app/utils/nav.spec.ts": {
+    "size": 2166,
+    "mtime_ns": 1786268800532234900,
+    "word_count": 232
+  },
+  "app/utils/nav.ts": {
+    "size": 2911,
+    "mtime_ns": 1786268800533234000,
+    "word_count": 457
+  },
+  "app/utils/search.ts": {
+    "size": 1674,
+    "mtime_ns": 1786169015894573100,
+    "word_count": 190
+  },
+  "docs/channels.md": {
+    "size": 7203,
+    "mtime_ns": 1786169015900192900,
+    "word_count": 946,
+    "hashes": {
+      "docs/channels.md": "de6f1faa85337947e4e1b0394f06d10eb2c5f7b2cff0d890ed366b75b86f64d2"
+    }
+  },
+  "docs/dashboard.md": {
+    "size": 7397,
+    "mtime_ns": 1786169015900192900,
+    "word_count": 1050,
+    "hashes": {
+      "docs/dashboard.md": "4b50e499a5463f97d818dfa2c3ef620e4187f14c8d50bfbd3066e98939983a0f"
+    }
+  },
+  "e2e/channel.spec.ts": {
+    "size": 5050,
+    "mtime_ns": 1786169015902885800,
+    "word_count": 511
+  },
+  "scripts/seed-channels.mjs": {
+    "size": 6891,
+    "mtime_ns": 1786169016016062300,
+    "word_count": 830
+  },
+  "scripts/seed-follows.mjs": {
+    "size": 2502,
+    "mtime_ns": 1786169016017465600,
+    "word_count": 359
+  },
+  "server/api/channels/[name]/profile.get.ts": {
+    "size": 1055,
+    "mtime_ns": 1786169016021962300,
+    "word_count": 130
+  },
+  "server/api/channels/[name]/videos.get.ts": {
+    "size": 1078,
+    "mtime_ns": 1786169016023185700,
+    "word_count": 136
+  },
+  "server/api/channels/index.get.ts": {
+    "size": 1159,
+    "mtime_ns": 1786169016023185700,
+    "word_count": 129
+  },
+  "server/api/dashboard/analytics.get.ts": {
+    "size": 1229,
+    "mtime_ns": 1786169016023185700,
+    "word_count": 150
+  },
+  "server/api/dashboard/overview.get.ts": {
+    "size": 721,
+    "mtime_ns": 1786169016023185700,
+    "word_count": 98
+  },
+  "server/api/notifications/index.get.ts": {
+    "size": 432,
+    "mtime_ns": 1786169016027388700,
+    "word_count": 48
+  },
+  "server/api/notifications/read.post.ts": {
+    "size": 570,
+    "mtime_ns": 1786169016027388700,
+    "word_count": 66
+  },
+  "server/api/search.get.ts": {
+    "size": 1272,
+    "mtime_ns": 1786169016027388700,
+    "word_count": 167
+  },
+  "server/api/watch/[slug]/comments.post.ts": {
+    "size": 2687,
+    "mtime_ns": 1786169016030561900,
+    "word_count": 329
+  },
+  "server/api/watch/[slug]/comments/[id].delete.ts": {
+    "size": 2015,
+    "mtime_ns": 1786169016030561900,
+    "word_count": 258
+  },
+  "server/api/watch/[slug]/comments/[id]/like.post.ts": {
+    "size": 2518,
+    "mtime_ns": 1786169016031744800,
+    "word_count": 280
+  },
+  "server/db/migrations/0004_powerful_bloodstrike.sql": {
+    "size": 1363,
+    "mtime_ns": 1786169016036521100,
+    "word_count": 146,
+    "hashes": {
+      "server/db/migrations/0004_powerful_bloodstrike.sql": "d7af0d2a89a428e9c309756ba37da919c2d547c03238bd54b06afb6415c461da"
+    }
+  },
+  "server/db/migrations/meta/0004_snapshot.json": {
+    "size": 29579,
+    "mtime_ns": 1786169016038935800,
+    "word_count": 2053,
+    "hashes": {
+      "server/db/migrations/meta/0004_snapshot.json": "9c8f7b8737184ac893642d4bb57dce1f8b098dcede36ffbaf70e2766d232fb5d"
+    }
+  },
+  "server/db/schema/channels.ts": {
+    "size": 1687,
+    "mtime_ns": 1786169016039937800,
+    "word_count": 220
+  },
+  "server/db/schema/comment-likes.ts": {
+    "size": 1104,
+    "mtime_ns": 1786169016040936800,
+    "word_count": 142
+  },
+  "server/db/schema/notification-reads.ts": {
+    "size": 842,
+    "mtime_ns": 1786169016043475100,
+    "word_count": 119
+  },
+  "server/utils/comments.ts": {
+    "size": 4408,
+    "mtime_ns": 1786169016044755100,
+    "word_count": 565
+  },
+  "server/utils/dashboard.ts": {
+    "size": 12253,
+    "mtime_ns": 1786169016046178500,
+    "word_count": 1173
+  },
+  "server/utils/notifications.ts": {
+    "size": 3704,
+    "mtime_ns": 1786169016049656000,
+    "word_count": 431
+  },
+  "server/utils/search.ts": {
+    "size": 2200,
+    "mtime_ns": 1786169016050653600,
+    "word_count": 256
+  },
+  "shared/types/channel.ts": {
+    "size": 3429,
+    "mtime_ns": 1786169016052652000,
+    "word_count": 487
+  },
+  "shared/types/dashboard.ts": {
+    "size": 3508,
+    "mtime_ns": 1786169016052652000,
+    "word_count": 494
+  },
+  "shared/types/notification.ts": {
+    "size": 1026,
+    "mtime_ns": 1786169016057946700,
+    "word_count": 154
+  },
+  "shared/types/search.ts": {
+    "size": 890,
+    "mtime_ns": 1786169016058948300,
+    "word_count": 138
+  },
+  "shared/utils/channel.spec.ts": {
+    "size": 1263,
+    "mtime_ns": 1786169016060948400,
+    "word_count": 101
+  },
+  "shared/utils/channel.ts": {
+    "size": 1392,
+    "mtime_ns": 1786169016060948400,
+    "word_count": 188
+  },
+  "shared/utils/trend.spec.ts": {
+    "size": 3740,
+    "mtime_ns": 1786169016063816200,
+    "word_count": 451
+  },
+  "shared/utils/trend.ts": {
+    "size": 3370,
+    "mtime_ns": 1786169016067128100,
+    "word_count": 489
+  }
+}

@@ -1,6 +1,5 @@
 {
   "permissions": {
-    "defaultMode": "bypassPermissions",
     "allow": [
       "Bash(npm install *)",
       "Bash(npm audit *)",
@@ -10,7 +9,9 @@
       "Bash(npx shadcn-vue@latest init -t nuxt --icon-library lucide -b neutral -y -d --pointer --css-variables)",
       "Bash(curl -sS -m 10 -o /dev/null -w \"%{http_code}\\\\n\" https://shadcn-vue.com/init)",
       "Bash(curl -sS -m 10 -o /dev/null -w \"%{http_code}\\\\n\" https://registry.npmjs.org)",
-      "Bash(npm uninstall *)"
-    ]
+      "Bash(npm uninstall *)",
+      "Bash(graphify query *)"
+    ],
+    "defaultMode": "bypassPermissions"
   }
 }

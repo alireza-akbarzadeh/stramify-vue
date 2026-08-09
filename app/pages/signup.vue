@@ -1,10 +1,13 @@
-<script setup lang="ts">
-import { Lock, Mail, User } from '@lucide/vue'
-import { Button } from '@/components/ui/button'
-import { toast } from '@/components/ui/sonner'
-import { authClient } from '@/lib/auth-client'
+<script lang="ts" setup>
+import {Lock, Mail, User} from '@lucide/vue'
+import {Button} from '@/components/ui/button'
+import {toast} from '@/components/ui/sonner'
+import {authClient} from '@/lib/auth-client'
+import {useAuthStore} from '@/stores/auth'
 
-useHead({ title: 'Sign up — Streamify' })
+useHead({title: 'Sign up — Streamify'})
+
+const auth = useAuthStore()
 
 const name = ref('')
 const email = ref('')
@@ -15,14 +18,14 @@ const pending = ref(false)
 // Mirrors the server's minPasswordLength so the user gets the rule before
 // submitting rather than as a round-trip rejection.
 const passwordError = computed(() =>
-  password.value && password.value.length < 8 ? 'Use at least 8 characters.' : ''
+    password.value && password.value.length < 8 ? 'Use at least 8 characters.' : ''
 )
 
 async function onSubmit() {
   if (passwordError.value) return
   error.value = ''
   pending.value = true
-  const { error: authError } = await authClient.signUp.email({
+  const {error: authError} = await authClient.signUp.email({
     name: name.value,
     email: email.value,
     password: password.value
@@ -33,60 +36,61 @@ async function onSubmit() {
     toast.error(error.value)
     return
   }
-  await navigateTo('/')
+  await auth.completeSignIn()
 }
 </script>
 
 <template>
-  <AuthLayout title="Create your channel" subtitle="Free to start. No credit card required.">
+  <AuthLayout subtitle="Free to start. No credit card required." title="Create your channel">
     <form class="space-y-5" @submit.prevent="onSubmit">
-      <SocialAuthButtons @error="error = $event; toast.error($event)" />
+      <SocialAuthButtons @error="error = $event; toast.error($event)"/>
 
       <AuthFormField
-        id="name"
-        v-model="name"
-        label="Name"
-        autocomplete="name"
-        placeholder="Your display name"
-        :icon="User"
+          id="name"
+          v-model="name"
+          :icon="User"
+          autocomplete="name"
+          label="Name"
+          placeholder="Your display name"
       />
       <AuthFormField
-        id="email"
-        v-model="email"
-        label="Email"
-        type="email"
-        autocomplete="email"
-        placeholder="you@example.com"
-        :icon="Mail"
+          id="email"
+          v-model="email"
+          :icon="Mail"
+          autocomplete="email"
+          label="Email"
+          placeholder="you@example.com"
+          type="email"
       />
       <AuthFormField
-        id="password"
-        v-model="password"
-        label="Password"
-        type="password"
-        autocomplete="new-password"
-        placeholder="At least 8 characters"
-        :icon="Lock"
-        :error="passwordError"
+          id="password"
+          v-model="password"
+          :error="passwordError"
+          :icon="Lock"
+          autocomplete="new-password"
+          label="Password"
+          placeholder="At least 8 characters"
+          type="password"
       />
 
-      <AuthAlert v-if="error" :message="error" />
+      <AuthAlert v-if="error" :message="error"/>
 
-      <Button type="submit" size="lg" class="w-full" :disabled="pending || !!passwordError">
+      <Button :disabled="pending || !!passwordError" class="w-full" size="lg" type="submit">
         {{ pending ? 'Creating account…' : 'Start streaming free' }}
       </Button>
 
       <p class="text-center text-xs leading-relaxed text-muted-foreground">
         By creating an account you agree to our
-        <NuxtLink to="/terms" class="text-foreground hover:underline">Terms</NuxtLink>
+        <NuxtLink class="text-foreground hover:underline" to="/terms">Terms</NuxtLink>
         and
-        <NuxtLink to="/privacy" class="text-foreground hover:underline">Privacy Policy</NuxtLink>.
+        <NuxtLink class="text-foreground hover:underline" to="/privacy">Privacy Policy</NuxtLink>
+        .
       </p>
     </form>
 
     <template #footer>
       Already have an account?
-      <NuxtLink to="/login" class="font-medium text-primary hover:underline">Log in</NuxtLink>
+      <NuxtLink class="font-medium text-primary hover:underline" to="/login">Log in</NuxtLink>
     </template>
   </AuthLayout>
 </template>
