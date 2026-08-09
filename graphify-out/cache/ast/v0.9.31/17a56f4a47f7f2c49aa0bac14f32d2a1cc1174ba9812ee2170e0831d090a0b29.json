@@ -1,0 +1,159 @@
+{
+  "nodes": [
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_md",
+      "label": "component-suspense.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_suspense_component_best_practices",
+      "label": "Suspense Component Best Practices",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_task_list",
+      "label": "Task List",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_single_root_in_default_and_fallback_slots",
+      "label": "Single Root in Default and Fallback Slots",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L23"
+    },
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_fallback_timing_on_reverts_timeout",
+      "label": "Fallback Timing on Reverts (`timeout`)",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L61"
+    },
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_pending_state_only_re_triggers_on_root_replacement",
+      "label": "Pending State Only Re-triggers on Root Replacement",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L91"
+    },
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_use_suspensible_for_nested_suspense_vue_3_3",
+      "label": "Use `suspensible` for Nested Suspense (Vue 3.3+)",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L124"
+    },
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_track_loading_with_suspense_events",
+      "label": "Track Loading with Suspense Events",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L160"
+    },
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_recommended_nesting_with_routerview_transition_keepalive",
+      "label": "Recommended Nesting with RouterView, Transition, KeepAlive",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L191"
+    },
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_treat_suspense_cautiously_in_production",
+      "label": "Treat Suspense Cautiously in Production",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L226"
+    }
+  ],
+  "edges": [
+    {
+      "source": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_md",
+      "target": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_suspense_component_best_practices",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_suspense_component_best_practices",
+      "target": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_task_list",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_suspense_component_best_practices",
+      "target": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_single_root_in_default_and_fallback_slots",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_suspense_component_best_practices",
+      "target": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_fallback_timing_on_reverts_timeout",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_suspense_component_best_practices",
+      "target": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_pending_state_only_re_triggers_on_root_replacement",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_suspense_component_best_practices",
+      "target": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_use_suspensible_for_nested_suspense_vue_3_3",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_suspense_component_best_practices",
+      "target": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_track_loading_with_suspense_events",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L160",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_suspense_component_best_practices",
+      "target": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_recommended_nesting_with_routerview_transition_keepalive",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L191",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_suspense_component_best_practices",
+      "target": "$graphify-root$_agents_skills_vue_best_practices_references_component_suspense_treat_suspense_cautiously_in_production",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/vue-best-practices/references/component-suspense.md",
+      "source_location": "L226",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

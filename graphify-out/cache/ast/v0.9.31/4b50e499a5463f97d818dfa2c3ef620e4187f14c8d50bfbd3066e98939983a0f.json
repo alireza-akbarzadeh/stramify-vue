@@ -1,0 +1,217 @@
+{
+  "nodes": [
+    {
+      "id": "$graphify-root$_docs_dashboard_md",
+      "label": "dashboard.md",
+      "file_type": "document",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "$graphify-root$_docs_dashboard_dashboard",
+      "label": "Dashboard",
+      "file_type": "document",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "$graphify-root$_docs_dashboard_the_one_thing_to_understand_first",
+      "label": "The one thing to understand first",
+      "file_type": "document",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L8"
+    },
+    {
+      "id": "$graphify-root$_docs_dashboard_what_s_real",
+      "label": "What's real",
+      "file_type": "document",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L27"
+    },
+    {
+      "id": "$graphify-root$_docs_dashboard_what_s_deliberately_absent",
+      "label": "What's deliberately absent",
+      "file_type": "document",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L44"
+    },
+    {
+      "id": "$graphify-root$_docs_dashboard_api",
+      "label": "API",
+      "file_type": "document",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L55"
+    },
+    {
+      "id": "$graphify-root$_docs_dashboard_overlap_with_server_utils_channels_ts_read_before_extending",
+      "label": "Overlap with `server/utils/channels.ts` \u2014 read before extending",
+      "file_type": "document",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L69"
+    },
+    {
+      "id": "$graphify-root$_docs_dashboard_component_tree",
+      "label": "Component tree",
+      "file_type": "document",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L81"
+    },
+    {
+      "id": "$graphify-root$_docs_dashboard_charts",
+      "label": "Charts",
+      "file_type": "document",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L105"
+    },
+    {
+      "id": "$graphify-root$_docs_dashboard_filling_the_series",
+      "label": "Filling the series",
+      "file_type": "document",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L119"
+    },
+    {
+      "id": "$graphify-root$_docs_dashboard_running_it",
+      "label": "Running it",
+      "file_type": "document",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L127"
+    },
+    {
+      "id": "$graphify-root$_docs_dashboard_failure_modes",
+      "label": "Failure modes",
+      "file_type": "document",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L136"
+    },
+    {
+      "id": "$graphify-root$_docs_dashboard_known_limits",
+      "label": "Known limits",
+      "file_type": "document",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L152"
+    }
+  ],
+  "edges": [
+    {
+      "source": "$graphify-root$_docs_dashboard_md",
+      "target": "$graphify-root$_docs_dashboard_dashboard",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_docs_dashboard_md",
+      "target": "$graphify-root$_docs_decisions_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "target_file": "$graphify-root$/docs/DECISIONS.md"
+    },
+    {
+      "source": "$graphify-root$_docs_dashboard_dashboard",
+      "target": "$graphify-root$_docs_dashboard_the_one_thing_to_understand_first",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_docs_dashboard_dashboard",
+      "target": "$graphify-root$_docs_dashboard_what_s_real",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_docs_dashboard_dashboard",
+      "target": "$graphify-root$_docs_dashboard_what_s_deliberately_absent",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_docs_dashboard_dashboard",
+      "target": "$graphify-root$_docs_dashboard_api",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_docs_dashboard_api",
+      "target": "$graphify-root$_docs_dashboard_overlap_with_server_utils_channels_ts_read_before_extending",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_docs_dashboard_dashboard",
+      "target": "$graphify-root$_docs_dashboard_component_tree",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L81",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_docs_dashboard_component_tree",
+      "target": "$graphify-root$_docs_dashboard_charts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L105",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_docs_dashboard_component_tree",
+      "target": "$graphify-root$_docs_dashboard_filling_the_series",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L119",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_docs_dashboard_dashboard",
+      "target": "$graphify-root$_docs_dashboard_running_it",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L127",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_docs_dashboard_dashboard",
+      "target": "$graphify-root$_docs_dashboard_failure_modes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L136",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_docs_dashboard_dashboard",
+      "target": "$graphify-root$_docs_dashboard_known_limits",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/dashboard.md",
+      "source_location": "L152",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

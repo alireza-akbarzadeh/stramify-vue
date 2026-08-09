@@ -1,0 +1,127 @@
+{
+  "nodes": [
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_md",
+      "label": "plugins.md",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/plugins.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_vue_plugin_best_practices",
+      "label": "Vue Plugin Best Practices",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/plugins.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_task_list",
+      "label": "Task List",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/plugins.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_structure_plugins_for_app_use",
+      "label": "Structure Plugins for `app.use()`",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/plugins.md",
+      "source_location": "L21"
+    },
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_register_capabilities_explicitly_in_install",
+      "label": "Register Capabilities Explicitly in `install()`",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/plugins.md",
+      "source_location": "L71"
+    },
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_type_plugin_contracts",
+      "label": "Type Plugin Contracts",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/plugins.md",
+      "source_location": "L98"
+    },
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_use_symbol_injection_keys_in_plugins",
+      "label": "Use Symbol Injection Keys in Plugins",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/plugins.md",
+      "source_location": "L116"
+    },
+    {
+      "id": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_provide_required_injection_helpers",
+      "label": "Provide Required Injection Helpers",
+      "file_type": "document",
+      "source_file": ".agents/skills/vue-best-practices/references/plugins.md",
+      "source_location": "L151"
+    }
+  ],
+  "edges": [
+    {
+      "source": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_md",
+      "target": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_vue_plugin_best_practices",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/vue-best-practices/references/plugins.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_vue_plugin_best_practices",
+      "target": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_task_list",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/vue-best-practices/references/plugins.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_vue_plugin_best_practices",
+      "target": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_structure_plugins_for_app_use",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/vue-best-practices/references/plugins.md",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_vue_plugin_best_practices",
+      "target": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_register_capabilities_explicitly_in_install",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/vue-best-practices/references/plugins.md",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_vue_plugin_best_practices",
+      "target": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_type_plugin_contracts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/vue-best-practices/references/plugins.md",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_vue_plugin_best_practices",
+      "target": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_use_symbol_injection_keys_in_plugins",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/vue-best-practices/references/plugins.md",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_vue_plugin_best_practices",
+      "target": "$graphify-root$_agents_skills_vue_best_practices_references_plugins_provide_required_injection_helpers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".agents/skills/vue-best-practices/references/plugins.md",
+      "source_location": "L151",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
