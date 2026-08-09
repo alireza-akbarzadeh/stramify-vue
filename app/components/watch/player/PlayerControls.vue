@@ -49,12 +49,12 @@ const { theater, toggle: toggleTheater } = useTheaterMode()
 
       <template v-if="!live">
         <PlayerTooltip label="Back 10s (j)">
-          <media-seek-button class="player-button" :seconds="-10">
+          <media-seek-button class="player-button player-button-secondary" :seconds="-10">
             <RotateCcw aria-hidden="true" />
           </media-seek-button>
         </PlayerTooltip>
         <PlayerTooltip label="Forward 10s (l)">
-          <media-seek-button class="player-button" :seconds="10">
+          <media-seek-button class="player-button player-button-secondary" :seconds="10">
             <RotateCw aria-hidden="true" />
           </media-seek-button>
         </PlayerTooltip>
@@ -87,7 +87,7 @@ const { theater, toggle: toggleTheater } = useTheaterMode()
       <PlayerTooltip :label="theater ? 'Default view (t)' : 'Theater mode (t)'">
         <button
           type="button"
-          class="player-button hidden lg:inline-grid"
+          class="player-button player-button-theater"
           :aria-pressed="theater"
           aria-label="Theater mode"
           @click="toggleTheater"
@@ -98,7 +98,7 @@ const { theater, toggle: toggleTheater } = useTheaterMode()
       </PlayerTooltip>
 
       <PlayerTooltip label="Miniplayer (i)">
-        <media-pip-button class="player-button">
+        <media-pip-button class="player-button player-button-secondary">
           <PictureInPicture2 aria-hidden="true" />
         </media-pip-button>
       </PlayerTooltip>

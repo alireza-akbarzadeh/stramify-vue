@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ChannelNotifyMode } from '#shared/types/channel'
 import type { CommentDraft, CommentSort, ReactionValue, WatchTarget } from '#shared/types/watch'
 import type { ChatPanel, CommentsPanel, RelatedPanel, WatchEngagement } from './types'
 import WatchPlayer from './WatchPlayer.vue'
@@ -46,6 +47,7 @@ const sort = defineModel<CommentSort>('sort', { required: true })
 
 defineEmits<{
   (e: 'react', value: ReactionValue): void
+  (e: 'set-notify', mode: ChannelNotifyMode): void
   (e: 'send-chat', body: string): void
   (e: 'post-comment', draft: CommentDraft): void
   (e: 'like-comment' | 'remove-comment', id: string): void
@@ -77,7 +79,9 @@ useTheaterShortcut()
           :channel="engagement.channel"
           :name="target.channel"
           :pending="engagement.followPending"
+          :notify-pending="engagement.notifyPending"
           @toggle-follow="$emit('toggle-follow')"
+          @set-notify="$emit('set-notify', $event)"
         />
         <WatchActions
           :reactions="engagement.reactions"

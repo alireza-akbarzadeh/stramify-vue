@@ -167,6 +167,35 @@ media-gesture {
   display: none;
 }
 
+/* Theater rearranges the page around the player, and the page only has two
+   columns from `lg` up — below that the button would have nothing to do. These
+   overrides sit after `.player-button` on purpose: they match it exactly on
+   specificity, so source order is the only thing deciding them. That's also
+   why this isn't a `hidden lg:inline-grid` pair on the element — `player.css`
+   loads after Tailwind, and the utility would silently lose. */
+.player-button-theater {
+  display: none;
+}
+
+@media (min-width: 64rem) {
+  .player-button-theater {
+    display: inline-grid;
+  }
+}
+
+/* Which controls survive a narrow player. Container queries rather than
+   viewport ones, because what decides this is how wide the video box is: the
+   same page is roomy at `lg` and cramped in a phone's single column, and a
+   fullscreen player is roomy on any device. Below ~30rem the skip buttons and
+   the miniplayer go — seeking is still there by dragging the scrubber, and PiP
+   is a desktop affordance. Play, volume, time, captions, settings and
+   fullscreen stay. */
+@container (max-width: 30rem) {
+  .player-button-secondary {
+    display: none;
+  }
+}
+
 .player-button svg {
   width: 1.25rem;
   height: 1.25rem;
@@ -355,6 +384,13 @@ media-gesture {
   white-space: nowrap;
 }
 
+@container (max-width: 30rem) {
+  .player-time {
+    padding-inline: 0.375rem;
+    font-size: 0.75rem;
+  }
+}
+
 .player-time-divider {
   color: rgb(255 255 255 / 0.6);
 }
@@ -423,7 +459,16 @@ media-tooltip-trigger {
 
 .player-menu-items {
   min-width: 11rem;
+  /* An HLS source can offer a dozen quality levels, and the menu renders
+     inside the player, which clips overflow — so the list has to scroll rather
+     than run off the top of the video. The `cqw` term is the player's own
+     height read off its 16:9 width (see `container-type` on `.player`), which
+     keeps a small player's menu proportionally smaller. */
+  max-height: min(22rem, calc(52cqw - 4rem));
   padding: 0.375rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
   border: 1px solid var(--border);
   border-radius: 0.75rem;
   background: color-mix(in oklab, var(--popover) 92%, transparent);

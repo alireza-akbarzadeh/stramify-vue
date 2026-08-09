@@ -9,12 +9,16 @@ import type { TooltipPlacement } from 'vidstack'
  * It works with a plain `<button>` as well as a `media-*-button`: Vidstack
  * anchors to the trigger's first child whenever that child is a button or
  * carries `role="button"`, which the theater toggle relies on.
+ *
+ * Vidstack's stock 700ms hover delay is tuned for a tooltip that explains a
+ * page; on a control bar the pointer is already there on purpose, and waiting
+ * most of a second reads as the tooltip being broken.
  */
 defineProps<{ label: string; placement?: TooltipPlacement }>()
 </script>
 
 <template>
-  <media-tooltip>
+  <media-tooltip :show-delay="300">
     <media-tooltip-trigger>
       <slot />
     </media-tooltip-trigger>

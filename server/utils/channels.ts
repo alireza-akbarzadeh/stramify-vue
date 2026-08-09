@@ -37,7 +37,7 @@ export async function readChannelSummary(
       .where(sql`lower(${clips.creator}) = lower(${name})`),
     userId
       ? db
-          .select({ id: follows.id })
+          .select({ notify: follows.notify })
           .from(follows)
           .where(and(eq(follows.userId, userId), sql`${lower} = lower(${name})`))
           .limit(1)
@@ -48,7 +48,10 @@ export async function readChannelSummary(
     name,
     followers: formatCount(followers[0]?.total ?? 0),
     clipCount: clipCount[0]?.total ?? 0,
-    isFollowing: mine.length > 0
+    isFollowing: mine.length > 0,
+    // No follow row means no bell — `none` rather than the column default, so
+    // the client never renders a lit bell for a channel you don't follow.
+    notify: mine[0]?.notify ?? 'none'
   }
 }
 

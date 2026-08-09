@@ -16,6 +16,24 @@ export const CHANNEL_SORTS: ReadonlyArray<{ value: ChannelSort; label: string }>
   { value: 'new', label: 'Newest' }
 ]
 
+/**
+ * The bell: which of a followed channel's events are worth interrupting the
+ * viewer for. Stored per follow (`follows.notify`) and read by the
+ * notification feed, so each value is a real difference in what arrives:
+ *
+ * - `all` — every upload and every time the channel goes live. The default,
+ *   because it's what the feed already did for every follow before the bell
+ *   existed.
+ * - `live` — going live only. For channels that publish more clips than you
+ *   want pinged about.
+ * - `none` — following without notifications.
+ *
+ * Ordered loudest-first; the menu renders it in this order.
+ */
+export const CHANNEL_NOTIFY_MODES = ['all', 'live', 'none'] as const
+
+export type ChannelNotifyMode = (typeof CHANNEL_NOTIFY_MODES)[number]
+
 /** How a channel's own video grid is ordered. */
 export type ChannelVideoSort = 'latest' | 'popular' | 'oldest'
 

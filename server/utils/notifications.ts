@@ -3,6 +3,7 @@ import { db } from '../db/client'
 import { clips, follows, liveStreams, notificationReads } from '../db/schema'
 import { formatAge } from './format'
 import { toChannelHandle } from '#shared/utils/channel'
+import type { ChannelNotifyMode } from '#shared/types/channel'
 import type { AppNotification, NotificationFeed } from '#shared/types/notification'
 
 /** How many entries the bell holds. Older activity lives on `/following`. */
@@ -15,17 +16,48 @@ const FEED_LIMIT = 20
  */
 type Event = Omit<AppNotification, 'unread' | 'age'> & { at: Date }
 
-/** Handles the user follows, canonicalised the way every other join does it. */
-async function followedHandles(userId: string): Promise<string[]> {
+/**
+ * Handles the user follows, canonicalised the way every other join does it,
+ * each carrying its bell setting.
+ *
+ * `follows_user_channel_unique` is on the raw text, so two rows can still
+ * canonicalise to the same handle with different settings. That collapses to
+ * the louder of the two — a stray duplicate row should never be what silences
+ * a channel.
+ */
+async function followedChannels(userId: string): Promise<Map<string, ChannelNotifyMode>> {
   const rows = await db
-    .select({ channel: follows.channel })
+    .select({ channel: follows.channel, notify: follows.notify })
     .from(follows)
     .where(eq(follows.userId, userId))
 
-  return [...new Set(rows.map((row) => toChannelHandle(row.channel)))]
+  const loudness: Record<ChannelNotifyMode, number> = { all: 2, live: 1, none: 0 }
+  const modes = new Map<string, ChannelNotifyMode>()
+  for (const row of rows) {
+    const handle = toChannelHandle(row.channel)
+    const current = modes.get(handle)
+    if (!current || loudness[row.notify] > loudness[current]) modes.set(handle, row.notify)
+  }
+  return modes
+}
+
+/**
+ * The handles whose events of `kind` the viewer asked to hear about — the one
+ * place the bell settings turn into a query. Exported so that rule is pinned
+ * by a test without a database behind it.
+ */
+export function handlesFor(
+  modes: Map<string, ChannelNotifyMode>,
+  kind: 'live' | 'upload'
+): string[] {
+  const wanted: ChannelNotifyMode[] = kind === 'live' ? ['all', 'live'] : ['all']
+  return [...modes]
+    .filter(([, mode]) => wanted.includes(mode))
+    .map(([handle]) => handle)
 }
 
 async function liveEvents(handles: string[]): Promise<Event[]> {
+  if (handles.length === 0) return []
   const rows = await db
     .select()
     .from(liveStreams)
@@ -45,6 +77,7 @@ async function liveEvents(handles: string[]): Promise<Event[]> {
 }
 
 async function uploadEvents(handles: string[]): Promise<Event[]> {
+  if (handles.length === 0) return []
   const rows = await db
     .select()
     .from(clips)
@@ -79,15 +112,17 @@ async function readCursor(userId: string): Promise<Date | null> {
  * newest first, with everything after their last "mark all read" flagged.
  *
  * A user who follows nobody gets an empty feed rather than a global one —
- * this is a follow feed, not a firehose.
+ * this is a follow feed, not a firehose. Each follow's bell decides which of
+ * its events qualify, so muting a channel here is what stops the row from
+ * being read at all rather than something the client filters out afterwards.
  */
 export async function readNotifications(userId: string): Promise<NotificationFeed> {
-  const handles = await followedHandles(userId)
-  if (handles.length === 0) return { items: [], unreadCount: 0 }
+  const modes = await followedChannels(userId)
+  if (modes.size === 0) return { items: [], unreadCount: 0 }
 
   const [live, uploads, cursor] = await Promise.all([
-    liveEvents(handles),
-    uploadEvents(handles),
+    liveEvents(handlesFor(modes, 'live')),
+    uploadEvents(handlesFor(modes, 'upload')),
     readCursor(userId)
   ])
 

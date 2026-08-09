@@ -532,13 +532,12 @@ opened in a browser. Still owed:
    - `db.execute<FeedRow>()` in `server/utils/home.ts` — same drizzle generic
      the channels session flagged; `FeedRow` is a `type` alias for that reason
      but the postgres-js `RowList` may still need a cast.
-   - `server/api/home/*.get.ts` rely on Nitro **auto-imports** for
-     `getSessionUser` / `selectHomeFeed` / `selectFollowingFeed` (matching the
-     working-tree edit to `watch/[slug]/view.post.ts`), unlike every older
-     route, which imports explicitly. If auto-import isn't picking them up,
-     add the relative imports back.
    - The nested-CTE `sql` template and the `now()::timestamp` recency term have
-     never been executed against Postgres.
+     never been executed against Postgres. The `union all` relies on Postgres
+     resolving the two bare `'clip'`/`'live'` literals to `text` so they can be
+     compared against `reactions.target_kind::text`.
+   - `z.enum()` over a slug tuple in `server/api/home/feed.get.ts` — the same
+     Zod 4 shape the dashboard and channels sessions both flagged.
 2. Confirm migration `0004_powerful_bloodstrike.sql` (the `channels` table) is
    actually **applied** — the home query `left join`s `channels` for avatars,
    so it 500s if the previous session's migration is still unapplied.

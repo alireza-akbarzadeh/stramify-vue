@@ -2,6 +2,7 @@
 import { ChevronLeft, ChevronRight } from '@lucide/vue'
 import { useElementSize, useScroll } from '@vueuse/core'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 import { chipDomId } from '#shared/utils/home'
 import type { HomeChip } from '#shared/types/home'
@@ -31,12 +32,36 @@ const rail = useTemplateRef<HTMLDivElement>('rail')
 const { arrivedState } = useScroll(rail)
 const { width } = useElementSize(rail)
 
-/** Only worth showing arrows when the rail actually overflows. */
-const overflows = computed(() => (rail.value?.scrollWidth ?? 0) > width.value + 1)
+/**
+ * Only worth showing arrows when the rail actually overflows.
+ *
+ * Measured rather than computed: `scrollWidth` isn't reactive, so this has to
+ * be re-read whenever the content or the box could have changed — which
+ * includes the moment the category chips arrive and replace the skeleton, not
+ * just on resize. `nextTick` waits for that render before measuring.
+ */
+const overflows = ref(false)
+
+watch(
+  [() => props.chips.length, () => props.loading, width],
+  async () => {
+    await nextTick()
+    const el = rail.value
+    overflows.value = !!el && el.scrollWidth > el.clientWidth + 1
+  },
+  { immediate: true }
+)
 
 function scroll(direction: -1 | 1) {
   rail.value?.scrollBy({ left: direction * Math.max(200, width.value * 0.6), behavior: 'smooth' })
 }
+
+/**
+ * Placeholder chip widths, in the proportions the real labels come out at
+ * ("All", "Live", then category names). A row of identical pills reads as a
+ * loading bar; these read as chips.
+ */
+const SKELETON_WIDTHS = ['w-14', 'w-16', 'w-20', 'w-24', 'w-[5.5rem]']
 
 /** Roving focus: arrow keys move the selection, which is also what moves focus. */
 function onArrowKey(direction: -1 | 1) {
@@ -54,7 +79,12 @@ function onArrowKey(direction: -1 | 1) {
       role="status"
       aria-label="Loading filters"
     >
-      <div v-for="n in 5" :key="n" class="h-8 w-24 shrink-0 animate-pulse rounded-full bg-muted" />
+      <!-- h-8 is exactly a real chip: py-1.5 twice over a text-sm line box. -->
+      <Skeleton
+        v-for="chipWidth in SKELETON_WIDTHS"
+        :key="chipWidth"
+        :class="['h-8 shrink-0 rounded-full', chipWidth]"
+      />
     </div>
 
     <template v-else>

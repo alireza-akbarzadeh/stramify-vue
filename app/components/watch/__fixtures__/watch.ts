@@ -175,5 +175,6 @@ export const channel: ChannelSummary = {
   name: 'EchoCollective',
   followers: '128.4k',
   isFollowing: false,
-  clipCount: 42
+  clipCount: 42,
+  notify: 'none'
 }

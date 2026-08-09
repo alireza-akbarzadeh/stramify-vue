@@ -1,3 +1,5 @@
+import { selectFollowingFeed } from '../../utils/home'
+import { getSessionUser } from '../../utils/session'
 import type { HomeVideo } from '#shared/types/home'
 
 /**

@@ -30,6 +30,7 @@ export interface WatchEngagement {
   saved: boolean
   reactPending: boolean
   followPending: boolean
+  notifyPending: boolean
 }
 
 export type RelatedPanel = AsyncPanel<RelatedItem>

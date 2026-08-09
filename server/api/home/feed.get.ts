@@ -1,4 +1,6 @@
 import { z } from 'zod'
+import { selectHomeFeed } from '../../utils/home'
+import { getSessionUser } from '../../utils/session'
 import { CLIP_CATEGORIES, toCategorySlug } from '#shared/utils/category'
 import { HOME_PAGE_SIZE } from '#shared/types/home'
 import type { HomeFeedPage } from '#shared/types/home'
@@ -13,11 +15,10 @@ const categorySlugs = CLIP_CATEGORIES.map(toCategorySlug) as [CategorySlug, ...C
 const querySchema = z.object({
   category: z.enum(categorySlugs).optional(),
   // Spelled out rather than `z.coerce.boolean()`, which treats any non-empty
-  // string as true — including `?live=false`.
-  live: z
-    .enum(['true', 'false'])
-    .optional()
-    .transform((value) => value === 'true'),
+  // string as true — including `?live=false`. Converted at the call site
+  // instead of with `.transform()`, which changes how the object schema treats
+  // a missing key.
+  live: z.enum(['true', 'false']).optional(),
   cursor: z.coerce.number().int().min(0).max(10_000).default(0),
   limit: z.coerce.number().int().min(1).max(48).default(HOME_PAGE_SIZE)
 })
@@ -41,7 +42,7 @@ export default defineEventHandler(async (event): Promise<HomeFeedPage> => {
 
   return await selectHomeFeed({
     category: category ?? null,
-    liveOnly: live,
+    liveOnly: live === 'true',
     cursor,
     limit,
     userId: user?.id ?? null
