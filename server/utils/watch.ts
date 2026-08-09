@@ -2,7 +2,7 @@ import { eq, ilike } from 'drizzle-orm'
 import { db } from '../db/client'
 import { clips, liveStreams } from '../db/schema'
 import type { ClipRow, LiveStreamRow } from './discovery'
-import { formatAge, formatCount, formatDuration, formatUptime } from './format'
+import { formatAge, formatDuration, formatUptime } from './format'
 import type { RelatedItem, WatchTarget } from '#shared/types/watch'
 
 /**

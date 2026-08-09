@@ -493,3 +493,62 @@ migrated `useAuth` → `stores/auth` and `useWatchlist` → `stores/watchlist`
 session edited two of this one's new components in place to use the stores —
 left as-is, and the rest of this work was written against the stores for the
 same reason. If `git status` looks strange around these files, that's why.
+
+## Home feed session, 2026-08-09 (appended)
+
+**Built**: `/` is now the app's home feed instead of the marketing landing
+page. Full write-up in [home-feed.md](./home-feed.md), decisions in ADR-020.
+
+- **`/` → `HomeView`** under the dashboard layout: a YouTube-style chip bar
+  (All · Live · one chip per non-empty category), a "Latest from channels you
+  follow" rail, and a ranked recommendation grid mixing clips and live
+  sessions. Works signed out — the ranking just loses the follow term.
+- **The landing page moved verbatim to `/marketing`** (the user had already
+  staged that file) and is linked from the footer's Company column as "Why
+  Streamify", so it isn't orphaned.
+- **Ranking is an explicit written-down score** in `server/utils/home.ts`:
+  `ln(1+audience) + 1.5·ln(1+likes) − ln(1+dislikes) + 3·followed + 1.5·live +
+  2/(1+age_days)`. It reads `clips`, `live_streams`, `reactions` and `follows`
+  — all existing tables. **No migration, no schema change in this session.**
+- **No new search.** `/api/search` + `AppSearch` in the top bar already do what
+  was asked and every page under the dashboard layout gets them; home
+  deliberately does not grow a second search box.
+- Skeletons mirror the real card's box model line-box for line-box
+  (`HomeVideoCardSkeleton`), so neither the first load, a chip change, nor a
+  "Load more" causes reflow.
+- New files: `shared/types/home.ts`, `shared/utils/home.ts` (+ spec),
+  `server/utils/home.ts`, `server/api/home/{feed,following}.get.ts`,
+  `app/composables/{useHomeFeed,useFollowingFeed}.ts`, seven components under
+  `app/components/home/` (+ `HomeVideoCard.spec.ts`), `docs/home-feed.md`,
+  `e2e/marketing.spec.ts`. `e2e/home.spec.ts` was rewritten for the feed.
+
+**⚠️ NOT VERIFIED — do this first if you're picking it up.** Same cause as the
+three sessions before it: the shell tool's safety classifier was unavailable
+for most of this session, so the toolchain never ran and the page was never
+opened in a browser. Still owed:
+
+1. `npm run lint && npm run typecheck && npm run test && npm run test:e2e`.
+   Likeliest breakages, all in code that was never compiled:
+   - `db.execute<FeedRow>()` in `server/utils/home.ts` — same drizzle generic
+     the channels session flagged; `FeedRow` is a `type` alias for that reason
+     but the postgres-js `RowList` may still need a cast.
+   - `server/api/home/*.get.ts` rely on Nitro **auto-imports** for
+     `getSessionUser` / `selectHomeFeed` / `selectFollowingFeed` (matching the
+     working-tree edit to `watch/[slug]/view.post.ts`), unlike every older
+     route, which imports explicitly. If auto-import isn't picking them up,
+     add the relative imports back.
+   - The nested-CTE `sql` template and the `now()::timestamp` recency term have
+     never been executed against Postgres.
+2. Confirm migration `0004_powerful_bloodstrike.sql` (the `channels` table) is
+   actually **applied** — the home query `left join`s `channels` for avatars,
+   so it 500s if the previous session's migration is still unapplied.
+3. Eyeball `/` signed out and signed in: chips filter, "Load more" appends,
+   the subscriptions rail only shows when you follow someone, skeletons don't
+   shift the layout, and 375×812 is single-column with no horizontal overflow.
+
+**Working-tree note**: this session did *not* touch the pre-existing uncommitted
+edits to `server/utils/{channels,dashboard,discovery,format,watch}.ts` and
+`server/api/watch/[slug]/*` (a `formatCount` re-export removal that leans on
+auto-imports). One of them introduced a typo — "read it xxas" in
+`server/utils/format.ts`'s `formatUptime` doc comment — left alone as someone
+else's in-flight work.

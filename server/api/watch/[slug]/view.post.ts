@@ -1,9 +1,7 @@
 import { eq, sql } from 'drizzle-orm'
 import { z } from 'zod'
-import { db } from '../../../db/client'
-import { clips } from '../../../db/schema'
-import { resolveWatchTarget } from '../../../utils/watch'
-import { formatCount } from '../../../utils/format'
+import { clips } from '#server/db/schema'
+import { db } from '#server/db/client.ts'
 
 const paramsSchema = z.object({ slug: z.string().min(1).max(200) })
 

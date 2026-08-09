@@ -33,7 +33,7 @@ const RADIO_TEMPLATE = `
       </media-menu-button>
     </PlayerTooltip>
 
-    <media-menu-items class="player-menu-items" placement="top end" offset="8">
+    <media-menu-items class="player-menu-items" placement="top end" :offset="8">
       <div class="player-menu-label">Speed</div>
       <media-speed-radio-group normal-label="Normal" v-html="RADIO_TEMPLATE" />
 

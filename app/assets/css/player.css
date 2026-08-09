@@ -21,11 +21,27 @@
   overflow: hidden;
   border-radius: var(--radius);
   background: #000;
+  /* Makes the player a query container so the `cqw` caption size below scales
+     with the video box rather than the viewport — without this it silently
+     falls back to viewport units, which reads as oversized in a sidebar-sized
+     player and undersized in fullscreen. */
+  container-type: inline-size;
 }
 
 .player[data-fullscreen] {
   border-radius: 0;
   aspect-ratio: auto;
+}
+
+/* Theater mode: the grid cell already spans both columns (see WatchLayout), so
+   all that's left is stopping a wide viewport from making the video taller
+   than the screen. The subtracted height is the app's top bar plus enough room
+   to keep the title visible under the player. */
+@media (min-width: 64rem) {
+  .player-theater {
+    width: min(100%, calc((100dvh - 11rem) * 16 / 9));
+    margin-inline: auto;
+  }
 }
 
 /* ── Poster and gestures ────────────────────────────────────────── */
@@ -35,17 +51,28 @@
 .player-poster {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   border-radius: inherit;
   opacity: 0;
   transition: opacity 0.2s var(--player-ease);
   pointer-events: none;
 }
 
+/* `media-poster` renders an `<img>` of its own, so the sizing has to land on
+   the child — on the host it does nothing but leave the image at its
+   intrinsic size, spilling out of the frame. */
+.player-poster img {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
 .player-poster[data-visible] {
   opacity: 1;
+}
+
+.player-poster[data-hidden] {
+  display: none;
 }
 
 media-gesture {
@@ -67,24 +94,34 @@ media-gesture {
   padding: 2.5rem 0.5rem 0.5rem;
   background: linear-gradient(to top, rgb(0 0 0 / 0.85), rgb(0 0 0 / 0.4) 60%, transparent);
   opacity: 0;
+  /* Hidden rather than merely transparent so a keyboard user doesn't tab into
+     controls they can't see. Delaying only the visibility switch lets the fade
+     finish first. */
+  visibility: hidden;
   transform: translateY(0.5rem);
   transition:
     opacity 0.2s var(--player-ease),
-    transform 0.2s var(--player-ease);
-  pointer-events: none;
+    transform 0.2s var(--player-ease),
+    visibility 0s linear 0.2s;
 }
 
 .player-controls[data-visible] {
   opacity: 1;
+  visibility: visible;
   transform: translateY(0);
-  pointer-events: auto;
+  transition:
+    opacity 0.2s var(--player-ease),
+    transform 0.2s var(--player-ease),
+    visibility 0s;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .player-controls {
-    transition-duration: 0.01ms;
-    transform: none;
-  }
+/* Vidstack pins `pointer-events: none` on `media-controls` with an inline
+   style, which no stylesheet rule on the element itself can outrank — so the
+   rows have to opt back in or nothing on the bar is clickable. Leaving the
+   gradient padding above them inert is the point: a click there falls through
+   to `media-gesture` and pauses, the way it does on YouTube. */
+.player-controls > * {
+  pointer-events: auto;
 }
 
 .player-row {
@@ -99,13 +136,18 @@ media-gesture {
 
 /* ── Buttons ────────────────────────────────────────────────────── */
 
+/* The theater toggle is a plain `<button>` rather than a Vidstack element, so
+   this carries a UA reset the `media-*` buttons don't need. */
 .player-button {
   display: inline-grid;
   place-items: center;
   width: 2.25rem;
   height: 2.25rem;
   flex-shrink: 0;
+  padding: 0;
+  border: 0;
   border-radius: 0.5rem;
+  background: none;
   color: #fff;
   cursor: pointer;
   transition: background-color 0.15s var(--player-ease);
@@ -120,14 +162,26 @@ media-gesture {
   outline-offset: 2px;
 }
 
+.player-button[aria-hidden='true'],
+.player-button:not([data-supported]):is(media-pip-button, media-fullscreen-button) {
+  display: none;
+}
+
 .player-button svg {
   width: 1.25rem;
   height: 1.25rem;
+  grid-area: 1 / 1;
 }
 
 /* Icon swapping is driven by the state Vidstack already publishes, so no
-   component needs to mirror playback state into its own reactive copy. */
+   component needs to mirror playback state into its own reactive copy.
+   `data-when-on` is the "state attribute present" variant — paused for the
+   play button, muted for volume, active for captions/PiP/fullscreen. */
 .player-button [data-when-on],
+.player-button [data-when-low] {
+  display: none;
+}
+
 .player-button[data-paused] [data-when-off],
 .player-button[data-active] [data-when-off],
 .player-button[data-muted] [data-when-off] {
@@ -138,6 +192,18 @@ media-gesture {
 .player-button[data-active] [data-when-on],
 .player-button[data-muted] [data-when-on] {
   display: block;
+}
+
+/* Volume is three-way, not a toggle: Vidstack reports `data-state` as
+   muted | low | high, so the half-volume icon needs its own pair of rules
+   rather than riding on the on/off ones above. Without this the low icon
+   never hides and stacks on top of the high one. */
+.player-button[data-state='low'] [data-when-low] {
+  display: block;
+}
+
+.player-button[data-state='low'] [data-when-off] {
+  display: none;
 }
 
 /* ── Time scrubber ──────────────────────────────────────────────── */
@@ -295,15 +361,62 @@ media-gesture {
 
 /* ── Tooltips ───────────────────────────────────────────────────── */
 
+/* Vidstack gives `media-tooltip` `display: contents` itself but leaves the
+   trigger alone, so without this the wrapper — not the button inside it —
+   becomes the flex item and the bar's sizing and gaps go with it. */
+media-tooltip-trigger {
+  display: contents;
+}
+
 .player-tooltip {
-  padding: 0.25rem 0.5rem;
+  padding: 0.3125rem 0.5rem;
+  border: 1px solid rgb(255 255 255 / 0.12);
   border-radius: 0.375rem;
-  background: rgb(0 0 0 / 0.9);
+  background: rgb(9 9 11 / 0.95);
+  box-shadow: 0 8px 20px -8px rgb(0 0 0 / 0.9);
   font-size: 0.75rem;
   font-weight: 500;
+  line-height: 1.25;
   color: #fff;
   white-space: nowrap;
   z-index: 40;
+  opacity: 0;
+}
+
+/* Two reasons this is an animation and not a transition. Vidstack un-hides the
+   bubble before floating-ui has resolved its position, so it paints once at
+   the control bar's top-left corner — fading in from nothing hides that frame.
+   And on the way out Vidstack waits for `animationend` before re-applying
+   `display: none`; a transition isn't an animation, so the bubble would just
+   vanish mid-fade. */
+.player-tooltip[data-visible] {
+  animation: player-tooltip-in 0.15s var(--player-ease) forwards;
+}
+
+.player-tooltip:not([data-visible]) {
+  animation: player-tooltip-out 0.15s var(--player-ease);
+}
+
+@keyframes player-tooltip-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.375rem) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes player-tooltip-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(0.375rem) scale(0.96);
+  }
 }
 
 /* ── Settings menu ──────────────────────────────────────────────── */
@@ -315,9 +428,16 @@ media-gesture {
   border-radius: 0.75rem;
   background: color-mix(in oklab, var(--popover) 92%, transparent);
   backdrop-filter: blur(12px);
+  box-shadow: 0 12px 32px -12px rgb(0 0 0 / 0.9);
   color: var(--popover-foreground);
   font-size: 0.8125rem;
   z-index: 40;
+}
+
+/* Same asynchronous-placement problem as the tooltip — Vidstack shows the menu
+   a frame before floating-ui has positioned it. */
+.player-menu-items[aria-hidden='false'] {
+  animation: player-tooltip-in 0.15s var(--player-ease);
 }
 
 .player-menu-items[data-resizing] {
@@ -380,20 +500,76 @@ media-gesture {
   opacity: 1;
 }
 
+/* ── Reduced motion ─────────────────────────────────────────────── */
+
+/* Everything here still has to *arrive* — the tooltip and menu depend on
+   opacity for the pre-placement frame, and Vidstack waits on `animationend`
+   before hiding the tooltip — so the durations collapse rather than the
+   animations being dropped. */
+@media (prefers-reduced-motion: reduce) {
+  .player-controls,
+  .player-poster,
+  .player-preview,
+  .player-thumb,
+  .player-track,
+  .player-button {
+    transition-duration: 0.01ms;
+  }
+
+  .player-menu-items[aria-hidden='false'],
+  .player-tooltip[data-visible],
+  .player-tooltip:not([data-visible]) {
+    animation-duration: 0.01ms;
+  }
+
+  .player-controls {
+    transform: none;
+  }
+}
+
 /* ── Captions ───────────────────────────────────────────────────── */
 
 .player-captions {
   position: absolute;
   inset: 0;
   z-index: 15;
+  margin: 1%;
   font-size: clamp(0.875rem, 2.5cqw, 1.375rem);
-  transition: bottom 0.2s var(--player-ease);
+  text-align: center;
   pointer-events: none;
+  user-select: none;
+}
+
+/* Vidstack flags the overlay when there's no caption track or captions are
+   switched off. Without this the last rendered cue would sit there forever. */
+.player-captions[aria-hidden='true'] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* The caption renderer creates one of these per cue and writes the WebVTT
+   positioning fields onto it as `--cue-*` variables — they only do anything if
+   the box is positioned and actually reads them. Left unstyled, every cue
+   stacks in the overlay's top-left corner. */
+.player-captions [data-part='cue-display'] {
+  position: absolute;
+  top: var(--cue-top);
+  left: var(--cue-left);
+  right: var(--cue-right);
+  bottom: var(--cue-bottom);
+  width: var(--cue-width, auto);
+  height: var(--cue-height, auto);
+  box-sizing: border-box;
+  transform: var(--cue-transform);
+  text-align: var(--cue-text-align, center);
+  white-space: pre-line;
 }
 
 .player-captions [data-part='cue'] {
+  display: inline-block;
   padding: 0.2em 0.5em;
   border-radius: 0.25rem;
   background: rgb(0 0 0 / 0.75);
+  line-height: 1.35;
   color: #fff;
 }
