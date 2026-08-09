@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Button } from '@/components/ui/button'
 import WatchUpNextCard from '@/components/watch/WatchUpNextCard.vue'
 import { useSearch } from '@/composables/useSearch'
@@ -31,7 +31,9 @@ const total = computed(() => videos.value.length + channels.value.length)
       </h1>
       <p class="mt-1 text-sm text-muted-foreground" role="status">
         <template v-if="!query">Type in the bar above to search videos and channels.</template>
-        <template v-else-if="query.length < 2">Keep typing — searches start at two characters.</template>
+        <template v-else-if="query.length < 2"
+          >Keep typing — searches start at two characters.</template
+        >
         <template v-else-if="isPending">Searching…</template>
         <template v-else-if="isError">Search is unavailable right now.</template>
         <template v-else>{{ total }} {{ total === 1 ? 'result' : 'results' }}</template>
@@ -54,7 +56,7 @@ const total = computed(() => videos.value.length + channels.value.length)
     >
       <p class="text-lg font-semibold text-foreground">Couldn't run that search</p>
       <p class="mt-2 text-sm text-muted-foreground">The request didn't reach the server.</p>
-      <Button type="button" variant="outline" size="sm" class="mt-4" @click="refetch()">
+      <Button class="mt-4" size="sm" type="button" variant="outline" @click="refetch()">
         Retry
       </Button>
     </div>
@@ -67,8 +69,8 @@ const total = computed(() => videos.value.length + channels.value.length)
       <p class="mt-2 text-sm text-muted-foreground">
         Try a shorter word, a creator's name, or a category like Music or Gaming.
       </p>
-      <Button as-child variant="outline" size="sm" class="mt-4">
-        <NuxtLink to="/clips">Browse everything</NuxtLink>
+      <Button as-child class="mt-4" size="sm" variant="outline">
+        <NuxtLink to="/app/pages/explore">Browse everything</NuxtLink>
       </Button>
     </div>
 

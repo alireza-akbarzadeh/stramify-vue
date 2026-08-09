@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Button } from '@/components/ui/button'
 import { useWatchlistStore } from '@/stores/watchlist'
 import { relatedToItem } from '@/utils/watchlist'
@@ -46,13 +46,13 @@ const MORE_SKELETONS = 4
 </script>
 
 <template>
-  <section :id="panelId" role="tabpanel" :aria-labelledby="labelledBy">
+  <section :id="panelId" :aria-labelledby="labelledBy" role="tabpanel">
     <h2 class="sr-only">Recommended for you</h2>
 
     <!-- Covers the first load *and* every filter change: each chip is its own
          query key, so switching to one that hasn't been fetched is pending
          again, and switching back to a cached one skips this entirely. -->
-    <div v-if="pending" :class="GRID" role="status" aria-label="Loading recommendations">
+    <div v-if="pending" :class="GRID" aria-label="Loading recommendations" role="status">
       <HomeVideoCardSkeleton v-for="n in INITIAL_SKELETONS" :key="n" />
     </div>
 
@@ -62,7 +62,7 @@ const MORE_SKELETONS = 4
     >
       <p class="text-lg font-semibold text-foreground">Couldn't load your feed</p>
       <p class="mt-2 text-sm text-muted-foreground">The request didn't reach the server.</p>
-      <Button type="button" variant="outline" size="sm" class="mt-4" @click="emit('retry')">
+      <Button class="mt-4" size="sm" type="button" variant="outline" @click="emit('retry')">
         Retry
       </Button>
     </div>
@@ -75,8 +75,8 @@ const MORE_SKELETONS = 4
       <p class="mt-2 text-sm text-muted-foreground">
         Try another filter, or browse everything that's been published.
       </p>
-      <Button as-child variant="outline" size="sm" class="mt-4">
-        <NuxtLink to="/clips">Browse all clips</NuxtLink>
+      <Button as-child class="mt-4" size="sm" variant="outline">
+        <NuxtLink to="/app/pages/explore">Browse all clips</NuxtLink>
       </Button>
     </div>
 
@@ -85,8 +85,8 @@ const MORE_SKELETONS = 4
         <HomeVideoCard
           v-for="video in videos"
           :key="`${video.kind}-${video.id}`"
-          :video="video"
           :saved="watchlist.isSaved(video.id)"
+          :video="video"
           @toggle-save="watchlist.toggle(relatedToItem(video))"
         />
         <!-- The next page lands in these slots, so the page grows downward
@@ -97,7 +97,7 @@ const MORE_SKELETONS = 4
       </div>
 
       <div v-if="hasMore" class="mt-10 flex justify-center">
-        <Button type="button" variant="outline" :disabled="loadingMore" @click="emit('load-more')">
+        <Button :disabled="loadingMore" type="button" variant="outline" @click="emit('load-more')">
           {{ loadingMore ? 'Loading…' : 'Load more' }}
         </Button>
       </div>

@@ -1,14 +1,22 @@
 import {
   BarChart3,
-  Bookmark,
   Clapperboard,
+  Clock3,
+  GamepadDirectional,
   Grid2x2,
   Heart,
+  History,
   House,
   LayoutDashboard,
+  ListVideo,
+  MicSignal,
+  Music,
+  Newspaper,
   Radio,
   ShieldCheck,
   ShieldHalf,
+  Store,
+  Trophy,
   Tv,
   Video
 } from '@lucide/vue'
@@ -45,13 +53,66 @@ export const discoverLinks: NavLink[] = [
  * is already the link home) and so is anything still badged as a placeholder —
  * the marketing chrome shouldn't advertise a route that isn't built yet.
  */
-export const headerLinks: NavLink[] = discoverLinks.filter(
-  (link) => link.to !== '/' && !link.badge
-)
+export const headerLinks: NavLink[] = discoverLinks.filter((link) => link.to !== '/' && !link.badge)
 
+export const exploreLinks: NavLink[] = [
+  {
+    label: 'Shopping',
+    to: '/shopping',
+    icon: Store
+  },
+  {
+    label: 'Music',
+    to: '/music',
+    icon: Music
+  },
+  {
+    label: 'Movies & Tv',
+    to: '/trending',
+    icon: Clapperboard
+  },
+  {
+    label: 'Gaming',
+    to: '/gaming',
+    icon: GamepadDirectional
+  },
+  {
+    label: 'News',
+    to: '/news',
+    icon: Newspaper
+  },
+  {
+    label: 'Sports',
+    to: '/sports',
+    icon: Trophy
+  },
+  {
+    label: 'Podcasts',
+    to: '/podcasts',
+    icon: MicSignal
+  }
+]
 export const libraryLinks: NavLink[] = [
-  { label: 'Watchlist', to: '/watchlist', icon: Bookmark },
-  { label: 'Following', to: '/following', icon: Heart, badge: 'Phase 10' }
+  {
+    label: 'History',
+    to: '/history',
+    icon: History
+  },
+  {
+    label: 'Playlists',
+    to: '/playlists',
+    icon: ListVideo
+  },
+  {
+    label: 'Watch later',
+    to: '/watch-later',
+    icon: Clock3
+  },
+  {
+    label: 'Liked videos',
+    to: '/liked',
+    icon: Heart
+  }
 ]
 
 /** Signed-in only — every one of these routes is behind the `auth` middleware. */
