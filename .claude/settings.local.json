@@ -10,7 +10,9 @@
       "Bash(curl -sS -m 10 -o /dev/null -w \"%{http_code}\\\\n\" https://shadcn-vue.com/init)",
       "Bash(curl -sS -m 10 -o /dev/null -w \"%{http_code}\\\\n\" https://registry.npmjs.org)",
       "Bash(npm uninstall *)",
-      "Bash(graphify query *)"
+      "Bash(graphify query *)",
+      "Bash(node -e ' *)",
+      "Bash(grep -o 'media-play-button[^{,]*' layouts/video.css)"
     ],
     "defaultMode": "bypassPermissions"
   }
