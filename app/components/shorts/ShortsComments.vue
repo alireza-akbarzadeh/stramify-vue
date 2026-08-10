@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { toast } from 'vue-sonner'
 import type { CommentDraft, CommentSort } from '#shared/types/watch'
+import { useEventListener } from '@vueuse/core'
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import WatchComments from '@/components/watch/WatchComments.vue'
 import { useShortsActions } from '@/composables/useShortsActions'
@@ -11,11 +12,24 @@ import { useAuthStore } from '@/stores/auth'
 import { useShortsStore } from '@/stores/shorts'
 
 /**
- * Comments for whichever short opened them, in a sheet.
+ * Comments for whichever short opened them, in a drawer that rises out of the
+ * bottom of the short.
+ *
+ * Bottom rather than the side because the thread belongs to the video, not to
+ * the page: a panel flying in from the right edge of a 1440px window has no
+ * visible relationship to a 9:16 column in the middle of it. Width is tied to
+ * that column's own geometry — the reel is `100dvh` minus the top bar, the
+ * frame inside it is 9:16, so `height × 9/16` is exactly how wide the video is
+ * and the drawer lines up with its edges at any viewport height.
+ *
+ * `Sheet` (Reka UI Dialog) rather than a new drawer dependency: `side="bottom"`
+ * already ships the slide-up/slide-down `data-state` animation, and Reka's
+ * presence machine holds the unmount until the exit animation finishes. What it
+ * does not give is drag-to-dismiss — that would need `vaul-vue`.
  *
  * Both the API and the list are the watch page's — `/api/watch/[slug]/comments`
  * resolves a short's id like any other clip, and `WatchComments` is already
- * presentational, so this component is the sheet, the query wiring, and
+ * presentational, so this component is the drawer, the query wiring, and
  * nothing else. Rebuilding a second comment thread for the same table would be
  * two implementations of replies, sorting and optimistic likes.
  *
@@ -36,6 +50,31 @@ const open = computed({
   get: () => shorts.commentsOpen,
   set: (value: boolean) => !value && shorts.closeComments()
 })
+
+/**
+ * Pin the drawer's box to the reel's box.
+ *
+ * It is portalled to `<body>`, so centring it centres it on the *window* while
+ * the short is centred inside the reel — which the sidebar has pushed right and
+ * the up/down nav rail has trimmed on the right. Guessing either from CSS means
+ * re-deriving two widths that already move on their own (the sidebar collapses,
+ * the rail hides on mobile), so this reads the reel's real edges instead and
+ * lets `mx-auto` centre inside them.
+ */
+const railInset = ref({ left: '0px', right: '0px' })
+
+function measureReel() {
+  const el = document.querySelector('[data-shorts-reel]')
+  if (!el) return
+  const rect = el.getBoundingClientRect()
+  railInset.value = {
+    left: `${rect.left}px`,
+    right: `${window.innerWidth - rect.right}px`
+  }
+}
+
+watch(open, (isOpen) => isOpen && measureReel())
+useEventListener('resize', () => open.value && measureReel())
 
 function onPost(draft: CommentDraft) {
   if (!user.value) return toast.error('Log in to comment.')
@@ -65,15 +104,24 @@ function onLike(id: string) {
 
 <template>
   <Sheet v-model:open="open">
-    <SheetContent side="right" class="w-full gap-0 sm:max-w-md">
-      <SheetHeader class="border-b border-border px-5 py-4">
+    <SheetContent
+      side="bottom"
+      class="mx-auto h-[68dvh] max-h-[calc(100dvh-5rem)] gap-0 rounded-t-2xl border-x motion-reduce:animate-none sm:max-w-[min(32rem,calc((100dvh-4rem)*9/16))]"
+      :style="railInset"
+    >
+      <!--
+        The title is the dialog's accessible name and nothing else — `WatchComments`
+        renders its own heading with the live count, and two "Comments" headings
+        stacked on top of each other is what you get for keeping both visible.
+      -->
+      <SheetHeader class="sr-only">
         <SheetTitle>Comments</SheetTitle>
-        <SheetDescription class="sr-only">
+        <SheetDescription>
           Comments on the short you are watching. Press Escape to close.
         </SheetDescription>
       </SheetHeader>
 
-      <div class="min-h-0 flex-1 overflow-y-auto px-5 py-5">
+      <div class="min-h-0 flex-1 overflow-y-auto px-5 pb-5 pt-6">
         <WatchComments
           v-model:sort="sort"
           :comments="comments.data.value ?? []"

@@ -13,6 +13,11 @@ import ShortsSlide from './ShortsSlide.vue'
  * sidebar and top bar stay put and the browser's own overscroll never joins
  * in mid-flick. `overscroll-contain` is what stops a flick past the last short
  * from turning into a pull-to-refresh.
+ *
+ * A short that plays to the end scrolls the feed on by one — which is the
+ * whole reason the page works without touching it. The slide decides whether
+ * it is allowed to end at all (see its `loop`); by the time `ended` reaches
+ * here, moving on is always the right answer.
  */
 const props = defineProps<{ items: Short[]; hasMore: boolean; loadingMore: boolean }>()
 const emit = defineEmits<{ (e: 'load-more'): void }>()
@@ -48,7 +53,8 @@ watch(
   <div class="flex h-full min-h-0">
     <div
       ref="container"
-      class="h-full flex-1 snap-y snap-mandatory overflow-y-auto overscroll-contain scroll-smooth motion-reduce:scroll-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      data-shorts-reel
+      class="h-full flex-1 snap-y snap-mandatory scroll-smooth overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       tabindex="-1"
     >
       <ShortsSlide
@@ -56,6 +62,8 @@ watch(
         :key="short.id"
         :short="short"
         :distance="Math.abs(position - index)"
+        :last="position === count - 1 && !hasMore"
+        @ended="step(1)"
       />
 
       <p v-if="loadingMore" class="sr-only" role="status">Loading more shorts</p>

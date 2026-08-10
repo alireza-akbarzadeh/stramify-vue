@@ -6,6 +6,8 @@ import { useShortsStore } from '@/stores/shorts'
 
 /** The slice of Vidstack's player element this component drives. */
 type PlayerElement = HTMLElement & {
+  muted: boolean
+  state: { canPlay: boolean }
   play: () => Promise<void>
   pause: () => Promise<void> | void
 }
@@ -40,38 +42,60 @@ const player = useTemplateRef<PlayerElement>('player')
 // the toggle belongs to the short you're looking at.
 const isPaused = computed(() => !props.active || paused.value)
 
-async function sync() {
+/**
+ * Push the store's state onto the element. Deliberately synchronous: two of
+ * these can be in flight for the same short (a scroll and a `can-play` land in
+ * the same frame), and an `await` anywhere above the play/pause call lets an
+ * older `pause()` resume *after* a newer `play()` and leave the short sitting
+ * on its poster.
+ */
+function sync() {
   const el = player.value
   if (!el) return
 
-  // The attribute, and only the attribute. Vidstack exposes `muted` as a
-  // Maverick prop whose setter silently does nothing (`el.muted = true` leaves
-  // the video audible), and `remoteControl.mute()` is overridden again by the
-  // prop a frame later. Toggling the attribute is the one route that reaches
-  // the media element — which is also why the template must not carry a
-  // `muted` attribute of its own: Vue would turn it into that dead property
-  // assignment before this ever runs.
+  // Both routes, because each covers a half of the element's life that the
+  // other cannot. The attribute goes first and above the readiness guard: it is
+  // what Vidstack reads when it builds its initial state, so it is the only way
+  // the very first `<video>` is created already muted — and an unmuted first
+  // frame is exactly what the browser's autoplay policy refuses, which strands
+  // the short on its poster with no way back.
   el.toggleAttribute('muted', muted.value)
+
+  // `state` is Vidstack's own, so its absence means the custom element hasn't
+  // been upgraded yet — and until it has, `<media-player>` is an inert
+  // `HTMLElement` on which every route in is a silent no-op. `can-play` runs
+  // this again once the element is real.
+  if (!el.state) return
+
+  // The property is the half the attribute cannot do: once the element exists,
+  // a changed `muted` attribute is never reflected onto the `<video>`, which is
+  // how a short ends up playing audible behind a muted icon. It reads back
+  // stale because Vidstack routes it through a media *request* rather than
+  // assigning it — that is expected, and why the attribute above still matters.
+  el.muted = muted.value
 
   if (isPaused.value) return void el.pause()
 
-  try {
-    await el.play()
-  } catch {
+  el.play().catch(() => {
     // Browsers refuse to autoplay audio until the viewer has interacted with
     // the page. Dropping to muted keeps the feed moving instead of stranding
     // it on a poster; the watcher below replays this with sound off.
     if (!muted.value) shorts.muted = true
-  }
+  })
 }
 
-// Three triggers, because none covers the others: the state changing after
-// mount, the element existing at all, and the element becoming ready.
+// Four triggers, because none of them covers the others: the state changing
+// after mount, the element existing at all, the element becoming ready, and —
+// the one that is easy to leave out — playback actually starting. Vidstack
+// settles the provider's own `muted` somewhere after `can-play`, so a mute set
+// before that is quietly overwritten, and without this last re-assert the feed
+// opens with sound on behind a muted icon.
 // Bound with `useEventListener` rather than template handlers so the listeners
 // land on the custom element under their exact event names.
 watch([isPaused, muted], sync)
 onMounted(sync)
 useEventListener(player, 'can-play', sync)
+useEventListener(player, 'playing', sync)
 useEventListener(player, 'play', () => emit('play'))
 useEventListener(player, 'end', () => emit('ended'))
 </script>
