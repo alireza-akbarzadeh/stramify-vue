@@ -1,15 +1,10 @@
 <script lang="ts" setup>
-import { Separator } from '@/components/ui/separator'
-import { SidebarTrigger } from '@/components/ui/sidebar'
+import {Separator} from '@/components/ui/separator'
+import {SidebarTrigger} from '@/components/ui/sidebar'
 import AppSearch from '@/components/search/AppSearch.vue'
 import NotificationBell from '@/components/notifications/NotificationBell.vue'
-import { MonitorUp, Plus, Radio, SquarePen } from '@lucide/vue'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu' /**
+import {MonitorUp, Plus, Radio, SquarePen} from '@lucide/vue'
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from '@/components/ui/dropdown-menu' /**
  * The app shell's top bar: sidebar toggle, search, notifications, theme,
  * account.
  *
@@ -37,25 +32,37 @@ import {
 
 <template>
   <header
-    class="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-2 border-b border-border bg-glass px-3 backdrop-blur-xl sm:gap-3 sm:px-6"
+      class="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-2 border-b border-border bg-glass px-3 backdrop-blur-xl sm:gap-3 sm:px-6"
   >
-    <SidebarTrigger />
-    <Separator class="hidden h-5 sm:block" orientation="vertical" />
+    <SidebarTrigger/>
+    <Separator class="hidden h-5 sm:block" orientation="vertical"/>
 
-    <AppSearch />
+    <AppSearch/>
 
     <div class="ml-auto flex shrink-0 items-center gap-1 sm:gap-2">
       <DropdownMenu class="mr-2">
-        <DropdownMenuTrigger class="flex items-center gap-2"> <Plus />Create</DropdownMenuTrigger>
+        <DropdownMenuTrigger class="flex items-center gap-2">
+          <Plus/>
+          <span class="hidden md:flex">Create</span>
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem><MonitorUp /> Upload Video</DropdownMenuItem>
-          <DropdownMenuItem><Radio />Go Live</DropdownMenuItem>
-          <DropdownMenuItem><SquarePen />Create Post</DropdownMenuItem>
+          <DropdownMenuItem>
+            <MonitorUp/>
+            Upload Video
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Radio/>
+            Go Live
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <SquarePen/>
+            Create Post
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <NotificationBell />
-      <ThemeToggle />
-      <UserMenu />
+      <NotificationBell/>
+      <ThemeToggle/>
+      <UserMenu/>
     </div>
   </header>
 </template>
