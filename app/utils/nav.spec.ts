@@ -17,7 +17,11 @@ import {
     headerLinks,
     isNavLinkActive,
     libraryLinks,
-    mobileNavLinks
+    mobileNavLinks,
+    studioLinks,
+    studioManageLinks,
+    studioMobileLinks,
+    studioSettingsLink
 } from './nav'
 
 const pagesDir = fileURLToPath(new URL('../pages', import.meta.url))
@@ -46,7 +50,11 @@ const groups: Array<[string, NavLink[]]> = [
     ['creatorLinks', creatorLinks],
     ['headerLinks', headerLinks],
     ['accountLinks', accountLinks],
-    ['mobileNavLinks', mobileNavLinks]
+    ['mobileNavLinks', mobileNavLinks],
+    ['studioLinks', studioLinks],
+    ['studioManageLinks', studioManageLinks],
+    ['studioSettingsLink', [studioSettingsLink]],
+    ['studioMobileLinks', studioMobileLinks]
 ]
 
 describe.each(groups)('%s', (_name, links) => {
@@ -82,10 +90,24 @@ describe('mobileNavLinks', () => {
     })
 })
 
+describe('studioMobileLinks', () => {
+    // Same contract as `mobileNavLinks` — the bar both sets render is a
+    // `grid-cols-4`, so a fifth tab would silently wrap to a second row.
+    it('is exactly four tabs', () => {
+        expect(studioMobileLinks).toHaveLength(4)
+    })
+})
+
 describe('isNavLinkActive', () => {
     it('matches Home exactly instead of prefixing every route in the app', () => {
         expect(isNavLinkActive('/', '/')).toBe(true)
         expect(isNavLinkActive('/', '/live')).toBe(false)
+    })
+
+    it('honours `exact` so a section root stays dark on its own children', () => {
+        expect(isNavLinkActive('/studio', '/studio', true)).toBe(true)
+        expect(isNavLinkActive('/studio', '/studio/videos', true)).toBe(false)
+        expect(isNavLinkActive('/studio', '/studio/videos')).toBe(true)
     })
 
     it('treats a child route as active', () => {

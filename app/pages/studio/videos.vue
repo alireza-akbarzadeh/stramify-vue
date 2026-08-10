@@ -1,8 +1,11 @@
 <script lang="ts" setup>
-definePageMeta({layout: 'dashboard'})
-useHead({title: 'Studio Videos — Streamify'})
+definePageMeta({middleware: 'auth', layout: 'studio'})
+useHead({title: 'Content — Streamify Studio'})
 </script>
 
 <template>
-  <ComingSoon description="we weill implement this as soone as possible" title="studio videos"/>
+  <ComingSoon
+      description="Every video, stream and clip you've published, with its visibility, views and comments in one table."
+      title="Channel content"
+  />
 </template>

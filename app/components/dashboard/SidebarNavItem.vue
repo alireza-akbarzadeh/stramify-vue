@@ -19,7 +19,7 @@ const {state, isMobile} = useSidebar()
 /** Text shows everywhere except the desktop rail. */
 const showLabel = computed(() => state.value === 'expanded' || isMobile.value)
 
-const isActive = computed(() => isNavLinkActive(props.link.to, route.path))
+const isActive = computed(() => isNavLinkActive(props.link.to, route.path, props.link.exact))
 </script>
 
 <template>
@@ -55,7 +55,12 @@ const isActive = computed(() => isNavLinkActive(props.link.to, route.path))
           />
         </span>
 
-        <span v-if="showLabel" class="min-w-0 flex-1 truncate">
+        <!--
+          Hidden rather than dropped on the rail. `v-if` left the row with no
+          accessible name at all — the hover tooltip isn't one, so a screen
+          reader met a column of links that each announced as just their href.
+        -->
+        <span :class="showLabel ? 'min-w-0 flex-1 truncate' : 'sr-only'">
           {{ link.label }}
         </span>
 

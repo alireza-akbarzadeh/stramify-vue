@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type {NavLink} from '@/utils/nav'
 import {isNavLinkActive, mobileNavLinks} from '@/utils/nav'
 
 /**
@@ -12,19 +13,28 @@ import {isNavLinkActive, mobileNavLinks} from '@/utils/nav'
  *
  * `pb-[env(safe-area-inset-bottom)]` keeps the row clear of the iOS home
  * indicator; on everything else the inset is 0 and the bar sits flush.
+ *
+ * `links` exists so the studio shell can hand it a creator-scoped set instead
+ * of the browse one; the row is a `grid-cols-4`, so whatever is passed has to
+ * be four tabs (`nav.spec.ts` holds both sets to that).
  */
+withDefaults(defineProps<{links?: NavLink[]; label?: string}>(), {
+    links: () => mobileNavLinks,
+    label: 'Primary'
+})
+
 const route = useRoute()
 </script>
 
 <template>
   <nav
-      aria-label="Primary"
+      :aria-label="label"
       class="fixed inset-x-0 bottom-0 z-40 border-t border-border/60 bg-glass pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden"
   >
     <ul class="grid grid-cols-4">
-      <li v-for="link in mobileNavLinks" :key="link.to">
+      <li v-for="link in links" :key="link.to">
         <NuxtLink
-            :aria-current="isNavLinkActive(link.to, route.path) ? 'page' : undefined"
+            :aria-current="isNavLinkActive(link.to, route.path, link.exact) ? 'page' : undefined"
             :to="link.to"
             class="group flex h-14 select-none flex-col items-center justify-center gap-0.5 text-[10px] font-medium text-muted-foreground transition-colors duration-150 aria-[current=page]:text-primary active:scale-[0.97]"
         >

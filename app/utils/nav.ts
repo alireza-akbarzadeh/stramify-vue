@@ -1,5 +1,7 @@
 import {
     BarChart3,
+    ChartNoAxesColumn,
+    CircleDollarSign,
     Clapperboard,
     Clock3,
     GamepadDirectional,
@@ -9,10 +11,13 @@ import {
     House,
     LayoutDashboard,
     ListVideo,
+    MessageSquareText,
     MicSignal,
     Music,
     Newspaper,
+    Palette,
     Radio,
+    Settings,
     ShieldCheck,
     ShieldHalf,
     Store,
@@ -28,6 +33,12 @@ export interface NavLink {
     icon: Component
     /** Short chip on the right — marks a route that's still a placeholder. */
     badge?: string
+    /**
+     * Match `to` exactly instead of as a path prefix. Needed by a link that
+     * sits at the root of its own section (`/studio`), which would otherwise
+     * stay lit on every child route underneath it.
+     */
+    exact?: boolean
 }
 
 /**
@@ -134,9 +145,51 @@ export const mobileNavLinks: NavLink[] = [
 /** Signed-in only — every one of these routes is behind the `auth` middleware. */
 export const creatorLinks: NavLink[] = [
     {label: 'Overview', to: '/dashboard', icon: LayoutDashboard},
+    {label: 'Studio', to: '/studio', icon: Clapperboard},
     {label: 'Go live', to: '/stream', icon: Radio, badge: 'Phase 7'},
     {label: 'Analytics', to: '/analytics', icon: BarChart3}
 ]
+
+/**
+ * Creator Studio's own sidebar — the second nav in the app.
+ *
+ * It is deliberately *not* a subset of `creatorLinks`: the studio is a separate
+ * surface with its own shell (`layouts/studio.vue`), the way YouTube Studio sits
+ * beside YouTube rather than inside it. Everything here is scoped to one
+ * channel's own content, so none of it belongs in the browse sidebar.
+ *
+ * Split into two groups because the first four are the daily loop (look at the
+ * channel, then at a video, then at the numbers, then at the replies) and the
+ * rest are things you configure occasionally. Same dead-link rule as above —
+ * every `to` is a page on disk, asserted in `nav.spec.ts`.
+ */
+export const studioLinks: NavLink[] = [
+    {label: 'Dashboard', to: '/studio', icon: LayoutDashboard, exact: true},
+    {label: 'Content', to: '/studio/videos', icon: Video},
+    {label: 'Analytics', to: '/studio/analytics', icon: ChartNoAxesColumn},
+    {label: 'Comments', to: '/studio/comments', icon: MessageSquareText}
+]
+
+export const studioManageLinks: NavLink[] = [
+    {label: 'Playlists', to: '/studio/playlists', icon: ListVideo},
+    {label: 'Monetization', to: '/studio/monetization', icon: CircleDollarSign},
+    {label: 'Customization', to: '/studio/customization', icon: Palette}
+]
+
+/** The studio's own settings row, pinned to the sidebar footer like YouTube's. */
+export const studioSettingsLink: NavLink = {
+    label: 'Settings',
+    to: '/studio/settings',
+    icon: Settings
+}
+
+/**
+ * The studio's phone tab bar. Same four-tab contract as `mobileNavLinks` — the
+ * bar is a `grid-cols-4` — and the same reasoning: these are the destinations a
+ * creator opens on a phone, with the rest of the studio nav one tap away in the
+ * sidebar sheet.
+ */
+export const studioMobileLinks: NavLink[] = studioLinks
 
 /**
  * Where the account menu can take you — shared by every surface that renders
@@ -151,8 +204,10 @@ export const accountLinks: NavLink[] = [
 
 /**
  * Whether a nav link is the current page. `/` matches exactly — as a prefix it
- * would light up on every route in the app.
+ * would light up on every route in the app — and so does any link that opts in
+ * with `exact`, which is how `/studio` stays dark while you're on
+ * `/studio/videos` and its own row isn't the one you're looking at.
  */
-export function isNavLinkActive(to: string, path: string): boolean {
-    return to === '/' ? path === to : path === to || path.startsWith(`${to}/`)
+export function isNavLinkActive(to: string, path: string, exact = false): boolean {
+    return to === '/' || exact ? path === to : path === to || path.startsWith(`${to}/`)
 }

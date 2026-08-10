@@ -11,7 +11,10 @@
       "Bash(curl -sS -m 10 -o /dev/null -w \"%{http_code}\\\\n\" https://registry.npmjs.org)",
       "Bash(npm uninstall *)",
       "PowerShell(node --version)",
-      "PowerShell(npm --version)"
+      "PowerShell(npm --version)",
+      "PowerShell(Write-Output \"--- node/npm ---\"; node --version; npm --version; Write-Output \"--- version managers ---\"; foreach \\($c in @\\('nvm','fnm','volta','pnpm','yarn','bun'\\)\\) { $p = Get-Command $c -ErrorAction SilentlyContinue; if \\($p\\) { \"$c : $\\($p.Source\\)\" } else { \"$c : not found\" } })",
+      "PowerShell(nvm list 2>&1)",
+      "PowerShell(nvm use 22.23.1 2>&1)"
     ],
     "defaultMode": "bypassPermissions"
   }

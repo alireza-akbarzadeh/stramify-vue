@@ -1,8 +1,11 @@
 <script lang="ts" setup>
-definePageMeta({layout: 'studio'})
-useHead({title: 'Studio analytics — Streamify'})
+definePageMeta({middleware: 'auth', layout: 'studio'})
+useHead({title: 'Analytics — Streamify Studio'})
 </script>
 
 <template>
-  <ComingSoon description="we weill implement this as soone as possible" title="Studio analytics"/>
+  <ComingSoon
+      description="Watch time, reach and audience for your channel, once the analytics tables are real."
+      title="Channel analytics"
+  />
 </template>
