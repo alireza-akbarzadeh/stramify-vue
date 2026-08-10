@@ -43,6 +43,13 @@
       "when": 1786636800000,
       "tag": "0005_calm_wild_pack",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1786636800001,
+      "tag": "0006_square_micromax",
+      "breakpoints": true
     }
   ]
 }

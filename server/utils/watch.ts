@@ -25,6 +25,7 @@ export function toWatchClip(row: ClipRow): WatchTarget {
     description: row.description ?? '',
     image: row.thumbnailUrl,
     videoUrl: row.videoUrl,
+    orientation: row.orientation,
     views: `${formatCount(row.views)} views`,
     publishedAt: formatAge(row.createdAt),
     duration: formatDuration(row.durationSeconds)

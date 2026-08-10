@@ -1,4 +1,5 @@
 import { onKeyStroke } from '@vueuse/core'
+import { isShortcutBlocked } from '@/utils/keyboard'
 
 /**
  * Theater mode: the player widens to the full content column and the sidebar
@@ -16,9 +17,6 @@ export function useTheaterMode() {
   return { theater, toggle: () => (theater.value = !theater.value) }
 }
 
-/** Where a bare letter is text the viewer is typing, not a shortcut. */
-const TYPING_TARGET = 'input, textarea, select, [contenteditable]:not([contenteditable="false"])'
-
 /**
  * Binds `t` — the shortcut YouTube uses. Registered by `WatchLayout` so it
  * lives and dies with the watch page rather than leaking onto every route.
@@ -31,8 +29,7 @@ export function useTheaterShortcut() {
   const { toggle } = useTheaterMode()
 
   onKeyStroke('t', (event) => {
-    if (event.metaKey || event.ctrlKey || event.altKey) return
-    if ((event.target as Element | null)?.closest?.(TYPING_TARGET)) return
+    if (isShortcutBlocked(event)) return
     event.preventDefault()
     toggle()
   })

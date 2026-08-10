@@ -53,7 +53,7 @@ export const discoverLinks: NavLink[] = [
     {label: 'Home', to: '/', icon: House},
     {label: 'Live', to: '/live', icon: Radio},
     {label: 'Clips', to: '/clips', icon: Video},
-    {label: 'Shorts', to: '/shorts', icon: Clapperboard, badge: 'Phase 6'},
+    {label: 'Shorts', to: '/shorts', icon: Clapperboard},
     {label: 'Categories', to: '/category', icon: Grid2x2},
     {label: 'Channels', to: '/channels', icon: Tv}
 ]

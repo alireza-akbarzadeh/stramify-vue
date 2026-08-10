@@ -83,6 +83,10 @@ const CANDIDATES = sql`
          c.created_at as published_at,
          c.duration_seconds
   from clips c
+  -- Shorts have their own full-screen feed at /shorts; a 9:16 video in this
+  -- page's 16:9 card is two black bars. Same rule as landscapeClips in
+  -- utils/discovery.ts, spelled in SQL because this query is raw.
+  where c.orientation = 'landscape'
   union all
   select l.id,
          l.streamer_name as slug,

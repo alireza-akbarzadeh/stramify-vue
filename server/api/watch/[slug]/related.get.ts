@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { db } from '../../../db/client'
 import { clips, liveStreams } from '../../../db/schema'
 import { clipToRelated, liveToRelated, resolveWatchTarget } from '../../../utils/watch'
+import { landscapeClips } from '../../../utils/discovery'
 import type { RelatedItem } from '#shared/types/watch'
 
 const paramsSchema = z.object({ slug: z.string().min(1).max(200) })
@@ -41,9 +42,11 @@ export default defineEventHandler(async (event): Promise<RelatedItem[]> => {
       .select()
       .from(clips)
       .where(
-        resolved.kind === 'clip'
-          ? and(eq(clips.category, category), ne(clips.id, resolved.row.id))
-          : eq(clips.category, category)
+        and(
+          eq(clips.category, category),
+          landscapeClips,
+          resolved.kind === 'clip' ? ne(clips.id, resolved.row.id) : undefined
+        )
       )
       .orderBy(desc(clips.views))
       .limit(LIMIT)

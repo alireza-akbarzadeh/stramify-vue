@@ -1,8 +1,13 @@
-import { desc, eq } from 'drizzle-orm'
+import { and, desc, eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { db } from '../../../db/client'
 import { clips } from '../../../db/schema'
-import { emptyCategorySummary, selectCategorySummaries, toClip } from '../../../utils/discovery'
+import {
+  emptyCategorySummary,
+  landscapeClips,
+  selectCategorySummaries,
+  toClip
+} from '../../../utils/discovery'
 import { fromCategorySlug } from '#shared/utils/category'
 
 const paramsSchema = z.object({
@@ -17,7 +22,11 @@ export default defineEventHandler(async (event) => {
   }
 
   const [rows, [summary]] = await Promise.all([
-    db.select().from(clips).where(eq(clips.category, category)).orderBy(desc(clips.createdAt)),
+    db
+      .select()
+      .from(clips)
+      .where(and(eq(clips.category, category), landscapeClips))
+      .orderBy(desc(clips.createdAt)),
     selectCategorySummaries(category)
   ])
 

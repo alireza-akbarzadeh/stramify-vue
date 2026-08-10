@@ -39,6 +39,19 @@ const { count } = useViewCounter(slug)
 const { user } = storeToRefs(useAuthStore())
 const watchlist = useWatchlistStore()
 
+// A vertical clip is a short, and this page's 16:9 player would letterbox it
+// into two black slabs. Search and the up-next rail therefore keep linking
+// everything to `/watch` and the right surface is picked here, once.
+watch(
+  target.data,
+  (found) => {
+    if (found?.kind === 'clip' && found.orientation === 'vertical') {
+      navigateTo(`/shorts?v=${encodeURIComponent(found.id)}`, { replace: true })
+    }
+  },
+  { immediate: true }
+)
+
 const notFound = computed(
   () => (target.error.value as { statusCode?: number } | null)?.statusCode === 404
 )

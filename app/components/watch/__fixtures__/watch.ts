@@ -29,6 +29,7 @@ export const clipTarget: WatchTarget = {
     'The encore nobody expected. Three songs, no setlist, one take — recorded on the final night of the Tokyo Dome run.\n\nShot on four handhelds and mixed from the desk feed. Full set drops next week.',
   image: 'https://picsum.photos/seed/midnight-echo/960/540',
   videoUrl: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
+  orientation: 'landscape',
   views: '12.4k views',
   publishedAt: '3h ago',
   duration: '02:45'

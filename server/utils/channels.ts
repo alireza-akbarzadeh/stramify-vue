@@ -3,7 +3,7 @@ import type { SQL } from 'drizzle-orm'
 import { db } from '../db/client'
 import { clips, follows, liveStreams } from '../db/schema'
 import {  formatUptime } from './format'
-import { toClip } from './discovery'
+import { landscapeClips, toClip } from './discovery'
 import { toChannelDisplayName, toChannelHandle } from '#shared/utils/channel'
 import type { Clip, ClipCategory } from '#shared/types/discovery'
 import type {
@@ -332,7 +332,7 @@ export async function readChannelVideos(
   const rows = await db
     .select()
     .from(clips)
-    .where(sql`lower(${clips.creator}) = ${toChannelHandle(name)}`)
+    .where(and(sql`lower(${clips.creator}) = ${toChannelHandle(name)}`, landscapeClips))
     .orderBy(VIDEO_ORDER[sort])
     .limit(60)
 

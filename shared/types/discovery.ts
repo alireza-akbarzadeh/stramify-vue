@@ -1,5 +1,11 @@
 export type ClipCategory = 'Music' | 'Gaming' | 'Creative'
 
+/**
+ * Which way up a clip was shot. `vertical` is what `/shorts` serves; every
+ * 16:9 surface filters to `landscape`. See `server/db/schema/clips.ts`.
+ */
+export type ClipOrientation = 'landscape' | 'vertical'
+
 export interface Clip {
   id: string
   title: string

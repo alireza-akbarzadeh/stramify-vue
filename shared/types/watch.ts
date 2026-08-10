@@ -1,5 +1,5 @@
 import type { ChannelNotifyMode } from './channel'
-import type { ClipCategory } from './discovery'
+import type { ClipCategory, ClipOrientation } from './discovery'
 
 /**
  * The two things you can land on at `/watch/[slug]`. Discriminated on `kind`
@@ -27,6 +27,13 @@ export interface WatchTargetBase {
 
 export interface WatchClip extends WatchTargetBase {
   kind: 'clip'
+  /**
+   * A `vertical` clip is a short, and `/watch` is the wrong player for it —
+   * the page redirects to `/shorts?v=<id>` when it sees this. Search and the
+   * up-next rail can therefore keep linking everything to `/watch` without
+   * knowing which of the two surfaces owns the video.
+   */
+  orientation: ClipOrientation
   /** Pre-formatted, e.g. `"12.4k views"`. */
   views: string
   /** Pre-formatted relative publish date, e.g. `"3h ago"`. */

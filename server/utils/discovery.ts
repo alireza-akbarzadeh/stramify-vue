@@ -1,4 +1,4 @@
-import { count, desc, eq, sql } from 'drizzle-orm'
+import { and, count, desc, eq, sql } from 'drizzle-orm'
 import { db } from '../db/client'
 import { clips } from '../db/schema'
 import type { liveStreams } from '../db/schema'
@@ -8,6 +8,15 @@ import type { CategorySummary, Clip, ClipCategory, LiveSignal } from '#shared/ty
 
 export type ClipRow = typeof clips.$inferSelect
 export type LiveStreamRow = typeof liveStreams.$inferSelect
+
+/**
+ * The filter every 16:9 surface applies: the clips grid, a channel's Videos
+ * tab and the up-next rail all render `Clip`/`RelatedItem` cards with an
+ * `aspect-video` thumbnail, and a portrait short in one of those is two black
+ * bars. `/shorts` owns the vertical half of the table (see
+ * `server/utils/shorts.ts`); the home feed applies the same rule in raw SQL.
+ */
+export const landscapeClips = eq(clips.orientation, 'landscape')
 
 /** Live-stream row → wire shape. Same contract for the `/live` grid and the signals rail. */
 export function toLiveSignal(row: LiveStreamRow): LiveSignal {
@@ -75,7 +84,9 @@ export async function selectCategorySummaries(name?: ClipCategory): Promise<Cate
       >`(array_agg(${clips.thumbnailUrl} order by ${clips.views} desc))[1]`
     })
     .from(clips)
-    .where(name ? eq(clips.category, name) : undefined)
+    // Counts have to agree with what `/category/[slug]` actually lists, and
+    // that page is a 16:9 grid — so shorts are outside this total too.
+    .where(and(landscapeClips, name ? eq(clips.category, name) : undefined))
     .groupBy(clips.category)
     .orderBy(desc(count(clips.id)))
 
