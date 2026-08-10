@@ -20,6 +20,9 @@ const columns = [
   {
     title: 'Company',
     links: [
+      // `/` is the app's home feed now, so the product tour lives here — it's
+      // the only entry point left to it.
+      ['Why Streamify', '/marketing'],
       ['About', '/about'],
       ['Careers', '/careers'],
       ['Security', '/security']

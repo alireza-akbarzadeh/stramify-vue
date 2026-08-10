@@ -2,7 +2,7 @@ import { count, desc, eq, sql } from 'drizzle-orm'
 import { db } from '../db/client'
 import { clips } from '../db/schema'
 import type { liveStreams } from '../db/schema'
-import { formatAge, formatCount, formatDuration, formatUptime } from './format'
+import { formatAge, formatDuration, formatUptime } from './format'
 import { CATEGORY_DESCRIPTIONS, toCategorySlug } from '#shared/utils/category'
 import type { CategorySummary, Clip, ClipCategory, LiveSignal } from '#shared/types/discovery'
 

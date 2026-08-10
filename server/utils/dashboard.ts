@@ -1,7 +1,7 @@
 import { and, count, desc, eq, gte, inArray, sql } from 'drizzle-orm'
 import { db } from '../db/client'
 import { chatMessages, clips, comments, follows, liveStreams, reactions } from '../db/schema'
-import { formatAge, formatCount } from './format'
+import { formatAge } from './format'
 import type { ClipRow } from './discovery'
 import type { SessionUser } from './session'
 import type {

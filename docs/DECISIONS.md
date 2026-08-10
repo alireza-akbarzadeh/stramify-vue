@@ -802,3 +802,76 @@ they require an active Pinia instance, so any future spec must seed the store
 (see `WatchChat.spec.ts`, which now calls a local `signIn()`/`signOut()` instead
 of toggling a `canPost` prop). The player tree is untouched: Vidstack's custom
 elements carry their own media context and `PlayerControls` takes one boolean.
+
+## ADR-020: `/` becomes the app's home feed, ranked by an explicit score
+
+**Status**: Accepted (2026-08-09). Moves the landing page written for ADR-001's
+scope to `/marketing`.
+
+**Context**: `/` was the marketing landing page — hero, pricing, FAQ, final CTA —
+while every actual product surface lived one click away behind the dashboard
+layout (`/live`, `/clips`, `/category`, `/channels`, `/watch/…`). That is the
+right front door for a product with no content; it is the wrong one for a
+platform whose whole value is the catalogue. Neither Twitch nor YouTube shows a
+pitch at the root, and a returning viewer had no page that answered "what should
+I watch now" — `/clips` is a flat reverse-chronological list of VODs only, and
+`/live` is live only.
+
+The signals to rank with already existed and were unused: `clips.views`,
+`live_streams.viewer_count`, the `reactions` table (ADR-014) and the `follows`
+table. What did **not** exist was any watch history — there are no per-viewer
+view events, only a counter incremented by `view.post.ts`.
+
+**Decision**: `/` renders `HomeView` under the dashboard layout: a category chip
+bar, a subscriptions rail, and a ranked recommendation grid. The landing page
+moves verbatim to `/marketing`, linked from the footer's Company column.
+
+1. **One score, written down in `server/utils/home.ts`**, not tuned by feel:
+   `ln(1+audience) + 1.5·ln(1+likes) − ln(1+dislikes) + 3·followed + 1.5·live +
+   2/(1+age_days)`. Both popularity terms are logged first so one runaway number
+   can't own the page — the same reasoning as `RANK_SCORE` in `channels.ts`. A
+   like is weighted above a view because it's deliberate; the follow boost is
+   sized (in log space) to roughly the gap between a 1k- and a 20k-view video,
+   so a subscribed channel reliably outranks a comparable stranger without
+   turning the feed into a subscriptions page.
+2. **Clips and live sessions rank in one relation.** A `union all` CTE
+   normalises them into `audience` / `published_at`, so ordering and `limit`
+   happen in Postgres across both kinds. Merging two queries in JS would mean
+   fetching the whole catalogue per page.
+3. **Personalisation is optional, never required.** `/api/home/feed` reads the
+   session with `getSessionUser` and falls back to pure popularity when there
+   isn't one; a signed-out visitor gets a full page, not a login wall.
+   `/api/home/following` returns `[]` rather than a 401 for the same reason.
+4. **The subscriptions rail sorts by recency, not by score.** It answers "what's
+   new from my channels"; a popular old upload pinned to its front would be the
+   wrong answer. It's therefore a separate endpoint, and it only renders above
+   the unfiltered feed — on a category chip it would be answering a different
+   question than the grid under it.
+5. **Recommendation reasons are honest or absent.** The server returns
+   `'following' | 'live' | 'new' | null`; `null` (popularity alone) renders no
+   line rather than dressing a view count up as a personal recommendation. The
+   copy itself lives in `shared/utils/home.ts`, off the wire.
+6. **Offset paging, not a keyset cursor.** The ranking is deterministic per
+   viewer (ties break on id) and the catalogue is small; a keyset over a
+   computed score would have to ship the score to the client, pinning the
+   formula into the URL.
+
+**Rejected**: *A `recommendations` table or a precomputed feed* — nothing to
+precompute from, and it adds a staleness problem the query doesn't have.
+*Collaborative filtering / "viewers also watched"* — there is no per-viewer
+watch history in the schema, so it would be invented output (CLAUDE.md rule 2).
+*Keeping the landing page at `/` and putting the feed at `/home`* — leaves the
+root as the least useful page in the app and splits "home" across two URLs.
+*Reusing `DiscoveryFeed` for `/`* — it's clip-only, has its own search box that
+behaves differently from `AppSearch`, and its category tabs filter an
+already-fetched array rather than the query. *A separate "Live now" rail on
+home* — the +1.5 live boost already floats live sessions into the top of the
+unfiltered grid, and the Live chip plus `/live` cover the rest; a rail would
+have shown the same rows twice.
+
+**Consequences**: `e2e/home.spec.ts` was rewritten for the feed and the old
+landing assertions moved to `e2e/marketing.spec.ts`. The score is the one place
+to change when real view events land (Phase 12) — until then "recommended"
+means popularity + your follows + freshness, and `docs/home-feed.md` says so
+plainly. `/clips` and `/live` keep their dedicated pages; home does not replace
+them, it ranks across them.

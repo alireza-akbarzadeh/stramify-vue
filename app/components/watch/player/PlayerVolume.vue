@@ -4,7 +4,7 @@ import PlayerTooltip from './PlayerTooltip.vue'
 
 /**
  * Mute toggle with a slider that expands on hover. Vidstack puts `data-muted`
- * and `data-volume="muted|low|high"` on the button, so which icon shows is a
+ * and `data-state="muted|low|high"` on the button, so which icon shows is a
  * CSS concern (see `player.css`) rather than reactive state duplicated here.
  */
 </script>

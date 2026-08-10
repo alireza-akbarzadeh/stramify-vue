@@ -6,10 +6,12 @@
  * the existing `zz-discovery-preview.vue` convention.
  */
 import * as fixtures from '@/components/watch/__fixtures__/watch'
-import type { CommentSort } from '#shared/types/watch'
+import type { ChannelNotifyMode } from '#shared/types/channel'
+import type { CommentSort, ReactionValue } from '#shared/types/watch'
 import WatchLayout from '@/components/watch/WatchLayout.vue'
 import { Button } from '@/components/ui/button'
 import { useAuthStore } from '@/stores/auth'
+import { applyReaction } from '@/utils/reactions'
 
 useHead({ title: 'Watch preview (temp)' })
 
@@ -23,12 +25,31 @@ const mode = ref<'clip' | 'live'>('clip')
 const sort = ref<CommentSort>('top')
 const target = computed(() => (mode.value === 'live' ? fixtures.liveTarget : fixtures.clipTarget))
 
-const engagement = {
-  channel: fixtures.channel,
-  reactions: fixtures.reactions,
-  saved: false,
+// Engagement is local state here rather than a frozen fixture: like, follow
+// and the bell all animate on the way *into* their on-state, which you can't
+// eyeball unless the preview actually toggles.
+const channel = reactive({ ...fixtures.channel })
+const reactions = reactive({ ...fixtures.reactions })
+const saved = ref(false)
+
+const engagement = computed(() => ({
+  channel,
+  reactions,
+  saved: saved.value,
   reactPending: false,
-  followPending: false
+  followPending: false,
+  notifyPending: false
+}))
+
+function onToggleFollow() {
+  channel.isFollowing = !channel.isFollowing
+  channel.notify = channel.isFollowing ? 'all' : 'none'
+}
+function onReact(value: ReactionValue) {
+  Object.assign(reactions, applyReaction(reactions, value))
+}
+function onSetNotify(mode: ChannelNotifyMode) {
+  channel.notify = mode
 }
 const related = { items: fixtures.relatedItems, pending: false, errored: false }
 const comments = { items: fixtures.comments, pending: false, errored: false, posting: false }
@@ -56,6 +77,10 @@ const chat = { items: fixtures.chatMessages, pending: false, errored: false, sen
       :related="related"
       :comments="comments"
       :chat="chat"
+      @react="onReact"
+      @toggle-save="saved = !saved"
+      @toggle-follow="onToggleFollow"
+      @set-notify="onSetNotify"
     />
   </div>
 </template>

@@ -4,7 +4,10 @@ import { useAuthStore } from '@/stores/auth'
 import type { NotificationFeed } from '#shared/types/notification'
 
 const EMPTY: NotificationFeed = { items: [], unreadCount: 0 }
-const QUERY_KEY = ['notifications']
+
+/** Exported because the bell's contents depend on per-channel notify settings,
+ *  so `useChannelNotify` has to invalidate this feed when one changes. */
+export const NOTIFICATIONS_KEY = ['notifications']
 
 /** A followed channel can go live at any moment, so the bell re-checks. */
 const REFETCH_MS = 60_000
@@ -21,7 +24,7 @@ export function useNotifications() {
   const client = useQueryClient()
 
   const query = useQuery({
-    queryKey: QUERY_KEY,
+    queryKey: NOTIFICATIONS_KEY,
     enabled: isAuthenticated,
     refetchInterval: REFETCH_MS,
     queryFn: () => $fetch<NotificationFeed>('/api/notifications')
@@ -29,7 +32,7 @@ export function useNotifications() {
 
   const markAllRead = useMutation({
     mutationFn: () => $fetch<NotificationFeed>('/api/notifications/read', { method: 'POST' }),
-    onSuccess: (feed) => client.setQueryData(QUERY_KEY, feed)
+    onSuccess: (feed) => client.setQueryData(NOTIFICATIONS_KEY, feed)
   })
 
   return {

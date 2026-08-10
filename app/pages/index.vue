@@ -1,26 +1,25 @@
-<script lang="ts" setup>
-import type {LiveSignal} from '#shared/types/discovery'
-import {type LiveCategory} from '@/utils/live'
-import {useDiscoveryCategories} from "~/composables/useDiscoveryCategories.ts";
+<script setup lang="ts">
+import HomeView from '@/components/home/HomeView.vue'
 
-definePageMeta({layout: 'dashboard'})
-useHead({title: 'Home — Streamify'})
-const {data: categories, isPending: categoryLoading} = useDiscoveryCategories()
+/**
+ * `/` is the app's home feed, not the marketing site — that moved to
+ * `/marketing`. It renders for signed-out visitors too: the ranking falls back
+ * to popularity alone when there's no session to personalise against.
+ */
+definePageMeta({ layout: 'dashboard' })
 
-const activeCategory = ref<LiveCategory>('All Live')
-
-function open(signal: LiveSignal) {
-  navigateTo(`/watch/${encodeURIComponent(signal.name)}`)
-}
+useHead({
+  title: 'Streamify — Watch live streams and clips',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Your feed of live streams and clips, ranked by what people are watching and the channels you follow. Filter by category or search across every channel.'
+    }
+  ]
+})
 </script>
 
 <template>
-  <div class="mx-auto max-w-[1560px] px-4  sm:px-8 mt-6">
-    <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-      <CategoryScroller
-          v-model:active-category="activeCategory"
-          :categories="categories ?? []"
-      />
-    </div>
-  </div>
+  <HomeView />
 </template>

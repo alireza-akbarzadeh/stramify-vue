@@ -2,8 +2,10 @@
 import { ArrowLeft } from '@lucide/vue'
 import { storeToRefs } from 'pinia'
 import { toast } from 'vue-sonner'
+import type { ChannelNotifyMode } from '#shared/types/channel'
 import type { CommentDraft, CommentSort, ReactionValue } from '#shared/types/watch'
 import { Button } from '@/components/ui/button'
+import { notifyConfirmation } from '@/utils/notify'
 import { useWatchTarget, useWatchRelated } from '@/composables/useWatchTarget'
 import { useWatchComments } from '@/composables/useWatchComments'
 import { useWatchCommentMutations } from '@/composables/useWatchCommentMutations'
@@ -32,7 +34,7 @@ const chat = useWatchChat(slug, isLive)
 
 const channelName = computed(() => target.data.value?.channel ?? '')
 const { reactions, toggle: react } = useWatchReaction(slug)
-const { channel, toggle: follow } = useChannelFollow(channelName)
+const { channel, toggle: follow, notify } = useChannelFollow(channelName)
 const { count } = useViewCounter(slug)
 const { user } = storeToRefs(useAuthStore())
 const watchlist = useWatchlistStore()
@@ -49,7 +51,8 @@ const engagement = computed(() => ({
   reactions: reactions.value,
   saved: saved.value,
   reactPending: react.isPending.value,
-  followPending: follow.isPending.value
+  followPending: follow.isPending.value,
+  notifyPending: notify.isPending.value
 }))
 const relatedPanel = computed(() => ({
   items: related.data.value ?? [],
@@ -83,6 +86,12 @@ function onReact(value: ReactionValue) {
 function onFollow() {
   if (!user.value) return toast.error('Log in to follow this channel.')
   follow.mutate()
+}
+function onSetNotify(mode: ChannelNotifyMode) {
+  notify.mutate(mode, {
+    onSuccess: () => toast.success(notifyConfirmation(mode, channelName.value)),
+    onError: () => toast.error("Couldn't change your notifications for this channel.")
+  })
 }
 function onSendChat(body: string) {
   chat.send.mutate(body, { onError: () => toast.error("Couldn't send that message.") })
@@ -154,6 +163,7 @@ function onShare() {
       @toggle-save="onSave"
       @share="onShare"
       @toggle-follow="onFollow"
+      @set-notify="onSetNotify"
       @send-chat="onSendChat"
       @post-comment="onPostComment"
       @like-comment="onLikeComment"

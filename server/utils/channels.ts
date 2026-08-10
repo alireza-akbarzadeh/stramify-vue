@@ -2,7 +2,7 @@ import { and, asc, count, desc, eq, sql } from 'drizzle-orm'
 import type { SQL } from 'drizzle-orm'
 import { db } from '../db/client'
 import { clips, follows, liveStreams } from '../db/schema'
-import { formatCount, formatUptime } from './format'
+import {  formatUptime } from './format'
 import { toClip } from './discovery'
 import { toChannelDisplayName, toChannelHandle } from '#shared/utils/channel'
 import type { Clip, ClipCategory } from '#shared/types/discovery'
@@ -37,7 +37,7 @@ export async function readChannelSummary(
       .where(sql`lower(${clips.creator}) = lower(${name})`),
     userId
       ? db
-          .select({ id: follows.id })
+          .select({ notify: follows.notify })
           .from(follows)
           .where(and(eq(follows.userId, userId), sql`${lower} = lower(${name})`))
           .limit(1)
@@ -48,7 +48,10 @@ export async function readChannelSummary(
     name,
     followers: formatCount(followers[0]?.total ?? 0),
     clipCount: clipCount[0]?.total ?? 0,
-    isFollowing: mine.length > 0
+    isFollowing: mine.length > 0,
+    // No follow row means no bell — `none` rather than the column default, so
+    // the client never renders a lit bell for a channel you don't follow.
+    notify: mine[0]?.notify ?? 'none'
   }
 }
 

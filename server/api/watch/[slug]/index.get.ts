@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { resolveWatchTarget } from '../../../utils/watch'
 import type { WatchTarget } from '#shared/types/watch'
 
 const paramsSchema = z.object({ slug: z.string().min(1).max(200) })

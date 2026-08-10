@@ -2,6 +2,7 @@ import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tansta
 import type { MaybeRefOrGetter } from 'vue'
 import type {
   ChannelListItem,
+  ChannelNotifyMode,
   ChannelProfile,
   ChannelSort,
   ChannelVideoSort
@@ -9,6 +10,7 @@ import type {
 import type { Clip, ClipCategory } from '#shared/types/discovery'
 import type { ChannelSummary } from '#shared/types/watch'
 import { toChannelHandle } from '#shared/utils/channel'
+import { NOTIFICATIONS_KEY } from './useNotifications'
 
 export interface ChannelFilters {
   sort: ChannelSort
@@ -93,11 +95,53 @@ export function useChannelFollow(name: MaybeRefOrGetter<string>) {
     enabled: computed(() => !!handle.value)
   })
   const follow = useFollowChannel()
+  const notify = useChannelNotify()
 
   return {
     channel: computed(() => query.data.value ?? null),
-    toggle: { mutate: () => follow.mutate(handle.value), isPending: follow.isPending }
+    toggle: { mutate: () => follow.mutate(handle.value), isPending: follow.isPending },
+    notify: {
+      mutate: (mode: ChannelNotifyMode, options?: Parameters<typeof notify.mutate>[1]) =>
+        notify.mutate({ name: handle.value, mode }, options),
+      isPending: notify.isPending
+    }
   }
+}
+
+/**
+ * Set the bell for a followed channel.
+ *
+ * Only the summary cache carries `notify`, so unlike the follow toggle there's
+ * one place to patch. The patch is optimistic because the menu closes on the
+ * click and a bell that snapped back a beat later would read as a bug; a
+ * failure restores the previous mode rather than leaving a lie on screen.
+ *
+ * The feed itself is invalidated on success — muting a channel changes which
+ * rows the bell dropdown is allowed to show, and that's decided server-side.
+ */
+export function useChannelNotify() {
+  const client = useQueryClient()
+  const key = (name: string) => keys.summary(toChannelHandle(name))
+
+  return useMutation({
+    mutationFn: ({ name, mode }: { name: string; mode: ChannelNotifyMode }) =>
+      $fetch<ChannelSummary>(`/api/channels/${encodeURIComponent(toChannelHandle(name))}/notify`, {
+        method: 'POST',
+        body: { mode }
+      }),
+    onMutate: ({ name, mode }) => {
+      const previous = client.getQueryData<ChannelSummary>(key(name))
+      if (previous) client.setQueryData(key(name), { ...previous, notify: mode })
+      return { previous }
+    },
+    onSuccess: (summary, { name }) => {
+      client.setQueryData(key(name), summary)
+      client.invalidateQueries({ queryKey: NOTIFICATIONS_KEY })
+    },
+    onError: (_error, { name }, context) => {
+      if (context?.previous) client.setQueryData(key(name), context.previous)
+    }
+  })
 }
 
 /** Toggle one cached record's follow state, moving its count by exactly one. */

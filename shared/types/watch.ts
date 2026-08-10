@@ -1,3 +1,4 @@
+import type { ChannelNotifyMode } from './channel'
 import type { ClipCategory } from './discovery'
 
 /**
@@ -115,4 +116,9 @@ export interface ChannelSummary {
   isFollowing: boolean
   /** Total clips published by this channel. */
   clipCount: number
+  /**
+   * Bell state for this follow. `none` when not following — there's nothing to
+   * notify about a channel you don't follow, so the two can't disagree.
+   */
+  notify: ChannelNotifyMode
 }

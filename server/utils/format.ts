@@ -3,7 +3,6 @@
 // so every existing server import keeps working unchanged. Imported by
 // relative path, not the `#shared` alias, because `format.spec.ts` runs in
 // the plain vitest environment where Nuxt's aliases aren't applied.
-export { formatCount } from '../../shared/utils/format'
 
 export function formatDuration(totalSeconds: number): string {
   const minutes = Math.floor(totalSeconds / 60)
@@ -14,7 +13,7 @@ export function formatDuration(totalSeconds: number): string {
 /**
  * How long a live session has been running, e.g. `"9m"`, `"3h 17m"`.
  * Unlike `formatAge` this never says "ago" — it's an uptime, and it stays
- * minute-precise past the hour because live viewers read it as "how much
+ * minute-precise past the hour because live viewers read it xxas "how much
  * have I missed".
  */
 export function formatUptime(startedAt: Date): string {
