@@ -16,7 +16,8 @@ import {
     exploreLinks,
     headerLinks,
     isNavLinkActive,
-    libraryLinks
+    libraryLinks,
+    mobileNavLinks
 } from './nav'
 
 const pagesDir = fileURLToPath(new URL('../pages', import.meta.url))
@@ -44,7 +45,8 @@ const groups: Array<[string, NavLink[]]> = [
     ['libraryLinks', libraryLinks],
     ['creatorLinks', creatorLinks],
     ['headerLinks', headerLinks],
-    ['accountLinks', accountLinks]
+    ['accountLinks', accountLinks],
+    ['mobileNavLinks', mobileNavLinks]
 ]
 
 describe.each(groups)('%s', (_name, links) => {
@@ -60,6 +62,23 @@ describe('headerLinks', () => {
 
     it('leaves out placeholder routes so the public nav only advertises shipped pages', () => {
         expect(headerLinks.some((link) => link.badge)).toBe(false)
+    })
+})
+
+describe('mobileNavLinks', () => {
+    // The bar is a `grid-cols-4`, and four is also the point past which the tabs
+    // stop being comfortably tappable — so the count is part of the contract.
+    it('is exactly four tabs', () => {
+        expect(mobileNavLinks).toHaveLength(4)
+    })
+
+    it('only points at destinations the sidebar also offers', () => {
+        const sidebarRoutes = [...discoverLinks, ...libraryLinks, ...exploreLinks].map((link) => link.to)
+        for (const link of mobileNavLinks) expect(sidebarRoutes).toContain(link.to)
+    })
+
+    it('leaves out placeholder routes', () => {
+        expect(mobileNavLinks.some((link) => link.badge)).toBe(false)
     })
 })
 

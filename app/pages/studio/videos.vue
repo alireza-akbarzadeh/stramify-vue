@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-definePageMeta({ layout: 'dashboard' })
-useHead({ title: 'Studio Videos — Streamify' })
+definePageMeta({layout: 'dashboard'})
+useHead({title: 'Studio Videos — Streamify'})
 </script>
 
 <template>
-  <ComingSoon description="we weill implement this as soone as possible" title="Studio videos" />
+  <ComingSoon description="we weill implement this as soone as possible" title="studio videos"/>
 </template>

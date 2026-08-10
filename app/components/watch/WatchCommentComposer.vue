@@ -1,8 +1,9 @@
-<script setup lang="ts">
-import { Button } from '@/components/ui/button'
-import { useAutoGrow } from '@/composables/useAutoGrow'
+<script lang="ts" setup>
+import {Button} from '@/components/ui/button'
+import {useAutoGrow} from '@/composables/useAutoGrow'
 import ChannelAvatar from '@/components/ChannelAvatar.vue'
-import { useAuthStore } from '@/stores/auth'
+import {useAuthStore} from '@/stores/auth'
+import {Textarea} from "~/components/ui/textarea";
 
 const COMMENT_MAX_LENGTH = 1000
 
@@ -18,18 +19,18 @@ const COMMENT_MAX_LENGTH = 1000
  * so there is nothing for a caller to pass in.
  */
 const props = withDefaults(
-  defineProps<{
-    pending?: boolean
-    compact?: boolean
-    placeholder?: string
-    submitLabel?: string
-  }>(),
-  {
-    pending: false,
-    compact: false,
-    placeholder: 'Add a comment…',
-    submitLabel: 'Comment'
-  }
+    defineProps<{
+      pending?: boolean
+      compact?: boolean
+      placeholder?: string
+      submitLabel?: string
+    }>(),
+    {
+      pending: false,
+      compact: false,
+      placeholder: 'Add a comment…',
+      submitLabel: 'Comment'
+    }
 )
 const emit = defineEmits<{ (e: 'submit', body: string): void; (e: 'cancel'): void }>()
 
@@ -65,36 +66,36 @@ function cancel() {
 <template>
   <form :class="['flex gap-3', compact && 'mt-3']" @submit.prevent="submit">
     <ChannelAvatar
-      :name="auth.user?.name ?? '?'"
-      :image="auth.user?.image"
-      :class="compact ? 'size-7 text-[11px]' : 'size-9'"
+        :class="compact ? 'size-7 text-[11px]' : 'size-9'"
+        :image="auth.user?.image"
+        :name="auth.user?.name ?? '?'"
     />
     <div class="min-w-0 flex-1">
-      <textarea
-        ref="field"
-        v-model="draft"
-        rows="1"
-        :maxlength="COMMENT_MAX_LENGTH"
-        :placeholder="placeholder"
-        :aria-label="placeholder"
-        :disabled="pending"
-        class="w-full resize-none border-0 border-b border-border bg-transparent pb-2 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary disabled:opacity-60"
-        @focus="focused = true"
-        @keydown.enter.exact.prevent="submit"
-        @keydown.esc="cancel"
-      />
+      <Textarea
+          ref="field"
+          v-model="draft"
+          :aria-label="placeholder"
+          :disabled="pending"
+          :maxlength="COMMENT_MAX_LENGTH"
+          :placeholder="placeholder"
+          class="w-full resize-none border-0 border-b border-border bg-transparent pb-2 text-sm outline-none transition-colors placeholder:text-muted-foreground disabled:opacity-60"
+          rows="3"
+          @focus="focused = true"
+          @keydown.enter.exact.prevent="submit"
+          @keydown.esc="cancel"
 
+      />
       <div v-if="open" class="mt-2 flex items-center justify-end gap-2">
         <span
-          v-if="trimmed.length > COMMENT_MAX_LENGTH - 100"
-          class="mr-auto text-xs text-muted-foreground"
+            v-if="trimmed.length > COMMENT_MAX_LENGTH - 100"
+            class="mr-auto text-xs text-muted-foreground"
         >
           {{ COMMENT_MAX_LENGTH - trimmed.length }} left
         </span>
-        <Button type="button" variant="ghost" size="sm" :disabled="pending" @click="cancel">
+        <Button :disabled="pending" size="sm" type="button" variant="ghost" @click="cancel">
           Cancel
         </Button>
-        <Button type="submit" size="sm" :disabled="!canSubmit">
+        <Button :disabled="!canSubmit" size="sm" type="submit">
           {{ pending ? 'Posting…' : submitLabel }}
         </Button>
       </div>

@@ -9,47 +9,47 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @keyframes marquee {
-  to {
-    transform: translateX(-100%);
-  }
+    to {
+        transform: translateX(-100%);
+    }
 }
 
 @keyframes shimmer {
-  100% {
-    transform: translateX(200%);
-  }
+    100% {
+        transform: translateX(200%);
+    }
 }
 
 @keyframes pulse-ring {
-  0% {
-    box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 60%, transparent);
-  }
-  70% {
-    box-shadow: 0 0 0 10px transparent;
-  }
-  100% {
-    box-shadow: 0 0 0 0 transparent;
-  }
+    0% {
+        box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 60%, transparent);
+    }
+    70% {
+        box-shadow: 0 0 0 10px transparent;
+    }
+    100% {
+        box-shadow: 0 0 0 0 transparent;
+    }
 }
 
 /* Reka UI exposes the measured panel height as --reka-accordion-content-height,
    which lets the accordion animate to its natural height instead of a guess. */
 @keyframes accordion-down {
-  from {
-    height: 0;
-  }
-  to {
-    height: var(--reka-accordion-content-height);
-  }
+    from {
+        height: 0;
+    }
+    to {
+        height: var(--reka-accordion-content-height);
+    }
 }
 
 @keyframes accordion-up {
-  from {
-    height: var(--reka-accordion-content-height);
-  }
-  to {
-    height: 0;
-  }
+    from {
+        height: var(--reka-accordion-content-height);
+    }
+    to {
+        height: 0;
+    }
 }
 
 /* The three below belong to `components/motion/PopBurst.vue` — the one-shot
@@ -57,66 +57,65 @@
 
 /* Squash then overshoot, so a click reads as pressed *and* confirmed. */
 @keyframes pop {
-  0% {
-    transform: scale(1);
-  }
-  30% {
-    transform: scale(0.86);
-  }
-  65% {
-    transform: scale(1.18);
-  }
-  100% {
-    transform: scale(1);
-  }
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(0.86);
+    }
+    65% {
+        transform: scale(1.18);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* One spark of the burst. `--spark-angle` is set per element to fan them out;
    the centering translate is repeated in every frame because an animation owns
    `transform` outright while it runs and would otherwise drop it. */
 @keyframes spark {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) rotate(var(--spark-angle, 0deg)) translateY(0) scale(0.4);
-  }
-  25% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) rotate(var(--spark-angle, 0deg))
-      translateY(calc(-1 * var(--spark-distance, 15px))) scale(1);
-  }
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(var(--spark-angle, 0deg)) translateY(0) scale(0.4);
+    }
+    25% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(var(--spark-angle, 0deg)) translateY(calc(-1 * var(--spark-distance, 15px))) scale(1);
+    }
 }
 
 /* A bell that just got switched on. Decaying swing, like it was struck once. */
 @keyframes bell-ring {
-  0%,
-  100% {
-    transform: rotate(0);
-  }
-  15% {
-    transform: rotate(15deg);
-  }
-  35% {
-    transform: rotate(-12deg);
-  }
-  55% {
-    transform: rotate(8deg);
-  }
-  75% {
-    transform: rotate(-4deg);
-  }
+    0%,
+    100% {
+        transform: rotate(0);
+    }
+    15% {
+        transform: rotate(15deg);
+    }
+    35% {
+        transform: rotate(-12deg);
+    }
+    55% {
+        transform: rotate(8deg);
+    }
+    75% {
+        transform: rotate(-4deg);
+    }
 }
 
 @keyframes float-slow {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-14px);
-  }
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-14px);
+    }
 }
 
 /* ===========================================================
@@ -126,203 +125,242 @@
 =========================================================== */
 
 :root {
-  --radius: 1rem;
+    --radius: 1rem;
 
-  /* LIGHT */
+    /* LIGHT */
 
-  --background: #fafafb;
-  --foreground: #0f172a;
+    --background: #fafafb;
+    --foreground: #0f172a;
 
-  --card: #ffffff;
-  --card-foreground: #111827;
+    --card: #ffffff;
+    --card-foreground: #111827;
 
-  --popover: #ffffff;
-  --popover-foreground: #111827;
+    --popover: #ffffff;
+    --popover-foreground: #111827;
 
-  --primary: #ff335f;
-  --primary-foreground: #ffffff;
+    --primary: #ff335f;
+    --primary-foreground: #ffffff;
 
-  --secondary: #6366f1;
-  --secondary-foreground: #ffffff;
+    --secondary: #6366f1;
+    --secondary-foreground: #ffffff;
 
-  --accent: #06b6d4;
-  --accent-foreground: #ffffff;
+    --accent: #06b6d4;
+    --accent-foreground: #ffffff;
 
-  --muted: #f3f4f6;
-  --muted-foreground: #6b7280;
+    --muted: #f3f4f6;
+    --muted-foreground: #6b7280;
 
-  --destructive: #ef4444;
-  --destructive-foreground: white;
+    --destructive: #ef4444;
+    --destructive-foreground: white;
 
-  --border: rgba(15, 23, 42, .08);
-  --input: rgba(15, 23, 42, .08);
+    --border: rgba(15, 23, 42, .08);
+    --input: rgba(15, 23, 42, .08);
 
-  --ring: #ff335f;
+    --ring: #ff335f;
 
-  --success: #22c55e;
-  --warning: #f59e0b;
+    --success: #22c55e;
+    --warning: #f59e0b;
 
-  --surface: #ffffff;
-  --surface-2: #f7f8fb;
-  --surface-3: #edf1f6;
+    --surface: #ffffff;
+    --surface-2: #f7f8fb;
+    --surface-3: #edf1f6;
 
-  --glass: rgba(255,255,255,.7);
+    --glass: rgba(255, 255, 255, .7);
 
-  --shadow-color: rgba(15,23,42,.08);
+    --shadow-color: rgba(15, 23, 42, .08);
 
-  --sidebar: var(--surface-2);
-  --sidebar-foreground: var(--foreground);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: var(--surface-3);
-  --sidebar-accent-foreground: var(--foreground);
-  --sidebar-border: var(--border);
-  --sidebar-ring: var(--ring);
+    --sidebar: var(--surface-2);
+    --sidebar-foreground: var(--foreground);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--surface-3);
+    --sidebar-accent-foreground: var(--foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
 }
 
 .dark {
 
-  --background: #07090d;
-  --foreground: #f8fafc;
+    --background: #07090d;
+    --foreground: #f8fafc;
 
-  --card: #10131b;
-  --card-foreground: #f8fafc;
+    --card: #10131b;
+    --card-foreground: #f8fafc;
 
-  --popover: #10131b;
-  --popover-foreground: #f8fafc;
+    --popover: #10131b;
+    --popover-foreground: #f8fafc;
 
-  --primary: #ff4b6e;
-  --primary-foreground: white;
+    --primary: #ff4b6e;
+    --primary-foreground: white;
 
-  --secondary: #7c5cff;
-  --secondary-foreground: white;
+    --secondary: #7c5cff;
+    --secondary-foreground: white;
 
-  --accent: #22d3ee;
-  --accent-foreground: white;
+    --accent: #22d3ee;
+    --accent-foreground: white;
 
-  --muted: #171b24;
-  --muted-foreground: #9ca3af;
+    --muted: #171b24;
+    --muted-foreground: #9ca3af;
 
-  --destructive: #ff4d4f;
-  --destructive-foreground: white;
+    --destructive: #ff4d4f;
+    --destructive-foreground: white;
 
-  --border: rgba(255,255,255,.08);
-  --input: rgba(255,255,255,.08);
+    --border: rgba(255, 255, 255, .08);
+    --input: rgba(255, 255, 255, .08);
 
-  --ring: #ff4b6e;
+    --ring: #ff4b6e;
 
-  --success: #22c55e;
-  --warning: #fbbf24;
+    --success: #22c55e;
+    --warning: #fbbf24;
 
-  --surface: #0f1218;
-  --surface-2: #151923;
-  --surface-3: #1d2330;
+    --surface: #0f1218;
+    --surface-2: #151923;
+    --surface-3: #1d2330;
 
-  --glass: rgba(16,19,27,.65);
+    --glass: rgba(16, 19, 27, .65);
 
-  --shadow-color: rgba(0,0,0,.45);
+    --shadow-color: rgba(0, 0, 0, .45);
 
-  --sidebar: var(--surface);
-  --sidebar-foreground: var(--foreground);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: var(--surface-2);
-  --sidebar-accent-foreground: var(--foreground);
-  --sidebar-border: var(--border);
-  --sidebar-ring: var(--ring);
+    --sidebar: var(--surface);
+    --sidebar-foreground: var(--foreground);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--surface-2);
+    --sidebar-accent-foreground: var(--foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
 }
 
 @theme inline {
 
-  --font-sans: "Inter", sans-serif;
+    --font-sans: "Inter", sans-serif;
 
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
 
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
 
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
 
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
 
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
 
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
 
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
 
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
 
-  --color-success: var(--success);
-  --color-warning: var(--warning);
+    --color-success: var(--success);
+    --color-warning: var(--warning);
 
-  --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
-  --color-surface-3: var(--surface-3);
+    --color-surface: var(--surface);
+    --color-surface-2: var(--surface-2);
+    --color-surface-3: var(--surface-3);
 
-  --color-glass: var(--glass);
+    --color-glass: var(--glass);
 
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
 
-  --radius-sm: calc(var(--radius) - 6px);
-  --radius-md: calc(var(--radius) - 3px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 8px);
+    --radius-sm: calc(var(--radius) - 6px);
+    --radius-md: calc(var(--radius) - 3px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 8px);
 
-  --animate-accordion-down: accordion-down 300ms cubic-bezier(0.16, 1, 0.3, 1);
-  --animate-accordion-up: accordion-up 250ms cubic-bezier(0.16, 1, 0.3, 1);
+    --animate-accordion-down: accordion-down 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    --animate-accordion-up: accordion-up 250ms cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Press feedback, on the project's expo-out curve. The sparks outlast the
-     pop so they're still travelling once the icon has settled. */
-  --animate-pop: pop 300ms cubic-bezier(0.16, 1, 0.3, 1);
-  --animate-spark: spark 450ms cubic-bezier(0.16, 1, 0.3, 1);
-  --animate-bell-ring: bell-ring 600ms cubic-bezier(0.16, 1, 0.3, 1);
+    /* Press feedback, on the project's expo-out curve. The sparks outlast the
+       pop so they're still travelling once the icon has settled. */
+    --animate-pop: pop 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    --animate-spark: spark 450ms cubic-bezier(0.16, 1, 0.3, 1);
+    --animate-bell-ring: bell-ring 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* A quiet scrollbar for long in-app columns (the sidebar nav, chat, menus).
+   The platform default is a wide opaque gutter that reads as a piece of the
+   OS dropped into the layout — next to a 1px border and a soft glass panel it
+   is the loudest thing on screen.
+
+   The track keeps its 6px whatever happens, so the thumb fading in on hover
+   can't reflow the column underneath it; only the colour changes. */
+@utility scrollbar-slim {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: transparent;
+        border-radius: 9999px;
+        transition: background-color 150ms ease;
+    }
+
+    &:hover,
+    &:focus-within {
+        scrollbar-color: color-mix(in oklab, var(--color-foreground) 20%, transparent) transparent;
+
+        &::-webkit-scrollbar-thumb {
+            background-color: color-mix(in oklab, var(--color-foreground) 20%, transparent);
+        }
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: color-mix(in oklab, var(--color-foreground) 35%, transparent);
+    }
 }
 
 @layer base {
 
-*{
-    @apply border-border;
-}
+    * {
+        @apply border-border;
+    }
 
-html{
-    color-scheme: light dark;
-}
+    html {
+        color-scheme: light dark;
+    }
 
-body{
+    body {
 
-    @apply bg-background text-foreground;
+        @apply bg-background text-foreground;
 
-    font-family: Inter,sans-serif;
+        font-family: Inter, sans-serif;
 
-    background-image:
-        radial-gradient(circle at top left,
-            rgba(255,75,110,.08),
-            transparent 30%),
+        background-image: radial-gradient(circle at top left,
+        rgba(255, 75, 110, .08),
+        transparent 30%),
         radial-gradient(circle at top right,
-            rgba(124,92,255,.08),
-            transparent 30%),
+                rgba(124, 92, 255, .08),
+                transparent 30%),
         radial-gradient(circle at bottom,
-            rgba(34,211,238,.05),
-            transparent 35%);
+                rgba(34, 211, 238, .05),
+                transparent 35%);
 
-    background-attachment: fixed;
+        background-attachment: fixed;
 
-    min-height:100vh;
-}
+        min-height: 100vh;
+    }
 }

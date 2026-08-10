@@ -1,0 +1,23 @@
+<script lang="ts" setup>
+import type {HTMLAttributes} from 'vue'
+import {toValue} from 'vue'
+import {ErrorMessage} from 'vee-validate'
+import {cn} from '@/lib/utils'
+import {useFormField} from './useFormField'
+
+const props = defineProps<{
+  class?: HTMLAttributes['class']
+}>()
+
+const {name, formMessageId} = useFormField()
+</script>
+
+<template>
+  <ErrorMessage
+      :id="formMessageId"
+      :class="cn('text-destructive text-sm', props.class)"
+      :name="toValue(name)"
+      as="p"
+      data-slot="form-message"
+  />
+</template>

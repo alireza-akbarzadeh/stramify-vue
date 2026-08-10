@@ -115,6 +115,22 @@ export const libraryLinks: NavLink[] = [
     }
 ]
 
+/**
+ * The mobile bottom tab bar — four destinations, thumb-reachable.
+ *
+ * Hand-picked rather than sliced off the top of `discoverLinks`: a tab bar is
+ * the whole nav on a phone, so it has to span the app (watch → discover →
+ * library) instead of just repeating the first four sidebar rows. Four is the
+ * cap on purpose — a fifth tab is where these bars stop being tappable. The
+ * rest of the nav is still one tap away behind the sidebar sheet.
+ */
+export const mobileNavLinks: NavLink[] = [
+    {label: 'Home', to: '/', icon: House},
+    {label: 'Live', to: '/live', icon: Radio},
+    {label: 'Clips', to: '/clips', icon: Video},
+    {label: 'Library', to: '/playlists', icon: ListVideo}
+]
+
 /** Signed-in only — every one of these routes is behind the `auth` middleware. */
 export const creatorLinks: NavLink[] = [
     {label: 'Overview', to: '/dashboard', icon: LayoutDashboard},
