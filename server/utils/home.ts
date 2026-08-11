@@ -1,5 +1,6 @@
 import { sql } from 'drizzle-orm'
 import { db } from '../db/client'
+import { notSuppressed } from './feedback'
 import { formatAge, formatDuration, formatUptime } from './format'
 import { formatCount } from '#shared/utils/format'
 import { HOME_PAGE_SIZE } from '#shared/types/home'
@@ -32,7 +33,7 @@ import type { CategorySlug, ClipCategory } from '#shared/types/discovery'
  * Inventing one off nothing would be theatre (CLAUDE.md rule 2); when view
  * events land in Phase 12 this expression is the one place that changes.
  */
-const SCORE = sql`
+export const SCORE = sql`
   ln(1 + cand.audience)
   + (ln(1 + coalesce(rx.likes, 0)) * 1.5)
   - ln(1 + coalesce(rx.dislikes, 0))
@@ -47,7 +48,7 @@ const SCORE = sql`
  * viewer count, `published_at` is an upload date or a session start — so the
  * score is one expression rather than two that could drift apart.
  */
-type FeedRow = {
+export type FeedRow = {
   id: string
   slug: string
   kind: 'clip' | 'live'
@@ -70,7 +71,7 @@ type FeedRow = {
  * `limit` have to happen across both kinds at once, and doing that in memory
  * would mean fetching the whole catalogue on every page request.
  */
-const CANDIDATES = sql`
+export const CANDIDATES = sql`
   select c.id,
          c.id as slug,
          'clip' as kind,
@@ -103,7 +104,7 @@ const CANDIDATES = sql`
 `
 
 /** Like/dislike totals per target, counted from `reactions` — no stored counter to drift. */
-const REACTION_STATS = sql`
+export const REACTION_STATS = sql`
   select target_id,
          target_kind::text as target_kind,
          count(*) filter (where value = 'like')::int as likes,
@@ -113,7 +114,7 @@ const REACTION_STATS = sql`
 `
 
 /** The signed-in user's follows, lowercased to match `lower(channel)` everywhere else. */
-function myFollows(userId: string | null) {
+export function myFollows(userId: string | null) {
   return sql`
     select lower(channel) as handle
     from follows
@@ -144,7 +145,7 @@ function toMeta(row: FeedRow): string {
     : `${formatCount(row.audience)} views · ${formatAge(new Date(row.published_at))}`
 }
 
-function toHomeVideo(row: FeedRow): HomeVideo {
+export function toHomeVideo(row: FeedRow): HomeVideo {
   return {
     id: row.id,
     slug: row.slug,
@@ -214,6 +215,9 @@ export async function selectHomeFeed(options: HomeFeedOptions = {}): Promise<Hom
     left join channels ch on ch.handle = lower(cand.channel)
     where ${category ? sql`lower(cand.category) = ${category}` : sql`true`}
       and ${liveOnly ? sql`cand.kind = 'live'` : sql`true`}
+      -- Dropped before the limit, not after: hiding rows from an already-cut
+      -- page would return short pages and repeat the offset on the next one.
+      and ${notSuppressed(userId)}
     order by ${SCORE} desc, cand.id asc
     limit ${limit + 1} offset ${cursor}
   `)
@@ -238,6 +242,12 @@ const FOLLOWING_LIMIT = 12
  * old upload staying pinned to the front of it would be the wrong answer.
  * Returns `[]` when signed out or following nobody, so the caller renders
  * nothing instead of an empty shelf.
+ *
+ * Feed feedback applies here too. The rail is the only other place a home card
+ * appears, and a "Not interested" that hides the card from the grid while
+ * leaving the same video in the shelf above it reads as a broken button. The
+ * follow itself is untouched — hiding a channel from the home page is not
+ * unfollowing it, and undoing the feedback brings the shelf back.
  */
 export async function selectFollowingFeed(userId: string | null): Promise<HomeVideo[]> {
   if (!userId) return []
@@ -261,6 +271,7 @@ export async function selectFollowingFeed(userId: string | null): Promise<HomeVi
     from candidates cand
     join my_follows mf on mf.handle = lower(cand.channel)
     left join channels ch on ch.handle = lower(cand.channel)
+    where ${notSuppressed(userId)}
     order by (cand.kind = 'live') desc, cand.published_at desc
     limit ${FOLLOWING_LIMIT}
   `)

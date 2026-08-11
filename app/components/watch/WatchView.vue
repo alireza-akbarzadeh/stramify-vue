@@ -13,6 +13,7 @@ import { useWatchChat } from '@/composables/useWatchChat'
 import { useWatchReaction } from '@/composables/useWatchEngagement'
 import { useChannelFollow } from '@/composables/useChannel'
 import { useViewCounter } from '@/composables/useViewCounter'
+import { useWatchProgress } from '@/composables/useWatchProgress'
 import { useAuthStore } from '@/stores/auth'
 import { useWatchlistStore } from '@/stores/watchlist'
 import { watchTargetToItem } from '@/utils/watchlist'
@@ -36,8 +37,21 @@ const channelName = computed(() => target.data.value?.channel ?? '')
 const { reactions, toggle: react } = useWatchReaction(slug)
 const { channel, toggle: follow, notify } = useChannelFollow(channelName)
 const { count } = useViewCounter(slug)
+const { track, finish } = useWatchProgress(slug)
 const { user } = storeToRefs(useAuthStore())
 const watchlist = useWatchlistStore()
+
+/**
+ * `?t=` — a resume point from the "Continue watching" rail, or from a link
+ * someone shared at a timestamp. Read off the route rather than fetched, so
+ * the player starts in the right place with no extra round trip. A junk value
+ * is `NaN`, which the player treats the same as absent.
+ */
+const route = useRoute()
+const resumeAt = computed(() => {
+  const seconds = Number(route.query.t)
+  return Number.isFinite(seconds) && seconds > 0 ? seconds : undefined
+})
 
 // A vertical clip is a short, and this page's 16:9 player would letterbox it
 // into two black slabs. Search and the up-next rail therefore keep linking
@@ -171,7 +185,10 @@ function onShare() {
       :related="relatedPanel"
       :comments="commentsPanel"
       :chat="chatPanel"
+      :resume-at="resumeAt"
       @play-start="count()"
+      @progress="track"
+      @ended="finish"
       @react="onReact"
       @toggle-save="onSave"
       @share="onShare"

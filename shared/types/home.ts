@@ -48,3 +48,22 @@ export interface HomeChip {
 
 /** Cards per page. Divides evenly by 2, 3 and 4, so no ragged last row at any breakpoint. */
 export const HOME_PAGE_SIZE = 24
+
+/**
+ * What a piece of negative feedback applies to: this one video ("Not
+ * interested"), or everything by its channel ("Don't recommend this channel").
+ */
+export const HOME_FEEDBACK_KINDS = ['video', 'channel'] as const
+export type HomeFeedbackKind = (typeof HOME_FEEDBACK_KINDS)[number]
+
+/**
+ * One thing the viewer has asked the feed to stop showing.
+ *
+ * `target` is a `HomeVideo.id` for `'video'` and a channel handle for
+ * `'channel'`. The server canonicalises the handle's casing and echoes the
+ * stored row back, so the client's undo always refers to the same row.
+ */
+export interface HomeFeedback {
+  kind: HomeFeedbackKind
+  target: string
+}

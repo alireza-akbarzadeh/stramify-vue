@@ -19,10 +19,17 @@ export interface ContinueWatchingItem extends RelatedItem {
   avatarUrl: string | null
 }
 
-/** What the player reports back. `completed` is the player's call, not `position >= duration`. */
+/**
+ * What the player sends up as it plays.
+ *
+ * Position and "did it finish", and nothing else — the runtime is *not* on the
+ * wire. The server already has the clip row, so taking the duration from there
+ * means a misreporting player (a bad manifest, a stale metadata read) can't
+ * park a wrong denominator on the row that the progress bar then divides by.
+ */
 export interface WatchProgressUpdate {
   positionSeconds: number
-  durationSeconds: number
+  /** The player's `ended` event, not `position >= duration` — see `watch_progress`. */
   completed: boolean
 }
 

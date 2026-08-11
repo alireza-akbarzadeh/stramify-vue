@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { Button } from '@/components/ui/button'
+import { useHomeFeedback } from '@/composables/useHomeFeedback'
 import { useWatchlistStore } from '@/stores/watchlist'
 import { relatedToItem } from '@/utils/watchlist'
 import HomeVideoCard from './HomeVideoCard.vue'
@@ -30,6 +31,13 @@ defineProps<{
 const emit = defineEmits<{ (e: 'retry' | 'load-more'): void }>()
 
 const watchlist = useWatchlistStore()
+
+/**
+ * Owned here, not by the card, for the same reason the watchlist is: one
+ * mutation patches every cached page, and per-card copies would be twenty-four
+ * of it. Hiding a card rewrites this grid's own cache — see `useHomeFeedback`.
+ */
+const feedback = useHomeFeedback()
 
 /**
  * One literal, used by the real grid and by both skeleton grids, so a
@@ -88,6 +96,7 @@ const MORE_SKELETONS = 4
           :saved="watchlist.isSaved(video.id)"
           :video="video"
           @toggle-save="watchlist.toggle(relatedToItem(video))"
+          @feedback="feedback.submit($event)"
         />
         <!-- The next page lands in these slots, so the page grows downward
              instead of jumping when the request resolves. -->

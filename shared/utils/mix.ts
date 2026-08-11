@@ -39,7 +39,7 @@ export function parseMixId(id: string): { seed: MixSeed; key: string } | null {
  * (the id is lowercased for lookup, the label shouldn't be), and the category's
  * display name for a category mix.
  */
-export function mixTitle(seed: MixSeed, label: string): string {
+export function mixTitle(label: string): string {
   return `${label} mix`
 }
 

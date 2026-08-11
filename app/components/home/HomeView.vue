@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { useDiscoveryCategories } from '@/composables/useDiscoveryCategories'
-import { useFollowingFeed } from '@/composables/useFollowingFeed'
 import { useHomeFeed } from '@/composables/useHomeFeed'
-import { useAuthStore } from '@/stores/auth'
 import {
   ALL_CHIP,
   buildHomeChips,
@@ -11,19 +9,22 @@ import {
   homeFilterLabel
 } from '#shared/utils/home'
 import HomeChipBar from './HomeChipBar.vue'
-import HomeFollowingRail from './HomeFollowingRail.vue'
-import HomeFollowingRailSkeleton from './HomeFollowingRailSkeleton.vue'
+import HomeShelves from './HomeShelves.vue'
 import HomeVideoGrid from './HomeVideoGrid.vue'
 
 /**
- * The signed-in-or-not home page: a category filter bar, your subscriptions,
+ * The signed-in-or-not home page: a category filter bar, a stack of shelves,
  * and a ranked recommendation feed.
+ *
+ * The shelves (continue watching, your subscriptions, shorts, mixes, your
+ * playlists) live in `HomeShelves` with their own queries — five independent
+ * caches that none of this file's state depends on. What's left here is the
+ * two things that *are* coupled: the chip and the grid it filters.
  *
  * Search isn't here — it lives in the app bar above (`AppSearch`), which every
  * page under the dashboard layout already gets, so the home page doesn't grow
  * a second search box that behaves differently from the real one.
  */
-const auth = useAuthStore()
 const { data: categories, isPending: categoriesPending } = useDiscoveryCategories()
 
 const chips = computed(() => buildHomeChips(categories.value ?? []))
@@ -32,26 +33,15 @@ const activeChip = computed(() => findHomeChip(chips.value, activeId.value))
 
 const { data, isPending, isError, refetch, fetchNextPage, hasNextPage, isFetchingNextPage } =
   useHomeFeed(activeChip)
-const { data: following, isPending: followingPending } = useFollowingFeed()
 
 const videos = computed(() => data.value?.pages.flatMap((page) => page.items) ?? [])
 
 /**
- * The subscriptions rail is not category-filtered, so it only belongs above an
- * unfiltered feed — on a category chip it would be answering a different
- * question than the grid under it.
+ * None of the shelves is category-filtered, so they only belong above an
+ * unfiltered feed — on a category chip they'd be answering a different
+ * question than the grid under them.
  */
-const showFollowing = computed(() => activeChip.value.id === ALL_CHIP.id)
-const followingVideos = computed(() => (showFollowing.value ? (following.value ?? []) : []))
-
-/**
- * Gated on the session as well as the query: a disabled TanStack query stays
- * `pending` forever, so signed out this would otherwise be a rail that never
- * resolves.
- */
-const followingLoading = computed(
-  () => showFollowing.value && auth.isAuthenticated && followingPending.value
-)
+const showShelves = computed(() => activeChip.value.id === ALL_CHIP.id)
 
 /** The chip bar and the grid are a tablist and its one panel. */
 const PANEL_ID = 'home-feed-panel'
@@ -71,8 +61,7 @@ const PANEL_ID = 'home-feed-panel'
     </div>
 
     <div class="space-y-10 pt-4">
-      <HomeFollowingRailSkeleton v-if="followingLoading" />
-      <HomeFollowingRail v-else-if="followingVideos.length" :videos="followingVideos" />
+      <HomeShelves v-if="showShelves" />
 
       <HomeVideoGrid
         :videos="videos"

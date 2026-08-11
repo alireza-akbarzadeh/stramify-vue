@@ -78,4 +78,18 @@ describe('HomeVideoCard', () => {
     await wrapper.find('button[aria-pressed]').trigger('click')
     expect(wrapper.emitted('toggle-save')).toHaveLength(1)
   })
+
+  it('offers the actions menu, named after the video it acts on', async () => {
+    const wrapper = await mountSuspended(HomeVideoCard, { props: { video: video(), saved: false } })
+    const trigger = wrapper.find('[aria-haspopup="menu"]')
+    expect(trigger.exists()).toBe(true)
+    expect(trigger.attributes('aria-label')).toContain('Midnight Echo')
+  })
+
+  // The card used to be wrapped in one anchor, which made the buttons inside it
+  // invalid HTML. The stretched link keeps the whole card clickable instead.
+  it('keeps its buttons outside the watch link', async () => {
+    const wrapper = await mountSuspended(HomeVideoCard, { props: { video: video(), saved: false } })
+    expect(wrapper.find('a button').exists()).toBe(false)
+  })
 })

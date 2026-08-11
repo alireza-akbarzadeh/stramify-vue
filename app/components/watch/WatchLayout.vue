@@ -5,6 +5,7 @@ import type { ChatPanel, CommentsPanel, RelatedPanel, WatchEngagement } from './
 import WatchPlayer from './WatchPlayer.vue'
 import WatchMeta from './WatchMeta.vue'
 import WatchActions from './WatchActions.vue'
+import WatchSaveToPlaylist from './WatchSaveToPlaylist.vue'
 import WatchChannelBar from './WatchChannelBar.vue'
 import WatchDescription from './WatchDescription.vue'
 import WatchComments from './WatchComments.vue'
@@ -41,6 +42,8 @@ defineProps<{
   related: RelatedPanel
   comments: CommentsPanel
   chat: ChatPanel
+  /** `?t=` — where to drop the playhead. Passed straight through to the player. */
+  resumeAt?: number
 }>()
 
 const sort = defineModel<CommentSort>('sort', { required: true })
@@ -51,7 +54,8 @@ defineEmits<{
   (e: 'send-chat', body: string): void
   (e: 'post-comment', draft: CommentDraft): void
   (e: 'like-comment' | 'remove-comment', id: string): void
-  (e: 'play-start' | 'toggle-save' | 'share' | 'toggle-follow'): void
+  (e: 'progress', currentTime: number): void
+  (e: 'play-start' | 'ended' | 'toggle-save' | 'share' | 'toggle-follow'): void
   (e: 'retry-related' | 'retry-comments' | 'retry-chat'): void
 }>()
 
@@ -68,7 +72,13 @@ useTheaterShortcut()
       class="min-w-0 lg:row-start-1"
       :class="theater ? 'lg:col-span-2' : 'lg:col-start-1'"
     >
-      <WatchPlayer :target="target" @play-start="$emit('play-start')" />
+      <WatchPlayer
+        :target="target"
+        :resume-at="resumeAt"
+        @play-start="$emit('play-start')"
+        @progress="$emit('progress', $event)"
+        @ended="$emit('ended')"
+      />
     </div>
 
     <div class="min-w-0 space-y-4 lg:col-start-1 lg:row-start-2">
@@ -83,14 +93,25 @@ useTheaterShortcut()
           @toggle-follow="$emit('toggle-follow')"
           @set-notify="$emit('set-notify', $event)"
         />
-        <WatchActions
-          :reactions="engagement.reactions"
-          :saved="engagement.saved"
-          :pending="engagement.reactPending"
-          @react="$emit('react', $event)"
-          @toggle-save="$emit('toggle-save')"
-          @share="$emit('share')"
-        />
+        <div class="flex flex-wrap items-center gap-2">
+          <WatchActions
+            :reactions="engagement.reactions"
+            :saved="engagement.saved"
+            :pending="engagement.reactPending"
+            @react="$emit('react', $event)"
+            @toggle-save="$emit('toggle-save')"
+            @share="$emit('share')"
+          />
+          <!-- Clips only: `playlist_items` holds clips, not live sessions.
+               Owns its own queries rather than taking props, because it's the
+               one control here whose state (which playlists hold this video)
+               nothing else on the page needs. -->
+          <WatchSaveToPlaylist
+            v-if="target.kind === 'clip'"
+            :slug="target.slug"
+            :clip-id="target.id"
+          />
+        </div>
       </div>
       <WatchDescription
         :description="target.description"

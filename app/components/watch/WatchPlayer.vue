@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Loader2 } from '@lucide/vue'
+import type { MediaTimeUpdateEvent } from 'vidstack'
 import type { WatchTarget } from '#shared/types/watch'
 import LiveBadge from '@/components/landing/LiveBadge.vue'
 import { useTheaterMode } from '@/composables/useTheaterMode'
@@ -19,12 +20,46 @@ import PlayerControls from './player/PlayerControls.vue'
  * grid cell, and `.player-theater` is only about capping the height so a wide
  * viewport can't push the video past the fold.
  */
-const props = defineProps<{ target: WatchTarget }>()
-/** `play-start` drives the view counter; the parent debounces it per session. */
-const emit = defineEmits<{ (e: 'play-start'): void }>()
+const props = defineProps<{
+  target: WatchTarget
+  /**
+   * Seconds to start at, from the `?t=` on a "Continue watching" link or a
+   * shared deep link. `undefined` starts at the beginning.
+   */
+  resumeAt?: number
+}>()
+const emit = defineEmits<{
+  /** Drives the view counter; the parent debounces it per session. */
+  (e: 'play-start'): void
+  /** The playhead, forwarded to `useWatchProgress`, which throttles the writes. */
+  (e: 'progress', currentTime: number): void
+  (e: 'ended'): void
+}>()
 
 const live = computed(() => props.target.kind === 'live')
 const { theater } = useTheaterMode()
+
+/** Vidstack's element exposes a writable `currentTime`; that's all we need off it. */
+const player = useTemplateRef<HTMLElement & { currentTime: number }>('player')
+
+/**
+ * Seek once, on `can-play`.
+ *
+ * Not on mount: before the provider can play there is no seekable range, so
+ * setting `currentTime` earlier is silently discarded. A live stream is never
+ * seeked — its "resume point" is the live edge, which is where it already is.
+ */
+const resumed = ref(false)
+function onCanPlay() {
+  if (resumed.value || live.value || !props.resumeAt || !player.value) return
+  resumed.value = true
+  player.value.currentTime = props.resumeAt
+}
+
+/** Vidstack's `time-update` carries the playhead in its detail. */
+function onTimeUpdate(event: MediaTimeUpdateEvent) {
+  emit('progress', event.detail.currentTime)
+}
 </script>
 
 <template>
@@ -33,6 +68,7 @@ const { theater } = useTheaterMode()
     :class="theater && 'player-theater'"
   >
     <media-player
+      ref="player"
       class="player"
       :title="target.title"
       :src="target.videoUrl"
@@ -40,6 +76,9 @@ const { theater } = useTheaterMode()
       playsinline
       autoplay
       @play="emit('play-start')"
+      @can-play="onCanPlay"
+      @time-update="onTimeUpdate"
+      @ended="emit('ended')"
     >
       <media-provider>
         <media-poster class="player-poster" :src="target.image" alt="" />
