@@ -6,6 +6,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: [
     '~/assets/css/main.css',
+    // vue-sonner v2 ships its stylesheet as a separate entry instead of
+    // bundling it into the JS. Without it the toaster renders an unstyled,
+    // unpositioned <ol> at the end of <body> — toasts mount but never show.
+    'vue-sonner/style.css',
     // Vidstack's base element styles only. The stock `default/theme.css` and
     // `default/layouts/video.css` are deliberately not loaded — the player
     // wears our own skin (`assets/css/player.css`) over Vidstack's headless

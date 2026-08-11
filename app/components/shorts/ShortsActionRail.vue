@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {Bookmark, BookmarkCheck, Link2, MessageCircle, ThumbsDown, ThumbsUp} from '@lucide/vue'
+import {Bookmark, BookmarkCheck, MessageCircle, Repeat1, Send, ThumbsDown, ThumbsUp} from '@lucide/vue'
 import {storeToRefs} from 'pinia'
 import {toast} from 'vue-sonner'
 import type {Short} from '#shared/types/shorts'
@@ -38,10 +38,10 @@ function onReact(value: ReactionValue) {
 
 function onShare() {
   shares.value += 1
-
+  const link = `${window.location.origin}/shorts?v=${props.short.id}`
   navigator.clipboard
-      .writeText(`${window.location.origin}/shorts?v=${props.short.id}`)
-      .then(() => toast.success('Link copied to clipboard'))
+      .writeText(link)
+      .then(() => toast('Link copied to clipboard', {description: link}))
       .catch(() => toast.error("Couldn't copy the link"))
 }
 </script>
@@ -74,7 +74,14 @@ function onShare() {
         :pressed="shorts.commentsFor === short.id"
         @click="shorts.openComments(short.id)"
     />
-    <ShortsActionButton :burst="shares" :icon="Link2" :sparks="4" label="Copy link to this short" @click="onShare"/>
+    <ShortsActionButton
+        :caption="formatCount(short.commentCount)"
+        :icon="Repeat1"
+        :label="`Repeat`"
+        :pressed="shorts.commentsFor === short.id"
+        @click="shorts.openComments(short.id)"
+    />
+    <ShortsActionButton :burst="shares" :icon="Send" :sparks="4" label="Copy link to this short" @click="onShare"/>
     <ShortsActionButton
         :active="saved"
         :burst="saved"
