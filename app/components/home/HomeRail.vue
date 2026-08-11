@@ -17,26 +17,29 @@ import { Button } from '@/components/ui/button'
  * below `sm`, where swiping is the obvious gesture and two more tap targets
  * would just crowd the row.
  */
-defineProps<{
-  title: string
-  /** DOM id for the heading — the section points at it with `aria-labelledby`. */
-  headingId: string
-  /** Optional "see all" destination, rendered as a link beside the heading. */
-  to?: string
-  /** Label for that link. Ignored without `to`. */
-  toLabel?: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    title: string
+    /** DOM id for the heading — the section points at it with `aria-labelledby`. */
+    headingId: string
+    /** Optional "see all" destination, rendered as a link beside the heading. */
+    to?: string
+    /** Label for that link. Ignored without `to`. */
+    toLabel?: string
+    /**
+     * Pixels one arrow press travels. The default is a bit under two video
+     * cards; a rail of much smaller items (the story circles on `/following`)
+     * passes its own, or a press would fly past a whole screenful of them.
+     */
+    step?: number
+  }>(),
+  { to: undefined, toLabel: undefined, step: 640 }
+)
 
 const track = useTemplateRef<HTMLUListElement>('track')
 
-/**
- * A bit under two cards' worth, so a press always leaves part of the previous
- * card visible — a full-width jump loses your place in the row.
- */
-const STEP = 640
-
 function scroll(direction: -1 | 1) {
-  track.value?.scrollBy({ left: direction * STEP, behavior: 'smooth' })
+  track.value?.scrollBy({ left: direction * props.step, behavior: 'smooth' })
 }
 </script>
 
@@ -53,9 +56,17 @@ function scroll(direction: -1 | 1) {
   <section :aria-labelledby="headingId" class="min-w-0">
     <div class="mb-4 flex items-center justify-between gap-4">
       <div class="flex min-w-0 items-baseline gap-3">
-        <h2 :id="headingId" class="truncate text-lg font-semibold text-foreground">
-          {{ title }}
-        </h2>
+        <!--
+          The heading is a slot so a shelf can put an avatar and a badge beside
+          its title (`/following` names a channel, not a category). It still
+          carries `headingId` and falls back to plain text, so nothing that
+          doesn't opt in changes.
+        -->
+        <slot name="heading" :heading-id="headingId">
+          <h2 :id="headingId" class="truncate text-lg font-semibold text-foreground">
+            {{ title }}
+          </h2>
+        </slot>
         <NuxtLink
           v-if="to"
           :to="to"

@@ -10,6 +10,15 @@ import type {
 import type { Clip, ClipCategory } from '#shared/types/discovery'
 import type { ChannelSummary } from '#shared/types/watch'
 import { toChannelHandle } from '#shared/utils/channel'
+import type { FollowedChannel, FollowingShelf } from '#shared/types/following'
+import {
+  FOLLOWED_CHANNELS_KEY,
+  FOLLOWING_ROOT_KEY,
+  FOLLOWING_SHELVES_KEY,
+  dropFollowedChannel,
+  dropFollowingShelf,
+  setFollowedNotify
+} from '@/utils/following'
 import { NOTIFICATIONS_KEY } from './useNotifications'
 
 export interface ChannelFilters {
@@ -130,9 +139,16 @@ export function useChannelNotify() {
         body: { mode }
       }),
     onMutate: ({ name, mode }) => {
+      const handle = toChannelHandle(name)
       const previous = client.getQueryData<ChannelSummary>(key(name))
       if (previous) client.setQueryData(key(name), { ...previous, notify: mode })
-      return { previous }
+      // `/following`'s manage list renders a bell per row off its own cache,
+      // so it has to move with the summary or the two disagree on screen.
+      const previousList = client.getQueryData<FollowedChannel[]>(FOLLOWED_CHANNELS_KEY)
+      client.setQueryData<FollowedChannel[]>(FOLLOWED_CHANNELS_KEY, (list) =>
+        setFollowedNotify(list, handle, mode)
+      )
+      return { previous, previousList }
     },
     onSuccess: (summary, { name }) => {
       client.setQueryData(key(name), summary)
@@ -140,6 +156,7 @@ export function useChannelNotify() {
     },
     onError: (_error, { name }, context) => {
       if (context?.previous) client.setQueryData(key(name), context.previous)
+      if (context?.previousList) client.setQueryData(FOLLOWED_CHANNELS_KEY, context.previousList)
     }
   })
 }
@@ -176,6 +193,14 @@ export function useFollowChannel() {
     client.setQueryData<ChannelProfile>(keys.profile(handle), (profile) =>
       profile ? toggleFollow(profile) : profile
     )
+    // `/following` is a list of the channels you follow, not a list with a
+    // follow button on it, so the row leaves rather than changing state.
+    client.setQueryData<FollowedChannel[]>(FOLLOWED_CHANNELS_KEY, (list) =>
+      dropFollowedChannel(list, handle)
+    )
+    client.setQueryData<FollowingShelf[]>(FOLLOWING_SHELVES_KEY, (shelves) =>
+      dropFollowingShelf(shelves, handle)
+    )
   }
 
   return useMutation({
@@ -186,11 +211,18 @@ export function useFollowChannel() {
     onMutate: (name) => patch(toChannelHandle(name)),
     // The watch page's header reads the summary shape, which the server just
     // recomputed — take it verbatim rather than re-deriving it here.
-    onSuccess: (summary, name) => client.setQueryData(keys.summary(toChannelHandle(name)), summary),
+    onSuccess: (summary, name) => {
+      client.setQueryData(keys.summary(toChannelHandle(name)), summary)
+      // A *new* follow can't be patched into `/following` — that row carries
+      // stats and a shelf of videos this cache has never seen — so it refetches.
+      // Unfollowing needs nothing: `patch` already took the row out.
+      if (summary.isFollowing) client.invalidateQueries({ queryKey: FOLLOWING_ROOT_KEY })
+    },
     onError: (_error, name) => {
       const handle = toChannelHandle(name)
       client.invalidateQueries({ queryKey: ['channels', 'directory'] })
       client.invalidateQueries({ queryKey: keys.profile(handle) })
+      client.invalidateQueries({ queryKey: FOLLOWING_ROOT_KEY })
     }
   })
 }

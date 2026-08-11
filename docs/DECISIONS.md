@@ -875,3 +875,80 @@ to change when real view events land (Phase 12) — until then "recommended"
 means popularity + your follows + freshness, and `docs/home-feed.md` says so
 plainly. `/clips` and `/live` keep their dedicated pages; home does not replace
 them, it ranks across them.
+
+---
+
+## ADR-021: `/following` ships on the existing `follows` table; the story ring means "new this week", not "unseen"
+
+**Status**: Accepted (2026-08-11). Retires the `ComingSoon` placeholder noted in
+ADR-020's follow-ups and in PROGRESS.md.
+
+**Context**: `follows` has existed since ADR-014 and is written from four
+surfaces (watch page, channel page, `/channels`, and the home rail's cards). Its
+only reader was the ranking term in `server/utils/home.ts` and the notification
+feed. Nothing in the app ever answered "which channels do I follow" — `/following`
+was a placeholder and was not linked from any nav, so the Follow button had no
+payoff page at all.
+
+Two things did **not** exist and still don't: any per-viewer watch history (only
+`clips.views`, a counter), and any "seen" state for a channel's uploads.
+`watch_progress` (migration `0007`) records resume positions for videos you
+opened, which is not the same thing as knowing you've seen that a channel
+published.
+
+**Decision**: `/following` renders a story rail, a shelf per channel, and a
+manage list, off two new read-only endpoints. No migration — every column it
+reads already exists.
+
+1. **The story ring has three states, and the lit ones are honest.** `live`
+   (rotating accent gradient), `new` (the channel's own hue, held still) and
+   `quiet` (a flat border). `new` means "published within
+   `FOLLOWING_FRESH_DAYS`", and every label the UI attaches says exactly that —
+   "new this week". An Instagram-style ring invites the reading "unseen", which
+   the schema cannot support; claiming it would be fake functionality
+   (CLAUDE.md rule 2). Live uses one fixed gradient for every channel rather
+   than a per-channel hue, because it is the one state that has to mean the
+   same thing at a glance across the whole rail. No state is carried by colour
+   alone — live also gets a pill and all three are in the accessible name.
+2. **Shelves are per channel, ordered by how much that channel has published,
+   and "See all" goes to the channel's existing Videos tab.** A dedicated
+   all-your-subscriptions page would be a second list of the same videos whose
+   only distinguishing feature is being longer; `/channel/[handle]?tab=videos`
+   already sorts and paginates them.
+3. **The channel half reuses the directory's CTE.** `selectChannelRows` gained
+   `followedOnly`, an `order` override and four columns rather than growing a
+   fourth near-identical aggregate query (rule 10). The ordering override exists
+   so "recently followed" doesn't have to be added to `ChannelSort`, which is
+   the directory's public sort *menu* — a type change there is a UI change.
+4. **Two endpoints, not one payload.** `/api/following/channels` is cheap and
+   paints the rail; `/api/following/shelves` is the heavy per-channel window
+   query underneath it. One combined response would make the rail wait for the
+   shelves.
+5. **Unfollowing removes the row.** `/following` is a list *of* your follows, so
+   the shared `useFollowChannel` mutation drops the row from those caches rather
+   than toggling a button on it; re-following invalidates instead, because the
+   row carries stats the cache never had. One mutation still owns every surface.
+6. **`clipCount` on this page is landscape-only.** It sits next to a link into
+   the Videos tab, which is landscape-only, so the number and its destination
+   have to agree. `ChannelListItem.clipCount` on `/channels` is unchanged and
+   still counts shorts — changing it would move the directory's ranking.
+
+**Rejected**: *A full-screen Instagram-style story viewer* — a sequential
+autoplaying overlay is a different product surface (progress bars, gestures,
+its own player) and the user chose navigation instead. *An `unseen`/`last_seen`
+column on `follows`* — it would need a write on every impression to mean
+anything, and a ring backed by a column nobody updates is worse than no ring.
+*A `/following/videos` page* — see (2). *Feed feedback (⋮ "Not interested") on
+shelf cards* — "don't recommend this channel" is meaningless on a channel's own
+shelf; the honest control there is Unfollow. Feedback given on the home page is
+still honoured by the query. *Putting Following in `discoverLinks`* — that
+derives the public marketing header, where "Following" means nothing to a
+visitor with no session; it went in `libraryLinks` instead.
+
+**Consequences**: `all_handles` in `selectChannelRows` gained a `my_follows`
+arm, so a channel you follow whose content was later deleted still appears in a
+list whose entire job is to be complete — signed out that arm is empty, so
+`/channels` is unaffected. Shelves cap at `FOLLOWING_SHELF_LIMIT` channels;
+everyone past the cap is still in the rail and the manage list. `docs/following.md`
+carries the full write-up, including where a real "unseen" marker would go if
+one is ever wanted.

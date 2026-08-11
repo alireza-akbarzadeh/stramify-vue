@@ -26,7 +26,7 @@ const props = defineProps<{ short: Short; distance: number; last: boolean }>()
 const emit = defineEmits<{ (e: 'ended'): void }>()
 
 const shorts = useShortsStore()
-const { muted, paused, held } = storeToRefs(shorts)
+const { muted, paused, held, repeat } = storeToRefs(shorts)
 const { count } = useViewCounter(() => props.short.id)
 
 const active = computed(() => props.distance === 0)
@@ -34,13 +34,19 @@ const loaded = computed(() => props.distance <= 1)
 const showPaused = computed(() => active.value && paused.value)
 
 /**
- * Loop instead of ending — which is what stops the feed advancing, since a
- * looping video never fires `end`.
+ * Loop instead of ending — which is what stops the feed advancing, since the
+ * `ended` the reel listens for is the one event Vidstack withholds while a
+ * video is looping.
  *
- * Two reasons to hold still: the viewer tapped this short (`held`), or there
- * is nothing after it. Scrolling off the last short would land on empty space.
+ * Three reasons to hold still: the viewer tapped this short (`held`), repeat is
+ * switched on, or there is nothing after it — scrolling off the last short
+ * would land on empty space.
+ *
+ * The first two are only ever true of the short on screen. `repeat` is a mode
+ * that outlives the short it was switched on for, so it re-applies to whatever
+ * the viewer scrolls to next; `held` is reset on every new short.
  */
-const loop = computed(() => (active.value && held.value) || props.last)
+const loop = computed(() => (active.value && (held.value || repeat.value)) || props.last)
 </script>
 
 <template>

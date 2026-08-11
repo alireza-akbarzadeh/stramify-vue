@@ -619,3 +619,212 @@ first, or run `node --env-file=.env node_modules/drizzle-kit/bin.cjs migrate`.
 with it two throwaway verification files (`zz-check.mjs`,
 `zz-feedback-check.spec.ts`). They are deleted in the working tree; the deletion
 still needs committing.
+
+## Shorts player session, 2026-08-11 (appended)
+
+Three bugs on `/shorts`, all in the same area: the reel could not be unmuted,
+and the repeat button in the action rail was wired to the comment sheet.
+
+**The mute could not be turned on — root cause.** `ShortsPlayer.sync()` called
+`el.play()` guarded only by `if (!el.state)`, which checks that the custom
+element has been *upgraded*, not that it can play. Vidstack throws straight out
+of `play()`/`pause()` until the provider is ready (`"[vidstack] media is not
+ready - wait for can-play event."` — see `throwIfNotReadyForPlayback` in
+`vidstack/dev/chunks`), and the `catch` treated *every* rejection as a browser
+autoplay refusal and ran `shorts.muted = true`. That write persists to local
+storage, so unmuting and then scrolling to a short whose provider hadn't caught
+up — or simply reloading — silently reverted the feed to muted and kept it that
+way. Fixed by gating play/pause on `el.state.canPlay` (`can-play` re-runs
+`sync`, so nothing is lost) and narrowing the fallback to `NotAllowedError`,
+which is the only name a browser gives an autoplay block. The mute assignment
+stays *above* the new guard on purpose: Vidstack queues it until the provider
+exists, so the first frame is still silent.
+
+**`end` is not `ended`.** The player listened on Vidstack's `end`, which fires
+every time the playhead reaches the finish *including* when `loop` sends it back
+to the start. So the reel advanced off exactly the shorts that had asked to stay
+put — the tapped-and-held one, the last one, and (now) a repeating one.
+`ShortsSlide`'s comment claiming "a looping video never fires `end`" was
+backwards; `ended` is the event Vidstack withholds while looping.
+
+**Repeat was never wired.** `stores/shorts` defined `repeat` and `toggleRepeat`
+but did not return them, so both were `undefined` at every call site. The rail's
+repeat button was a copy of the comments button — it called
+`shorts.openComments()`, captioned itself with `commentCount`, and took its
+pressed state from `commentsFor`. Now: the store exports both, the button
+toggles repeat and reads its own state, `r` is bound in `useShortsKeys` (the
+store's toast comment already assumed it existed), and `ShortsSlide.loop`
+honours it. `repeat` deliberately survives `setActive` — it is a mode, unlike
+`held`, which is about the one short you tapped.
+
+**Tests.** `ShortsPlayer.spec.ts` is new and covers the mute regression
+directly; its first and third cases fail against the pre-fix component
+(verified). Vidstack isn't registered under Vitest, so the specs stand the
+element's surface up by hand and drive one `sync()` pass per `can-play`. Two
+traps worth knowing if you extend them: the mute persists to local storage, and
+a wrapper left mounted keeps answering the store's watcher and re-mutes the next
+test — hence the `beforeEach`/`afterEach` pair. `ShortsActionRail.spec.ts` was
+already failing before this session (it asserted five buttons; the rail had six)
+and now covers repeat.
+
+**Not done / carried forward**
+
+- Not verified in a real browser. Chrome had no remote-debugging port open this
+  session, and restarting the user's browser wasn't mine to do. The reasoning is
+  from Vidstack's own source, and the regression tests pin it, but a manual pass
+  on `/shorts?v=<id>` — unmute, scroll, reload — is still worth doing.
+- Pre-existing and untouched: `app/utils/nav.spec.ts` fails (asserts four mobile
+  tabs, there are five), and `ShortsPlayer.vue`'s `defineEmits` overloads trip
+  `@typescript-eslint/unified-signatures`. Both predate this session.
+
+**Working-tree note**: a concurrent graphify run committed `459a9e1 "feat:
+update graphify"` at 21:01 mid-session, sweeping this session's
+`ShortsPlayer.vue` and `stores/shorts.ts` edits into it along with a stray
+`final-check.tmp.mjs`. The edits are intact and complete; only the commit
+message is wrong for them. The rest of this work (rail, slide, keys, specs) is
+still uncommitted.
+
+## Following page session, 2026-08-11 (appended)
+
+`/following` was a `ComingSoon` placeholder **and was not linked from any nav**,
+even though `follows` has existed since ADR-014 and is written from four
+surfaces. The Follow button had no payoff page. Now built — full write-up in
+[following.md](./following.md), decisions in **ADR-021**.
+
+**Built**
+
+- **`/following`**: a story rail (every followed channel as an avatar in a
+  gradient ring, live first), a shelf per channel (up to 10 recent videos,
+  most-published channels first, "See all" → `/channel/[handle]?tab=videos`),
+  and a manage list with the notification bell and Unfollow.
+- **No migration.** Every column it reads already exists.
+- New: `shared/types/following.ts`, `server/utils/following.ts`,
+  `server/api/following/{channels,shelves}.get.ts`,
+  `app/composables/useFollowing.ts`, `app/utils/following.ts` (+ spec), six
+  components under `app/components/following/` (+ `FollowingStoryCircle.spec.ts`),
+  `docs/following.md`.
+- `selectChannelRows` (`server/utils/channels.ts`) gained `followedOnly`, an
+  `order` override, and the columns `landscape_clip_count`, `last_published`,
+  `live_label`, `notify`, `followed_at`. Its `all_handles` union gained a
+  `my_follows` arm so a followed channel whose content was deleted still
+  appears. **`/channels` behaviour is unchanged** — signed out that arm is
+  empty, and `ChannelListItem.clipCount` still counts shorts as before.
+- `HomeRail` gained an optional `step` prop and a `#heading` slot, both
+  additive with fallbacks — the five existing home shelves are untouched.
+- `useFollowChannel` / `useChannelNotify` now also patch the `['following', …]`
+  caches, so unfollowing on this page can't leave the watch page or the
+  directory claiming otherwise. Query keys live in `app/utils/following.ts`
+  rather than the composable to avoid an import cycle.
+- `Following` added to `libraryLinks` (not `discoverLinks` — that derives the
+  public marketing header).
+- New CSS: `@keyframes story-ring` + `--animate-story-ring` in `main.css`.
+
+**The ring is deliberately not an "unseen" marker.** Nothing in the schema
+tracks what a viewer has watched, so the lit ring means "published within
+`FOLLOWING_FRESH_DAYS`" and every label says "new this week". See ADR-021 §1.
+
+**⚠️ NOT VERIFIED — do this first if you're picking it up.** Same cause as the
+five sessions before it: the shell tool's safety classifier was down for most of
+this session (it flapped in and out — some `grep`/`cat` calls landed, no `npx`
+call ever did). So **none** of the toolchain ran and the page was never opened
+in a browser. Still owed:
+
+1. `npm run lint && npm run typecheck && npm run test`. Likeliest breakages, all
+   in code that was never compiled:
+   - `db.execute<ChannelRow>()` / `db.execute<ShelfRow>()` — the same drizzle
+     generic every previous session flagged; both row types are `type` aliases
+     for that reason but the postgres-js `RowList` may still need a cast.
+   - `server/utils/following.ts`'s nested CTE has never run against Postgres.
+     Watch `count(*) filter (where orientation = 'landscape')` in `clip_stats`,
+     the `order by … limit` inside the `channel_totals` CTE, and whether
+     `notSuppressed(userId)` still resolves against the `cands cand` alias.
+   - `row.followed_at` is read through `new Date(...)` on the assumption the
+     driver may hand back a string rather than a `Date`.
+2. Eyeball `/following` signed in as a seeded handle that follows several
+   channels, signed in with **zero** follows (the empty state is half the
+   design), and signed out. Check the live ring actually rotates, that it
+   stops under `prefers-reduced-motion`, and 375×812 has no horizontal
+   overflow.
+3. No e2e spec exists for the page yet.
+
+**Noticed, not fixed** (out of scope, left as-is): `app/components/home/
+HomeVideoGrid.vue:87` links to `/app/pages/explore` — a source path that leaked
+into a route, so the empty-state "Browse all clips" button 404s. Should be
+`/explore`.
+
+**Concurrent-session note**: a session building `/history` ran alongside this
+one — `app/pages/history.vue`, `app/components/history/`,
+`app/composables/useHistory.ts`, `server/api/history/`, `server/utils/history.ts`,
+`shared/types/history.ts`, `shared/utils/history.ts` are all theirs, not this
+session's. No overlap: `history` already had its `libraryLinks` entry, and the
+three shared files this session touched (`app/utils/nav.ts`,
+`app/components/home/HomeRail.vue`, `app/utils/channel.ts`) contain only this
+session's edits, verified with `git diff`. The uncommitted shorts-player work
+from the previous session is also still in the tree.
+
+## Watch history session, 2026-08-11 (appended)
+
+`/history` was a `ComingSoon` placeholder even though `libraryLinks` already
+linked to it and the player had been writing `watch_progress` rows since the
+Continue-watching rail was built. Full write-up: [history.md](./history.md).
+
+### What was built
+
+- **`/history`** — every watched clip, newest first, grouped under day headings
+  ("Today" / "Yesterday" / the date). Every row draws a progress bar on its
+  thumbnail (**full** on a finished video, partial otherwise) and a line reading
+  `Resume · 7 min left` or `Watched`. Partly-watched rows link with `?t=`;
+  finished ones restart. Search by title/channel (mirrored to `?q=`), remove one
+  row, and clear-all behind a confirm dialog.
+- New: `shared/types/history.ts`, `shared/utils/history.ts` (+ spec),
+  `server/utils/history.ts`, `server/api/history/index.{get,delete}.ts`,
+  `app/composables/useHistory.ts`, six components under
+  `app/components/history/` (+ `HistoryRow.spec.ts`), `docs/history.md`.
+- **No schema change and no new table.** `watch_progress` is reused as-is, so
+  history shows the *last* watch per clip and a rewatch moves a row rather than
+  adding one. That limit is documented rather than papered over — a per-play
+  event log stays a Phase 12 concern (CLAUDE.md rule 2).
+- Removing one row reuses `DELETE /api/watch/[slug]/progress`; only clear-all
+  needed a new endpoint.
+
+### Verified (toolchain actually ran this session)
+
+- `npm run typecheck` — clean for all new files. Three **pre-existing** errors
+  remain in files this session didn't touch: `PopBurst.vue`, `ui/sonner/
+  Sonner.vue`, `watch/WatchActions.vue`.
+- `npx eslint` on every new file — clean.
+- `npx vitest run` — **319 passed, 1 failed**. The failure is pre-existing and
+  not this session's: `app/utils/nav.spec.ts` "is exactly four tabs" now sees
+  five, because the Following session added a `Following` tab to
+  `mobileNavLinks`. Either drop a tab or update that test — it's a product call.
+  (Also note: vitest picks up a stale `.claude/worktrees/distracted-saha-7e1abf/`
+  copy of the repo, reported as 34 failing *files* with zero failing tests. It
+  should be added to the vitest `exclude` list or deleted.)
+- SQL layer exercised against the dev Postgres inside a **rolled-back
+  transaction** (nothing persisted): ordering, `limit + 1` paging probe, offset
+  page 2, title search, channel search, no-match search, and `%` correctly
+  escaped so it matches nothing rather than everything.
+- API boundary by curl: signed-out `GET` → 200 empty page, `cursor=-5` → 400,
+  200-char `q` → 400, signed-out `DELETE` → 401.
+- Rendered at 1440×900 and 375×812: no horizontal overflow, no console errors,
+  thumbnails hold 16:9 at both, row menu button is 44×44 on touch (36×36 with
+  hover reveal on desktop), sidebar marks History active.
+
+### Fixed en route (another session's uncommitted work)
+
+`server/utils/channels.ts` had a **syntax error** that broke `nuxt typecheck`
+repo-wide: three backticks inside a SQL comment sat within a `` sql`…` ``
+template literal and closed the string mid-query. This is exactly the "never
+compiled" class of breakage the Following session's own handoff predicted. The
+comment was reworded without backticks and a note added so it doesn't come back.
+**Nothing else in that file was touched.**
+
+### Not done / owed
+
+- **Never opened signed in with real rows** — `watch_progress` is empty for
+  every account in the dev DB, and this repo has no authenticated-e2e path or
+  progress seed. The list was verified instead via the component spec, the
+  rolled-back SQL run, and a temporary fixture-backed preview page (deleted).
+  A `scripts/seed-watch-progress.mjs` would close this and is the obvious next
+  step.
+- No e2e spec — `e2e/` currently only covers signed-out surfaces.

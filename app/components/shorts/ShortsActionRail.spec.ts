@@ -2,6 +2,7 @@
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import { describe, expect, it } from 'vitest'
 import type { Short } from '#shared/types/shorts'
+import { useShortsStore } from '@/stores/shorts'
 import ShortsActionRail from './ShortsActionRail.vue'
 
 const short: Short = {
@@ -43,12 +44,28 @@ describe('ShortsActionRail', () => {
   it('gives every action a name, since none of them carry visible label text', async () => {
     const wrapper = await mount()
     const labels = wrapper.findAll('button').map((button) => button.attributes('aria-label'))
-    expect(labels).toHaveLength(5)
+    expect(labels).toHaveLength(6)
     expect(labels.every((label) => !!label?.trim())).toBe(true)
   })
 
   it('labels the save button by what pressing it will do', async () => {
     const wrapper = await mount()
-    expect(wrapper.get('button[aria-label="Save to watchlist"]').exists()).toBe(true)
+    expect(wrapper.find('button[aria-label="Save to watchlist"]').exists()).toBe(true)
+  })
+
+  it('drives repeat off the store, not the comment sheet it was copied from', async () => {
+    const wrapper = await mount()
+    const shorts = useShortsStore()
+    const repeat = wrapper.get('button[aria-label="Repeat this short (r)"]')
+
+    expect(repeat.attributes('aria-pressed')).toBe('false')
+
+    await repeat.trigger('click')
+
+    expect(shorts.repeat).toBe(true)
+    // The sheet stays shut: the two used to share a handler.
+    expect(shorts.commentsFor).toBeNull()
+    expect(repeat.attributes('aria-label')).toBe('Turn off repeat (r)')
+    expect(repeat.attributes('aria-pressed')).toBe('true')
   })
 })

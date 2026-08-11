@@ -75,11 +75,13 @@ function onShare() {
         @click="shorts.openComments(short.id)"
     />
     <ShortsActionButton
-        :caption="formatCount(short.commentCount)"
+        :active="shorts.repeat"
+        :burst="shorts.repeat"
+        :caption="shorts.repeat ? 'Looping' : 'Repeat'"
         :icon="Repeat1"
-        :label="`Repeat`"
-        :pressed="shorts.commentsFor === short.id"
-        @click="shorts.openComments(short.id)"
+        :label="shorts.repeat ? 'Turn off repeat (r)' : 'Repeat this short (r)'"
+        :pressed="shorts.repeat"
+        @click="shorts.toggleRepeat()"
     />
     <ShortsActionButton :burst="shares" :icon="Send" :sparks="4" label="Copy link to this short" @click="onShare"/>
     <ShortsActionButton

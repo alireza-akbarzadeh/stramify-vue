@@ -23,6 +23,7 @@ import {
     Store,
     Trophy,
     Tv,
+    Users,
     Video
 } from '@lucide/vue'
 import type {Component} from 'vue'
@@ -104,6 +105,18 @@ export const exploreLinks: NavLink[] = [
     }
 ]
 export const libraryLinks: NavLink[] = [
+    /**
+     * First in the group because it's the only entry that has new content in
+     * it — history, playlists and liked only ever hold things you already
+     * chose. It sits here rather than in `discoverLinks` so it stays out of the
+     * public marketing header, where "Following" would mean nothing to a
+     * visitor with no session.
+     */
+    {
+        label: 'Following',
+        to: '/following',
+        icon: Users
+    },
     {
         label: 'History',
         to: '/history',

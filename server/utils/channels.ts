@@ -8,11 +8,14 @@ import { toChannelDisplayName, toChannelHandle } from '#shared/utils/channel'
 import type { Clip, ClipCategory } from '#shared/types/discovery'
 import type {
   ChannelListItem,
+  ChannelNotifyMode,
   ChannelProfile,
   ChannelSort,
   ChannelVideoSort
 } from '#shared/types/channel'
 import type { ChannelSummary } from '#shared/types/watch'
+import { FOLLOWING_FRESH_DAYS } from '#shared/types/following'
+import type { FollowedChannel } from '#shared/types/following'
 
 /**
  * Channel header data for the watch page — the follow button and its count.
@@ -98,20 +101,34 @@ type ChannelRow = {
   followers: number
   total_views: number
   clip_count: number
+  /**
+   * `clip_count` minus shorts. The directory has always counted every clip and
+   * keeps doing so; `/following` needs the number that matches the channel
+   * page's Videos tab, which is landscape-only (`readChannelVideos`).
+   */
+  landscape_clip_count: number
+  /** Newest upload, for the "new this week" ring on `/following`. */
+  last_published: Date | null
   live_count: number
   live_title: string | null
+  /** Streamer name in its own casing — the watch-page slug for a live session. */
+  live_label: string | null
   top_thumbnail: string | null
   categories: string[] | null
   label: string | null
   is_following: boolean
+  /** Only non-null for a channel the viewer follows. See `followedOnly`. */
+  notify: ChannelNotifyMode | null
+  followed_at: Date | null
 }
 
 /**
  * Every channel in the system with its derived stats.
  *
- * "Every channel" is the union of three sources, because a channel exists as
+ * "Every channel" is the union of four sources, because a channel exists as
  * soon as it has *anything*: a row in `channels` (identity written, maybe no
- * uploads yet), a clip, or a live session. Aggregating in one statement rather
+ * uploads yet), a clip, a live session, or a follower. Aggregating in one
+ * statement rather
  * than in JS keeps sorting and `limit` in the database, which is the only way
  * the directory stays a single page of work as the table grows.
  */
@@ -123,16 +140,38 @@ function selectChannelRows(options: {
   limit?: number
   /** Signed-in viewer, so each row can carry its own follow state. */
   userId?: string | null
+  /**
+   * Restrict to channels this viewer follows. Needs `userId`; without one
+   * `my_follows` is empty and this would return nothing, so it's ignored.
+   */
+  followedOnly?: boolean
+  /**
+   * Overrides `ORDER_BY[sort]`. `ChannelSort` is the directory's public sort
+   * menu, so an ordering that only one caller wants (recently-followed) is
+   * passed in here rather than added to a type the UI renders as options.
+   */
+  order?: SQL
 }) {
-  const { handle, search, category, sort = 'top', limit = 60, userId = null } = options
+  const {
+    handle,
+    search,
+    category,
+    sort = 'top',
+    limit = 60,
+    userId = null,
+    followedOnly = false,
+    order
+  } = options
 
   return db.execute<ChannelRow>(sql`
     with clip_stats as (
       select lower(creator) as handle,
              max(creator) as label,
              count(*)::int as clip_count,
+             count(*) filter (where orientation = 'landscape')::int as landscape_clip_count,
              coalesce(sum(views), 0)::int as total_views,
              min(created_at) as first_published,
+             max(created_at) as last_published,
              (array_agg(thumbnail_url order by views desc))[1] as top_thumbnail
       from clips
       group by lower(creator)
@@ -152,7 +191,7 @@ function selectChannelRows(options: {
       group by lower(channel)
     ),
     my_follows as (
-      select lower(channel) as handle
+      select lower(channel) as handle, notify, created_at as followed_at
       from follows
       where ${userId ? sql`user_id = ${userId}` : sql`false`}
     ),
@@ -175,6 +214,13 @@ function selectChannelRows(options: {
       select handle from clip_stats
       union select handle from live_stats
       union select handle from channels
+      -- A channel you follow is a channel, even if everything it published has
+      -- since been deleted. Without this arm followedOnly would quietly drop
+      -- it and /following would under-report its own list. Signed out,
+      -- my_follows is empty, so nothing else sees a difference.
+      -- (No backticks in here: this comment lives inside a JS template
+      -- literal, and one would close the string mid-query.)
+      union select handle from my_follows
     )
     select h.handle,
            c.display_name,
@@ -189,12 +235,17 @@ function selectChannelRows(options: {
            coalesce(fs.followers, 0) as followers,
            coalesce(cs.total_views, 0) as total_views,
            coalesce(cs.clip_count, 0) as clip_count,
+           coalesce(cs.landscape_clip_count, 0) as landscape_clip_count,
+           cs.last_published,
            coalesce(ls.live_count, 0) as live_count,
            ls.live_title,
+           ls.label as live_label,
            cs.top_thumbnail,
            cats.categories,
            coalesce(cs.label, ls.label) as label,
-           (mf.handle is not null) as is_following
+           (mf.handle is not null) as is_following,
+           mf.notify,
+           mf.followed_at
     from all_handles h
     left join channels c on c.handle = h.handle
     left join clip_stats cs on cs.handle = h.handle
@@ -203,6 +254,7 @@ function selectChannelRows(options: {
     left join category_stats cats on cats.handle = h.handle
     left join my_follows mf on mf.handle = h.handle
     where ${handle ? sql`h.handle = ${handle}` : sql`true`}
+      and ${followedOnly && userId ? sql`mf.handle is not null` : sql`true`}
       and ${
         search
           ? sql`(h.handle ilike ${`%${search}%`} or coalesce(c.display_name, '') ilike ${`%${search}%`})`
@@ -213,7 +265,7 @@ function selectChannelRows(options: {
         // untyped parameter on the left of `= any(...)` can't be inferred.
         category ? sql`${category}::text = any(cats.categories)` : sql`true`
       }
-    order by ${ORDER_BY[sort]}
+    order by ${order ?? ORDER_BY[sort]}
     limit ${limit}
   `)
 }
@@ -315,6 +367,76 @@ export async function readChannelProfile(
       : null,
     isFollowing: row.is_following
   }
+}
+
+/**
+ * `/following`'s order: anyone on air right now, then most recently followed.
+ *
+ * Live first because it's the only thing on the page that expires — a session
+ * you miss is gone, an upload isn't. After that, newest follow first, so a
+ * channel you just subscribed to is where you left it rather than buried under
+ * whoever has the biggest numbers.
+ */
+const FOLLOWED_ORDER = sql`
+  (coalesce(ls.live_count, 0) > 0) desc,
+  mf.followed_at desc nulls last,
+  h.handle asc
+`
+
+/**
+ * How many follows one page will render. Far past any real account, and it
+ * keeps a pathological one from turning the story rail into a memory problem.
+ */
+const FOLLOWED_LIMIT = 200
+
+function toFollowedChannel(row: ChannelRow, now: number): FollowedChannel {
+  const published = row.last_published ? new Date(row.last_published).getTime() : null
+  return {
+    handle: row.handle,
+    name: toDisplayName(row),
+    tagline: row.tagline ?? '',
+    avatarUrl: row.avatar_url,
+    bannerUrl: row.banner_url,
+    verified: row.verified,
+    followerCount: row.followers,
+    clipCount: row.landscape_clip_count,
+    isLive: row.live_count > 0,
+    liveTitle: row.live_title,
+    // The streamer's own casing, which is what `/watch/[slug]` resolves.
+    liveSlug: row.live_count > 0 ? (row.live_label ?? row.handle) : null,
+    // A followed row always has a `notify`; the fallback is for the impossible
+    // case rather than a real default, and matches `readChannelSummary`.
+    notify: (row.notify ?? 'all') as ChannelNotifyMode,
+    // Through `new Date` rather than straight to `toISOString`: `db.execute`
+    // hands back whatever the driver parsed the column into, and `formatJoined`
+    // above already hedges the same way for `joined_at`.
+    followedAt: new Date(row.followed_at ?? 0).toISOString(),
+    hasNew:
+      published !== null && now - published <= FOLLOWING_FRESH_DAYS * 86_400_000,
+    categories: toCategories(row.categories)
+  }
+}
+
+/**
+ * Every channel this viewer follows.
+ *
+ * Lives here rather than in `utils/following.ts` because it is the same CTE and
+ * the same row mapper as the directory — one `followedOnly` flag apart — and
+ * duplicating that query to keep the file names tidy is exactly the trade
+ * CLAUDE.md rule 10 says not to make. The *videos* half of `/following` is a
+ * clips query and does live in `utils/following.ts`.
+ */
+export async function listFollowedChannels(userId: string): Promise<FollowedChannel[]> {
+  const rows = await selectChannelRows({
+    userId,
+    followedOnly: true,
+    order: FOLLOWED_ORDER,
+    limit: FOLLOWED_LIMIT
+  })
+  // One clock for the whole page, so two channels published a millisecond
+  // apart can't disagree about whether "this week" has elapsed.
+  const now = Date.now()
+  return [...rows].map((row) => toFollowedChannel(row, now))
 }
 
 /** Ordering for a channel's own video grid. */

@@ -108,6 +108,18 @@
     }
 }
 
+/* The travelling ring on a live channel's story circle
+   (`components/following/FollowingStoryCircle.vue`). A conic-gradient's angle
+   is not animatable, so the element painting it is rotated instead — which
+   also keeps the whole effect on the compositor rather than triggering layout.
+   The gradient's first and last stops are the same colour, so a full turn
+   loops with no visible seam. */
+@keyframes story-ring {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
 @keyframes float-slow {
     0%,
     100% {
@@ -291,6 +303,10 @@
     --animate-pop: pop 300ms cubic-bezier(0.16, 1, 0.3, 1);
     --animate-spark: spark 450ms cubic-bezier(0.16, 1, 0.3, 1);
     --animate-bell-ring: bell-ring 600ms cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Ambient, not busy. Six seconds a turn reads as "this channel is on air";
+       anything near a spinner's pace would read as "the page is loading". */
+    --animate-story-ring: story-ring 6s linear infinite;
 }
 
 /* A quiet scrollbar for long in-app columns (the sidebar nav, chat, menus).

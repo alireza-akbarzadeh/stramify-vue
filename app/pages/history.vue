@@ -1,8 +1,10 @@
 <script lang="ts" setup>
+import HistoryView from '@/components/history/HistoryView.vue'
+
 definePageMeta({ layout: 'dashboard' })
-useHead({ title: 'history — Streamify' })
+useHead({ title: 'Watch history — Streamify' })
 </script>
 
 <template>
-  <ComingSoon description="we weill implement this as soone as possible" title="trending" />
+  <HistoryView />
 </template>
