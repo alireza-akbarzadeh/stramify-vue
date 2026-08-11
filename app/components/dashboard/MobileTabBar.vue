@@ -1,27 +1,18 @@
+```vue
 <script lang="ts" setup>
 import type {NavLink} from '@/utils/nav'
 import {isNavLinkActive, mobileNavLinks} from '@/utils/nav'
 
-/**
- * The phone-sized primary nav: a fixed bottom tab bar, the pattern every
- * native app (and YouTube) uses, because the top-left hamburger is the one
- * corner of a phone a thumb can't reach.
- *
- * It replaces nothing — the sidebar sheet still holds the full nav behind the
- * top bar's trigger. This is the shortcut to the four destinations that carry
- * the traffic. Hidden from `md` up, where the sidebar is always on screen.
- *
- * `pb-[env(safe-area-inset-bottom)]` keeps the row clear of the iOS home
- * indicator; on everything else the inset is 0 and the bar sits flush.
- *
- * `links` exists so the studio shell can hand it a creator-scoped set instead
- * of the browse one; the row is a `grid-cols-4`, so whatever is passed has to
- * be four tabs (`nav.spec.ts` holds both sets to that).
- */
-withDefaults(defineProps<{links?: NavLink[]; label?: string}>(), {
-    links: () => mobileNavLinks,
-    label: 'Primary'
-})
+withDefaults(
+    defineProps<{
+      links?: NavLink[]
+      label?: string
+    }>(),
+    {
+      links: () => mobileNavLinks,
+      label: 'Primary',
+    },
+)
 
 const route = useRoute()
 </script>
@@ -29,24 +20,57 @@ const route = useRoute()
 <template>
   <nav
       :aria-label="label"
-      class="fixed inset-x-0 bottom-0 z-40 border-t border-border/60 bg-glass pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden"
+      class="fixed inset-x-0 bottom-0 z-40 pb-[env(safe-area-inset-bottom)] md:hidden"
   >
-    <ul class="grid grid-cols-4">
-      <li v-for="link in links" :key="link.to">
-        <NuxtLink
-            :aria-current="isNavLinkActive(link.to, route.path, link.exact) ? 'page' : undefined"
-            :to="link.to"
-            class="group flex h-14 select-none flex-col items-center justify-center gap-0.5 text-[10px] font-medium text-muted-foreground transition-colors duration-150 aria-[current=page]:text-primary active:scale-[0.97]"
+    <div
+        class="mx-auto max-w-lg overflow-hidden rounded-t-3xl bg-background/85 shadow-[0_-8px_30px_rgba(0,0,0,0.08)] backdrop-blur-2xl supports-[backdrop-filter]:bg-background/70 dark:shadow-[0_-8px_30px_rgba(0,0,0,0.3)]"
+    >
+      <ul class="grid grid-cols-5 items-center px-1.5 pt-1.5">
+        <li
+            v-for="link in links"
+            :key="link.to"
+            class="relative min-w-0"
         >
-          <span
-              class="grid h-7 w-12 place-items-center rounded-full transition-colors duration-150 group-aria-[current=page]:bg-primary/12"
+          <NuxtLink
+              :aria-current="
+              isNavLinkActive(link.to, route.path, link.exact)
+                ? 'page'
+                : undefined
+            "
+              :to="link.to"
+              class="group relative flex h-15 select-none flex-col items-center justify-center gap-1 px-1 text-[10px] font-medium text-muted-foreground outline-none transition-all duration-200 ease-out active:scale-95 focus-visible:ring-2 focus-visible:ring-primary/50 aria-[current=page]:text-foreground"
           >
-            <component :is="link.icon" aria-hidden="true" class="size-5 stroke-[1.8]"/>
-          </span>
+            <!-- Active background -->
+            <span
+                class="absolute inset-x-1 top-0.5 h-10 scale-90 rounded-xl bg-primary/0 opacity-0 transition-all duration-200 ease-out group-aria-[current=page]:scale-100 group-aria-[current=page]:bg-primary/10 group-aria-[current=page]:opacity-100"
+            />
 
-          <span class="max-w-full truncate px-1">{{ link.label }}</span>
-        </NuxtLink>
-      </li>
-    </ul>
+            <!-- Icon -->
+            <span
+                class="relative z-10 grid size-7 place-items-center transition-all duration-200 ease-out group-aria-[current=page]:-translate-y-0.5 group-aria-[current=page]:text-primary"
+            >
+              <component
+                  :is="link.icon"
+                  aria-hidden="true"
+                  class="size-[1.35rem] stroke-[1.8] transition-all duration-200 group-aria-[current=page]:scale-105 group-aria-[current=page]:stroke-[2.2]"
+              />
+            </span>
+
+            <!-- Label -->
+            <span
+                class="relative z-10 max-w-full truncate px-1 leading-none transition-all duration-200 group-aria-[current=page]:font-semibold"
+            >
+              {{ link.label }}
+            </span>
+
+            <!-- Active indicator -->
+            <span
+                class="absolute bottom-0 left-1/2 size-1 -translate-x-1/2 scale-0 rounded-full bg-primary opacity-0 transition-all duration-200 group-aria-[current=page]:scale-100 group-aria-[current=page]:opacity-100"
+            />
+          </NuxtLink>
+        </li>
+      </ul>
+    </div>
   </nav>
 </template>
+```

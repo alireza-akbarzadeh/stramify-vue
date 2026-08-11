@@ -136,9 +136,10 @@ export const libraryLinks: NavLink[] = [
  * rest of the nav is still one tap away behind the sidebar sheet.
  */
 export const mobileNavLinks: NavLink[] = [
-    {label: 'Home', to: '/', icon: House},
+    {label: 'shorts', to: '/shorts', icon: Clapperboard},
     {label: 'Live', to: '/live', icon: Radio},
-    {label: 'Clips', to: '/clips', icon: Video},
+    {label: 'Home', to: '/', icon: House},
+    {label: 'Music', to: '/music', icon: Music},
     {label: 'Library', to: '/playlists', icon: ListVideo}
 ]
 
