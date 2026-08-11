@@ -551,3 +551,71 @@ edits to `server/utils/{channels,dashboard,discovery,format,watch}.ts` and
 auto-imports). One of them introduced a typo — "read it xxas" in
 `server/utils/format.ts`'s `formatUptime` doc comment — left alone as someone
 else's in-flight work.
+
+## Feed feedback session, 2026-08-11 (appended)
+
+Added the ⋮ menu on home cards, and made "Not interested" / "Don't recommend
+this channel" real rather than a local hide. Ran **alongside** an active
+"redesign home page" session — see the working-tree note at the end.
+
+**Built**
+
+- `feed_feedback` table (migration `0008_solid_gressill`): `user_id`, `kind`
+  (`video` | `channel`), `target`, unique on all three.
+- `server/utils/feedback.ts` — write, delete, and `notSuppressed(userId)`, a
+  correlated `not exists` folded into the `where` of `selectHomeFeed` *and*
+  `selectFollowingFeed`. Suppression happens **inside** the ranking query;
+  filtering an already-cut page returns short pages and repeats the offset.
+- `POST`/`DELETE /api/home/feedback` (both `requireUser`, Zod-validated). The
+  POST echoes the canonical stored row so the toast's Undo targets it exactly.
+- `HomeVideoCardMenu.vue` — save/unsave, copy link, and the two feedback items.
+  `allowFeedback` prop (default `true`) turns the feedback pair off where the
+  list isn't a recommendation; `MixView` passes `false`.
+- `useHomeFeedback` — owned by the *list* (`HomeVideoGrid`, `HomeFollowingRail`),
+  not the card. Optimistic removal across every cached chip and the rail,
+  toast + Undo, snapshot-restore on failure.
+- `HomeVideoCard` restructured to a **stretched link** (`after:inset-0` on the
+  title anchor). It used to be one big `<a>` wrapping everything, which makes
+  any button inside it invalid HTML and swallows its clicks. Anything
+  interactive on the card now needs `relative z-10`.
+
+**Verified**
+
+- 27 unit tests across `app/utils/home.spec.ts`, `HomeVideoCard.spec.ts`,
+  `HomeVideoCardMenu.spec.ts`. Note: Reka menus don't open under happy-dom's
+  synthetic *pointer* events — open them with `keydown` Enter, and tear the
+  wrapper down in `afterEach` or the portalled panel leaks into the next test.
+- Against the real Neon dev DB (throwaway harness, deleted): hiding a video
+  removes it, hiding a channel clears it from both the feed and the rail, a
+  signed-out feed is unaffected, and deleting the row restores it.
+- In the browser signed out: menu opens with all four items, "Not interested"
+  toasts "Log in to tune your recommendations." and removes nothing.
+
+**Migration journal was broken — fixed.** `0005`/`0006` carry hand-written
+`when` timestamps (`1786636800000/1`) that sit *ahead* of the real clock, and
+drizzle-kit only applies entries newer than the last applied one. So `0007`
+(watch_progress, playlists) and `0008` were both being silently skipped —
+`drizzle-kit migrate` printed "migrations applied successfully" while changing
+nothing. Renumbered `0007` → `...002` and `0008` → `...003` and applied both to
+Neon (user approved). **If you add a migration, check its `when` is greater
+than `1786636800003` or it will be skipped the same way.**
+
+Also note `npm run db:migrate` does *not* pick up `.env` here — it connected to
+a default local Postgres and reported success. Set `DATABASE_URL` in the shell
+first, or run `node --env-file=.env node_modules/drizzle-kit/bin.cjs migrate`.
+
+**Not done**
+
+- No feedback UI outside home cards. `/shorts`, `/watch` up-next and the
+  discovery grids have no ⋮; the table and endpoints are general enough to
+  serve them when someone wants it.
+- `HomeContinueCard` (the other session's continue-watching card) has no menu —
+  left alone as in-flight work.
+- No "undo everything" screen. The only way back is the toast's Undo or a
+  `delete from feed_feedback`.
+
+**Working-tree note**: a concurrent "redesign home page" session committed
+`cceb4d0` mid-way through this one, sweeping this work in alongside theirs — and
+with it two throwaway verification files (`zz-check.mjs`,
+`zz-feedback-check.spec.ts`). They are deleted in the working tree; the deletion
+still needs committing.

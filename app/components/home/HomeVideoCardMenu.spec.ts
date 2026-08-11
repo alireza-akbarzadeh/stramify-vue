@@ -92,4 +92,19 @@ describe('HomeVideoCardMenu', () => {
     await nextTick()
     expect(menu.emitted('toggle-save')).toHaveLength(1)
   })
+
+  // A curated mix reuses this card; "Not interested" there would act on nothing.
+  it('drops the feedback items where the list is not a recommendation', async () => {
+    wrapper = await mountSuspended(HomeVideoCardMenu, {
+      props: { video: video(), saved: false, allowFeedback: false },
+      attachTo: document.body
+    })
+    await wrapper.find('[aria-haspopup="menu"]').trigger('keydown', { key: 'Enter' })
+    await new Promise((resolve) => setTimeout(resolve, 0))
+
+    expect(item('Save to watchlist')).toBeTruthy()
+    expect(item('Copy link')).toBeTruthy()
+    expect(() => item('Not interested')).toThrow()
+    expect(() => item("Don't recommend this channel")).toThrow()
+  })
 })

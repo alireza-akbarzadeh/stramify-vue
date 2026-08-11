@@ -19,7 +19,15 @@ import type { HomeFeedback, HomeVideo } from '#shared/types/home'
  * anchor instead — which is what this did before the menu existed — makes every
  * button inside it invalid HTML and swallows its clicks.
  */
-const props = defineProps<{ video: HomeVideo; saved: boolean }>()
+const props = withDefaults(
+  defineProps<{
+    video: HomeVideo
+    saved: boolean
+    /** Passed through to the ⋮ menu — see `HomeVideoCardMenu`. */
+    allowFeedback?: boolean
+  }>(),
+  { allowFeedback: true }
+)
 defineEmits<{ (e: 'toggle-save'): void; (e: 'feedback', value: HomeFeedback): void }>()
 
 const to = computed(() => `/watch/${encodeURIComponent(props.video.slug)}`)
@@ -72,6 +80,7 @@ const reason = computed(() =>
       <HomeVideoCardMenu
         :video="video"
         :saved="saved"
+        :allow-feedback="allowFeedback"
         class="relative z-10 -mr-1"
         @toggle-save="$emit('toggle-save')"
         @feedback="$emit('feedback', $event)"

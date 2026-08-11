@@ -59,12 +59,11 @@ export function useDeletePlaylist() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    // `url: string` — an interpolated literal path blows Nuxt's typed-route
-    // instantiation depth. Same note as `useContinueWatching`.
-    mutationFn: (id: string) => {
-      const url: string = `/api/playlists/${encodeURIComponent(id)}`
-      return $fetch(url, { method: 'DELETE' })
-    },
+    // Explicit response generic — see the note in `useContinueWatching`.
+    mutationFn: (id: string) =>
+      $fetch<{ deleted: boolean }>(`/api/playlists/${encodeURIComponent(id)}`, {
+        method: 'DELETE'
+      }),
 
     onMutate: async (id) => {
       await queryClient.cancelQueries({ queryKey: PLAYLISTS_KEY })
@@ -94,10 +93,11 @@ export function useRemovePlaylistItem(playlistId: MaybeRefOrGetter<string>) {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (clipId: string) => {
-      const url: string = `/api/playlists/${encodeURIComponent(toValue(playlistId))}/items/${encodeURIComponent(clipId)}`
-      return $fetch(url, { method: 'DELETE' })
-    },
+    mutationFn: (clipId: string) =>
+      $fetch<{ removed: boolean }>(
+        `/api/playlists/${encodeURIComponent(toValue(playlistId))}/items/${encodeURIComponent(clipId)}`,
+        { method: 'DELETE' }
+      ),
 
     onSuccess: async () => {
       await Promise.all([

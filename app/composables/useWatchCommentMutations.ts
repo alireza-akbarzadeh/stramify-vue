@@ -61,8 +61,14 @@ export function useWatchCommentMutations(slug: MaybeRefOrGetter<string>) {
   })
 
   const remove = useMutation({
+    // Response generic spelled out: without it Nuxt's typed `$fetch` infers the
+    // body by matching this interpolated path against every route in the app,
+    // which blows TypeScript's instantiation depth limit. Every other dynamic
+    // call in this file already passes one.
     mutationFn: (id: string) =>
-      $fetch(`${base.value}/${encodeURIComponent(id)}`, { method: 'DELETE' }),
+      $fetch<{ deleted: boolean }>(`${base.value}/${encodeURIComponent(id)}`, {
+        method: 'DELETE'
+      }),
     onMutate: (id) => {
       const previous = snapshot()
       patch((list) => removeComment(list, id))

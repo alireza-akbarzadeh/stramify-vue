@@ -39,14 +39,14 @@ export function useRemoveFromContinue() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    // The path is assembled from a `string`-typed base so the template starts
-    // with a non-literal. Nuxt's typed `$fetch` otherwise tries to match the
-    // literal against every route in the app and blows the instantiation depth
-    // limit — the same reason `useWatchCommentMutations` builds a `base` first.
-    mutationFn: (slug: string) => {
-      const base: string = `/api/watch/${encodeURIComponent(slug)}`
-      return $fetch(`${base}/progress`, { method: 'DELETE' })
-    },
+    // The response generic is spelled out on purpose. Left off, Nuxt's typed
+    // `$fetch` infers the body by matching the interpolated path against every
+    // route in the app, which blows TypeScript's instantiation depth limit —
+    // the same reason every dynamic call in `useWatchEngagement` is explicit.
+    mutationFn: (slug: string) =>
+      $fetch<{ removed: boolean }>(`/api/watch/${encodeURIComponent(slug)}/progress`, {
+        method: 'DELETE'
+      }),
 
     onMutate: async (slug) => {
       await queryClient.cancelQueries({ queryKey: QUERY_KEY })

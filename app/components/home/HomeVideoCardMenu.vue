@@ -32,7 +32,19 @@ import { toChannelDisplayName } from '#shared/utils/channel'
  * Motion is Track A — `data-state` classes from `tw-animate-css`, which Reka's
  * presence machine waits on before unmounting. See the `motion` skill.
  */
-const props = defineProps<{ video: HomeVideo; saved: boolean }>()
+const props = withDefaults(
+  defineProps<{
+    video: HomeVideo
+    saved: boolean
+    /**
+     * Off wherever the list isn't a recommendation — a curated mix is something
+     * you opened on purpose, so "Not interested" there would be a button with
+     * nothing to act on. Save and copy link still apply everywhere.
+     */
+    allowFeedback?: boolean
+  }>(),
+  { allowFeedback: true }
+)
 const emit = defineEmits<{
   (e: 'toggle-save'): void
   (e: 'feedback', value: HomeFeedback): void
@@ -82,33 +94,33 @@ const ITEM =
           Copy link
         </DropdownMenuItem>
 
-        <DropdownMenuSeparator class="my-1 h-px bg-border" />
+        <template v-if="allowFeedback">
+          <DropdownMenuSeparator class="my-1 h-px bg-border" />
 
-        <DropdownMenuItem
-          :class="ITEM"
-          @select="emit('feedback', { kind: 'video', target: video.id })"
-        >
-          <Ban class="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
-          <span class="min-w-0 flex-1">
-            <span class="block font-medium">Not interested</span>
-            <span class="block text-xs text-muted-foreground">
-              Fewer videos like this one.
+          <DropdownMenuItem
+            :class="ITEM"
+            @select="emit('feedback', { kind: 'video', target: video.id })"
+          >
+            <Ban class="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+            <span class="min-w-0 flex-1">
+              <span class="block font-medium">Not interested</span>
+              <span class="block text-xs text-muted-foreground"> Fewer videos like this one. </span>
             </span>
-          </span>
-        </DropdownMenuItem>
+          </DropdownMenuItem>
 
-        <DropdownMenuItem
-          :class="ITEM"
-          @select="emit('feedback', { kind: 'channel', target: video.channel })"
-        >
-          <UserMinus class="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
-          <span class="min-w-0 flex-1">
-            <span class="block font-medium">Don't recommend this channel</span>
-            <span class="block truncate text-xs text-muted-foreground">
-              Nothing from {{ channelName }} on your home page.
+          <DropdownMenuItem
+            :class="ITEM"
+            @select="emit('feedback', { kind: 'channel', target: video.channel })"
+          >
+            <UserMinus class="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+            <span class="min-w-0 flex-1">
+              <span class="block font-medium">Don't recommend this channel</span>
+              <span class="block truncate text-xs text-muted-foreground">
+                Nothing from {{ channelName }} on your home page.
+              </span>
             </span>
-          </span>
-        </DropdownMenuItem>
+          </DropdownMenuItem>
+        </template>
       </DropdownMenuContent>
     </DropdownMenuPortal>
   </DropdownMenuRoot>

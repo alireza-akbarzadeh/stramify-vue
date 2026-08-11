@@ -3,7 +3,14 @@ import { db } from '../db/client'
 import { CANDIDATES, myFollows, REACTION_STATS, SCORE, toHomeVideo } from './home'
 import type { FeedRow } from './home'
 import { fromCategorySlug } from '#shared/utils/category'
-import { mixId, mixSubtitle, mixTitle, MIX_COVER_COUNT, parseMixId } from '#shared/utils/mix'
+import {
+  mixId,
+  mixReason,
+  mixSubtitle,
+  mixTitle,
+  MIX_COVER_COUNT,
+  parseMixId
+} from '#shared/utils/mix'
 import { MIX_ITEM_LIMIT, MIX_RAIL_LIMIT } from '#shared/types/mix'
 import type { MixDetail, MixSeed, MixSummary } from '#shared/types/mix'
 
@@ -50,6 +57,12 @@ function myWatchedChannels(userId: string | null) {
 }
 
 /**
+ * One row of an opened mix: a feed row plus the two signals its subtitle needs
+ * in order to describe itself honestly (see `mixReason`).
+ */
+type MixRow = FeedRow & { followed: boolean; watched: number }
+
+/**
  * One seed row, before it becomes a `MixSummary`.
  *
  * A `type` alias rather than an `interface` because `db.execute<T>()` requires
@@ -62,6 +75,8 @@ type SeedRow = {
   /** The channel's or category's own casing, for the label. */
   label: string
   followed: boolean
+  /** How many of this channel's clips the viewer has started. 0 when signed out. */
+  watched: number
   count: number
   covers: string[]
 }
@@ -81,6 +96,7 @@ async function selectChannelSeeds(userId: string | null, limit: number): Promise
     select lower(cand.channel) as key,
            min(cand.channel) as label,
            bool_or(mf.handle is not null) as followed,
+           coalesce(max(mw.watched), 0)::int as watched,
            count(*)::int as count,
            (array_agg(cand.image order by cand.audience desc))[1:${MIX_COVER_COUNT}] as covers
     from candidates cand
@@ -115,6 +131,7 @@ async function selectCategorySeeds(userId: string | null, limit: number): Promis
     select lower(cand.category) as key,
            min(cand.category) as label,
            false as followed,
+           0 as watched,
            count(*)::int as count,
            (array_agg(cand.image order by cand.audience desc))[1:${MIX_COVER_COUNT}] as covers
     from candidates cand
@@ -133,7 +150,7 @@ function toSummary(seed: MixSeed, row: SeedRow): MixSummary {
     id: mixId(seed, row.key),
     seed,
     title: mixTitle(row.label),
-    subtitle: mixSubtitle(seed, row.label, row.followed),
+    subtitle: mixSubtitle(seed, row.label, mixReason(row.followed, row.watched)),
     covers: (row.covers ?? []).filter(Boolean),
     count: row.count
   }
@@ -185,10 +202,11 @@ export async function selectMix(id: string, userId: string | null): Promise<MixD
   // unknown one is a 404, not a query that scans everything and finds nothing.
   if (seed === 'category' && !fromCategorySlug(key)) return null
 
-  const rows = await db.execute<FeedRow & { followed: boolean }>(sql`
+  const rows = await db.execute<MixRow>(sql`
     with candidates as (${CANDIDATES}),
          reaction_stats as (${REACTION_STATS}),
-         my_follows as (${myFollows(userId)})
+         my_follows as (${myFollows(userId)}),
+         my_watched as (${myWatchedChannels(userId)})
     select cand.id,
            cand.slug,
            cand.kind,
@@ -201,10 +219,12 @@ export async function selectMix(id: string, userId: string | null): Promise<MixD
            cand.published_at,
            cand.duration_seconds,
            ch.avatar_url,
-           (mf.handle is not null) as followed
+           (mf.handle is not null) as followed,
+           coalesce(mw.watched, 0)::int as watched
     from candidates cand
     left join reaction_stats rx on rx.target_id = cand.id and rx.target_kind = cand.kind
     left join my_follows mf on mf.handle = lower(cand.channel)
+    left join my_watched mw on mw.handle = lower(cand.channel)
     left join channels ch on ch.handle = lower(cand.channel)
     where ${seedFilter(seed, key)}
     order by ${SCORE} desc, cand.id asc
@@ -222,19 +242,19 @@ export async function selectMix(id: string, userId: string | null): Promise<MixD
  * than a second query — the label's casing and the cover thumbnails are both
  * already in hand.
  */
-function toDetailSummary(
-  seed: MixSeed,
-  key: string,
-  items: (FeedRow & { followed: boolean })[]
-): MixSummary {
+function toDetailSummary(seed: MixSeed, key: string, items: MixRow[]): MixSummary {
   const first = items[0]!
   const label = seed === 'channel' ? first.channel : (fromCategorySlug(key) ?? key)
+  const reason = mixReason(
+    items.some((item) => item.followed),
+    Math.max(...items.map((item) => item.watched))
+  )
 
   return {
     id: mixId(seed, key),
     seed,
     title: mixTitle(label),
-    subtitle: mixSubtitle(seed, label, items.some((item) => item.followed)),
+    subtitle: mixSubtitle(seed, label, reason),
     covers: items.slice(0, MIX_COVER_COUNT).map((item) => item.image),
     count: items.length
   }

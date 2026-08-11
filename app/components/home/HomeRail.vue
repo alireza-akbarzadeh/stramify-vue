@@ -41,7 +41,16 @@ function scroll(direction: -1 | 1) {
 </script>
 
 <template>
-  <section :aria-labelledby="headingId">
+  <!--
+    `min-w-0` is load-bearing, not decoration. The dashboard layout's `main` is
+    a flex item, and a flex item's default `min-width: auto` means its width is
+    floored by its content's min-content size. The slides below are `shrink-0`
+    with a percentage width, which can't resolve during min-content sizing, so
+    they fall back to their intrinsic image width — and the whole page grew a
+    horizontal scrollbar the width of the sidebar. Capping this section at zero
+    stops the track from voting on how wide the page is.
+  -->
+  <section :aria-labelledby="headingId" class="min-w-0">
     <div class="mb-4 flex items-center justify-between gap-4">
       <div class="flex min-w-0 items-baseline gap-3">
         <h2 :id="headingId" class="truncate text-lg font-semibold text-foreground">
@@ -80,7 +89,10 @@ function scroll(direction: -1 | 1) {
       </div>
     </div>
 
-    <ul ref="track" class="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 scrollbar-none">
+    <ul
+      ref="track"
+      class="flex min-w-0 snap-x snap-mandatory gap-4 overflow-x-auto pb-2 scrollbar-none"
+    >
       <slot />
     </ul>
   </section>

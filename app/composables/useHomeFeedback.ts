@@ -42,9 +42,7 @@ export function useHomeFeedback() {
     client.setQueriesData<HomeFeedCache>({ queryKey: FEED_KEY }, (cache) =>
       dropFromHomeFeed(cache, feedback)
     )
-    client.setQueryData<HomeVideo[]>(FOLLOWING_KEY, (videos) =>
-      dropFromFollowing(videos, feedback)
-    )
+    client.setQueryData<HomeVideo[]>(FOLLOWING_KEY, (videos) => dropFromFollowing(videos, feedback))
   }
 
   const hide = useMutation({

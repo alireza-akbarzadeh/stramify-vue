@@ -48,15 +48,29 @@ defineProps<{
 
 const sort = defineModel<CommentSort>('sort', { required: true })
 
+/**
+ * Grouped by payload rather than by feature, which is what `unified-signatures`
+ * asks for: `send-chat` carries a message body and the two comment events carry
+ * a comment id, so all three are one `string` signature; everything the viewer
+ * merely *pressed* carries nothing.
+ */
 defineEmits<{
   (e: 'react', value: ReactionValue): void
   (e: 'set-notify', mode: ChannelNotifyMode): void
-  (e: 'send-chat', body: string): void
   (e: 'post-comment', draft: CommentDraft): void
-  (e: 'like-comment' | 'remove-comment', id: string): void
   (e: 'progress', currentTime: number): void
-  (e: 'play-start' | 'ended' | 'toggle-save' | 'share' | 'toggle-follow'): void
-  (e: 'retry-related' | 'retry-comments' | 'retry-chat'): void
+  (e: 'send-chat' | 'like-comment' | 'remove-comment', value: string): void
+  (
+    e:
+      | 'play-start'
+      | 'ended'
+      | 'toggle-save'
+      | 'share'
+      | 'toggle-follow'
+      | 'retry-related'
+      | 'retry-comments'
+      | 'retry-chat'
+  ): void
 }>()
 
 const { theater } = useTheaterMode()

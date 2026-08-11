@@ -28,12 +28,16 @@ const props = defineProps<{
    */
   resumeAt?: number
 }>()
+/**
+ * - `progress` — the playhead, forwarded to `useWatchProgress`, which throttles
+ *   the writes; the player itself keeps no state about them.
+ * - `play-start` — drives the view counter, which the parent debounces per
+ *   session.
+ * - `ended` — marks the clip finished, whatever the playhead reads.
+ */
 const emit = defineEmits<{
-  /** Drives the view counter; the parent debounces it per session. */
-  (e: 'play-start'): void
-  /** The playhead, forwarded to `useWatchProgress`, which throttles the writes. */
   (e: 'progress', currentTime: number): void
-  (e: 'ended'): void
+  (e: 'play-start' | 'ended'): void
 }>()
 
 const live = computed(() => props.target.kind === 'live')

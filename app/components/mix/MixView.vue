@@ -117,6 +117,7 @@ const SKELETONS = 6
             :key="`${video.kind}-${video.id}`"
             :video="video"
             :saved="watchlist.isSaved(video.id)"
+            :allow-feedback="false"
             @toggle-save="watchlist.toggle(relatedToItem(video))"
           />
         </div>

@@ -44,15 +44,33 @@ export function mixTitle(label: string): string {
 }
 
 /**
+ * Why a channel mix was seeded — which is also what its subtitle claims.
+ *
+ * `popular` is the one that matters: a signed-out viewer, or a signed-in one
+ * with no history, still gets channel mixes (seeded by reach), and telling them
+ * "because you watched" would be a claim about them that isn't true.
+ */
+export type MixReason = 'followed' | 'watched' | 'popular'
+
+/** Which claim a channel's numbers actually support. */
+export function mixReason(followed: boolean, watched: number): MixReason {
+  if (followed) return 'followed'
+  return watched > 0 ? 'watched' : 'popular'
+}
+
+/**
  * The line under the title — why this mix is on your screen.
  *
- * `followed` distinguishes the two reasons a channel mix appears: because you
- * subscribe to it, or because you kept watching it. Saying "because you follow"
- * to someone who doesn't would be a small lie the UI has no need to tell.
+ * Each branch states only what the data behind it supports (CLAUDE.md rule 2).
+ * A category mix never personalises: the ordering of category seeds leans on
+ * your history, but any given category's *contents* are ranked by reach, and
+ * "top in Gaming" is the honest description of that.
  */
-export function mixSubtitle(seed: MixSeed, label: string, followed: boolean): string {
+export function mixSubtitle(seed: MixSeed, label: string, reason: MixReason): string {
   if (seed === 'category') return `Top in ${label} right now`
-  return followed ? `Because you follow ${label}` : `Because you watched ${label}`
+  if (reason === 'followed') return `Because you follow ${label}`
+  if (reason === 'watched') return `Because you watched ${label}`
+  return `Popular from ${label}`
 }
 
 /** How many cover thumbnails a mix card stacks. */

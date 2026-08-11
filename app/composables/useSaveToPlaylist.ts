@@ -47,9 +47,8 @@ export function useTogglePlaylistMembership(
   return useMutation({
     // The two branches return different bodies (`{ removed }` vs `{ added }`)
     // and neither is read, so the result is dropped rather than widened into a
-    // union the mutation's generic can't name. The URLs are annotated `string`
-    // for the same reason as in `useContinueWatching`: an interpolated literal
-    // path blows Nuxt's typed-route instantiation depth.
+    // union the mutation's generic can't name. Response generics are explicit
+    // for the reason noted in `useContinueWatching`.
     mutationFn: async ({
       playlistId,
       contains
@@ -57,15 +56,19 @@ export function useTogglePlaylistMembership(
       playlistId: string
       contains: boolean
     }): Promise<void> => {
-      const base: string = `/api/playlists/${encodeURIComponent(playlistId)}/items`
+      const base = `/api/playlists/${encodeURIComponent(playlistId)}/items`
 
       if (contains) {
-        const url: string = `${base}/${encodeURIComponent(toValue(clipId))}`
-        await $fetch(url, { method: 'DELETE' })
+        await $fetch<{ removed: boolean }>(`${base}/${encodeURIComponent(toValue(clipId))}`, {
+          method: 'DELETE'
+        })
         return
       }
 
-      await $fetch(base, { method: 'POST', body: { clipId: toValue(clipId) } })
+      await $fetch<{ added: boolean }>(base, {
+        method: 'POST',
+        body: { clipId: toValue(clipId) }
+      })
     },
 
     onMutate: async ({ playlistId, contains }) => {

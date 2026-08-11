@@ -33,7 +33,10 @@ export function useWatchProgress(slug: MaybeRefOrGetter<string>) {
     if (!key) return
 
     savedAt.value = position.value
-    await $fetch(`/api/watch/${encodeURIComponent(key)}/progress`, {
+    // Explicit response generic — an interpolated path left to Nuxt's typed
+    // `$fetch` blows TypeScript's instantiation depth (see
+    // `useContinueWatching`).
+    await $fetch<{ saved: boolean }>(`/api/watch/${encodeURIComponent(key)}/progress`, {
       method: 'POST',
       body: { positionSeconds: Math.floor(position.value), completed }
     }).catch(() => {})
