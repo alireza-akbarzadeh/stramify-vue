@@ -74,12 +74,26 @@ function sync() {
   // assigning it — that is expected, and why the attribute above still matters.
   el.muted = muted.value
 
+  // Vidstack throws straight out of `play()` and `pause()` until the provider
+  // is ready ("media is not ready — wait for `can-play`"), and at this call
+  // site that throw is indistinguishable from a browser refusing autoplay.
+  // Standing down until `can-play` — which runs this again — is what keeps the
+  // `catch` below meaning only the one thing it says it means. The mute above
+  // is deliberately outside this guard: Vidstack queues it until the provider
+  // exists, so it still lands on the very first frame.
+  if (!el.state.canPlay) return
+
   if (isPaused.value) return void el.pause()
 
-  el.play().catch(() => {
+  el.play().catch((error: unknown) => {
     // Browsers refuse to autoplay audio until the viewer has interacted with
-    // the page. Dropping to muted keeps the feed moving instead of stranding
-    // it on a poster; the watcher below replays this with sound off.
+    // the page, and `NotAllowedError` is the only name they give that refusal.
+    // Narrow, because the fallback is destructive: it writes the viewer's
+    // sound preference to storage, so treating every rejection as an autoplay
+    // block is what silently re-mutes a feed they asked to hear.
+    if ((error as DOMException | null)?.name !== 'NotAllowedError') return
+    // Dropping to muted keeps the feed moving instead of stranding it on a
+    // poster; the watcher below replays this with sound off.
     if (!muted.value) shorts.muted = true
   })
 }
@@ -97,7 +111,11 @@ onMounted(sync)
 useEventListener(player, 'can-play', sync)
 useEventListener(player, 'playing', sync)
 useEventListener(player, 'play', () => emit('play'))
-useEventListener(player, 'end', () => emit('ended'))
+// `ended`, not Vidstack's `end`: `end` fires every time the playhead reaches
+// the finish *including* when `loop` sends it back to the start, so listening
+// on it advances the feed off the very shorts that asked to stay put. `ended`
+// is the one Vidstack withholds while looping.
+useEventListener(player, 'ended', () => emit('ended'))
 </script>
 
 <template>

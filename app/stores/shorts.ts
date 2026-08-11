@@ -112,11 +112,13 @@ export const useShortsStore = defineStore('shorts', () => {
         activeId,
         paused,
         held,
+        repeat,
         commentsFor,
         commentsOpen,
         setActive,
         toggleMuted,
         togglePaused,
+        toggleRepeat,
         openComments,
         closeComments
     }

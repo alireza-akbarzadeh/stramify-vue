@@ -1,0 +1,3409 @@
+{
+  "communities": {
+    "0": [
+      "claude_skills_design_system_templates_design_tokens_starter_100_type",
+      "claude_skills_design_system_templates_design_tokens_starter_100_value",
+      "claude_skills_design_system_templates_design_tokens_starter_200_type",
+      "claude_skills_design_system_templates_design_tokens_starter_200_value",
+      "claude_skills_design_system_templates_design_tokens_starter_300_type",
+      "claude_skills_design_system_templates_design_tokens_starter_300_value",
+      "claude_skills_design_system_templates_design_tokens_starter_400_type",
+      "claude_skills_design_system_templates_design_tokens_starter_400_value",
+      "claude_skills_design_system_templates_design_tokens_starter_500_type",
+      "claude_skills_design_system_templates_design_tokens_starter_500_value",
+      "claude_skills_design_system_templates_design_tokens_starter_50_type",
+      "claude_skills_design_system_templates_design_tokens_starter_50_value",
+      "claude_skills_design_system_templates_design_tokens_starter_600_type",
+      "claude_skills_design_system_templates_design_tokens_starter_600_value",
+      "claude_skills_design_system_templates_design_tokens_starter_700_type",
+      "claude_skills_design_system_templates_design_tokens_starter_700_value",
+      "claude_skills_design_system_templates_design_tokens_starter_800_type",
+      "claude_skills_design_system_templates_design_tokens_starter_800_value",
+      "claude_skills_design_system_templates_design_tokens_starter_900_type",
+      "claude_skills_design_system_templates_design_tokens_starter_900_value",
+      "claude_skills_design_system_templates_design_tokens_starter_950_type",
+      "claude_skills_design_system_templates_design_tokens_starter_950_value",
+      "claude_skills_design_system_templates_design_tokens_starter_blue_50",
+      "claude_skills_design_system_templates_design_tokens_starter_blue_500",
+      "claude_skills_design_system_templates_design_tokens_starter_blue_600",
+      "claude_skills_design_system_templates_design_tokens_starter_blue_700",
+      "claude_skills_design_system_templates_design_tokens_starter_blue_800",
+      "claude_skills_design_system_templates_design_tokens_starter_color_blue",
+      "claude_skills_design_system_templates_design_tokens_starter_color_gray",
+      "claude_skills_design_system_templates_design_tokens_starter_color_green",
+      "claude_skills_design_system_templates_design_tokens_starter_color_red",
+      "claude_skills_design_system_templates_design_tokens_starter_color_white",
+      "claude_skills_design_system_templates_design_tokens_starter_color_yellow",
+      "claude_skills_design_system_templates_design_tokens_starter_gray_100",
+      "claude_skills_design_system_templates_design_tokens_starter_gray_200",
+      "claude_skills_design_system_templates_design_tokens_starter_gray_300",
+      "claude_skills_design_system_templates_design_tokens_starter_gray_400",
+      "claude_skills_design_system_templates_design_tokens_starter_gray_50",
+      "claude_skills_design_system_templates_design_tokens_starter_gray_500",
+      "claude_skills_design_system_templates_design_tokens_starter_gray_600",
+      "claude_skills_design_system_templates_design_tokens_starter_gray_700",
+      "claude_skills_design_system_templates_design_tokens_starter_gray_800",
+      "claude_skills_design_system_templates_design_tokens_starter_gray_900",
+      "claude_skills_design_system_templates_design_tokens_starter_gray_950",
+      "claude_skills_design_system_templates_design_tokens_starter_green_500",
+      "claude_skills_design_system_templates_design_tokens_starter_green_600",
+      "claude_skills_design_system_templates_design_tokens_starter_primitive_color",
+      "claude_skills_design_system_templates_design_tokens_starter_red_500",
+      "claude_skills_design_system_templates_design_tokens_starter_red_600",
+      "claude_skills_design_system_templates_design_tokens_starter_red_700",
+      "claude_skills_design_system_templates_design_tokens_starter_white_type",
+      "claude_skills_design_system_templates_design_tokens_starter_white_value",
+      "claude_skills_design_system_templates_design_tokens_starter_yellow_500"
+    ],
+    "1": [
+      "claude_skills_design_scripts_cip_core",
+      "claude_skills_design_scripts_cip_core_bm25",
+      "claude_skills_design_scripts_cip_core_bm25_fit",
+      "claude_skills_design_scripts_cip_core_bm25_init",
+      "claude_skills_design_scripts_cip_core_bm25_score",
+      "claude_skills_design_scripts_cip_core_bm25_tokenize",
+      "claude_skills_design_scripts_cip_core_detect_domain",
+      "claude_skills_design_scripts_cip_core_get_cip_brief",
+      "claude_skills_design_scripts_cip_core_load_csv",
+      "claude_skills_design_scripts_cip_core_rationale_106",
+      "claude_skills_design_scripts_cip_core_rationale_112",
+      "claude_skills_design_scripts_cip_core_rationale_137",
+      "claude_skills_design_scripts_cip_core_rationale_153",
+      "claude_skills_design_scripts_cip_core_rationale_175",
+      "claude_skills_design_scripts_cip_core_rationale_185",
+      "claude_skills_design_scripts_cip_core_rationale_43",
+      "claude_skills_design_scripts_cip_core_rationale_56",
+      "claude_skills_design_scripts_cip_core_rationale_61",
+      "claude_skills_design_scripts_cip_core_rationale_80",
+      "claude_skills_design_scripts_cip_core_search",
+      "claude_skills_design_scripts_cip_core_search_all",
+      "claude_skills_design_scripts_cip_core_search_csv",
+      "claude_skills_design_scripts_cip_generate",
+      "claude_skills_design_scripts_cip_generate_build_cip_prompt",
+      "claude_skills_design_scripts_cip_generate_check_logo_required",
+      "claude_skills_design_scripts_cip_generate_generate_cip_set",
+      "claude_skills_design_scripts_cip_generate_generate_with_nano_banana",
+      "claude_skills_design_scripts_cip_generate_load_env",
+      "claude_skills_design_scripts_cip_generate_load_logo_image",
+      "claude_skills_design_scripts_cip_generate_main",
+      "claude_skills_design_scripts_cip_generate_rationale_187",
+      "claude_skills_design_scripts_cip_generate_rationale_287",
+      "claude_skills_design_scripts_cip_generate_rationale_342",
+      "claude_skills_design_scripts_cip_generate_rationale_37",
+      "claude_skills_design_scripts_cip_generate_rationale_70",
+      "claude_skills_design_scripts_cip_generate_rationale_90",
+      "claude_skills_design_scripts_cip_render_html",
+      "claude_skills_design_scripts_cip_render_html_generate_html",
+      "claude_skills_design_scripts_cip_render_html_get_deliverable_info",
+      "claude_skills_design_scripts_cip_render_html_get_image_base64",
+      "claude_skills_design_scripts_cip_render_html_main",
+      "claude_skills_design_scripts_cip_render_html_rationale_100",
+      "claude_skills_design_scripts_cip_render_html_rationale_110",
+      "claude_skills_design_scripts_cip_render_html_rationale_125",
+      "claude_skills_design_scripts_cip_search",
+      "claude_skills_design_scripts_cip_search_format_brief",
+      "claude_skills_design_scripts_cip_search_format_results",
+      "claude_skills_design_scripts_cip_search_main",
+      "claude_skills_design_scripts_cip_search_rationale_18",
+      "claude_skills_design_scripts_cip_search_rationale_33"
+    ],
+    "2": [
+      "claude_skills_design_system_scripts_search_slides",
+      "claude_skills_design_system_scripts_search_slides_format_context",
+      "claude_skills_design_system_scripts_search_slides_format_result",
+      "claude_skills_design_system_scripts_search_slides_main",
+      "claude_skills_design_system_scripts_search_slides_rationale_18",
+      "claude_skills_design_system_scripts_search_slides_rationale_65",
+      "claude_skills_design_system_scripts_slide_search_core",
+      "claude_skills_design_system_scripts_slide_search_core_bm25",
+      "claude_skills_design_system_scripts_slide_search_core_bm25_fit",
+      "claude_skills_design_system_scripts_slide_search_core_bm25_init",
+      "claude_skills_design_system_scripts_slide_search_core_bm25_score",
+      "claude_skills_design_system_scripts_slide_search_core_bm25_tokenize",
+      "claude_skills_design_system_scripts_slide_search_core_calculate_pattern_break",
+      "claude_skills_design_system_scripts_slide_search_core_detect_domain",
+      "claude_skills_design_system_scripts_slide_search_core_get_background_config",
+      "claude_skills_design_system_scripts_slide_search_core_get_color_for_emotion",
+      "claude_skills_design_system_scripts_slide_search_core_get_layout_for_goal",
+      "claude_skills_design_system_scripts_slide_search_core_get_typography_for_slide",
+      "claude_skills_design_system_scripts_slide_search_core_load_csv",
+      "claude_skills_design_system_scripts_slide_search_core_load_decision_csv",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_108",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_114",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_139",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_159",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_181",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_216",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_230",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_248",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_284",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_293",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_302",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_326",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_353",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_45",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_58",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_63",
+      "claude_skills_design_system_scripts_slide_search_core_rationale_82",
+      "claude_skills_design_system_scripts_slide_search_core_search",
+      "claude_skills_design_system_scripts_slide_search_core_search_all",
+      "claude_skills_design_system_scripts_slide_search_core_search_csv",
+      "claude_skills_design_system_scripts_slide_search_core_search_with_context",
+      "claude_skills_design_system_scripts_slide_search_core_should_use_full_bleed"
+    ],
+    "3": [
+      "claude_skills_design_system_templates_design_tokens_starter_0_type",
+      "claude_skills_design_system_templates_design_tokens_starter_0_value",
+      "claude_skills_design_system_templates_design_tokens_starter_10_type",
+      "claude_skills_design_system_templates_design_tokens_starter_10_value",
+      "claude_skills_design_system_templates_design_tokens_starter_12_type",
+      "claude_skills_design_system_templates_design_tokens_starter_12_value",
+      "claude_skills_design_system_templates_design_tokens_starter_16_type",
+      "claude_skills_design_system_templates_design_tokens_starter_16_value",
+      "claude_skills_design_system_templates_design_tokens_starter_1_type",
+      "claude_skills_design_system_templates_design_tokens_starter_1_value",
+      "claude_skills_design_system_templates_design_tokens_starter_2_type",
+      "claude_skills_design_system_templates_design_tokens_starter_2_value",
+      "claude_skills_design_system_templates_design_tokens_starter_3_type",
+      "claude_skills_design_system_templates_design_tokens_starter_3_value",
+      "claude_skills_design_system_templates_design_tokens_starter_4_type",
+      "claude_skills_design_system_templates_design_tokens_starter_4_value",
+      "claude_skills_design_system_templates_design_tokens_starter_5_type",
+      "claude_skills_design_system_templates_design_tokens_starter_5_value",
+      "claude_skills_design_system_templates_design_tokens_starter_6_type",
+      "claude_skills_design_system_templates_design_tokens_starter_6_value",
+      "claude_skills_design_system_templates_design_tokens_starter_8_type",
+      "claude_skills_design_system_templates_design_tokens_starter_8_value",
+      "claude_skills_design_system_templates_design_tokens_starter_primitive_spacing",
+      "claude_skills_design_system_templates_design_tokens_starter_spacing_0",
+      "claude_skills_design_system_templates_design_tokens_starter_spacing_1",
+      "claude_skills_design_system_templates_design_tokens_starter_spacing_10",
+      "claude_skills_design_system_templates_design_tokens_starter_spacing_12",
+      "claude_skills_design_system_templates_design_tokens_starter_spacing_16",
+      "claude_skills_design_system_templates_design_tokens_starter_spacing_2",
+      "claude_skills_design_system_templates_design_tokens_starter_spacing_3",
+      "claude_skills_design_system_templates_design_tokens_starter_spacing_4",
+      "claude_skills_design_system_templates_design_tokens_starter_spacing_5",
+      "claude_skills_design_system_templates_design_tokens_starter_spacing_6",
+      "claude_skills_design_system_templates_design_tokens_starter_spacing_8"
+    ],
+    "4": [
+      "claude_skills_graphify_references_extraction_spec_confidencerubric",
+      "claude_skills_graphify_references_extraction_spec_extractionsubagentprompt",
+      "claude_skills_graphify_references_extraction_spec_hyperedgerule",
+      "claude_skills_graphify_references_extraction_spec_nodeidformat",
+      "claude_skills_graphify_references_extraction_spec_semanticsimilarityrule",
+      "claude_skills_motion_references_recipes_alertdialog",
+      "claude_skills_motion_references_recipes_hoverpress",
+      "claude_skills_motion_references_recipes_listexit",
+      "claude_skills_motion_references_recipes_routetransitions",
+      "claude_skills_motion_references_recipes_scrolllinkedprogress",
+      "claude_skills_motion_references_recipes_selectcombobox",
+      "claude_skills_motion_references_recipes_sheetdrawer",
+      "claude_skills_motion_references_recipes_springpresets",
+      "claude_skills_motion_references_recipes_staggeredlist",
+      "claude_skills_motion_references_recipes_tooltip",
+      "claude_skills_motion_skill_accessibilityrule",
+      "claude_skills_motion_skill_commonpitfalls",
+      "claude_skills_motion_skill_countup",
+      "claude_skills_motion_skill_magnetic",
+      "claude_skills_motion_skill_marquee",
+      "claude_skills_motion_skill_reveal",
+      "claude_skills_motion_skill_timingtable",
+      "claude_skills_motion_skill_tracka",
+      "claude_skills_motion_skill_trackb",
+      "claude_skills_motion_skill_usepresence",
+      "claude_skills_ponytail_audit_skill_ponytailaudit",
+      "claude_skills_ponytail_debt_skill_ponytaildebt",
+      "claude_skills_ponytail_gain_skill_ponytailgain",
+      "claude_skills_ponytail_help_skill_ponytailhelp",
+      "claude_skills_ponytail_review_skill_ponytailreview",
+      "claude_skills_ponytail_skill_intensitylevels",
+      "claude_skills_ponytail_skill_ponytail",
+      "claude_skills_ponytail_skill_ponytailcomment",
+      "claude_skills_ponytail_skill_theladder"
+    ],
+    "5": [
+      "claude_skills_design_references_banner_sizes_and_styles",
+      "claude_skills_design_references_cip_deliverable_guide",
+      "claude_skills_design_references_cip_design",
+      "claude_skills_design_references_cip_prompt_engineering",
+      "claude_skills_design_references_cip_style_guide",
+      "claude_skills_design_references_design_routing",
+      "claude_skills_design_references_icon_design",
+      "claude_skills_design_references_logo_color_psychology",
+      "claude_skills_design_references_logo_design",
+      "claude_skills_design_references_logo_prompt_engineering",
+      "claude_skills_design_references_logo_style_guide",
+      "claude_skills_design_references_slides",
+      "claude_skills_design_references_slides_copywriting_formulas",
+      "claude_skills_design_references_slides_create",
+      "claude_skills_design_references_slides_html_template",
+      "claude_skills_design_references_slides_layout_patterns",
+      "claude_skills_design_references_slides_strategies",
+      "claude_skills_design_references_social_photos_design",
+      "claude_skills_design_system_references_states_and_variants",
+      "claude_skills_design_system_references_tailwind_integration",
+      "claude_skills_design_system_references_token_architecture",
+      "claude_skills_graphify_skill",
+      "concept_ai_icon_generation_system",
+      "concept_ai_logo_generation_system",
+      "concept_banner_art_direction_styles",
+      "concept_cip_corporate_identity_program",
+      "concept_component_states_and_variants",
+      "concept_design_skill_routing",
+      "concept_graphify_knowledge_graph_pipeline",
+      "concept_slides_html_presentation_system",
+      "concept_social_photos_workflow",
+      "concept_tailwind_css_variable_integration",
+      "concept_three_layer_token_architecture"
+    ],
+    "6": [
+      "server_api_watch_slug_chat_get",
+      "server_api_watch_slug_chat_get_paramsschema",
+      "server_api_watch_slug_chat_get_queryschema",
+      "server_api_watch_slug_chat_post",
+      "server_api_watch_slug_chat_post_bodyschema",
+      "server_api_watch_slug_chat_post_paramsschema",
+      "server_db_schema_auth",
+      "server_db_schema_auth_account",
+      "server_db_schema_auth_session",
+      "server_db_schema_auth_ts_docref_adr_0007",
+      "server_db_schema_auth_twofactor",
+      "server_db_schema_auth_user",
+      "server_db_schema_auth_verification",
+      "server_db_schema_chat_messages",
+      "server_db_schema_chat_messages_chatmessages",
+      "server_db_schema_chat_messages_ts_docref_adr_0015",
+      "server_db_schema_clips",
+      "server_db_schema_clips_clipcategoryenum",
+      "server_db_schema_clips_ts_docref_adr_0014",
+      "server_db_schema_comments",
+      "server_db_schema_comments_comments",
+      "server_db_schema_comments_ts_docref_adr_0014",
+      "server_db_schema_follows",
+      "server_db_schema_follows_ts_docref_adr_0014",
+      "server_db_schema_index",
+      "server_db_schema_live_streams",
+      "server_db_schema_live_streams_ts_docref_adr_0014",
+      "server_db_schema_reactions",
+      "server_db_schema_reactions_reactions",
+      "server_db_schema_reactions_reactiontargetenum",
+      "server_db_schema_reactions_reactionvalueenum",
+      "server_db_schema_reactions_ts_docref_adr_0014",
+      "server_utils_watch_resolvelivestream"
+    ],
+    "7": [
+      "app_components_watch_watchskeleton",
+      "app_components_watch_watchview",
+      "app_components_watch_watchview_channel_toggle_follow",
+      "app_components_watch_watchview_channelname",
+      "app_components_watch_watchview_chat",
+      "app_components_watch_watchview_chatpanel",
+      "app_components_watch_watchview_comments",
+      "app_components_watch_watchview_commentspanel",
+      "app_components_watch_watchview_count",
+      "app_components_watch_watchview_engagement",
+      "app_components_watch_watchview_isclip",
+      "app_components_watch_watchview_islive",
+      "app_components_watch_watchview_issaved_toggle_togglesave",
+      "app_components_watch_watchview_notfound",
+      "app_components_watch_watchview_onfollow",
+      "app_components_watch_watchview_onreact",
+      "app_components_watch_watchview_onsave",
+      "app_components_watch_watchview_onsaverelated",
+      "app_components_watch_watchview_onsendchat",
+      "app_components_watch_watchview_onshare",
+      "app_components_watch_watchview_props",
+      "app_components_watch_watchview_reactions_toggle_react",
+      "app_components_watch_watchview_related",
+      "app_components_watch_watchview_relatedpanel",
+      "app_components_watch_watchview_saved",
+      "app_components_watch_watchview_slug",
+      "app_components_watch_watchview_sort",
+      "app_components_watch_watchview_target",
+      "app_components_watch_watchview_user"
+    ],
+    "8": [
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_101",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_112",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_151",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_17",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_173",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_190",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_20",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_206",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_214",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_232",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_291",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_320",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_53",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_72",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_add_breakpoints",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_add_color_palette",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_add_colors_multiple_times",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_add_plugins",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_add_plugins_no_duplicates",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_base_config_structure",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_default_content_paths_nextjs",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_full_configuration_javascript",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_full_configuration_typescript",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_generate_config_with_colors",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_generate_javascript_config",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_init_default_typescript",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_recommend_plugins_nextjs",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_validate_config_valid"
+    ],
+    "9": [
+      "claude_skills_ui_ux_pro_max_scripts_design_system",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_ansi_ljust",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_detect_page_type",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_format_ascii_box",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_format_markdown",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_format_master_md",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_format_page_override_md",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_generate_design_system",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_generate_intelligent_overrides",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_hex_to_ansi",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_persist_design_system",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_1218",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_1327",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_1433",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_445",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_459",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_467",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_474",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_637",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_780",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_819",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_831",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_901",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_safe_slug",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_section_header",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testpersistence",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testpersistence_test_persist_then_skip_then_force",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testpersistence_test_persist_writes_only_under_output_dir"
+    ],
+    "10": [
+      "app_components_ui_sheet_index",
+      "app_components_ui_sheet_sheet",
+      "app_components_ui_sheet_sheet_emits",
+      "app_components_ui_sheet_sheet_forwarded",
+      "app_components_ui_sheet_sheet_props",
+      "app_components_ui_sheet_sheetclose",
+      "app_components_ui_sheet_sheetclose_props",
+      "app_components_ui_sheet_sheetcontent",
+      "app_components_ui_sheet_sheetcontent_delegatedprops",
+      "app_components_ui_sheet_sheetcontent_emits",
+      "app_components_ui_sheet_sheetcontent_forwarded",
+      "app_components_ui_sheet_sheetcontent_props",
+      "app_components_ui_sheet_sheetcontent_sheetcontentprops",
+      "app_components_ui_sheet_sheetdescription",
+      "app_components_ui_sheet_sheetdescription_delegatedprops",
+      "app_components_ui_sheet_sheetdescription_props",
+      "app_components_ui_sheet_sheetfooter",
+      "app_components_ui_sheet_sheetfooter_props",
+      "app_components_ui_sheet_sheetheader",
+      "app_components_ui_sheet_sheetheader_props",
+      "app_components_ui_sheet_sheetoverlay",
+      "app_components_ui_sheet_sheetoverlay_delegatedprops",
+      "app_components_ui_sheet_sheetoverlay_props",
+      "app_components_ui_sheet_sheettitle",
+      "app_components_ui_sheet_sheettitle_delegatedprops",
+      "app_components_ui_sheet_sheettitle_props",
+      "app_components_ui_sheet_sheettrigger",
+      "app_components_ui_sheet_sheettrigger_props"
+    ],
+    "11": [
+      "claude_skills_design_system_scripts_html_token_validator",
+      "claude_skills_design_system_scripts_html_token_validator_get_context",
+      "claude_skills_design_system_scripts_html_token_validator_is_allowed_exception",
+      "claude_skills_design_system_scripts_html_token_validator_is_allowed_rgba",
+      "claude_skills_design_system_scripts_html_token_validator_is_inside_block",
+      "claude_skills_design_system_scripts_html_token_validator_load_css_variables",
+      "claude_skills_design_system_scripts_html_token_validator_main",
+      "claude_skills_design_system_scripts_html_token_validator_print_result",
+      "claude_skills_design_system_scripts_html_token_validator_print_summary",
+      "claude_skills_design_system_scripts_html_token_validator_py_path",
+      "claude_skills_design_system_scripts_html_token_validator_rationale_104",
+      "claude_skills_design_system_scripts_html_token_validator_rationale_109",
+      "claude_skills_design_system_scripts_html_token_validator_rationale_116",
+      "claude_skills_design_system_scripts_html_token_validator_rationale_186",
+      "claude_skills_design_system_scripts_html_token_validator_rationale_197",
+      "claude_skills_design_system_scripts_html_token_validator_rationale_206",
+      "claude_skills_design_system_scripts_html_token_validator_rationale_222",
+      "claude_skills_design_system_scripts_html_token_validator_rationale_63",
+      "claude_skills_design_system_scripts_html_token_validator_rationale_79",
+      "claude_skills_design_system_scripts_html_token_validator_rationale_90",
+      "claude_skills_design_system_scripts_html_token_validator_rationale_98",
+      "claude_skills_design_system_scripts_html_token_validator_validate_directory",
+      "claude_skills_design_system_scripts_html_token_validator_validate_file",
+      "claude_skills_design_system_scripts_html_token_validator_validate_html",
+      "claude_skills_design_system_scripts_html_token_validator_validationresult",
+      "claude_skills_design_system_scripts_html_token_validator_validationresult_add_error",
+      "claude_skills_design_system_scripts_html_token_validator_validationresult_add_warning",
+      "claude_skills_design_system_scripts_html_token_validator_validationresult_init"
+    ],
+    "12": [
+      "claude_skills_ui_ux_pro_max_scripts_core",
+      "claude_skills_ui_ux_pro_max_scripts_core_bm25",
+      "claude_skills_ui_ux_pro_max_scripts_core_bm25_fit",
+      "claude_skills_ui_ux_pro_max_scripts_core_bm25_init",
+      "claude_skills_ui_ux_pro_max_scripts_core_bm25_score",
+      "claude_skills_ui_ux_pro_max_scripts_core_bm25_tokenize",
+      "claude_skills_ui_ux_pro_max_scripts_core_bm25_vocabulary",
+      "claude_skills_ui_ux_pro_max_scripts_core_domain_keywords",
+      "claude_skills_ui_ux_pro_max_scripts_core_get_bm25",
+      "claude_skills_ui_ux_pro_max_scripts_core_load_csv",
+      "claude_skills_ui_ux_pro_max_scripts_core_load_product_keywords",
+      "claude_skills_ui_ux_pro_max_scripts_core_normalize",
+      "claude_skills_ui_ux_pro_max_scripts_core_rationale_154",
+      "claude_skills_ui_ux_pro_max_scripts_core_rationale_162",
+      "claude_skills_ui_ux_pro_max_scripts_core_rationale_176",
+      "claude_skills_ui_ux_pro_max_scripts_core_rationale_182",
+      "claude_skills_ui_ux_pro_max_scripts_core_rationale_203",
+      "claude_skills_ui_ux_pro_max_scripts_core_rationale_225",
+      "claude_skills_ui_ux_pro_max_scripts_core_rationale_238",
+      "claude_skills_ui_ux_pro_max_scripts_core_rationale_252",
+      "claude_skills_ui_ux_pro_max_scripts_core_rationale_268",
+      "claude_skills_ui_ux_pro_max_scripts_core_rationale_293",
+      "claude_skills_ui_ux_pro_max_scripts_core_search_csv",
+      "claude_skills_ui_ux_pro_max_scripts_core_suggest_terms",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testtokenizer",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testtokenizer_test_short_domain_terms_are_kept",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testtokenizer_test_stopwords_removed",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testtokenizer_test_synonym_normalization"
+    ],
+    "13": [
+      "server_api_watch_slug_comments_get",
+      "server_api_watch_slug_comments_get_commentrow",
+      "server_api_watch_slug_comments_get_paramsschema",
+      "server_api_watch_slug_comments_get_queryschema",
+      "server_api_watch_slug_comments_get_tocomment",
+      "server_api_watch_slug_index_get",
+      "server_api_watch_slug_index_get_paramsschema",
+      "server_api_watch_slug_related_get",
+      "server_api_watch_slug_related_get_paramsschema",
+      "server_api_watch_slug_view_post",
+      "server_api_watch_slug_view_post_paramsschema",
+      "server_utils_format",
+      "server_utils_format_formatage",
+      "server_utils_format_formatduration",
+      "server_utils_format_formatuptime",
+      "server_utils_format_spec",
+      "server_utils_format_spec_minutesago",
+      "server_utils_watch",
+      "server_utils_watch_cliptorelated",
+      "server_utils_watch_livetorelated",
+      "server_utils_watch_resolvedtarget",
+      "server_utils_watch_resolvewatchtarget",
+      "server_utils_watch_towatchclip",
+      "server_utils_watch_towatchlive",
+      "shared_utils_format",
+      "shared_utils_format_formatcount",
+      "shared_utils_format_formatrelativetime"
+    ],
+    "14": [
+      "shared_types_discovery",
+      "shared_types_discovery_categoryslug",
+      "shared_types_discovery_categorysummary",
+      "shared_types_discovery_clip",
+      "shared_types_discovery_clipcategory",
+      "shared_types_discovery_livesignal",
+      "shared_types_discovery_watchlistitem",
+      "shared_types_discovery_watchlistkind",
+      "shared_types_watch",
+      "shared_types_watch_channelsummary",
+      "shared_types_watch_chatmessage",
+      "shared_types_watch_commentsort",
+      "shared_types_watch_reactionsummary",
+      "shared_types_watch_reactionvalue",
+      "shared_types_watch_relateditem",
+      "shared_types_watch_ts_docref_adr_0014",
+      "shared_types_watch_watchclip",
+      "shared_types_watch_watchcomment",
+      "shared_types_watch_watchlive",
+      "shared_types_watch_watchtarget",
+      "shared_types_watch_watchtargetbase",
+      "shared_utils_category",
+      "shared_utils_category_category_descriptions",
+      "shared_utils_category_clip_categories",
+      "shared_utils_category_fromcategoryslug",
+      "shared_utils_category_spec",
+      "shared_utils_category_tocategoryslug"
+    ],
+    "15": [
+      "app_components_ui_sidebar_index",
+      "app_components_ui_sidebar_sidebarfooter",
+      "app_components_ui_sidebar_sidebarfooter_props",
+      "app_components_ui_sidebar_sidebargroup",
+      "app_components_ui_sidebar_sidebargroup_props",
+      "app_components_ui_sidebar_sidebargrouplabel",
+      "app_components_ui_sidebar_sidebargrouplabel_props",
+      "app_components_ui_sidebar_sidebarinput",
+      "app_components_ui_sidebar_sidebarinput_props",
+      "app_components_ui_sidebar_sidebarinset",
+      "app_components_ui_sidebar_sidebarinset_props",
+      "app_components_ui_sidebar_sidebarmenu",
+      "app_components_ui_sidebar_sidebarmenu_props",
+      "app_components_ui_sidebar_sidebarmenuaction",
+      "app_components_ui_sidebar_sidebarmenuaction_props",
+      "app_components_ui_sidebar_sidebarmenubadge",
+      "app_components_ui_sidebar_sidebarmenubadge_props",
+      "app_components_ui_sidebar_sidebarmenuitem",
+      "app_components_ui_sidebar_sidebarmenuitem_props",
+      "app_components_ui_sidebar_sidebarmenusubbutton",
+      "app_components_ui_sidebar_sidebarmenusubbutton_props",
+      "app_components_ui_sidebar_sidebarmenusubitem",
+      "app_components_ui_sidebar_sidebarmenusubitem_props",
+      "app_components_ui_sidebar_sidebarseparator",
+      "app_components_ui_sidebar_sidebarseparator_props"
+    ],
+    "16": [
+      "claude_skills_design_scripts_logo_core",
+      "claude_skills_design_scripts_logo_core_bm25",
+      "claude_skills_design_scripts_logo_core_bm25_fit",
+      "claude_skills_design_scripts_logo_core_bm25_init",
+      "claude_skills_design_scripts_logo_core_bm25_score",
+      "claude_skills_design_scripts_logo_core_bm25_tokenize",
+      "claude_skills_design_scripts_logo_core_detect_domain",
+      "claude_skills_design_scripts_logo_core_load_csv",
+      "claude_skills_design_scripts_logo_core_rationale_101",
+      "claude_skills_design_scripts_logo_core_rationale_107",
+      "claude_skills_design_scripts_logo_core_rationale_132",
+      "claude_skills_design_scripts_logo_core_rationale_147",
+      "claude_skills_design_scripts_logo_core_rationale_169",
+      "claude_skills_design_scripts_logo_core_rationale_38",
+      "claude_skills_design_scripts_logo_core_rationale_51",
+      "claude_skills_design_scripts_logo_core_rationale_56",
+      "claude_skills_design_scripts_logo_core_rationale_75",
+      "claude_skills_design_scripts_logo_core_search",
+      "claude_skills_design_scripts_logo_core_search_all",
+      "claude_skills_design_scripts_logo_core_search_csv",
+      "claude_skills_design_scripts_logo_search",
+      "claude_skills_design_scripts_logo_search_format_output",
+      "claude_skills_design_scripts_logo_search_generate_design_brief",
+      "claude_skills_design_scripts_logo_search_rationale_16",
+      "claude_skills_design_scripts_logo_search_rationale_38"
+    ],
+    "17": [
+      "claude_skills_ui_ux_pro_max_scripts_design_system_designsystemgenerator",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_designsystemgenerator_init",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_designsystemgenerator_load_reasoning",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_palette_is_dark",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_109",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_127",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_184",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_190",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_relative_luminance",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testreasoningmatch",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testreasoningmatch_test_known_category_matches_exactly",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testreasoningmatch_test_unknown_category_falls_back_gracefully",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_rationale_129",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testendtoendcoherence",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testendtoendcoherence_test_dark_query_does_not_advise_against_dark_mode",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testendtoendcoherence_test_dark_query_foreground_is_lighter_than_background",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testendtoendcoherence_test_dark_query_gets_a_dark_background",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testendtoendcoherence_test_light_query_keeps_a_light_background",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testluminance",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testluminance_test_classifies_backgrounds_from_the_shipped_data",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testluminance_test_missing_background_is_not_dark",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testluminance_test_parses_six_and_three_digit_hex",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testluminance_test_returns_none_for_unparseable"
+    ],
+    "18": [
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_db_generate",
+      "package_scripts_db_migrate",
+      "package_scripts_db_seed",
+      "package_scripts_db_seed_chat",
+      "package_scripts_db_seed_clips",
+      "package_scripts_db_seed_comments",
+      "package_scripts_db_seed_live",
+      "package_scripts_db_studio",
+      "package_scripts_dev",
+      "package_scripts_format",
+      "package_scripts_format_check",
+      "package_scripts_generate",
+      "package_scripts_lint",
+      "package_scripts_lint_fix",
+      "package_scripts_postinstall",
+      "package_scripts_preview",
+      "package_scripts_test",
+      "package_scripts_test_e2e",
+      "package_scripts_test_watch",
+      "package_scripts_typecheck"
+    ],
+    "19": [
+      "claude_skills_ui_styling_license",
+      "claude_skills_ui_styling_references_canvas_design_system",
+      "claude_skills_ui_styling_references_shadcn_accessibility",
+      "claude_skills_ui_styling_references_shadcn_components",
+      "claude_skills_ui_styling_references_shadcn_theming",
+      "claude_skills_ui_styling_references_tailwind_customization",
+      "claude_skills_ui_styling_references_tailwind_responsive",
+      "claude_skills_ui_styling_references_tailwind_utilities",
+      "claude_skills_ui_styling_scripts_requirements",
+      "claude_skills_ui_styling_scripts_tests_requirements",
+      "claude_skills_ui_styling_skill",
+      "claude_skills_ui_ux_pro_max_skill",
+      "design_system_streamify_master",
+      "docs_architecture_frontendarchitecture",
+      "docs_architecture_research_claudeskillsevaluated",
+      "docs_architecture_research_uicomponentsystem",
+      "docs_decisions_adr002_shadcnvue",
+      "docs_decisions_adr009_uiuxpromaxcli",
+      "docs_progress_concurrentsessionnote",
+      "docs_prompt_phase2_designsystem",
+      "public_robots"
+    ],
+    "20": [
+      "claude_skills_design_system_scripts_generate_slide",
+      "claude_skills_design_system_scripts_generate_slide_e",
+      "claude_skills_design_system_scripts_generate_slide_generate_chart_slide",
+      "claude_skills_design_system_scripts_generate_slide_generate_cta_slide",
+      "claude_skills_design_system_scripts_generate_slide_generate_deck",
+      "claude_skills_design_system_scripts_generate_slide_generate_metrics_slide",
+      "claude_skills_design_system_scripts_generate_slide_generate_problem_slide",
+      "claude_skills_design_system_scripts_generate_slide_generate_solution_slide",
+      "claude_skills_design_system_scripts_generate_slide_generate_testimonial_slide",
+      "claude_skills_design_system_scripts_generate_slide_generate_title_slide",
+      "claude_skills_design_system_scripts_generate_slide_main",
+      "claude_skills_design_system_scripts_generate_slide_rationale_17",
+      "claude_skills_design_system_scripts_generate_slide_rationale_22",
+      "claude_skills_design_system_scripts_generate_slide_rationale_429",
+      "claude_skills_design_system_scripts_generate_slide_rationale_448",
+      "claude_skills_design_system_scripts_generate_slide_rationale_479",
+      "claude_skills_design_system_scripts_generate_slide_rationale_524",
+      "claude_skills_design_system_scripts_generate_slide_rationale_555",
+      "claude_skills_design_system_scripts_generate_slide_rationale_638",
+      "claude_skills_design_system_scripts_generate_slide_safe_url"
+    ],
+    "21": [
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_23",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_97",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_add_color_palette",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_138",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_239",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_249",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_259",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_31",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_42",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_47",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_64",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_add_spacing",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_custom_output_path",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_default_content_paths_react",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_default_output_path_javascript",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_init_framework",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_validate_config_empty_theme",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_validate_config_no_content",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_write_config"
+    ],
+    "22": [
+      "server_api_discovery_categories_get",
+      "server_api_discovery_categories_slug_get",
+      "server_api_discovery_categories_slug_get_paramsschema",
+      "server_api_discovery_clips_get",
+      "server_api_discovery_live_get",
+      "server_api_discovery_live_streamer_get",
+      "server_api_discovery_live_streamer_get_paramsschema",
+      "server_db_client",
+      "server_db_client_db",
+      "server_db_client_queryclient",
+      "server_db_schema_clips_clips",
+      "server_db_schema_live_streams_livestreams",
+      "server_utils_discovery",
+      "server_utils_discovery_cliprow",
+      "server_utils_discovery_emptycategorysummary",
+      "server_utils_discovery_livestreamrow",
+      "server_utils_discovery_selectcategorysummaries",
+      "server_utils_discovery_toclip",
+      "server_utils_discovery_tolivesignal",
+      "server_utils_discovery_tosummary"
+    ],
+    "23": [
+      "claude_skills_design_system_templates_design_tokens_starter_background_type",
+      "claude_skills_design_system_templates_design_tokens_starter_background_value",
+      "claude_skills_design_system_templates_design_tokens_starter_color_background",
+      "claude_skills_design_system_templates_design_tokens_starter_color_destructive",
+      "claude_skills_design_system_templates_design_tokens_starter_color_foreground",
+      "claude_skills_design_system_templates_design_tokens_starter_color_muted_foreground",
+      "claude_skills_design_system_templates_design_tokens_starter_color_primary_hover",
+      "claude_skills_design_system_templates_design_tokens_starter_color_secondary",
+      "claude_skills_design_system_templates_design_tokens_starter_destructive_type",
+      "claude_skills_design_system_templates_design_tokens_starter_destructive_value",
+      "claude_skills_design_system_templates_design_tokens_starter_foreground_type",
+      "claude_skills_design_system_templates_design_tokens_starter_foreground_value",
+      "claude_skills_design_system_templates_design_tokens_starter_muted_foreground_type",
+      "claude_skills_design_system_templates_design_tokens_starter_muted_foreground_value",
+      "claude_skills_design_system_templates_design_tokens_starter_primary_hover_type",
+      "claude_skills_design_system_templates_design_tokens_starter_primary_hover_value",
+      "claude_skills_design_system_templates_design_tokens_starter_secondary_type",
+      "claude_skills_design_system_templates_design_tokens_starter_secondary_value",
+      "claude_skills_design_system_templates_design_tokens_starter_semantic_color"
+    ],
+    "24": [
+      "claude_skills_ui_ux_pro_max_scripts_design_system_filter_anti_patterns_for_mode",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_query_wants_dark",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_133",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_143",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_149",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_172",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_resolve_color_mode",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_style_is_dark_primary",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testantipatterngating",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testantipatterngating_test_dark_clause_dropped_others_kept",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testantipatterngating_test_empty_input",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testantipatterngating_test_light_mode_is_a_no_op",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testantipatterngating_test_unrelated_anti_patterns_survive_dark_mode",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testmoderesolution",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testmoderesolution_test_dark_primary_style_detected",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testmoderesolution_test_dual_mode_style_is_not_dark_primary",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testmoderesolution_test_either_signal_resolves_dark",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testmoderesolution_test_query_keywords"
+    ],
+    "25": [
+      "server_api_channels_name_follow_post",
+      "server_api_channels_name_follow_post_paramsschema",
+      "server_api_channels_name_index_get",
+      "server_api_channels_name_index_get_paramsschema",
+      "server_api_watch_slug_reaction_get",
+      "server_api_watch_slug_reaction_get_paramsschema",
+      "server_api_watch_slug_reaction_post",
+      "server_api_watch_slug_reaction_post_bodyschema",
+      "server_api_watch_slug_reaction_post_paramsschema",
+      "server_db_schema_follows_follows",
+      "server_utils_channels",
+      "server_utils_channels_readchannelsummary",
+      "server_utils_channels_ts_docref_adr_0014",
+      "server_utils_reactions",
+      "server_utils_reactions_readreactionsummary",
+      "server_utils_session",
+      "server_utils_session_getsessionuser",
+      "server_utils_session_requireuser",
+      "server_utils_session_sessionuser"
+    ],
+    "26": [
+      "claude_skills_design_system_scripts_fetch_background",
+      "claude_skills_design_system_scripts_fetch_background_generate_css_for_background",
+      "claude_skills_design_system_scripts_fetch_background_get_background_image",
+      "claude_skills_design_system_scripts_fetch_background_get_curated_images",
+      "claude_skills_design_system_scripts_fetch_background_get_overlay_css",
+      "claude_skills_design_system_scripts_fetch_background_get_pexels_search_url",
+      "claude_skills_design_system_scripts_fetch_background_load_backgrounds_config",
+      "claude_skills_design_system_scripts_fetch_background_load_brand_colors",
+      "claude_skills_design_system_scripts_fetch_background_main",
+      "claude_skills_design_system_scripts_fetch_background_rationale_117",
+      "claude_skills_design_system_scripts_fetch_background_rationale_130",
+      "claude_skills_design_system_scripts_fetch_background_rationale_190",
+      "claude_skills_design_system_scripts_fetch_background_rationale_195",
+      "claude_skills_design_system_scripts_fetch_background_rationale_201",
+      "claude_skills_design_system_scripts_fetch_background_rationale_21",
+      "claude_skills_design_system_scripts_fetch_background_rationale_239",
+      "claude_skills_design_system_scripts_fetch_background_rationale_40",
+      "claude_skills_design_system_scripts_fetch_background_resolve_token_reference"
+    ],
+    "27": [
+      "scratch_watchlist_brand_gradient_logo",
+      "scratch_watchlist_clear_all_action",
+      "scratch_watchlist_clip_card",
+      "scratch_watchlist_dark_theme_ui",
+      "scratch_watchlist_dev_perf_overlay",
+      "scratch_watchlist_device_local_persistence",
+      "scratch_watchlist_discovery_feed_concept",
+      "scratch_watchlist_empty_live_channels_state",
+      "scratch_watchlist_feed_watchlist_toggle",
+      "scratch_watchlist_guest_accessible_design",
+      "scratch_watchlist_saved_clips_section",
+      "scratch_watchlist_search_bar",
+      "scratch_watchlist_site_footer",
+      "scratch_watchlist_start_streaming_cta",
+      "scratch_watchlist_system_status_indicator",
+      "scratch_watchlist_top_navigation",
+      "scratch_watchlist_watchlist_feature",
+      "scratch_watchlist_watchlist_page"
+    ],
+    "28": [
+      "app_components_discovery_discoveryfeed",
+      "app_components_discovery_discoveryfeed_activecategory",
+      "app_components_discovery_discoveryfeed_category",
+      "app_components_discovery_discoveryfeed_clips",
+      "app_components_discovery_discoveryfeed_data_clipsdata_ispending_clipspending_iserror_clipserrored_refetch_refetchclips",
+      "app_components_discovery_discoveryfeed_data_livesignalsdata_ispending_livepending",
+      "app_components_discovery_discoveryfeed_featured",
+      "app_components_discovery_discoveryfeed_filteredclips",
+      "app_components_discovery_discoveryfeed_items_saved_hydrated_issaved_toggle_remove_clear",
+      "app_components_discovery_discoveryfeed_livesignals",
+      "app_components_discovery_discoveryfeed_openclip",
+      "app_components_discovery_discoveryfeed_openlive",
+      "app_components_discovery_discoveryfeed_opensaved",
+      "app_components_discovery_discoveryfeed_savedclips",
+      "app_components_discovery_discoveryfeed_savedlive",
+      "app_components_discovery_discoveryfeed_search",
+      "app_components_discovery_discoveryfeed_view"
+    ],
+    "29": [
+      "app_components_ui_sidebar_sidebarprovider",
+      "app_components_ui_sidebar_sidebarprovider_emits",
+      "app_components_ui_sidebar_sidebarprovider_ismobile",
+      "app_components_ui_sidebar_sidebarprovider_open",
+      "app_components_ui_sidebar_sidebarprovider_openmobile",
+      "app_components_ui_sidebar_sidebarprovider_props",
+      "app_components_ui_sidebar_sidebarprovider_setopen",
+      "app_components_ui_sidebar_sidebarprovider_setopenmobile",
+      "app_components_ui_sidebar_sidebarprovider_state",
+      "app_components_ui_sidebar_sidebarprovider_togglesidebar",
+      "app_components_ui_sidebar_utils",
+      "app_components_ui_sidebar_utils_sidebar_cookie_max_age",
+      "app_components_ui_sidebar_utils_sidebar_cookie_name",
+      "app_components_ui_sidebar_utils_sidebar_keyboard_shortcut",
+      "app_components_ui_sidebar_utils_sidebar_width",
+      "app_components_ui_sidebar_utils_sidebar_width_icon",
+      "app_components_ui_sidebar_utils_usesidebar_providesidebarcontext"
+    ],
+    "30": [
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_18",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_205",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_213",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_22",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_248",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_256",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_61",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_90",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_temp_project",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_add_all_components_dry_run",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_add_all_components_no_config",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_check_shadcn_config_exists",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_get_installed_components_no_config",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_list_installed_empty",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_list_installed_with_components",
+      "fixture"
+    ],
+    "31": [
+      "components",
+      "components_aliases",
+      "components_aliases_components",
+      "components_aliases_composables",
+      "components_aliases_lib",
+      "components_aliases_ui",
+      "components_aliases_utils",
+      "components_iconlibrary",
+      "components_schema",
+      "components_style",
+      "components_tailwind",
+      "components_tailwind_basecolor",
+      "components_tailwind_config",
+      "components_tailwind_css",
+      "components_tailwind_cssvariables",
+      "components_tailwind_prefix",
+      "components_typescript"
+    ],
+    "32": [
+      "drizzle_kit",
+      "nuxt_eslint",
+      "package_devdependencies",
+      "package_devdependencies_drizzle_kit",
+      "package_devdependencies_nuxt_eslint",
+      "package_devdependencies_pino_pretty",
+      "package_devdependencies_playwright_test",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_tailwindcss_vite",
+      "package_devdependencies_tw_animate_css",
+      "package_devdependencies_vue_tsc",
+      "pino_pretty",
+      "playwright_test",
+      "tailwindcss",
+      "tailwindcss_vite",
+      "tw_animate_css",
+      "vue_tsc"
+    ],
+    "33": [
+      "claude_skills_design_scripts_icon_generate",
+      "claude_skills_design_scripts_icon_generate_apply_color",
+      "claude_skills_design_scripts_icon_generate_apply_viewbox_size",
+      "claude_skills_design_scripts_icon_generate_extract_svgs",
+      "claude_skills_design_scripts_icon_generate_generate_batch",
+      "claude_skills_design_scripts_icon_generate_generate_icon",
+      "claude_skills_design_scripts_icon_generate_generate_sizes",
+      "claude_skills_design_scripts_icon_generate_load_env",
+      "claude_skills_design_scripts_icon_generate_main",
+      "claude_skills_design_scripts_icon_generate_rationale_129",
+      "claude_skills_design_scripts_icon_generate_rationale_167",
+      "claude_skills_design_scripts_icon_generate_rationale_178",
+      "claude_skills_design_scripts_icon_generate_rationale_191",
+      "claude_skills_design_scripts_icon_generate_rationale_28",
+      "claude_skills_design_scripts_icon_generate_rationale_288",
+      "claude_skills_design_scripts_icon_generate_rationale_372"
+    ],
+    "34": [
+      "claude_skills_design_system_templates_design_tokens_starter_2xl_type",
+      "claude_skills_design_system_templates_design_tokens_starter_2xl_value",
+      "claude_skills_design_system_templates_design_tokens_starter_3xl_type",
+      "claude_skills_design_system_templates_design_tokens_starter_3xl_value",
+      "claude_skills_design_system_templates_design_tokens_starter_4xl_type",
+      "claude_skills_design_system_templates_design_tokens_starter_4xl_value",
+      "claude_skills_design_system_templates_design_tokens_starter_base_type",
+      "claude_skills_design_system_templates_design_tokens_starter_base_value",
+      "claude_skills_design_system_templates_design_tokens_starter_fontsize_2xl",
+      "claude_skills_design_system_templates_design_tokens_starter_fontsize_3xl",
+      "claude_skills_design_system_templates_design_tokens_starter_fontsize_4xl",
+      "claude_skills_design_system_templates_design_tokens_starter_fontsize_base",
+      "claude_skills_design_system_templates_design_tokens_starter_fontsize_xs",
+      "claude_skills_design_system_templates_design_tokens_starter_primitive_fontsize",
+      "claude_skills_design_system_templates_design_tokens_starter_xs_type",
+      "claude_skills_design_system_templates_design_tokens_starter_xs_value"
+    ],
+    "35": [
+      "claude_skills_ui_styling_scripts_shadcn_add",
+      "claude_skills_ui_styling_scripts_shadcn_add_main",
+      "claude_skills_ui_styling_scripts_shadcn_add_rationale_147",
+      "claude_skills_ui_styling_scripts_shadcn_add_rationale_193",
+      "claude_skills_ui_styling_scripts_shadcn_add_rationale_33",
+      "claude_skills_ui_styling_scripts_shadcn_add_rationale_42",
+      "claude_skills_ui_styling_scripts_shadcn_add_rationale_68",
+      "claude_skills_ui_styling_scripts_shadcn_add_rationale_84",
+      "claude_skills_ui_styling_scripts_shadcn_add_shadcninstaller_add_all_components",
+      "claude_skills_ui_styling_scripts_shadcn_add_shadcninstaller_add_components",
+      "claude_skills_ui_styling_scripts_shadcn_add_shadcninstaller_check_shadcn_config",
+      "claude_skills_ui_styling_scripts_shadcn_add_shadcninstaller_get_installed_components",
+      "claude_skills_ui_styling_scripts_shadcn_add_shadcninstaller_get_shadcn_version",
+      "claude_skills_ui_styling_scripts_shadcn_add_shadcninstaller_list_installed",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_1"
+    ],
+    "36": [
+      "server_api_auth_all",
+      "server_api_auth_providers_get",
+      "server_plugins_error_logger",
+      "server_utils_auth",
+      "server_utils_auth_auth",
+      "server_utils_auth_configuredproviders",
+      "server_utils_auth_env_keys",
+      "server_utils_auth_social_providers",
+      "server_utils_auth_socialprovider",
+      "server_utils_auth_socialproviders",
+      "server_utils_auth_ts_docref_adr_0007",
+      "server_utils_logger",
+      "server_utils_logger_logger",
+      "server_utils_mailer",
+      "server_utils_mailer_mail",
+      "server_utils_mailer_sendmail"
+    ],
+    "37": [
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_main",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_123",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_136",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_149",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_162",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_174",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_285",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_84",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_add_breakpoints",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_add_colors",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_add_fonts",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_add_plugins",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_add_spacing",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_recommend_plugins",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_validate_config"
+    ],
+    "38": [
+      "docs_architecture_deploymentarchitecture",
+      "docs_decisions",
+      "docs_decisions_adr005_cloudflarestream",
+      "docs_decisions_adr012_vidstackclips",
+      "docs_decisions_adr013_livestreamstable",
+      "docs_progress",
+      "docs_progress_currentphase",
+      "docs_progress_openquestions",
+      "docs_prompt_phase5_discovery",
+      "docs_prompt_phase6_video",
+      "docs_prompt_phase7_livestreaming",
+      "docs_video_streaming",
+      "docs_video_streaming_clipsdata",
+      "docs_video_streaming_livedata",
+      "docs_video_streaming_vidstackplayer"
+    ],
+    "39": [
+      "scratch_modal_channel_name",
+      "scratch_modal_close_button",
+      "scratch_modal_dark_theme_ui",
+      "scratch_modal_dimmed_background_overlay",
+      "scratch_modal_discovery_feed_grid",
+      "scratch_modal_netflix_style_preview_pattern",
+      "scratch_modal_performance_metrics_indicator",
+      "scratch_modal_play_button_overlay",
+      "scratch_modal_ready_to_stream_badge",
+      "scratch_modal_video_duration",
+      "scratch_modal_video_preview_modal",
+      "scratch_modal_video_thumbnail_image",
+      "scratch_modal_video_title",
+      "scratch_modal_viewer_count",
+      "scratch_modal_watchlist_button"
+    ],
+    "40": [
+      "app_components_ui_tooltip_index",
+      "app_components_ui_tooltip_tooltip",
+      "app_components_ui_tooltip_tooltip_emits",
+      "app_components_ui_tooltip_tooltip_forwarded",
+      "app_components_ui_tooltip_tooltip_props",
+      "app_components_ui_tooltip_tooltipcontent",
+      "app_components_ui_tooltip_tooltipcontent_delegatedprops",
+      "app_components_ui_tooltip_tooltipcontent_emits",
+      "app_components_ui_tooltip_tooltipcontent_forwarded",
+      "app_components_ui_tooltip_tooltipcontent_props",
+      "app_components_ui_tooltip_tooltipprovider",
+      "app_components_ui_tooltip_tooltipprovider_props",
+      "app_components_ui_tooltip_tooltiptrigger",
+      "app_components_ui_tooltip_tooltiptrigger_props"
+    ],
+    "41": [
+      "app_components_watch_watchchat",
+      "app_components_watch_watchchat_cansend",
+      "app_components_watch_watchchat_draft",
+      "app_components_watch_watchchat_emit",
+      "app_components_watch_watchchat_list",
+      "app_components_watch_watchchat_pinned_onscroll_scrolltobottom",
+      "app_components_watch_watchchat_props",
+      "app_components_watch_watchchat_send",
+      "app_components_watch_watchchat_spec",
+      "app_components_watch_watchchat_spec_base",
+      "app_components_watch_watchchat_spec_messages",
+      "app_components_watch_watchchatmessage",
+      "app_components_watch_watchchatmessage_age",
+      "app_components_watch_watchchatmessage_props"
+    ],
+    "42": [
+      "asset_naming_convention",
+      "bd_workflow",
+      "brand_sync_workflow",
+      "claude_claude_doc",
+      "claude_doc",
+      "claude_graphify_integration",
+      "claude_phase_process",
+      "claude_skills_banner_design_references_banner_sizes_and_styles_doc",
+      "claude_skills_banner_design_skill_doc",
+      "claude_skills_brand_references_approval_checklist_doc",
+      "claude_skills_brand_references_asset_organization_doc",
+      "claude_skills_brand_skill_doc",
+      "claude_stack_decision",
+      "claude_working_rules"
+    ],
+    "43": [
+      "claude_skills_brand_scripts_extract_colors",
+      "claude_skills_brand_scripts_extract_colors_calculatecompliance",
+      "claude_skills_brand_scripts_extract_colors_colordistance",
+      "claude_skills_brand_scripts_extract_colors_displaypalette",
+      "claude_skills_brand_scripts_extract_colors_extracthexcolors",
+      "claude_skills_brand_scripts_extract_colors_findnearestbrandcolor",
+      "claude_skills_brand_scripts_extract_colors_fs",
+      "claude_skills_brand_scripts_extract_colors_generateimagemagickcommand",
+      "claude_skills_brand_scripts_extract_colors_hextorgb",
+      "claude_skills_brand_scripts_extract_colors_main",
+      "claude_skills_brand_scripts_extract_colors_parsebrandcolors",
+      "claude_skills_brand_scripts_extract_colors_parseimagemagickoutput",
+      "claude_skills_brand_scripts_extract_colors_path",
+      "claude_skills_brand_scripts_extract_colors_rgbtohex"
+    ],
+    "44": [
+      "claude_skills_brand_scripts_validate_asset",
+      "claude_skills_brand_scripts_validate_asset_checkmanifest",
+      "claude_skills_brand_scripts_validate_asset_formatbytes",
+      "claude_skills_brand_scripts_validate_asset_formatoutput",
+      "claude_skills_brand_scripts_validate_asset_fs",
+      "claude_skills_brand_scripts_validate_asset_main",
+      "claude_skills_brand_scripts_validate_asset_parsefilename",
+      "claude_skills_brand_scripts_validate_asset_path",
+      "claude_skills_brand_scripts_validate_asset_rules",
+      "claude_skills_brand_scripts_validate_asset_suggestfilename",
+      "claude_skills_brand_scripts_validate_asset_validateasset",
+      "claude_skills_brand_scripts_validate_asset_validatefilename",
+      "claude_skills_brand_scripts_validate_asset_validatefilesize",
+      "claude_skills_brand_scripts_validate_asset_validateformat"
+    ],
+    "45": [
+      "claude_skills_ui_styling_scripts_shadcn_add_rationale_18",
+      "claude_skills_ui_styling_scripts_shadcn_add_shadcninstaller",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_112",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_45",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_51",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_66",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_71",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_77",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_add_components_already_installed",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_check_shadcn_config_not_exists",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_get_installed_components_empty",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_get_installed_components_with_files",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_init_custom_project_root",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_init_default_project_root"
+    ],
+    "46": [
+      "claude_skills_ui_ux_pro_max_scripts_core_rationale_412",
+      "claude_skills_ui_ux_pro_max_scripts_core_rationale_443",
+      "claude_skills_ui_ux_pro_max_scripts_core_search",
+      "claude_skills_ui_ux_pro_max_scripts_core_search_stack",
+      "claude_skills_ui_ux_pro_max_scripts_search",
+      "claude_skills_ui_ux_pro_max_scripts_search_format_output",
+      "claude_skills_ui_ux_pro_max_scripts_search_rationale_45",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_rationale_47",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testsearchdomains",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testsearchdomains_test_accessibility_query_hits_ux",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testsearchdomains_test_every_configured_domain_file_exists_and_is_searchable",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testsearchdomains_test_every_stack_file_exists_and_is_searchable",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testsearchdomains_test_ui_is_searchable_in_style_domain",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testsearchdomains_test_zero_result_query_reports_suggestions_not_error"
+    ],
+    "47": [
+      "claude_skills_ui_ux_pro_max_scripts_design_system_designsystemgenerator_apply_reasoning",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_designsystemgenerator_extract_results",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_designsystemgenerator_find_reasoning_rule",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_designsystemgenerator_generate",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_designsystemgenerator_multi_domain_search",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_designsystemgenerator_select_best_match",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_198",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_211",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_235",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_269",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_306",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_311",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_70",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_resolve_dial"
+    ],
+    "48": [
+      "app_components_watch_types",
+      "app_components_watch_types_asyncpanel",
+      "app_components_watch_types_chatpanel",
+      "app_components_watch_types_commentspanel",
+      "app_components_watch_types_relatedpanel",
+      "app_components_watch_types_watchengagement",
+      "app_components_watch_watchlayout",
+      "app_components_watch_watchlayout_sort",
+      "app_components_watch_watchmeta",
+      "app_components_watch_watchmeta_categoryhref",
+      "app_components_watch_watchmeta_props",
+      "app_components_watch_watchplayer",
+      "app_components_watch_watchplayer_emit"
+    ],
+    "49": [
+      "app_pages_login",
+      "app_pages_login_backupcode",
+      "app_pages_login_email",
+      "app_pages_login_error",
+      "app_pages_login_onsubmit",
+      "app_pages_login_otp",
+      "app_pages_login_password",
+      "app_pages_login_pending",
+      "app_pages_login_remember",
+      "app_pages_login_step",
+      "app_pages_login_usebackupcode",
+      "app_pages_login_verifybackup",
+      "app_pages_login_verifytotp"
+    ],
+    "50": [
+      "claude_skills_design_system_templates_design_tokens_starter",
+      "claude_skills_design_system_templates_design_tokens_starter_component",
+      "claude_skills_design_system_templates_design_tokens_starter_component_type",
+      "claude_skills_design_system_templates_design_tokens_starter_component_value",
+      "claude_skills_design_system_templates_design_tokens_starter_dark",
+      "claude_skills_design_system_templates_design_tokens_starter_dark_semantic",
+      "claude_skills_design_system_templates_design_tokens_starter_schema",
+      "claude_skills_design_system_templates_design_tokens_starter_section_type",
+      "claude_skills_design_system_templates_design_tokens_starter_section_value",
+      "claude_skills_design_system_templates_design_tokens_starter_semantic",
+      "claude_skills_design_system_templates_design_tokens_starter_semantic_spacing",
+      "claude_skills_design_system_templates_design_tokens_starter_spacing_component",
+      "claude_skills_design_system_templates_design_tokens_starter_spacing_section"
+    ],
+    "51": [
+      "scratch_feed_clip_card_pattern",
+      "scratch_feed_dark_theme_visual_style",
+      "scratch_feed_discovery_feed_page",
+      "scratch_feed_feed_watchlist_toggle",
+      "scratch_feed_hero_trending_card",
+      "scratch_feed_latency_indicator",
+      "scratch_feed_live_badge_pattern",
+      "scratch_feed_live_signals_rail",
+      "scratch_feed_signal_brief_panel",
+      "scratch_feed_site_footer",
+      "scratch_feed_streamify_brand",
+      "scratch_feed_top_highlights_section",
+      "scratch_feed_top_navbar"
+    ],
+    "52": [
+      "_claude_skills_brand_references_color_palette_management_color_hierarchy",
+      "_claude_skills_brand_references_messaging_framework_mission_vision_value_chain",
+      "_claude_skills_brand_references_update_doc",
+      "_claude_skills_brand_references_update_sync_script",
+      "_claude_skills_design_skill",
+      "_claude_skills_design_subskill_routing",
+      "_claude_skills_design_system_references_component_specs_doc",
+      "_claude_skills_design_system_references_component_tokens_doc",
+      "_claude_skills_design_system_references_primitive_tokens_doc",
+      "_claude_skills_design_system_references_semantic_tokens_doc",
+      "_claude_skills_design_system_skill",
+      "_claude_skills_design_system_token_architecture"
+    ],
+    "53": [
+      "app_components_dashboard_appsidebar",
+      "app_components_dashboard_appsidebar_browselinks",
+      "app_components_dashboard_appsidebar_creatorlinks",
+      "app_components_dashboard_appsidebar_isactive",
+      "app_components_dashboard_appsidebar_route",
+      "app_components_dashboard_appsidebar_state_ismobile",
+      "app_components_dashboard_dashboardshell",
+      "app_components_dashboard_sidebarusermenu",
+      "app_components_dashboard_sidebarusermenu_initial",
+      "app_components_dashboard_sidebarusermenu_ismobile",
+      "app_components_dashboard_sidebarusermenu_links",
+      "app_components_dashboard_sidebarusermenu_user_signout"
+    ],
+    "54": [
+      "app_components_watch_channelavatar",
+      "app_components_watch_channelavatar_hue",
+      "app_components_watch_channelavatar_initial",
+      "app_components_watch_channelavatar_props",
+      "app_components_watch_watchchannelbar",
+      "app_components_watch_watchchannelbar_emit",
+      "app_components_watch_watchcommentitem",
+      "app_components_watch_watchcomments",
+      "app_components_watch_watchcomments_emit",
+      "app_components_watch_watchcomments_props",
+      "app_components_watch_watchcomments_sort",
+      "app_components_watch_watchcomments_total"
+    ],
+    "55": [
+      "app_pages_reset_password",
+      "app_pages_reset_password_confirm",
+      "app_pages_reset_password_confirmerror",
+      "app_pages_reset_password_done",
+      "app_pages_reset_password_error",
+      "app_pages_reset_password_invalid",
+      "app_pages_reset_password_onsubmit",
+      "app_pages_reset_password_password",
+      "app_pages_reset_password_passworderror",
+      "app_pages_reset_password_pending",
+      "app_pages_reset_password_route",
+      "app_pages_reset_password_token"
+    ],
+    "56": [
+      "app_pages_settings_two_factor",
+      "app_pages_settings_two_factor_backupcodes",
+      "app_pages_settings_two_factor_enable",
+      "app_pages_settings_two_factor_error",
+      "app_pages_settings_two_factor_otp",
+      "app_pages_settings_two_factor_password",
+      "app_pages_settings_two_factor_pending",
+      "app_pages_settings_two_factor_qrdataurl",
+      "app_pages_settings_two_factor_step",
+      "app_pages_settings_two_factor_verify",
+      "package_dependencies_qrcode",
+      "qrcode"
+    ],
+    "57": [
+      "claude_skills_design_system_scripts_validate_tokens",
+      "claude_skills_design_system_scripts_validate_tokens_extensions",
+      "claude_skills_design_system_scripts_validate_tokens_formatreport",
+      "claude_skills_design_system_scripts_validate_tokens_fs",
+      "claude_skills_design_system_scripts_validate_tokens_getfiles",
+      "claude_skills_design_system_scripts_validate_tokens_main",
+      "claude_skills_design_system_scripts_validate_tokens_parseargs",
+      "claude_skills_design_system_scripts_validate_tokens_path",
+      "claude_skills_design_system_scripts_validate_tokens_patterns",
+      "claude_skills_design_system_scripts_validate_tokens_scanfile",
+      "claude_skills_design_system_scripts_validate_tokens_shouldskip",
+      "claude_skills_design_system_scripts_validate_tokens_skippatterns"
+    ],
+    "58": [
+      "claude_skills_design_system_templates_design_tokens_starter_bg_type",
+      "claude_skills_design_system_templates_design_tokens_starter_bg_value",
+      "claude_skills_design_system_templates_design_tokens_starter_button_bg",
+      "claude_skills_design_system_templates_design_tokens_starter_card_bg",
+      "claude_skills_design_system_templates_design_tokens_starter_card_padding",
+      "claude_skills_design_system_templates_design_tokens_starter_card_shadow",
+      "claude_skills_design_system_templates_design_tokens_starter_component_card",
+      "claude_skills_design_system_templates_design_tokens_starter_input_bg",
+      "claude_skills_design_system_templates_design_tokens_starter_padding_type",
+      "claude_skills_design_system_templates_design_tokens_starter_padding_value",
+      "claude_skills_design_system_templates_design_tokens_starter_shadow_type",
+      "claude_skills_design_system_templates_design_tokens_starter_shadow_value"
+    ],
+    "59": [
+      "claude_skills_design_system_templates_design_tokens_starter_button_padding_x",
+      "claude_skills_design_system_templates_design_tokens_starter_button_padding_y",
+      "claude_skills_design_system_templates_design_tokens_starter_component_input",
+      "claude_skills_design_system_templates_design_tokens_starter_focus_ring_type",
+      "claude_skills_design_system_templates_design_tokens_starter_focus_ring_value",
+      "claude_skills_design_system_templates_design_tokens_starter_input_focus_ring",
+      "claude_skills_design_system_templates_design_tokens_starter_input_padding_x",
+      "claude_skills_design_system_templates_design_tokens_starter_input_padding_y",
+      "claude_skills_design_system_templates_design_tokens_starter_padding_x_type",
+      "claude_skills_design_system_templates_design_tokens_starter_padding_x_value",
+      "claude_skills_design_system_templates_design_tokens_starter_padding_y_type",
+      "claude_skills_design_system_templates_design_tokens_starter_padding_y_value"
+    ],
+    "60": [
+      "claude_skills_slides_references_copywriting_formulas_aida",
+      "claude_skills_slides_references_copywriting_formulas_costofinaction",
+      "claude_skills_slides_references_copywriting_formulas_pas",
+      "claude_skills_slides_references_copywriting_formulas_proofstack",
+      "claude_skills_slides_references_copywriting_formulas_valuestack",
+      "claude_skills_slides_references_create_createsubcommand",
+      "claude_skills_slides_references_html_template_basestructure",
+      "claude_skills_slides_references_html_template_chartjsintegration",
+      "claude_skills_slides_references_layout_patterns_layoutselection",
+      "claude_skills_slides_references_slide_strategies_salespitch",
+      "claude_skills_slides_references_slide_strategies_ycseeddeck",
+      "claude_skills_slides_skill_slidesskill"
+    ],
+    "61": [
+      "claude_skills_ui_styling_scripts_tailwind_config_gen",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_1",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_342",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_357",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_364",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_376",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_strip_to_object",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testgeneratedconfigisvalidjs",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testgeneratedconfigisvalidjs_test_node_check_parses_generated_config",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testgeneratedconfigisvalidjs_test_property_before_plugins_is_comma_terminated",
+      "parametrize"
+    ],
+    "62": [
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_192",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_203",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_224",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_239",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_260",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_268",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_format_plugins",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_generate_config_string",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_generate_javascript",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_generate_typescript",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_indent_json",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_write_config"
+    ],
+    "63": [
+      "_claude_skills_brand_references_brand_guideline_template_color_palette_section",
+      "_claude_skills_brand_references_brand_guideline_template_logo_usage_section",
+      "_claude_skills_brand_references_brand_guideline_template_template",
+      "_claude_skills_brand_references_brand_guideline_template_typography_section",
+      "_claude_skills_brand_references_color_palette_management_doc",
+      "_claude_skills_brand_references_consistency_checklist_visual_consistency",
+      "_claude_skills_brand_references_logo_usage_rules_doc",
+      "_claude_skills_brand_references_typography_specifications_doc",
+      "_claude_skills_brand_references_update_color_presets",
+      "_claude_skills_brand_references_visual_identity_doc",
+      "_claude_skills_brand_templates_brand_guidelines_starter_doc"
+    ],
+    "64": [
+      "better_auth_infra",
+      "clsx",
+      "nuxt",
+      "package_dependencies",
+      "package_dependencies_better_auth_infra",
+      "package_dependencies_clsx",
+      "package_dependencies_nuxt",
+      "package_dependencies_tanstack_vue_query",
+      "package_dependencies_vidstack",
+      "tanstack_vue_query",
+      "vidstack"
+    ],
+    "65": [
+      "claude_skills_brand_scripts_inject_brand_context",
+      "claude_skills_brand_scripts_inject_brand_context_extractcolorsfromtable",
+      "claude_skills_brand_scripts_inject_brand_context_extractcoreattributes",
+      "claude_skills_brand_scripts_inject_brand_context_extracthexcolors",
+      "claude_skills_brand_scripts_inject_brand_context_extractimagestyle",
+      "claude_skills_brand_scripts_inject_brand_context_extracttypography",
+      "claude_skills_brand_scripts_inject_brand_context_extractvoice",
+      "claude_skills_brand_scripts_inject_brand_context_fs",
+      "claude_skills_brand_scripts_inject_brand_context_generatepromptaddition",
+      "claude_skills_brand_scripts_inject_brand_context_main",
+      "claude_skills_brand_scripts_inject_brand_context_path"
+    ],
+    "66": [
+      "claude_skills_design_system_scripts_embed_tokens",
+      "claude_skills_design_system_scripts_embed_tokens_args",
+      "claude_skills_design_system_scripts_embed_tokens_extracttokens",
+      "claude_skills_design_system_scripts_embed_tokens_findprojectroot",
+      "claude_skills_design_system_scripts_embed_tokens_fs",
+      "claude_skills_design_system_scripts_embed_tokens_minimal",
+      "claude_skills_design_system_scripts_embed_tokens_minimal_tokens",
+      "claude_skills_design_system_scripts_embed_tokens_path",
+      "claude_skills_design_system_scripts_embed_tokens_projectroot",
+      "claude_skills_design_system_scripts_embed_tokens_tokenspath",
+      "claude_skills_design_system_scripts_embed_tokens_wrapstyle"
+    ],
+    "67": [
+      "claude_skills_design_system_templates_design_tokens_starter_duration_fast",
+      "claude_skills_design_system_templates_design_tokens_starter_duration_normal",
+      "claude_skills_design_system_templates_design_tokens_starter_duration_slow",
+      "claude_skills_design_system_templates_design_tokens_starter_fast_type",
+      "claude_skills_design_system_templates_design_tokens_starter_fast_value",
+      "claude_skills_design_system_templates_design_tokens_starter_normal_type",
+      "claude_skills_design_system_templates_design_tokens_starter_normal_value",
+      "claude_skills_design_system_templates_design_tokens_starter_primitive",
+      "claude_skills_design_system_templates_design_tokens_starter_primitive_duration",
+      "claude_skills_design_system_templates_design_tokens_starter_slow_type",
+      "claude_skills_design_system_templates_design_tokens_starter_slow_value"
+    ],
+    "68": [
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_124",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_158",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_182",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_195",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_223",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_add_all_components_success",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_add_components_npx_not_found",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_add_components_subprocess_error",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_add_components_success",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_add_components_with_overwrite",
+      "patch"
+    ],
+    "69": [
+      "docs_architecture",
+      "docs_architecture_backendarchitecture",
+      "docs_architecture_observabilityarchitecture",
+      "docs_architecture_research_backendchoice",
+      "docs_architecture_scalingarchitecture",
+      "docs_architecture_securityarchitecture",
+      "docs_architecture_streamingarchitecture",
+      "docs_architecture_systemoverview",
+      "docs_decisions_adr003_nitromodularmonolith",
+      "docs_decisions_adr010_modularmonolith",
+      "docs_prompt_phase1_architecture"
+    ],
+    "70": [
+      "docs_architecture_databasearchitecture",
+      "docs_architecture_research",
+      "docs_architecture_research_cicd",
+      "docs_architecture_research_databaseorm",
+      "docs_architecture_research_statemanagement",
+      "docs_architecture_research_storagecdnsearch",
+      "docs_architecture_research_streaminginfra",
+      "docs_architecture_research_validationtesting",
+      "docs_decisions_adr004_drizzleorm",
+      "docs_decisions_adr008_postgresfulltextsearch",
+      "docs_prompt_phase0_research"
+    ],
+    "71": [
+      "docs_architecture_research_frontendframework",
+      "docs_decisions_adr001_nuxt4vue35",
+      "docs_decisions_adr011_motionv",
+      "docs_prompt",
+      "docs_prompt_phase10_socialsystem",
+      "docs_prompt_phase11_admin",
+      "docs_prompt_phase12_hardening",
+      "docs_prompt_phase3_foundation",
+      "docs_prompt_phase4_appshell",
+      "docs_prompt_phase8_livechat",
+      "docs_prompt_phase9_creatorsystem"
+    ],
+    "72": [
+      "any",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_py_path",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_31",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_45",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_50",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_rationale_61",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_base_config",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_default_content_paths",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_default_output_path",
+      "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator_init"
+    ],
+    "73": [
+      "app_pages_settings_security",
+      "app_pages_settings_security_changepassword",
+      "app_pages_settings_security_current",
+      "app_pages_settings_security_error",
+      "app_pages_settings_security_next",
+      "app_pages_settings_security_nexterror",
+      "app_pages_settings_security_pending",
+      "app_pages_settings_security_revokeothers",
+      "app_pages_settings_security_saved",
+      "app_pages_settings_security_user_signout"
+    ],
+    "74": [
+      "claude_skills_design_scripts_logo_generate",
+      "claude_skills_design_scripts_logo_generate_enhance_prompt",
+      "claude_skills_design_scripts_logo_generate_generate_batch",
+      "claude_skills_design_scripts_logo_generate_generate_logo",
+      "claude_skills_design_scripts_logo_generate_load_env",
+      "claude_skills_design_scripts_logo_generate_main",
+      "claude_skills_design_scripts_logo_generate_rationale_120",
+      "claude_skills_design_scripts_logo_generate_rationale_138",
+      "claude_skills_design_scripts_logo_generate_rationale_231",
+      "claude_skills_design_scripts_logo_generate_rationale_30"
+    ],
+    "75": [
+      "claude_skills_design_system_scripts_generate_tokens",
+      "claude_skills_design_system_scripts_generate_tokens_flattentokens",
+      "claude_skills_design_system_scripts_generate_tokens_fs",
+      "claude_skills_design_system_scripts_generate_tokens_generatecss",
+      "claude_skills_design_system_scripts_generate_tokens_generatetailwind",
+      "claude_skills_design_system_scripts_generate_tokens_main",
+      "claude_skills_design_system_scripts_generate_tokens_parseargs",
+      "claude_skills_design_system_scripts_generate_tokens_path",
+      "claude_skills_design_system_scripts_generate_tokens_resolvereference",
+      "claude_skills_design_system_scripts_generate_tokens_tocssvarname"
+    ],
+    "76": [
+      "claude_skills_design_system_templates_design_tokens_starter_button_fg",
+      "claude_skills_design_system_templates_design_tokens_starter_button_font_size",
+      "claude_skills_design_system_templates_design_tokens_starter_button_hover_bg",
+      "claude_skills_design_system_templates_design_tokens_starter_component_button",
+      "claude_skills_design_system_templates_design_tokens_starter_fg_type",
+      "claude_skills_design_system_templates_design_tokens_starter_fg_value",
+      "claude_skills_design_system_templates_design_tokens_starter_font_size_type",
+      "claude_skills_design_system_templates_design_tokens_starter_font_size_value",
+      "claude_skills_design_system_templates_design_tokens_starter_hover_bg_type",
+      "claude_skills_design_system_templates_design_tokens_starter_hover_bg_value"
+    ],
+    "77": [
+      "claude_skills_graphify_references_transcribe_envvars",
+      "claude_skills_graphify_references_transcribe_transcribeall",
+      "claude_skills_graphify_references_transcribe_whisperpromptstep",
+      "claude_skills_graphify_references_update_buildmerge",
+      "claude_skills_graphify_references_update_clusteronly",
+      "claude_skills_graphify_references_update_detectincremental",
+      "claude_skills_graphify_references_update_graphdiff",
+      "claude_skills_graphify_references_update_incrementalupdate",
+      "claude_skills_graphify_references_update_savemanifest",
+      "claude_skills_graphify_references_update_stampedmanifestfiles"
+    ],
+    "78": [
+      "_claude_skills_design_system_references_component_specs_button_spec",
+      "_claude_skills_design_system_references_component_specs_input_spec",
+      "_claude_skills_design_system_references_component_tokens_button_tokens",
+      "_claude_skills_design_system_references_component_tokens_input_tokens",
+      "_claude_skills_design_system_references_primitive_tokens_color_scales",
+      "_claude_skills_design_system_references_primitive_tokens_spacing_scale",
+      "_claude_skills_design_system_references_semantic_tokens_color_semantics",
+      "_claude_skills_design_system_references_semantic_tokens_dark_mode_overrides",
+      "_claude_skills_design_system_references_semantic_tokens_spacing_semantics"
+    ],
+    "79": [
+      "app_components_discovery_featuredclip",
+      "app_components_discovery_featuredclip_emit",
+      "app_components_discovery_livesignalsrail",
+      "app_components_discovery_livesignalsrail_emit",
+      "app_components_discovery_livesignalsrail_rail",
+      "app_components_discovery_livesignalsrail_scroll",
+      "app_components_discovery_savebutton",
+      "app_components_discovery_savebutton_emit",
+      "app_components_discovery_savebutton_props"
+    ],
+    "80": [
+      "claude_skills_brand_scripts_sync_brand_to_tokens",
+      "claude_skills_brand_scripts_sync_brand_to_tokens_adjustbrightness",
+      "claude_skills_brand_scripts_sync_brand_to_tokens_execfilesync",
+      "claude_skills_brand_scripts_sync_brand_to_tokens_extractcolorsfrommarkdown",
+      "claude_skills_brand_scripts_sync_brand_to_tokens_fs",
+      "claude_skills_brand_scripts_sync_brand_to_tokens_generatecolorscale",
+      "claude_skills_brand_scripts_sync_brand_to_tokens_main",
+      "claude_skills_brand_scripts_sync_brand_to_tokens_path",
+      "claude_skills_brand_scripts_sync_brand_to_tokens_updatedesigntokens"
+    ],
+    "81": [
+      "claude_skills_design_system_scripts_tests_test_validate_tokens",
+      "claude_skills_design_system_scripts_tests_test_validate_tokens_py_path",
+      "claude_skills_design_system_scripts_tests_test_validate_tokens_rationale_1",
+      "claude_skills_design_system_scripts_tests_test_validate_tokens_rationale_32",
+      "claude_skills_design_system_scripts_tests_test_validate_tokens_rationale_42",
+      "claude_skills_design_system_scripts_tests_test_validate_tokens_run",
+      "claude_skills_design_system_scripts_tests_test_validate_tokens_test_flags_hardcoded_hex_sharing_line_with_token",
+      "claude_skills_design_system_scripts_tests_test_validate_tokens_test_token_only_line_reports_no_violation",
+      "completedprocess"
+    ],
+    "82": [
+      "_claude_skills_claude_automation_recommender_references_hooks_patterns_doc",
+      "_claude_skills_claude_automation_recommender_references_hooks_patterns_notification_hooks",
+      "_claude_skills_claude_automation_recommender_references_mcp_servers_doc",
+      "_claude_skills_claude_automation_recommender_references_plugins_reference_doc",
+      "_claude_skills_claude_automation_recommender_references_plugins_reference_official_plugins_table",
+      "_claude_skills_claude_automation_recommender_references_skills_reference_doc",
+      "_claude_skills_claude_automation_recommender_references_subagent_templates_doc",
+      "_claude_skills_claude_automation_recommender_skill"
+    ],
+    "83": [
+      "app_components_discovery_categorycard",
+      "app_components_discovery_categorycard_cliplabel",
+      "app_components_discovery_categorycard_props",
+      "app_components_discovery_categorycard_spec",
+      "app_components_discovery_categorycard_spec_category",
+      "app_components_discovery_categorygrid",
+      "app_components_discovery_categorygrid_categories",
+      "app_components_discovery_categorygrid_data_ispending_iserror_refetch"
+    ],
+    "84": [
+      "app_components_discovery_livedirectory",
+      "app_components_discovery_livedirectory_activecategory",
+      "app_components_discovery_livedirectory_data_ispending_iserror_refetch",
+      "app_components_discovery_livedirectory_issaved_toggle",
+      "app_components_discovery_livedirectory_open",
+      "app_components_discovery_livedirectory_search",
+      "app_components_discovery_livedirectory_signals",
+      "app_components_discovery_livedirectory_visible"
+    ],
+    "85": [
+      "app_components_ui_sidebar_index_sidebarmenubuttonvariants",
+      "app_components_ui_sidebar_sidebarmenubutton",
+      "app_components_ui_sidebar_sidebarmenubutton_delegatedprops",
+      "app_components_ui_sidebar_sidebarmenubutton_ismobile_state",
+      "app_components_ui_sidebar_sidebarmenubutton_props",
+      "app_components_ui_sidebar_sidebarmenubuttonchild",
+      "app_components_ui_sidebar_sidebarmenubuttonchild_props",
+      "app_components_ui_sidebar_sidebarmenubuttonchild_sidebarmenubuttonprops"
+    ],
+    "86": [
+      "app_components_watch_fixtures_watch",
+      "app_components_watch_fixtures_watch_channel",
+      "app_components_watch_fixtures_watch_chatmessages",
+      "app_components_watch_fixtures_watch_cliptarget",
+      "app_components_watch_fixtures_watch_comments",
+      "app_components_watch_fixtures_watch_livetarget",
+      "app_components_watch_fixtures_watch_reactions",
+      "app_components_watch_fixtures_watch_relateditems"
+    ],
+    "87": [
+      "app_pages_signup",
+      "app_pages_signup_email",
+      "app_pages_signup_error",
+      "app_pages_signup_name",
+      "app_pages_signup_onsubmit",
+      "app_pages_signup_password",
+      "app_pages_signup_passworderror",
+      "app_pages_signup_pending"
+    ],
+    "88": [
+      "app_pages_verify_email",
+      "app_pages_verify_email_email",
+      "app_pages_verify_email_error",
+      "app_pages_verify_email_failed",
+      "app_pages_verify_email_pending",
+      "app_pages_verify_email_resend",
+      "app_pages_verify_email_route",
+      "app_pages_verify_email_sent"
+    ],
+    "89": [
+      "app_pages_zz_watch_preview",
+      "app_pages_zz_watch_preview_chat",
+      "app_pages_zz_watch_preview_comments",
+      "app_pages_zz_watch_preview_engagement",
+      "app_pages_zz_watch_preview_mode",
+      "app_pages_zz_watch_preview_related",
+      "app_pages_zz_watch_preview_sort",
+      "app_pages_zz_watch_preview_target"
+    ],
+    "90": [
+      "claude_skills_design_system_templates_design_tokens_starter_default_type",
+      "claude_skills_design_system_templates_design_tokens_starter_default_value",
+      "claude_skills_design_system_templates_design_tokens_starter_full_type",
+      "claude_skills_design_system_templates_design_tokens_starter_full_value",
+      "claude_skills_design_system_templates_design_tokens_starter_primitive_radius",
+      "claude_skills_design_system_templates_design_tokens_starter_radius_default",
+      "claude_skills_design_system_templates_design_tokens_starter_radius_full",
+      "claude_skills_design_system_templates_design_tokens_starter_shadow_default"
+    ],
+    "91": [
+      "docs_watch_page_category_only_upnext",
+      "docs_watch_page_follows_table",
+      "docs_watch_page_props_only_layout",
+      "docs_watch_page_requireuser",
+      "docs_watch_page_responsive_layout",
+      "docs_watch_page_watch_api_surface",
+      "docs_watch_page_watchlayout",
+      "docs_watch_page_watchview"
+    ],
+    "92": [
+      "app_components_dashboard_securitystatuscard",
+      "app_components_dashboard_securitystatuscard_checklist",
+      "app_components_dashboard_securitystatuscard_complete",
+      "app_components_dashboard_securitystatuscard_dashoffset",
+      "app_components_dashboard_securitystatuscard_done",
+      "app_components_dashboard_securitystatuscard_total",
+      "app_components_dashboard_securitystatuscard_user"
+    ],
+    "93": [
+      "app_components_discovery_categorydetail",
+      "app_components_discovery_categorydetail_category",
+      "app_components_discovery_categorydetail_clips",
+      "app_components_discovery_categorydetail_data_ispending_iserror_error_refetch",
+      "app_components_discovery_categorydetail_issaved_toggle",
+      "app_components_discovery_categorydetail_notfound",
+      "app_components_discovery_categorydetail_props"
+    ],
+    "94": [
+      "app_components_motion_magnetic",
+      "app_components_motion_magnetic_el",
+      "app_components_motion_magnetic_offset",
+      "app_components_motion_magnetic_onmove",
+      "app_components_motion_magnetic_props",
+      "app_components_motion_magnetic_reduced",
+      "app_components_motion_magnetic_reset"
+    ],
+    "95": [
+      "app_components_watch_watchupnext",
+      "app_components_watch_watchupnext_emit",
+      "app_components_watch_watchupnextcard",
+      "app_components_watch_watchupnextcard_emit",
+      "app_components_watch_watchupnextcard_spec",
+      "app_components_watch_watchupnextcard_spec_clip",
+      "app_components_watch_watchupnextcard_spec_live"
+    ],
+    "96": [
+      "app_utils_live",
+      "app_utils_live_filterlivesignals",
+      "app_utils_live_live_categories",
+      "app_utils_live_livecategory",
+      "app_utils_live_spec",
+      "app_utils_live_spec_signal",
+      "app_utils_live_spec_signals"
+    ],
+    "97": [
+      "claude_skills_ui_ux_pro_max_scripts_core_detect_domain",
+      "claude_skills_ui_ux_pro_max_scripts_core_rationale_378",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testdomaindetection",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testdomaindetection_test_accessibility_keywords_route_to_ux",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testdomaindetection_test_ambiguous_query_returns_runner_up",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testdomaindetection_test_empty_query_falls_back_to_style",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_core_testdomaindetection_test_style_keywords_route_to_style"
+    ],
+    "98": [
+      "claude_skills_ui_ux_pro_max_scripts_design_system_rationale_156",
+      "claude_skills_ui_ux_pro_max_scripts_design_system_select_palette_for_mode",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testpaletteselection",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testpaletteselection_test_dark_mode_falls_back_to_top_hit_when_no_dark_ramp_exists",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testpaletteselection_test_dark_mode_skips_light_palettes",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testpaletteselection_test_empty_results",
+      "claude_skills_ui_ux_pro_max_scripts_tests_test_design_system_mode_testpaletteselection_test_light_mode_keeps_the_existing_top_hit_behaviour"
+    ],
+    "99": [
+      "docs_watch_page_adr_015",
+      "docs_watch_page_chat_messages_table",
+      "docs_watch_page_chat_polling",
+      "docs_watch_page_comments_table",
+      "docs_watch_page_denormalized_author_name",
+      "docs_watch_page_readonly_comments_limit",
+      "docs_watch_page_seed_order_dependency"
+    ],
+    "100": [
+      "app_components_auth_authformfield",
+      "app_components_auth_authformfield_inputtype",
+      "app_components_auth_authformfield_ispassword",
+      "app_components_auth_authformfield_modelvalue",
+      "app_components_auth_authformfield_props",
+      "app_components_auth_authformfield_revealed"
+    ],
+    "101": [
+      "app_components_auth_backupcodelist",
+      "app_components_auth_backupcodelist_astext",
+      "app_components_auth_backupcodelist_copied",
+      "app_components_auth_backupcodelist_copy",
+      "app_components_auth_backupcodelist_download",
+      "app_components_auth_backupcodelist_props"
+    ],
+    "102": [
+      "app_components_auth_socialauthbuttons",
+      "app_components_auth_socialauthbuttons_emit",
+      "app_components_auth_socialauthbuttons_labels",
+      "app_components_auth_socialauthbuttons_pending",
+      "app_components_auth_socialauthbuttons_providers",
+      "app_components_auth_socialauthbuttons_signin"
+    ],
+    "103": [
+      "app_components_discovery_clipcard",
+      "app_components_discovery_clipcard_emit",
+      "app_components_discovery_clipgrid",
+      "app_components_discovery_clipgrid_categories",
+      "app_components_discovery_clipgrid_category",
+      "app_components_discovery_clipgrid_emit"
+    ],
+    "104": [
+      "app_components_discovery_watchlistcard",
+      "app_components_discovery_watchlistcard_emit",
+      "app_components_discovery_watchlistpanel",
+      "app_components_discovery_watchlistpanel_emit",
+      "app_components_discovery_watchlistpanel_props",
+      "app_components_discovery_watchlistpanel_total"
+    ],
+    "105": [
+      "app_components_landing_areachart",
+      "app_components_landing_areachart_area",
+      "app_components_landing_areachart_coords",
+      "app_components_landing_areachart_line",
+      "app_components_landing_areachart_max",
+      "app_components_landing_areachart_props"
+    ],
+    "106": [
+      "app_components_landing_chatshowcase",
+      "app_components_landing_chatshowcase_active",
+      "app_components_landing_chatshowcase_controls",
+      "app_components_landing_chatshowcase_messages",
+      "app_components_landing_chatshowcase_panel",
+      "app_components_landing_chatshowcase_visible"
+    ],
+    "107": [
+      "app_components_motion_countup",
+      "app_components_motion_countup_current_start",
+      "app_components_motion_countup_display",
+      "app_components_motion_countup_el",
+      "app_components_motion_countup_props",
+      "app_components_motion_countup_stop"
+    ],
+    "108": [
+      "app_components_themetoggle",
+      "app_components_themetoggle_colormode",
+      "app_components_themetoggle_isdark",
+      "app_components_themetoggle_toggle",
+      "app_composables_usewatchlist",
+      "app_composables_usewatchlist_usewatchlist"
+    ],
+    "109": [
+      "app_error",
+      "app_error_handleerror",
+      "app_error_heading",
+      "app_error_isnotfound",
+      "app_error_message",
+      "app_error_props"
+    ],
+    "110": [
+      "app_pages_forgot_password",
+      "app_pages_forgot_password_email",
+      "app_pages_forgot_password_error",
+      "app_pages_forgot_password_onsubmit",
+      "app_pages_forgot_password_pending",
+      "app_pages_forgot_password_sent"
+    ],
+    "111": [
+      "claude_skills_design_system_templates_design_tokens_starter_fontsize_sm",
+      "claude_skills_design_system_templates_design_tokens_starter_primitive_shadow",
+      "claude_skills_design_system_templates_design_tokens_starter_radius_sm",
+      "claude_skills_design_system_templates_design_tokens_starter_shadow_sm",
+      "claude_skills_design_system_templates_design_tokens_starter_sm_type",
+      "claude_skills_design_system_templates_design_tokens_starter_sm_value"
+    ],
+    "112": [
+      "claude_skills_graphify_references_query_explainflow",
+      "claude_skills_graphify_references_query_pathflow",
+      "claude_skills_graphify_references_query_queryflow",
+      "claude_skills_graphify_references_query_reflect",
+      "claude_skills_graphify_references_query_saveresult",
+      "claude_skills_graphify_references_query_vocabexpansion"
+    ],
+    "113": [
+      "docref_adr_0013",
+      "scripts_seed_live_streams",
+      "scripts_seed_live_streams_minutesago",
+      "scripts_seed_live_streams_placeholder",
+      "scripts_seed_live_streams_sql",
+      "scripts_seed_live_streams_streams"
+    ],
+    "114": [
+      "docs_watch_page_adr_014",
+      "docs_watch_page_clip_prefix_invariant",
+      "docs_watch_page_resolvewatchtarget",
+      "docs_watch_page_slug_resolution",
+      "docs_watch_page_unified_watch_route",
+      "docs_watch_page_watch_page"
+    ],
+    "115": [
+      "prettierrc",
+      "prettierrc_printwidth",
+      "prettierrc_semi",
+      "prettierrc_singlequote",
+      "prettierrc_tabwidth",
+      "prettierrc_trailingcomma"
+    ],
+    "116": [
+      "app_components_appheader",
+      "app_components_appheader_navlinks",
+      "app_components_appheader_open",
+      "app_components_appheader_scrolled_hidden",
+      "app_components_appheader_user"
+    ],
+    "117": [
+      "app_components_dashboard_dashboardwelcome",
+      "app_components_dashboard_dashboardwelcome_firstname",
+      "app_components_dashboard_dashboardwelcome_greeting",
+      "app_components_dashboard_dashboardwelcome_initial",
+      "app_components_dashboard_dashboardwelcome_user"
+    ],
+    "118": [
+      "app_components_motion_reveal",
+      "app_components_motion_reveal_el",
+      "app_components_motion_reveal_props",
+      "app_components_motion_reveal_shown",
+      "app_components_motion_reveal_stop"
+    ],
+    "119": [
+      "app_components_ui_button_button",
+      "app_components_ui_button_button_props",
+      "app_components_ui_button_button_spec",
+      "app_components_ui_button_index",
+      "app_components_ui_button_index_buttonvariants"
+    ],
+    "120": [
+      "app_components_ui_input_index",
+      "app_components_ui_input_input",
+      "app_components_ui_input_input_emits",
+      "app_components_ui_input_input_modelvalue",
+      "app_components_ui_input_input_props"
+    ],
+    "121": [
+      "app_components_ui_sidebar_index_sidebarprops",
+      "app_components_ui_sidebar_sidebar",
+      "app_components_ui_sidebar_sidebar_ismobile_state_openmobile_setopenmobile",
+      "app_components_ui_sidebar_sidebar_props",
+      "app_components_ui_sidebar_utils_sidebar_width_mobile"
+    ],
+    "122": [
+      "app_components_watch_watchactions",
+      "app_components_watch_watchactions_dislikes",
+      "app_components_watch_watchactions_emit",
+      "app_components_watch_watchactions_likes",
+      "app_components_watch_watchactions_props"
+    ],
+    "123": [
+      "app_utils_chat",
+      "app_utils_chat_chat_buffer_limit",
+      "app_utils_chat_mergechatmessages",
+      "app_utils_chat_spec",
+      "app_utils_chat_spec_message"
+    ],
+    "124": [
+      "app_utils_watchlist",
+      "app_utils_watchlist_cliptoitem",
+      "app_utils_watchlist_livetoitem",
+      "app_utils_watchlist_relatedtoitem",
+      "app_utils_watchlist_watchtargettoitem"
+    ],
+    "125": [
+      "claude_skills_design_system_templates_design_tokens_starter_border_type",
+      "claude_skills_design_system_templates_design_tokens_starter_border_value",
+      "claude_skills_design_system_templates_design_tokens_starter_card_border",
+      "claude_skills_design_system_templates_design_tokens_starter_color_border",
+      "claude_skills_design_system_templates_design_tokens_starter_input_border"
+    ],
+    "126": [
+      "claude_skills_design_system_templates_design_tokens_starter_button_radius",
+      "claude_skills_design_system_templates_design_tokens_starter_card_radius",
+      "claude_skills_design_system_templates_design_tokens_starter_input_radius",
+      "claude_skills_design_system_templates_design_tokens_starter_radius_type",
+      "claude_skills_design_system_templates_design_tokens_starter_radius_value"
+    ],
+    "127": [
+      "claude_skills_design_system_templates_design_tokens_starter_fontsize_lg",
+      "claude_skills_design_system_templates_design_tokens_starter_lg_type",
+      "claude_skills_design_system_templates_design_tokens_starter_lg_value",
+      "claude_skills_design_system_templates_design_tokens_starter_radius_lg",
+      "claude_skills_design_system_templates_design_tokens_starter_shadow_lg"
+    ],
+    "128": [
+      "scripts_seed_chat",
+      "scripts_seed_chat_messages",
+      "scripts_seed_chat_mjs_docref_adr_0015",
+      "scripts_seed_chat_secondsago",
+      "scripts_seed_chat_sql"
+    ],
+    "129": [
+      "scripts_seed_clips",
+      "scripts_seed_clips_clips",
+      "scripts_seed_clips_hoursago",
+      "scripts_seed_clips_placeholder",
+      "scripts_seed_clips_sql"
+    ],
+    "130": [
+      "scripts_seed_comments",
+      "scripts_seed_comments_comments",
+      "scripts_seed_comments_minutesago",
+      "scripts_seed_comments_mjs_docref_adr_0014",
+      "scripts_seed_comments_sql"
+    ],
+    "131": [
+      "_claude_skills_brand_references_brand_guideline_template_voice_tone_section",
+      "_claude_skills_brand_references_consistency_checklist_voice_consistency",
+      "_claude_skills_brand_references_messaging_framework_doc",
+      "_claude_skills_brand_references_voice_framework_doc"
+    ],
+    "132": [
+      "app_components_discovery_livechannelcard",
+      "app_components_discovery_livechannelcard_emit",
+      "app_components_discovery_livechannelgrid",
+      "app_components_discovery_livechannelgrid_emit"
+    ],
+    "133": [
+      "app_components_landing_dashboardshowcase",
+      "app_components_landing_dashboardshowcase_metrics",
+      "app_components_landing_dashboardshowcase_upcoming",
+      "app_components_landing_dashboardshowcase_viewers"
+    ],
+    "134": [
+      "app_components_landing_herostudio",
+      "app_components_landing_herostudio_chat",
+      "app_components_landing_herostudio_onmove_reset_layer",
+      "app_components_landing_herostudio_stage"
+    ],
+    "135": [
+      "app_components_ui_separator_index",
+      "app_components_ui_separator_separator",
+      "app_components_ui_separator_separator_delegatedprops",
+      "app_components_ui_separator_separator_props"
+    ],
+    "136": [
+      "app_components_ui_skeleton_index",
+      "app_components_ui_skeleton_skeleton",
+      "app_components_ui_skeleton_skeleton_props",
+      "app_components_ui_skeleton_skeleton_skeletonprops"
+    ],
+    "137": [
+      "app_components_ui_sonner_index",
+      "app_components_ui_sonner_sonner",
+      "app_components_ui_sonner_sonner_colormode",
+      "app_components_ui_sonner_sonner_props"
+    ],
+    "138": [
+      "app_components_usermenu",
+      "app_components_usermenu_initial",
+      "app_components_usermenu_links",
+      "app_components_usermenu_user_signout"
+    ],
+    "139": [
+      "app_components_watch_watchdescription",
+      "app_components_watch_watchdescription_clippable",
+      "app_components_watch_watchdescription_expanded",
+      "app_components_watch_watchdescription_props"
+    ],
+    "140": [
+      "app_composables_usewatchengagement",
+      "app_composables_usewatchengagement_empty_reactions",
+      "app_composables_usewatchengagement_usechannelfollow",
+      "app_composables_usewatchengagement_usewatchreaction"
+    ],
+    "141": [
+      "app_pages_category_slug",
+      "app_pages_category_slug_route",
+      "app_pages_category_slug_slug",
+      "app_pages_category_slug_title"
+    ],
+    "142": [
+      "app_utils_reactions",
+      "app_utils_reactions_applyreaction",
+      "app_utils_reactions_spec",
+      "app_utils_reactions_spec_summary"
+    ],
+    "143": [
+      "claude_skills_design_system_templates_design_tokens_starter_fontsize_xl",
+      "claude_skills_design_system_templates_design_tokens_starter_radius_xl",
+      "claude_skills_design_system_templates_design_tokens_starter_xl_type",
+      "claude_skills_design_system_templates_design_tokens_starter_xl_value"
+    ],
+    "144": [
+      "claude_skills_design_system_templates_design_tokens_starter_md_type",
+      "claude_skills_design_system_templates_design_tokens_starter_md_value",
+      "claude_skills_design_system_templates_design_tokens_starter_radius_md",
+      "claude_skills_design_system_templates_design_tokens_starter_shadow_md"
+    ],
+    "145": [
+      "claude_skills_design_system_templates_design_tokens_starter_none_type",
+      "claude_skills_design_system_templates_design_tokens_starter_none_value",
+      "claude_skills_design_system_templates_design_tokens_starter_radius_none",
+      "claude_skills_design_system_templates_design_tokens_starter_shadow_none"
+    ],
+    "146": [
+      "claude_skills_graphify_references_github_and_merge_clone",
+      "claude_skills_graphify_references_github_and_merge_crossrepograph",
+      "claude_skills_graphify_references_github_and_merge_mergegraphs",
+      "claude_skills_graphify_references_github_and_merge_monorepopattern"
+    ],
+    "147": [
+      "claude_skills_ui_ux_pro_max_scripts_validate_data",
+      "claude_skills_ui_ux_pro_max_scripts_validate_data_check_file",
+      "claude_skills_ui_ux_pro_max_scripts_validate_data_main",
+      "claude_skills_ui_ux_pro_max_scripts_validate_data_read_rows"
+    ],
+    "148": [
+      "package",
+      "package_name",
+      "package_private",
+      "package_type"
+    ],
+    "149": [
+      "_claude_skills_design_system_references_component_specs_card_spec",
+      "_claude_skills_design_system_references_component_tokens_card_tokens",
+      "_claude_skills_design_system_references_primitive_tokens_shadows"
+    ],
+    "150": [
+      "app_components_auth_authalert",
+      "app_components_auth_authalert_iserror",
+      "app_components_auth_authalert_props"
+    ],
+    "151": [
+      "app_components_auth_otpinput",
+      "app_components_auth_otpinput_emit",
+      "app_components_auth_otpinput_model"
+    ],
+    "152": [
+      "app_components_landing_pricingsection",
+      "app_components_landing_pricingsection_plans",
+      "app_components_landing_pricingsection_yearly"
+    ],
+    "153": [
+      "app_components_ui_sidebar_sidebarmenuskeleton",
+      "app_components_ui_sidebar_sidebarmenuskeleton_props",
+      "app_components_ui_sidebar_sidebarmenuskeleton_width"
+    ],
+    "154": [
+      "app_components_ui_sidebar_sidebarrail",
+      "app_components_ui_sidebar_sidebarrail_props",
+      "app_components_ui_sidebar_sidebarrail_togglesidebar"
+    ],
+    "155": [
+      "app_components_ui_sidebar_sidebartrigger",
+      "app_components_ui_sidebar_sidebartrigger_props",
+      "app_components_ui_sidebar_sidebartrigger_togglesidebar"
+    ],
+    "156": [
+      "app_composables_useauth",
+      "app_composables_useauth_sessionuser",
+      "app_composables_useauth_useauth"
+    ],
+    "157": [
+      "app_composables_usediscoverycategoryclips",
+      "app_composables_usediscoverycategoryclips_categoryclipsresponse",
+      "app_composables_usediscoverycategoryclips_usediscoverycategoryclips"
+    ],
+    "158": [
+      "app_composables_usediscoveryclips",
+      "app_composables_usediscoveryclips_discoveryclipsresponse",
+      "app_composables_usediscoveryclips_usediscoveryclips"
+    ],
+    "159": [
+      "app_composables_usewatchchat",
+      "app_composables_usewatchchat_ts_docref_adr_0015",
+      "app_composables_usewatchchat_usewatchchat"
+    ],
+    "160": [
+      "app_composables_usewatchtarget",
+      "app_composables_usewatchtarget_usewatchrelated",
+      "app_composables_usewatchtarget_usewatchtarget"
+    ],
+    "161": [
+      "app_lib_utils",
+      "app_lib_utils_cn",
+      "app_lib_utils_spec"
+    ],
+    "162": [
+      "app_pages_watch_slug",
+      "app_pages_watch_slug_route",
+      "app_pages_watch_slug_slug"
+    ],
+    "163": [
+      "claude_skills_brand_scripts_tests_test_sync_brand_to_tokens",
+      "claude_skills_brand_scripts_tests_test_sync_brand_to_tokens_rationale_1",
+      "claude_skills_brand_scripts_tests_test_sync_brand_to_tokens_test_sync_parses_bundled_starter_template"
+    ],
+    "164": [
+      "claude_skills_design_system_scripts_slide_token_validator",
+      "claude_skills_design_system_scripts_slide_token_validator_main",
+      "claude_skills_design_system_scripts_slide_token_validator_rationale_21"
+    ],
+    "165": [
+      "claude_skills_design_system_templates_design_tokens_starter_color_destructive_foreground",
+      "claude_skills_design_system_templates_design_tokens_starter_destructive_foreground_type",
+      "claude_skills_design_system_templates_design_tokens_starter_destructive_foreground_value"
+    ],
+    "166": [
+      "claude_skills_design_system_templates_design_tokens_starter_color_muted",
+      "claude_skills_design_system_templates_design_tokens_starter_muted_type",
+      "claude_skills_design_system_templates_design_tokens_starter_muted_value"
+    ],
+    "167": [
+      "claude_skills_design_system_templates_design_tokens_starter_color_primary",
+      "claude_skills_design_system_templates_design_tokens_starter_primary_type",
+      "claude_skills_design_system_templates_design_tokens_starter_primary_value"
+    ],
+    "168": [
+      "claude_skills_design_system_templates_design_tokens_starter_color_primary_foreground",
+      "claude_skills_design_system_templates_design_tokens_starter_primary_foreground_type",
+      "claude_skills_design_system_templates_design_tokens_starter_primary_foreground_value"
+    ],
+    "169": [
+      "claude_skills_design_system_templates_design_tokens_starter_color_ring",
+      "claude_skills_design_system_templates_design_tokens_starter_ring_type",
+      "claude_skills_design_system_templates_design_tokens_starter_ring_value"
+    ],
+    "170": [
+      "claude_skills_design_system_templates_design_tokens_starter_color_secondary_foreground",
+      "claude_skills_design_system_templates_design_tokens_starter_secondary_foreground_type",
+      "claude_skills_design_system_templates_design_tokens_starter_secondary_foreground_value"
+    ],
+    "171": [
+      "claude_skills_graphify_references_add_watch_debounce",
+      "claude_skills_graphify_references_add_watch_graphifywatch",
+      "claude_skills_graphify_references_add_watch_graphifywatchmodule"
+    ],
+    "172": [
+      "claude_skills_ui_styling_scripts_shadcn_add_py_path",
+      "claude_skills_ui_styling_scripts_shadcn_add_rationale_21",
+      "claude_skills_ui_styling_scripts_shadcn_add_shadcninstaller_init"
+    ],
+    "173": [
+      "docs_architecture_autharchitecture",
+      "docs_architecture_research_auth",
+      "docs_decisions_adr007_betterauth"
+    ],
+    "174": [
+      "docs_architecture_realtimearchitecture",
+      "docs_architecture_research_realtime",
+      "docs_decisions_adr006_nitrowebsocketsredis"
+    ],
+    "175": [
+      "docs_watch_page_optimistic_reaction",
+      "docs_watch_page_polymorphic_reactions",
+      "docs_watch_page_reactions_table"
+    ],
+    "176": [
+      "tsconfig",
+      "tsconfig_files",
+      "tsconfig_references"
+    ],
+    "177": [
+      "_claude_skills_design_system_references_component_specs_badge_spec",
+      "_claude_skills_design_system_references_component_tokens_badge_tokens"
+    ],
+    "178": [
+      "_claude_skills_design_system_references_component_specs_dialog_spec",
+      "_claude_skills_design_system_references_component_tokens_dialog_tokens"
+    ],
+    "179": [
+      "_claude_skills_design_system_references_component_specs_table_spec",
+      "_claude_skills_design_system_references_component_tokens_table_tokens"
+    ],
+    "180": [
+      "_claude_skills_design_system_references_primitive_tokens_typography_scale",
+      "_claude_skills_design_system_references_semantic_tokens_typography_semantics"
+    ],
+    "181": [
+      "app_components_appfooter",
+      "app_components_appfooter_columns"
+    ],
+    "182": [
+      "app_components_auth_authshowcase",
+      "app_components_auth_authshowcase_features"
+    ],
+    "183": [
+      "app_components_auth_channelcarousel",
+      "app_components_auth_channelcarousel_channels"
+    ],
+    "184": [
+      "app_components_dashboard_roadmapcard",
+      "app_components_dashboard_roadmapcard_items"
+    ],
+    "185": [
+      "app_components_landing_bentocard",
+      "app_components_landing_bentocard_props"
+    ],
+    "186": [
+      "app_components_landing_faqsection",
+      "app_components_landing_faqsection_faqs"
+    ],
+    "187": [
+      "app_components_landing_glasspanel",
+      "app_components_landing_glasspanel_props"
+    ],
+    "188": [
+      "app_components_landing_livebadge",
+      "app_components_landing_livebadge_props"
+    ],
+    "189": [
+      "app_components_landing_statsband",
+      "app_components_landing_statsband_stats"
+    ],
+    "190": [
+      "app_components_landing_testimonials",
+      "app_components_landing_testimonials_notes"
+    ],
+    "191": [
+      "app_components_landing_trustedby",
+      "app_components_landing_trustedby_communities"
+    ],
+    "192": [
+      "app_components_ui_sidebar_sidebarcontent",
+      "app_components_ui_sidebar_sidebarcontent_props"
+    ],
+    "193": [
+      "app_components_ui_sidebar_sidebargroupaction",
+      "app_components_ui_sidebar_sidebargroupaction_props"
+    ],
+    "194": [
+      "app_components_ui_sidebar_sidebargroupcontent",
+      "app_components_ui_sidebar_sidebargroupcontent_props"
+    ],
+    "195": [
+      "app_components_ui_sidebar_sidebarheader",
+      "app_components_ui_sidebar_sidebarheader_props"
+    ],
+    "196": [
+      "app_components_ui_sidebar_sidebarmenusub",
+      "app_components_ui_sidebar_sidebarmenusub_props"
+    ],
+    "197": [
+      "app_composables_usecountup",
+      "app_composables_usecountup_usecountup"
+    ],
+    "198": [
+      "app_composables_usediscoverycategories",
+      "app_composables_usediscoverycategories_usediscoverycategories"
+    ],
+    "199": [
+      "app_composables_uselivechannel",
+      "app_composables_uselivechannel_uselivechannel"
+    ],
+    "200": [
+      "app_composables_uselivesignals",
+      "app_composables_uselivesignals_uselivesignals"
+    ],
+    "201": [
+      "app_composables_usepointerparallax",
+      "app_composables_usepointerparallax_usepointerparallax"
+    ],
+    "202": [
+      "app_composables_usescrollheader",
+      "app_composables_usescrollheader_usescrollheader"
+    ],
+    "203": [
+      "app_composables_usestickyscroll",
+      "app_composables_usestickyscroll_usestickyscroll"
+    ],
+    "204": [
+      "app_composables_usetickinglist",
+      "app_composables_usetickinglist_usetickinglist"
+    ],
+    "205": [
+      "app_composables_useviewcounter",
+      "app_composables_useviewcounter_useviewcounter"
+    ],
+    "206": [
+      "app_composables_usewatchcomments",
+      "app_composables_usewatchcomments_usewatchcomments"
+    ],
+    "207": [
+      "app_lib_auth_client",
+      "app_lib_auth_client_authclient"
+    ],
+    "208": [
+      "app_pages_live_username",
+      "app_pages_live_username_route"
+    ],
+    "209": [
+      "better_auth",
+      "package_dependencies_better_auth"
+    ],
+    "210": [
+      "class_variance_authority",
+      "package_dependencies_class_variance_authority"
+    ],
+    "211": [
+      "claude_skills_graphify_references_add_watch_graphifyadd",
+      "claude_skills_graphify_references_add_watch_ingest"
+    ],
+    "212": [
+      "claude_skills_graphify_references_exports_falkordbexport",
+      "claude_skills_graphify_references_exports_neo4jexport"
+    ],
+    "213": [
+      "claude_skills_graphify_references_hooks_claudemdintegration",
+      "claude_skills_graphify_references_hooks_posthookcommit"
+    ],
+    "214": [
+      "claude_skills_slides_references_copywriting_formulas_beforeafterbridge",
+      "claude_skills_slides_references_slide_strategies_duartesparkline"
+    ],
+    "215": [
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_104",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_add_components_no_config"
+    ],
+    "216": [
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_147",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_add_components_dry_run"
+    ],
+    "217": [
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_240",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_list_installed_no_config"
+    ],
+    "218": [
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_56",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_init_dry_run"
+    ],
+    "219": [
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_rationale_96",
+      "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller_test_add_components_no_components"
+    ],
+    "220": [
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_125",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_add_fonts"
+    ],
+    "221": [
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_182",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_recommend_plugins"
+    ],
+    "222": [
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_197",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_generate_typescript_config"
+    ],
+    "223": [
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_223",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_generate_config_with_plugins"
+    ],
+    "224": [
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_26",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_init_javascript"
+    ],
+    "225": [
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_270",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_write_config_creates_content"
+    ],
+    "226": [
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_282",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_write_config_invalid_path"
+    ],
+    "227": [
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_37",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_default_output_path_typescript"
+    ],
+    "228": [
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_81",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_default_content_paths_vue"
+    ],
+    "229": [
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_rationale_88",
+      "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator_test_add_colors"
+    ],
+    "230": [
+      "drizzle_orm",
+      "package_dependencies_drizzle_orm"
+    ],
+    "231": [
+      "eslint",
+      "package_devdependencies_eslint"
+    ],
+    "232": [
+      "eslint_config_prettier",
+      "package_devdependencies_eslint_config_prettier"
+    ],
+    "233": [
+      "happy_dom",
+      "package_devdependencies_happy_dom"
+    ],
+    "234": [
+      "heroicons_vue",
+      "package_dependencies_heroicons_vue"
+    ],
+    "235": [
+      "ioredis",
+      "package_dependencies_ioredis"
+    ],
+    "236": [
+      "lucide_vue",
+      "package_dependencies_lucide_vue"
+    ],
+    "237": [
+      "motion_v",
+      "package_dependencies_motion_v"
+    ],
+    "238": [
+      "nuxt_test_utils",
+      "package_devdependencies_nuxt_test_utils"
+    ],
+    "239": [
+      "nuxtjs_color_mode",
+      "package_devdependencies_nuxtjs_color_mode"
+    ],
+    "240": [
+      "package_dependencies_pinia",
+      "pinia"
+    ],
+    "241": [
+      "package_dependencies_pinia_nuxt",
+      "pinia_nuxt"
+    ],
+    "242": [
+      "package_dependencies_pino",
+      "pino"
+    ],
+    "243": [
+      "package_dependencies_postgres",
+      "postgres"
+    ],
+    "244": [
+      "package_dependencies_reka_ui",
+      "reka_ui"
+    ],
+    "245": [
+      "package_dependencies_tailwind_merge",
+      "tailwind_merge"
+    ],
+    "246": [
+      "package_dependencies_vue",
+      "vue"
+    ],
+    "247": [
+      "package_dependencies_vue_router",
+      "vue_router"
+    ],
+    "248": [
+      "package_dependencies_vue_sonner",
+      "vue_sonner"
+    ],
+    "249": [
+      "package_dependencies_vueuse_core",
+      "vueuse_core"
+    ],
+    "250": [
+      "package_dependencies_vueuse_nuxt",
+      "vueuse_nuxt"
+    ],
+    "251": [
+      "package_dependencies_zod",
+      "zod"
+    ],
+    "252": [
+      "package_devdependencies_prettier",
+      "prettier"
+    ],
+    "253": [
+      "package_devdependencies_types_qrcode",
+      "types_qrcode"
+    ],
+    "254": [
+      "package_devdependencies_typescript",
+      "typescript"
+    ],
+    "255": [
+      "package_devdependencies_vitest",
+      "vitest"
+    ],
+    "256": [
+      "package_devdependencies_vue_test_utils",
+      "vue_test_utils"
+    ],
+    "257": [
+      "scratch_dbg",
+      "scratch_dbg_chromium"
+    ],
+    "258": [
+      "scratch_discovery_check",
+      "scratch_discovery_check_chromium"
+    ],
+    "259": [
+      "scratch_interact",
+      "scratch_interact_chromium"
+    ],
+    "260": [
+      "scratch_scroll",
+      "scratch_scroll_chromium"
+    ],
+    "261": [
+      "scratch_shot",
+      "scratch_shot_chromium"
+    ],
+    "262": [
+      "_claude_skills_brand_references_brand_guideline_template_imagery_section"
+    ],
+    "263": [
+      "_claude_skills_brand_references_color_palette_management_accessibility_contrast"
+    ],
+    "264": [
+      "_claude_skills_brand_references_color_palette_management_color_extraction"
+    ],
+    "265": [
+      "_claude_skills_brand_references_color_palette_management_compliance_validation"
+    ],
+    "266": [
+      "_claude_skills_brand_references_consistency_checklist_channel_audit"
+    ],
+    "267": [
+      "_claude_skills_brand_references_consistency_checklist_doc"
+    ],
+    "268": [
+      "_claude_skills_brand_references_logo_usage_rules_clear_space"
+    ],
+    "269": [
+      "_claude_skills_brand_references_logo_usage_rules_cobranding"
+    ],
+    "270": [
+      "_claude_skills_brand_references_logo_usage_rules_logo_variants"
+    ],
+    "271": [
+      "_claude_skills_brand_references_logo_usage_rules_minimum_size"
+    ],
+    "272": [
+      "_claude_skills_brand_references_messaging_framework_message_architecture"
+    ],
+    "273": [
+      "_claude_skills_brand_references_typography_specifications_font_pairings"
+    ],
+    "274": [
+      "_claude_skills_brand_references_typography_specifications_type_scale"
+    ],
+    "275": [
+      "_claude_skills_brand_references_voice_framework_voice_development_process"
+    ],
+    "276": [
+      "_claude_skills_brand_references_voice_framework_voice_vs_tone"
+    ],
+    "277": [
+      "_claude_skills_claude_automation_recommender_automation_types_overview"
+    ],
+    "278": [
+      "_claude_skills_claude_automation_recommender_decision_framework"
+    ],
+    "279": [
+      "_claude_skills_claude_automation_recommender_references_hooks_patterns_auto_formatting_hooks"
+    ],
+    "280": [
+      "_claude_skills_claude_automation_recommender_references_hooks_patterns_protection_hooks"
+    ],
+    "281": [
+      "_claude_skills_claude_automation_recommender_references_hooks_patterns_test_runner_hooks"
+    ],
+    "282": [
+      "_claude_skills_claude_automation_recommender_references_mcp_servers_context7"
+    ],
+    "283": [
+      "_claude_skills_claude_automation_recommender_references_mcp_servers_convex_mcp"
+    ],
+    "284": [
+      "_claude_skills_claude_automation_recommender_references_mcp_servers_github_mcp"
+    ],
+    "285": [
+      "_claude_skills_claude_automation_recommender_references_mcp_servers_playwright_mcp"
+    ],
+    "286": [
+      "_claude_skills_claude_automation_recommender_references_mcp_servers_sentry_mcp"
+    ],
+    "287": [
+      "_claude_skills_claude_automation_recommender_references_mcp_servers_supabase_mcp"
+    ],
+    "288": [
+      "_claude_skills_claude_automation_recommender_references_plugins_reference_lsp_plugins"
+    ],
+    "289": [
+      "_claude_skills_claude_automation_recommender_references_skills_reference_custom_skill_examples"
+    ],
+    "290": [
+      "_claude_skills_claude_automation_recommender_references_skills_reference_invocation_control"
+    ],
+    "291": [
+      "_claude_skills_claude_automation_recommender_references_skills_reference_skill_structure"
+    ],
+    "292": [
+      "_claude_skills_claude_automation_recommender_references_subagent_templates_code_reviewer_agent"
+    ],
+    "293": [
+      "_claude_skills_claude_automation_recommender_references_subagent_templates_model_selection_guide"
+    ],
+    "294": [
+      "_claude_skills_claude_automation_recommender_references_subagent_templates_security_reviewer_agent"
+    ],
+    "295": [
+      "_claude_skills_claude_automation_recommender_references_subagent_templates_test_writer_agent"
+    ],
+    "296": [
+      "_claude_skills_claude_automation_recommender_workflow"
+    ],
+    "297": [
+      "_claude_skills_design_banner_design_builtin"
+    ],
+    "298": [
+      "_claude_skills_design_cip_design_builtin"
+    ],
+    "299": [
+      "_claude_skills_design_icon_design_builtin"
+    ],
+    "300": [
+      "_claude_skills_design_logo_design_builtin"
+    ],
+    "301": [
+      "_claude_skills_design_slides_builtin"
+    ],
+    "302": [
+      "_claude_skills_design_social_photos_builtin"
+    ],
+    "303": [
+      "_claude_skills_design_system_contextual_decision_flow"
+    ],
+    "304": [
+      "_claude_skills_design_system_references_component_specs_alert_spec"
+    ],
+    "305": [
+      "_claude_skills_design_system_references_primitive_tokens_zindex_scale"
+    ],
+    "306": [
+      "_claude_skills_design_system_slide_system"
+    ],
+    "307": [
+      "app_app"
+    ],
+    "308": [
+      "app_components_auth_authbackdrop"
+    ],
+    "309": [
+      "app_components_auth_authcard"
+    ],
+    "310": [
+      "app_components_auth_authlayout"
+    ],
+    "311": [
+      "app_components_auth_authprovidericon"
+    ],
+    "312": [
+      "app_components_auth_channelcard"
+    ],
+    "313": [
+      "app_components_brandmark"
+    ],
+    "314": [
+      "app_components_comingsoon"
+    ],
+    "315": [
+      "app_components_dashboard_phaselockednotice"
+    ],
+    "316": [
+      "app_components_dashboard_stattile"
+    ],
+    "317": [
+      "app_components_landing_bentofeatures"
+    ],
+    "318": [
+      "app_components_landing_chatmessagerow"
+    ],
+    "319": [
+      "app_components_landing_finalcta"
+    ],
+    "320": [
+      "app_components_landing_landinghero"
+    ],
+    "321": [
+      "app_components_landing_pricingcard"
+    ],
+    "322": [
+      "app_components_motion_marquee"
+    ],
+    "323": [
+      "app_components_sectionheading"
+    ],
+    "324": [
+      "app_middleware_auth"
+    ],
+    "325": [
+      "app_pages_about"
+    ],
+    "326": [
+      "app_pages_careers"
+    ],
+    "327": [
+      "app_pages_category_index"
+    ],
+    "328": [
+      "app_pages_clips"
+    ],
+    "329": [
+      "app_pages_dashboard_analytics"
+    ],
+    "330": [
+      "app_pages_dashboard_index"
+    ],
+    "331": [
+      "app_pages_dashboard_stream"
+    ],
+    "332": [
+      "app_pages_following"
+    ],
+    "333": [
+      "app_pages_index"
+    ],
+    "334": [
+      "app_pages_live"
+    ],
+    "335": [
+      "app_pages_security"
+    ],
+    "336": [
+      "app_pages_zz_discovery_preview"
+    ],
+    "337": [
+      "app_plugins_auth_session"
+    ],
+    "338": [
+      "app_plugins_vidstack_client"
+    ],
+    "339": [
+      "app_plugins_vue_query"
+    ],
+    "340": [
+      "claude_skills_graphify_references_exports_graphmlexport"
+    ],
+    "341": [
+      "claude_skills_graphify_references_exports_mcpserver"
+    ],
+    "342": [
+      "claude_skills_graphify_references_exports_svgexport"
+    ],
+    "343": [
+      "claude_skills_graphify_references_exports_tokenbenchmark"
+    ],
+    "344": [
+      "claude_skills_graphify_references_exports_wikiexport"
+    ],
+    "345": [
+      "claude_skills_slides_references_copywriting_formulas_fab"
+    ],
+    "346": [
+      "drizzle_config"
+    ],
+    "347": [
+      "e2e_category_spec"
+    ],
+    "348": [
+      "e2e_home_spec"
+    ],
+    "349": [
+      "e2e_live_spec"
+    ],
+    "350": [
+      "e2e_watch_spec"
+    ],
+    "351": [
+      "eslint_config"
+    ],
+    "352": [
+      "nuxt_config"
+    ],
+    "353": [
+      "playwright_config"
+    ],
+    "354": [
+      "readme_doc"
+    ],
+    "355": [
+      "shared_types_vidstack_d"
+    ],
+    "356": [
+      "vitest_config"
+    ]
+  },
+  "cohesion": {
+    "0": 0.05370101596516691,
+    "1": 0.06693877551020408,
+    "2": 0.08710801393728224,
+    "3": 0.058823529411764705,
+    "4": 0.07130124777183601,
+    "5": 0.08712121212121213,
+    "6": 0.08901515151515152,
+    "7": 0.06896551724137931,
+    "8": 0.06896551724137931,
+    "9": 0.10591133004926108,
+    "10": 0.07142857142857142,
+    "11": 0.13756613756613756,
+    "12": 0.10846560846560846,
+    "13": 0.15384615384615385,
+    "14": 0.1111111111111111,
+    "15": 0.08,
+    "16": 0.11666666666666667,
+    "17": 0.1383399209486166,
+    "18": 0.09090909090909091,
+    "19": 0.10952380952380952,
+    "20": 0.14736842105263157,
+    "21": 0.1,
+    "22": 0.21578947368421053,
+    "23": 0.10526315789473684,
+    "24": 0.16374269005847952,
+    "25": 0.17543859649122806,
+    "26": 0.16993464052287582,
+    "27": 0.12418300653594772,
+    "28": 0.11764705882352941,
+    "29": 0.16911764705882354,
+    "30": 0.11764705882352941,
+    "31": 0.11764705882352941,
+    "32": 0.11764705882352941,
+    "33": 0.2,
+    "34": 0.125,
+    "35": 0.16666666666666666,
+    "36": 0.175,
+    "37": 0.13333333333333333,
+    "38": 0.21904761904761905,
+    "39": 0.14285714285714285,
+    "40": 0.14285714285714285,
+    "41": 0.15384615384615385,
+    "42": 0.16483516483516483,
+    "43": 0.21978021978021978,
+    "44": 0.25274725274725274,
+    "45": 0.14285714285714285,
+    "46": 0.18681318681318682,
+    "47": 0.14285714285714285,
+    "48": 0.21794871794871795,
+    "49": 0.20512820512820512,
+    "50": 0.15384615384615385,
+    "51": 0.24358974358974358,
+    "52": 0.19696969696969696,
+    "53": 0.16666666666666666,
+    "54": 0.16666666666666666,
+    "55": 0.16666666666666666,
+    "56": 0.16666666666666666,
+    "57": 0.24242424242424243,
+    "58": 0.19696969696969696,
+    "59": 0.19696969696969696,
+    "60": 0.19696969696969696,
+    "61": 0.19696969696969696,
+    "62": 0.19696969696969696,
+    "63": 0.2,
+    "64": 0.18181818181818182,
+    "65": 0.3090909090909091,
+    "66": 0.2,
+    "67": 0.18181818181818182,
+    "68": 0.18181818181818182,
+    "69": 0.2,
+    "70": 0.2,
+    "71": 0.18181818181818182,
+    "72": 0.2222222222222222,
+    "73": 0.2,
+    "74": 0.28888888888888886,
+    "75": 0.35555555555555557,
+    "76": 0.2,
+    "77": 0.2,
+    "78": 0.2222222222222222,
+    "79": 0.2222222222222222,
+    "80": 0.3333333333333333,
+    "81": 0.2777777777777778,
+    "82": 0.25,
+    "83": 0.25,
+    "84": 0.25,
+    "85": 0.32142857142857145,
+    "86": 0.25,
+    "87": 0.32142857142857145,
+    "88": 0.25,
+    "89": 0.25,
+    "90": 0.2857142857142857,
+    "91": 0.25,
+    "92": 0.2857142857142857,
+    "93": 0.2857142857142857,
+    "94": 0.2857142857142857,
+    "95": 0.2857142857142857,
+    "96": 0.3333333333333333,
+    "97": 0.42857142857142855,
+    "98": 0.42857142857142855,
+    "99": 0.3333333333333333,
+    "100": 0.3333333333333333,
+    "101": 0.3333333333333333,
+    "102": 0.4,
+    "103": 0.3333333333333333,
+    "104": 0.3333333333333333,
+    "105": 0.3333333333333333,
+    "106": 0.3333333333333333,
+    "107": 0.3333333333333333,
+    "108": 0.3333333333333333,
+    "109": 0.3333333333333333,
+    "110": 0.3333333333333333,
+    "111": 0.4666666666666667,
+    "112": 0.5333333333333333,
+    "113": 0.3333333333333333,
+    "114": 0.3333333333333333,
+    "115": 0.3333333333333333,
+    "116": 0.4,
+    "117": 0.4,
+    "118": 0.4,
+    "119": 0.6,
+    "120": 0.4,
+    "121": 0.4,
+    "122": 0.4,
+    "123": 0.6,
+    "124": 0.4,
+    "125": 0.6,
+    "126": 0.6,
+    "127": 0.6,
+    "128": 0.4,
+    "129": 0.4,
+    "130": 0.4,
+    "131": 0.5,
+    "132": 0.5,
+    "133": 0.5,
+    "134": 0.5,
+    "135": 0.5,
+    "136": 0.5,
+    "137": 0.5,
+    "138": 0.5,
+    "139": 0.5,
+    "140": 0.5,
+    "141": 0.5,
+    "142": 0.6666666666666666,
+    "143": 0.6666666666666666,
+    "144": 0.6666666666666666,
+    "145": 0.6666666666666666,
+    "146": 0.6666666666666666,
+    "147": 0.8333333333333334,
+    "148": 0.5,
+    "149": 0.6666666666666666,
+    "150": 0.6666666666666666,
+    "151": 0.6666666666666666,
+    "152": 0.6666666666666666,
+    "153": 0.6666666666666666,
+    "154": 0.6666666666666666,
+    "155": 0.6666666666666666,
+    "156": 0.6666666666666666,
+    "157": 0.6666666666666666,
+    "158": 0.6666666666666666,
+    "159": 0.6666666666666666,
+    "160": 0.6666666666666666,
+    "161": 1.0,
+    "162": 0.6666666666666666,
+    "163": 0.6666666666666666,
+    "164": 0.6666666666666666,
+    "165": 0.6666666666666666,
+    "166": 0.6666666666666666,
+    "167": 0.6666666666666666,
+    "168": 0.6666666666666666,
+    "169": 0.6666666666666666,
+    "170": 0.6666666666666666,
+    "171": 0.6666666666666666,
+    "172": 0.6666666666666666,
+    "173": 0.6666666666666666,
+    "174": 0.6666666666666666,
+    "175": 0.6666666666666666,
+    "176": 0.6666666666666666,
+    "177": 1.0,
+    "178": 1.0,
+    "179": 1.0,
+    "180": 1.0,
+    "181": 1.0,
+    "182": 1.0,
+    "183": 1.0,
+    "184": 1.0,
+    "185": 1.0,
+    "186": 1.0,
+    "187": 1.0,
+    "188": 1.0,
+    "189": 1.0,
+    "190": 1.0,
+    "191": 1.0,
+    "192": 1.0,
+    "193": 1.0,
+    "194": 1.0,
+    "195": 1.0,
+    "196": 1.0,
+    "197": 1.0,
+    "198": 1.0,
+    "199": 1.0,
+    "200": 1.0,
+    "201": 1.0,
+    "202": 1.0,
+    "203": 1.0,
+    "204": 1.0,
+    "205": 1.0,
+    "206": 1.0,
+    "207": 1.0,
+    "208": 1.0,
+    "209": 1.0,
+    "210": 1.0,
+    "211": 1.0,
+    "212": 1.0,
+    "213": 1.0,
+    "214": 1.0,
+    "215": 1.0,
+    "216": 1.0,
+    "217": 1.0,
+    "218": 1.0,
+    "219": 1.0,
+    "220": 1.0,
+    "221": 1.0,
+    "222": 1.0,
+    "223": 1.0,
+    "224": 1.0,
+    "225": 1.0,
+    "226": 1.0,
+    "227": 1.0,
+    "228": 1.0,
+    "229": 1.0,
+    "230": 1.0,
+    "231": 1.0,
+    "232": 1.0,
+    "233": 1.0,
+    "234": 1.0,
+    "235": 1.0,
+    "236": 1.0,
+    "237": 1.0,
+    "238": 1.0,
+    "239": 1.0,
+    "240": 1.0,
+    "241": 1.0,
+    "242": 1.0,
+    "243": 1.0,
+    "244": 1.0,
+    "245": 1.0,
+    "246": 1.0,
+    "247": 1.0,
+    "248": 1.0,
+    "249": 1.0,
+    "250": 1.0,
+    "251": 1.0,
+    "252": 1.0,
+    "253": 1.0,
+    "254": 1.0,
+    "255": 1.0,
+    "256": 1.0,
+    "257": 1.0,
+    "258": 1.0,
+    "259": 1.0,
+    "260": 1.0,
+    "261": 1.0,
+    "262": 1.0,
+    "263": 1.0,
+    "264": 1.0,
+    "265": 1.0,
+    "266": 1.0,
+    "267": 1.0,
+    "268": 1.0,
+    "269": 1.0,
+    "270": 1.0,
+    "271": 1.0,
+    "272": 1.0,
+    "273": 1.0,
+    "274": 1.0,
+    "275": 1.0,
+    "276": 1.0,
+    "277": 1.0,
+    "278": 1.0,
+    "279": 1.0,
+    "280": 1.0,
+    "281": 1.0,
+    "282": 1.0,
+    "283": 1.0,
+    "284": 1.0,
+    "285": 1.0,
+    "286": 1.0,
+    "287": 1.0,
+    "288": 1.0,
+    "289": 1.0,
+    "290": 1.0,
+    "291": 1.0,
+    "292": 1.0,
+    "293": 1.0,
+    "294": 1.0,
+    "295": 1.0,
+    "296": 1.0,
+    "297": 1.0,
+    "298": 1.0,
+    "299": 1.0,
+    "300": 1.0,
+    "301": 1.0,
+    "302": 1.0,
+    "303": 1.0,
+    "304": 1.0,
+    "305": 1.0,
+    "306": 1.0,
+    "307": 1.0,
+    "308": 1.0,
+    "309": 1.0,
+    "310": 1.0,
+    "311": 1.0,
+    "312": 1.0,
+    "313": 1.0,
+    "314": 1.0,
+    "315": 1.0,
+    "316": 1.0,
+    "317": 1.0,
+    "318": 1.0,
+    "319": 1.0,
+    "320": 1.0,
+    "321": 1.0,
+    "322": 1.0,
+    "323": 1.0,
+    "324": 1.0,
+    "325": 1.0,
+    "326": 1.0,
+    "327": 1.0,
+    "328": 1.0,
+    "329": 1.0,
+    "330": 1.0,
+    "331": 1.0,
+    "332": 1.0,
+    "333": 1.0,
+    "334": 1.0,
+    "335": 1.0,
+    "336": 1.0,
+    "337": 1.0,
+    "338": 1.0,
+    "339": 1.0,
+    "340": 1.0,
+    "341": 1.0,
+    "342": 1.0,
+    "343": 1.0,
+    "344": 1.0,
+    "345": 1.0,
+    "346": 1.0,
+    "347": 1.0,
+    "348": 1.0,
+    "349": 1.0,
+    "350": 1.0,
+    "351": 1.0,
+    "352": 1.0,
+    "353": 1.0,
+    "354": 1.0,
+    "355": 1.0,
+    "356": 1.0
+  },
+  "gods": [
+    {
+      "id": "claude_skills_ui_styling_scripts_tailwind_config_gen_tailwindconfiggenerator",
+      "label": "TailwindConfigGenerator",
+      "degree": 58
+    },
+    {
+      "id": "claude_skills_ui_styling_scripts_tests_test_tailwind_config_gen_testtailwindconfiggenerator",
+      "label": "TestTailwindConfigGenerator",
+      "degree": 35
+    },
+    {
+      "id": "claude_skills_ui_styling_scripts_shadcn_add_shadcninstaller",
+      "label": "ShadcnInstaller",
+      "degree": 34
+    },
+    {
+      "id": "claude_skills_ui_ux_pro_max_scripts_design_system_designsystemgenerator",
+      "label": "DesignSystemGenerator",
+      "degree": 29
+    },
+    {
+      "id": "claude_skills_ui_styling_scripts_tests_test_shadcn_add_testshadcninstaller",
+      "label": "TestShadcnInstaller",
+      "degree": 26
+    },
+    {
+      "id": "docs_prompt",
+      "label": "Master Prompt (product spec)",
+      "degree": 23
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "degree": 22
+    },
+    {
+      "id": "docs_decisions",
+      "label": "Architecture Decision Record (ADR log)",
+      "degree": 18
+    },
+    {
+      "id": "server_db_client_db",
+      "label": "db",
+      "degree": 17
+    },
+    {
+      "id": "docs_architecture",
+      "label": "Streamify Architecture doc",
+      "degree": 16
+    }
+  ],
+  "surprises": [
+    {
+      "source": "CLAUDE.md — Project Operating Guide",
+      "target": ".claude/CLAUDE.md — graphify trigger instructions",
+      "source_files": [
+        "CLAUDE.md",
+        ".claude/CLAUDE.md"
+      ],
+      "confidence": "INFERRED",
+      "relation": "conceptually_related_to",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories; peripheral node `.claude/CLAUDE.md — graphify trigger instructions` unexpectedly reaches hub `CLAUDE.md — Project Operating Guide`"
+    },
+    {
+      "source": "Streamify Design System Master File",
+      "target": "Phase 2 — Design System",
+      "source_files": [
+        "design-system/streamify/MASTER.md",
+        "docs/PROMPT.md"
+      ],
+      "confidence": "AMBIGUOUS",
+      "relation": "conceptually_related_to",
+      "why": "ambiguous connection - not explicitly stated in source; connects across different repos/directories"
+    },
+    {
+      "source": "Frontend architecture",
+      "target": "Streamify Design System Master File",
+      "source_files": [
+        "docs/ARCHITECTURE.md",
+        "design-system/streamify/MASTER.md"
+      ],
+      "confidence": "AMBIGUOUS",
+      "relation": "conceptually_related_to",
+      "why": "ambiguous connection - not explicitly stated in source; connects across different repos/directories"
+    },
+    {
+      "source": "readChannelSummary()",
+      "target": "formatCount()",
+      "source_files": [
+        "server/utils/channels.ts",
+        "shared/utils/format.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "toLiveSignal()",
+      "target": "formatCount()",
+      "source_files": [
+        "server/utils/discovery.ts",
+        "shared/utils/format.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    }
+  ],
+  "questions": [
+    {
+      "type": "ambiguous_edge",
+      "question": "What is the exact relationship between `Design Skill Routing System` and `graphify Knowledge Graph Pipeline`?",
+      "why": "Edge tagged AMBIGUOUS (relation: semantically_similar_to) - confidence is low."
+    },
+    {
+      "type": "ambiguous_edge",
+      "question": "What is the exact relationship between `ui-styling skill LICENSE (Apache License 2.0)` and `UI Styling Skill`?",
+      "why": "Edge tagged AMBIGUOUS (relation: references) - confidence is low."
+    },
+    {
+      "type": "ambiguous_edge",
+      "question": "What is the exact relationship between `Streamify Design System Master File` and `Phase 2 — Design System`?",
+      "why": "Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low."
+    },
+    {
+      "type": "ambiguous_edge",
+      "question": "What is the exact relationship between `Streamify Design System Master File` and `Frontend architecture`?",
+      "why": "Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low."
+    },
+    {
+      "type": "ambiguous_edge",
+      "question": "What is the exact relationship between `Signal Brief side panel (AI-style engagement summary + duration/save/play)` and `Latency indicator chip (\"44 ms\") between Live Signals and Top Highlights`?",
+      "why": "Edge tagged AMBIGUOUS (relation: suggests_realtime_streaming_infrastructure_for) - confidence is low."
+    },
+    {
+      "type": "ambiguous_edge",
+      "question": "What is the exact relationship between `Video Preview Modal` and `Dev Performance Indicator ('44 ms' render badge, bottom center)`?",
+      "why": "Edge tagged AMBIGUOUS (relation: measures_render_time_of) - confidence is low."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `primitive` connect `Community 67` to `Community 0`, `Community 34`, `Community 3`, `Community 111`, `Community 50`, `Community 90`?",
+      "why": "High betweenness centrality (0.012) - this node is a cross-community bridge."
+    }
+  ]
+}

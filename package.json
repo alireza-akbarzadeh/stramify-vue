@@ -26,7 +26,12 @@
     "db:seed:channels": "node --env-file=.env scripts/seed-channels.mjs",
     "db:seed:follows": "node --env-file=.env scripts/seed-follows.mjs",
     "db:seed:comments": "node --env-file=.env scripts/seed-comments.mjs",
-    "db:seed:chat": "node --env-file=.env scripts/seed-chat.mjs"
+    "db:seed:chat": "node --env-file=.env scripts/seed-chat.mjs",
+    "graphify:open": "open graphify-out/graph.html",
+    "graphify:report": "open graphify-out/GRAPH_REPORT.md",
+    "graphify:update": "$HOME/.local/bin/graphify update .",
+    "graphify:query": "$HOME/.local/bin/graphify query",
+    "graphify:mcp": "$HOME/.local/bin/graphify-mcp graphify-out/graph.json"
   },
   "dependencies": {
     "@better-auth/infra": "^0.3.7",
