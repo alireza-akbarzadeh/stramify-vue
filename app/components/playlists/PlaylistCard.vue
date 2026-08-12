@@ -80,7 +80,11 @@ const count = computed(() => playlistCountLabel(props.playlist.itemCount))
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem @select="$emit('edit')">
+        <!-- `@select.prevent` for the same reason as the delete item below and
+             as `WatchSaveToPlaylist`: letting the menu close here races the
+             dialog's focus trap against the menu returning focus to its
+             trigger. -->
+        <DropdownMenuItem @select.prevent="$emit('edit')">
           <Pencil class="size-4" />
           Edit
         </DropdownMenuItem>

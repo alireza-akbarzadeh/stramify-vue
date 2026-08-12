@@ -1,8 +1,10 @@
 <script lang="ts" setup>
+import LikedView from '@/components/liked/LikedView.vue'
+
 definePageMeta({ layout: 'dashboard' })
-useHead({ title: 'Playlist — Streamify' })
+useHead({ title: 'Liked videos — Streamify' })
 </script>
 
 <template>
-  <ComingSoon description="we weill implement this as soone as possible" title="playlist" />
+  <LikedView />
 </template>

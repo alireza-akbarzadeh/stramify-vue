@@ -37,7 +37,9 @@ export function usePlaylists() {
 /** One playlist and its videos. The id is part of the key, so each is cached separately. */
 export function usePlaylist(id: MaybeRefOrGetter<string>) {
   return useQuery({
-    queryKey: ['playlist', computed(() => toValue(id))],
+    queryKey: computed(() => playlistKey(toValue(id))),
+    // An empty id means there's no playlist in play (the watch page without
+    // `?list=`), not a playlist called "".
     enabled: computed(() => !!toValue(id)),
     queryFn: () => $fetch<PlaylistDetail>(`/api/playlists/${encodeURIComponent(toValue(id))}`)
   })

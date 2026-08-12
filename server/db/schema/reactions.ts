@@ -1,4 +1,4 @@
-import { pgEnum, pgTable, text, timestamp, unique } from 'drizzle-orm/pg-core'
+import { index, pgEnum, pgTable, text, timestamp, unique } from 'drizzle-orm/pg-core'
 import { user } from './auth'
 
 export const reactionTargetEnum = pgEnum('reaction_target', ['clip', 'live'])
@@ -26,5 +26,12 @@ export const reactions = pgTable(
     value: reactionValueEnum('value').notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow()
   },
-  (table) => [unique('reactions_user_target_unique').on(table.userId, table.targetId)]
+  (table) => [
+    unique('reactions_user_target_unique').on(table.userId, table.targetId),
+    // `/liked` reads one user's rows newest-first. The unique index above is
+    // the wrong shape for that — it can find the user, but the ordering would
+    // then be a sort over every reaction they've ever left. Same pairing as
+    // `watch_later_user_added_idx` and `watch_progress_user_updated_idx`.
+    index('reactions_user_created_idx').on(table.userId, table.createdAt)
+  ]
 )

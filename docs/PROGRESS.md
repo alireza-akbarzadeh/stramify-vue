@@ -990,3 +990,81 @@ Three new specs were written but not executed: `HomeRailCard.spec.ts`,
 3. No membership state: a grid card can't show "already saved". That needs an
    ids endpoint; the Undo toast covers the mistake case for now.
 4. `/watch-later` doesn't page — 60 saves is the ceiling on one response.
+
+## Playlists completion session, 2026-08-12 (appended)
+
+The ask was "save-to-playlist on the watch page, and a full-featured playlists
+page". **Most of it already existed and was committed** — the two tables, six
+endpoints, the seven composables, `WatchSaveToPlaylist`'s checkbox menu,
+`/playlists` and `/playlists/[id]`. This session closed the gaps that stopped it
+being finished rather than rebuilding any of it.
+
+### What was built
+
+**Editing (the biggest hole — you could create and delete, never rename).**
+
+- `PATCH /api/playlists/[id]` + `updatePlaylist()` — title, description,
+  visibility. Ownership in the `where`, 404 not 403, `''` clears the
+  description.
+- `useUpdatePlaylist()` invalidates both `['playlists']` and `['playlist', id]`.
+- `usePlaylistEditor()` owns the dialog state, shared by the library grid and
+  the detail header, so a page mounts **one** dialog rather than one per card.
+- `PlaylistCreateDialog` → **`PlaylistFormDialog`** (CLAUDE.md rule 10): one
+  component for create *and* edit, seeded on open instead of cleared on close.
+  Scoped `useId()` ids, because a page can now mount it twice.
+  Both callers updated; the old file is deleted.
+
+**Reordering.** `PATCH /api/playlists/[id]/items/[clipId]` `{ direction }` +
+`movePlaylistItem()` — swaps two rows' `position` in a transaction, which keeps
+the sparse-position invariant the schema is built on. Body is a *direction*, not
+a target index, so a stale client list can't move something to the wrong slot.
+`useMovePlaylistItem()` is optimistic. New `PlaylistItemRow` wraps `PlaylistRow`
+with the owner cluster (up / down / remove); arrows not drag-and-drop, so it
+works from the keyboard and on touch with no drag dependency.
+
+**"Play all" actually plays all.** It now links with `?list=<id>`, which turns
+on `WatchPlaylistQueue` (above Up next, self-fetching for the same documented
+reason `WatchSaveToPlaylist` is) and auto-advance in `WatchView.onEnded`.
+`useWatchPlaylist()` is shared by both; TanStack dedupes to one request. Without
+`?list=` the watch page is byte-for-byte what it was.
+
+**Pure helpers + docs.** `movedPlaylistItems()` and `playlistWatchHref()` moved
+into `shared/utils/library.ts` beside `playlistCountLabel`, with specs.
+`docs/playlists.md` written — it was referenced by `app/pages/playlists/index.vue`
+but never existed.
+
+### Not verified (toolchain blocked this session, again)
+
+The Bash classifier refused every *execution* command for the whole session
+(`npm test`, `npx vitest`, `npm run typecheck`, `npx eslint`, and the browser
+preview tools). Read-only commands worked, so the code was reviewed by reading.
+**None of the following ran** — treat them as owed:
+
+- `npm run typecheck`, `npx eslint .`, `npm test`.
+- No browser verification: the edit dialog, the reorder arrows and the `?list=`
+  queue have **not been seen rendered**.
+- New specs written but not executed: `PlaylistItemRow.spec.ts`, and the
+  `movedPlaylistItems` / `playlistWatchHref` blocks in `shared/utils/library.spec.ts`.
+
+**No migration is needed** — this session added no columns or tables. The
+`position` column it reorders has existed since `playlist_items` was created.
+
+### Concurrent session note
+
+Another session was live in this repo throughout (worktree
+`.claude/worktrees/distracted-saha-7e1abf`), doing PWA work and adding a
+`/liked` feature. It appended `LikedItem` / `LikedPage` / `LIKED_SORTS` to
+`shared/types/library.ts` while this session was editing the same file. The two
+sets of additions **coexisted cleanly** — nothing was overwritten in either
+direction — but that file, `nuxt.config.ts`, `server/db/schema/reactions.ts` and
+the PWA assets are all dirty from that other session, so don't read the current
+`git status` as this session's diff.
+
+### Owed / next steps
+
+1. Run typecheck, eslint and vitest; then verify in the browser.
+2. Reorder is up/down only. Drag-and-drop would need a drag library — an ADR
+   call, not a drive-by.
+3. Nothing lists a user's public playlists on their channel page yet, which is
+   the whole reason `unlisted` exists as a separate value from `public`.
+4. The detail page doesn't page: a very long playlist loads all its items.
