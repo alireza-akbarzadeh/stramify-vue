@@ -99,7 +99,13 @@ export async function selectContinueWatching(
         // same rule every landscape surface follows.
         eq(clips.orientation, 'landscape'),
         sql`${watchProgress.positionSeconds} >= ${RESUME_MIN_SECONDS}`,
-        sql`${watchProgress.positionSeconds} < ${clips.durationSeconds} * ${RESUME_MAX_FRACTION}`
+        // `::float8` is load-bearing. Left off, Postgres resolves
+        // `integer * $n` by picking `integer * integer` and then fails to parse
+        // the bound `0.95` as an integer — a 22P02 at query time, not a type
+        // error at build time, so the whole rail 500s for every signed-in
+        // viewer. Casting the parameter tells the planner which operator to
+        // pick. Don't "simplify" it away.
+        sql`${watchProgress.positionSeconds} < ${clips.durationSeconds} * ${RESUME_MAX_FRACTION}::float8`
       )
     )
     .orderBy(desc(watchProgress.updatedAt))

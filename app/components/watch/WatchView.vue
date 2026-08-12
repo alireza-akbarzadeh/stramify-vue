@@ -37,7 +37,7 @@ const channelName = computed(() => target.data.value?.channel ?? '')
 const { reactions, toggle: react } = useWatchReaction(slug)
 const { channel, toggle: follow, notify } = useChannelFollow(channelName)
 const { count } = useViewCounter(slug)
-const { track, finish } = useWatchProgress(slug)
+const { start, track, finish } = useWatchProgress(slug)
 const { user } = storeToRefs(useAuthStore())
 const watchlist = useWatchlistStore()
 
@@ -103,6 +103,15 @@ useHead({
   title: computed(() => (target.data.value ? `${target.data.value.title} — Streamify` : 'Streamify'))
 })
 
+/**
+ * Playback started: count the view, and record the clip so it shows up in
+ * `/history` straight away rather than only once the playhead passes 15s. Both
+ * are idempotent per clip, so an un-pause doesn't double-count either.
+ */
+function onPlayStart() {
+  count()
+  start()
+}
 function onSave() {
   if (target.data.value) watchlist.toggle(watchTargetToItem(target.data.value))
 }
@@ -186,7 +195,7 @@ function onShare() {
       :comments="commentsPanel"
       :chat="chatPanel"
       :resume-at="resumeAt"
-      @play-start="count()"
+      @play-start="onPlayStart"
       @progress="track"
       @ended="finish"
       @react="onReact"

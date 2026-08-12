@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useHomeFeedback } from '@/composables/useHomeFeedback'
+import { useSaveToWatchLater } from '@/composables/useWatchLater'
 import { useWatchlistStore } from '@/stores/watchlist'
 import { relatedToItem } from '@/utils/watchlist'
 import HomeRail from './HomeRail.vue'
@@ -22,6 +23,7 @@ defineProps<{ videos: HomeVideo[] }>()
 const watchlist = useWatchlistStore()
 // The same mutation the grid below uses — one press clears the video from both.
 const feedback = useHomeFeedback()
+const watchLater = useSaveToWatchLater()
 </script>
 
 <template>
@@ -35,6 +37,7 @@ const feedback = useHomeFeedback()
         :video="video"
         :saved="watchlist.isSaved(video.id)"
         @toggle-save="watchlist.toggle(relatedToItem(video))"
+        @save-later="watchLater.submit(video.id)"
         @feedback="feedback.submit($event)"
       />
     </li>

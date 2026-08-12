@@ -21,6 +21,29 @@ Three sections, ordered by how urgent the question is:
 The rail and the manage list show **every** follow. Only the shelves are capped
 (`FOLLOWING_SHELF_LIMIT`), because 50 follows would otherwise mean 500 cards.
 
+## The story rail is shared with the home page
+
+`FollowingStoryRail` renders on **two** surfaces: `/following` and the top of
+the home page's shelf stack (`HomeShelves`). It's the same component with the
+same ordering and the same ring states — only the heading's onward link differs,
+which is why `to` / `toLabel` / `headingId` are props:
+
+| Surface | Link | Heading id |
+| --- | --- | --- |
+| `/following` | "Find more" → `/channels` | `following-channels-heading` |
+| `/` (home) | "See all" → `/following` | `home-following-channels-heading` |
+
+`headingId` is a prop rather than a constant so two rails could never collide on
+one DOM id — the section points at it with `aria-labelledby`.
+
+Both surfaces call `useFollowedChannels()`, which is one query key, so they
+share a single cache entry and a single request rather than fetching the list
+twice. On home it sits **above** continue-watching: it's the only row that is
+navigation rather than content, and it carries the one thing on the page that
+expires — who is live right now. The existing "Latest from channels you follow"
+video rail stays where it was, below it: the circles say *who*, that rail says
+*what*.
+
 ## Why the ring has three states
 
 A ring that lights for everyone says nothing, so `storyRing()` returns one of:

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {Ban, Bookmark, BookmarkCheck, EllipsisVertical, Link2, UserMinus,} from '@lucide/vue'
+import {Ban, Bookmark, BookmarkCheck, Clock, EllipsisVertical, Link2, UserMinus,} from '@lucide/vue'
 
 import {
   DropdownMenu,
@@ -27,6 +27,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   (e: 'toggle-save'): void
+  (e: 'save-later'): void
   (e: 'feedback', value: HomeFeedback): void
 }>()
 
@@ -94,6 +95,21 @@ const ITEM =
           />
 
           {{ saved ? 'Remove from watchlist' : 'Save to watchlist' }}
+        </DropdownMenuItem>
+
+        <!-- Only for clips. A live session has no queue to sit in — it's over
+             by the time "later" arrives — which is also why `watch_later` is
+             keyed straight at `clips.id`. -->
+        <DropdownMenuItem
+            v-if="video.kind === 'clip'"
+            :class="ITEM"
+            @select="emit('save-later')"
+        >
+          <Clock
+              class="size-4 shrink-0 text-muted-foreground"
+          />
+
+          Save to Watch later
         </DropdownMenuItem>
 
         <DropdownMenuItem

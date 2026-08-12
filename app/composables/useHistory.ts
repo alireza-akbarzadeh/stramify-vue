@@ -1,11 +1,24 @@
-import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/vue-query'
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { refDebounced } from '@vueuse/core'
 import { useAuthStore } from '@/stores/auth'
+import { HISTORY_RAIL_LIMIT } from '#shared/types/history'
 import type { InfiniteData } from '@tanstack/vue-query'
 import type { HistoryPage } from '#shared/types/history'
 
 /** Everything `/history` caches, so one invalidation covers every search term. */
 const HISTORY_ROOT = ['history']
+
+/**
+ * The home page's "Recently watched" rail.
+ *
+ * Deliberately *outside* `HISTORY_ROOT`, next to `['home', 'continue']`, even
+ * though it reads the same endpoint. The mutations below patch every cache
+ * entry under `HISTORY_ROOT` as `InfiniteData`, and this one holds a flat
+ * array — one key for both shapes would mean `data.pages` on a list that has
+ * none. Grouping it with the other home shelves also keeps "invalidate the home
+ * page's personalised rails" a single prefix.
+ */
+const HOME_HISTORY_KEY = ['home', 'history']
 
 /**
  * How long to wait after the last keystroke before querying. Long enough that
@@ -77,6 +90,37 @@ export function useHistory(search: Ref<string>) {
 }
 
 /**
+ * The last few videos this viewer watched — the home page's "Recently watched"
+ * rail.
+ *
+ * The same `/api/history` the page reads, asked for ten rows and unfiltered.
+ * A plain query rather than the infinite one above: a rail has no "load more",
+ * and its ten cards are one response, so `useInfiniteQuery`'s page bookkeeping
+ * would be structure with nothing to hold.
+ *
+ * Gated and `staleTime: 0` for the same reasons as `useHistory` — coming home
+ * from a video you just watched has to show it at the front of the rail.
+ */
+export function useRecentHistory() {
+  const auth = useAuthStore()
+
+  return useQuery({
+    queryKey: HOME_HISTORY_KEY,
+    enabled: computed(() => auth.isAuthenticated),
+    staleTime: 0,
+    queryFn: async () => {
+      const page = await $fetch<HistoryPage>('/api/history', {
+        query: { limit: HISTORY_RAIL_LIMIT }
+      })
+      // The rail wants rows, not a page — `nextCursor` is meaningless to a
+      // shelf that can't page. Unwrapping here keeps that detail out of the
+      // component.
+      return page.items
+    }
+  })
+}
+
+/**
  * Remove one video from history.
  *
  * Reuses the Continue-watching rail's endpoint rather than adding a second one:
@@ -130,6 +174,10 @@ export function useRemoveFromHistory() {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['home', 'continue'] })
+      // The rail reads the same rows this just deleted. Invalidated rather than
+      // patched: it holds a fixed ten, so dropping one has to pull the eleventh
+      // up rather than leave a short shelf.
+      queryClient.invalidateQueries({ queryKey: HOME_HISTORY_KEY })
     }
   })
 }
@@ -149,8 +197,11 @@ export function useClearHistory() {
     mutationFn: () => $fetch<{ removed: number }>('/api/history', { method: 'DELETE' }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: HISTORY_ROOT })
-      // Continue-watching reads the same rows, so it is now empty too.
+      // Continue-watching and the home rail read the same rows, so both are
+      // now empty too. Named individually rather than invalidating the whole
+      // `home` prefix, which would also throw away the recommendation feed.
       queryClient.invalidateQueries({ queryKey: ['home', 'continue'] })
+      queryClient.invalidateQueries({ queryKey: HOME_HISTORY_KEY })
     }
   })
 }

@@ -1,0 +1,65 @@
+<!--
+  Streamify app mark — source of truth for every PWA/favicon raster.
+
+  Do not hand-edit the PNGs in `public/icons/`; edit this file (or its
+  `pwa-icon-maskable.svg` / `pwa-icon-apple.svg` siblings) and re-run
+  `npm run icons:pwa`.
+
+  This is the `purpose: "any"` variant: it draws its own rounded tile,
+  because "any" icons are shown as-authored (Chrome desktop install UI,
+  Windows tiles, the manifest preview in devtools).
+
+  Colours track the design tokens in `app/assets/css/main.css`:
+  `--primary: #ff335f` (light) / `#ff4b6e` (dark), spread into a gradient
+  so the tile has depth at large sizes.
+-->
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="512"
+  height="512"
+  viewBox="0 0 512 512"
+  role="img"
+  aria-label="Streamify"
+>
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff5c7a" />
+      <stop offset="0.5" stop-color="#ff335f" />
+      <stop offset="1" stop-color="#d81b4a" />
+    </linearGradient>
+
+    <!-- Off-centre highlight: keeps the tile from reading as flat fill. -->
+    <radialGradient id="sheen" cx="0.3" cy="0.14" r="0.85">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.28" />
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="url(#tile)" />
+  <rect width="512" height="512" rx="112" fill="url(#sheen)" />
+
+  <!-- Film-strip perforations: what makes the mark read as "video" rather
+       than a generic play button. Dropped from `favicon.svg`, where they
+       collapse into mush below ~32px. -->
+  <g fill="#ffffff" fill-opacity="0.82">
+    <rect x="34" y="107" width="26" height="34" rx="9" />
+    <rect x="34" y="195" width="26" height="34" rx="9" />
+    <rect x="34" y="283" width="26" height="34" rx="9" />
+    <rect x="34" y="371" width="26" height="34" rx="9" />
+
+    <rect x="452" y="107" width="26" height="34" rx="9" />
+    <rect x="452" y="195" width="26" height="34" rx="9" />
+    <rect x="452" y="283" width="26" height="34" rx="9" />
+    <rect x="452" y="371" width="26" height="34" rx="9" />
+  </g>
+
+  <!-- Play glyph. The stroke is the same colour as the fill purely to round
+       the three corners — cheaper and more robust than an arc-based path. -->
+  <path
+    d="M208 166 L356 256 L208 346 Z"
+    fill="#ffffff"
+    stroke="#ffffff"
+    stroke-width="28"
+    stroke-linejoin="round"
+  />
+</svg>

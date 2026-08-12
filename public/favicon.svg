@@ -1,0 +1,37 @@
+<!--
+  Streamify favicon. Deliberately *not* a resize of `pwa-icon.svg`: the
+  film-strip perforations that identify the mark at 192px turn into grey
+  smudges at 16–32px, which is the only size range a favicon is ever seen
+  at. The play glyph is scaled up to fill the space they vacate.
+
+  Shipped as SVG so it stays sharp on any DPI; `favicon.ico` remains
+  alongside it for browsers that ignore `rel="icon" type="image/svg+xml"`.
+  This file is hand-authored, not generated — `npm run icons:pwa` does not
+  touch it.
+-->
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="512"
+  height="512"
+  viewBox="0 0 512 512"
+  role="img"
+  aria-label="Streamify"
+>
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff5c7a" />
+      <stop offset="0.5" stop-color="#ff335f" />
+      <stop offset="1" stop-color="#d81b4a" />
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="url(#tile)" />
+
+  <path
+    d="M186 148 L378 256 L186 364 Z"
+    fill="#ffffff"
+    stroke="#ffffff"
+    stroke-width="34"
+    stroke-linejoin="round"
+  />
+</svg>

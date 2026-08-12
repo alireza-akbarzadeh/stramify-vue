@@ -60,6 +60,17 @@ export function useRemoveFromContinue() {
 
     onError: (_error, _slug, context) => {
       if (context?.previous) queryClient.setQueryData(QUERY_KEY, context.previous)
+    },
+
+    /**
+     * The delete forgets the whole `watch_progress` row, not just its place in
+     * this rail — so the video also leaves the viewer's history. Both surfaces
+     * that read it are invalidated rather than patched: each holds a fixed
+     * number of rows and has to pull the next one up.
+     */
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['home', 'history'] })
+      queryClient.invalidateQueries({ queryKey: ['history'] })
     }
   })
 }

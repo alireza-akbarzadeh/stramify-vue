@@ -828,3 +828,165 @@ comment was reworded without backticks and a note added so it doesn't come back.
   A `scripts/seed-watch-progress.mjs` would close this and is the obvious next
   step.
 - No e2e spec — `e2e/` currently only covers signed-out surfaces.
+
+**Follow-up in the same session**: the story rail was made reusable and added to
+the **home page**. `FollowingStoryRail` gained `to` / `toLabel` / `headingId`
+props (defaults unchanged, so `/following` is byte-identical) and now renders at
+the top of `HomeShelves` — above continue-watching, linking "See all" →
+`/following`. Both surfaces call `useFollowedChannels()`, one query key, so it's
+one request shared between them. `HomeShelves`' ordering doc comment was updated
+from five shelves to six. Confirmed working on `/following` in the user's own
+browser (screenshot: rings, LIVE pills and labels all render); the home
+placement has **not** been seen in a browser — the browser tooling was refused
+by the same classifier outage that blocked the toolchain.
+
+## PWA session, 2026-08-12 (appended)
+
+The app is now installable. Full write-up: [pwa.md](./pwa.md), decisions in
+ADR-022.
+
+### Read this first if you're touching PWA anything
+
+The request was to install **`@nuxtjs/pwa`** (pwa.nuxtjs.org). That module is
+**Nuxt 2 only** — its registry entry declares `compatibility: "^2.0.0"`, it has
+been frozen at 3.3.5 for years, and it targets the Nuxt 2 module API. On Nuxt
+4.5 it doesn't degrade, it fails to load. **`@vite-pwa/nuxt@1`** was installed
+instead; it's the Vite PWA org's Nuxt 3/4 module and what the ecosystem has
+actually moved to. Don't "fix" this back.
+
+### What was built
+
+- **`@vite-pwa/nuxt` + `sharp`** added as devDependencies. One `pwa` block in
+  `nuxt.config.ts`; no service-worker source in the repo (Workbox `generateSW`).
+- **`app.head` in `nuxt.config.ts`** — dual light/dark `theme-color`, favicon
+  links, `apple-touch-icon`, and the `apple-mobile-web-app-*` tags Safari reads
+  instead of the manifest. Also sets `htmlAttrs.lang: 'en'`, which was missing
+  repo-wide and is a Lighthouse a11y/PWA failure on its own.
+- **Icons**: three hand-authored SVG sources in `app/assets/icons/`
+  (`pwa-icon`, `-maskable`, `-apple`) → `public/icons/*.png` via
+  `npm run icons:pwa` (`scripts/generate-pwa-icons.mjs`). Three sources because
+  the consumers crop differently — `any` keeps its own rounded tile, `maskable`
+  is full-bleed with the glyph inside the 80% safe zone, iOS needs opaque with
+  no authored corners. `public/favicon.svg` is hand-authored separately (the
+  film-strip perforations turn to mush below ~32px) and is **not** generated.
+  Edit the SVGs, never the PNGs.
+- **`public/sw.js` deleted.** It held the self-destructing worker that cleared
+  an unrelated project's stale registration on `localhost:3000`. It had to go:
+  `vite-plugin-pwa` emits its own `sw.js` at the site root and a `public/` file
+  would shadow it. Its own header comment called for exactly this.
+- **No new environment variables.** The PWA layer is entirely build-time —
+  nothing secret, nothing per-environment. `NUXT_PWA_DEV=true npm run dev` is a
+  local toggle for testing the worker, not configuration, and is documented in
+  `pwa.md` rather than `.env.example`.
+
+### Deliberate limits (don't file these as bugs)
+
+- **No offline page.** `workbox.navigateFallback` is unset on purpose:
+  `generateSW`'s navigation route is all-or-nothing, so setting it would answer
+  *every* navigation from one precached shell and replace SSR/auth-gated pages
+  with a static document. Offline navigation therefore shows the browser's
+  error page. A real fallback needs `injectManifest` + `setCatchHandler`
+  (ADR-022).
+- **Nothing under `/api` is cached** — session, feeds and chat are
+  request-scoped.
+- **No install UI.** `client.installPrompt` captures `beforeinstallprompt`, but
+  no component consumes `$pwa.showInstallPrompt` yet.
+- **No manifest `screenshots`**, so Android shows the compact install dialog.
+  Omitted rather than faked (CLAUDE.md rule 2).
+
+### ⚠️ Verification status — do this first if you're picking it up
+
+The classifier outage that has now hit seven sessions running flapped through
+this one: file writes and `npm install` landed, most `npm run`/`node` calls did
+not. Concretely still owed:
+
+1. **`npm run icons:pwa` — the PNGs in `public/icons/` may not exist yet.**
+   Check `ls public/icons`. Until they do, the manifest's icon entries 404 and
+   the app is **not installable** (Chrome silently withholds the prompt when
+   the 192 or 512 `any` icon is missing). The SVG sources and the script are
+   both written; this is one command.
+2. **Confirm `public/sw.js` is gone** (`ls public`) — deletion needs a shell
+   and may not have run. If it's still there it will shadow the generated
+   worker.
+3. `npm run lint && npm run typecheck` — the `pwa` config block has never been
+   type-checked against `@vite-pwa/nuxt`'s option types.
+4. `npm run build && npm run preview`, then devtools → Application: manifest
+   parses with no errors, all four icons resolve, `sw.js` is activated, a
+   `workbox-precache` entry exists. Dev mode does **not** exercise
+   `generateSW`, so this is the only real check.
+5. Eyeball the mark itself at 64px and as an installed icon — it has only ever
+   been rendered as SVG source, never rasterised or seen on a home screen.
+
+## Watch later + recently-watched shelves session, 2026-08-12 (appended)
+
+Two more shelves on the home page, per an explicit request: **the last 10 videos
+watched** and **the last 10 saved for later**. The first was a query change; the
+second needed a subsystem built from nothing.
+
+### What was built
+
+**Recently watched (no new backend).** `/api/history` already accepted
+`?limit=`, so the rail is that endpoint asked for ten. `useRecentHistory()` in
+`app/composables/useHistory.ts` is a plain `useQuery` (a rail has no "load
+more"), cached at `['home', 'history']` — deliberately *outside* `['history']`,
+because the history mutations patch everything under that prefix as
+`InfiniteData` and a flat array there would be read as a page list with no
+`pages`. The removal and clear-all mutations, plus
+`useRemoveFromContinue`, now invalidate it.
+
+**Watch later (new, end to end).**
+
+- `server/db/schema/watch-later.ts` — `watch_later`, `unique(user_id, clip_id)`,
+  index `(user_id, added_at)`. Clips only, real FK. See ADR-023 for why this
+  isn't a system playlist or the localStorage watchlist.
+- `server/utils/watch-later.ts`, `server/api/watch-later/`
+  (`index.get` with `?limit=`, `index.post`, `[clipId].delete`) — reads answer
+  `[]` signed out, writes `requireUser`, both writes idempotent.
+- `app/composables/useWatchLater.ts` — list query keyed by limit, a
+  `submit`-style save (auth guard + toast + Undo, the `useHomeFeedback` shape)
+  and an optimistic remove.
+- `app/components/watch-later/` + `app/pages/watch-later.vue` — the page stops
+  being `ComingSoon`.
+- **Save to Watch later** added to `HomeVideoCardMenu` (clips only), wired
+  through `HomeVideoCard` to the two parents that own the mutation
+  (`HomeVideoGrid`, `HomeFollowingRail`) rather than one mutation per card.
+- `docs/watch-later.md` — subsystem write-up.
+
+**Card consolidation (CLAUDE.md rule 10).** The three personal shelves draw the
+same thing, so `HomeRailCard` now owns that chrome (thumbnail, corner chip,
+optional progress bar, one destructive ⋮ action). `HomeContinueCard` was
+refactored onto it — its behaviour and its spec are unchanged — and
+`HomeHistoryCard` / `HomeWatchLaterCard` are thin wrappers that differ only in
+link, chip, whether there's a bar, and the menu verb.
+
+`HomeShelves` is now eight shelves; the ordering doc comment was updated with
+where the two new ones sit and why.
+
+### Not verified (toolchain blocked this session)
+
+The Bash classifier was intermittently unavailable for most of this session.
+**None of the following ran**, and the next session should treat them as owed:
+
+- `npm run db:generate` — could not run, so **migration `0009_flat_lila_cheney`
+  was hand-written**: the `.sql`, the `_journal.json` entry (idx 9) and
+  `meta/0009_snapshot.json` (a copy of 0008 with a fresh `id`, `prevId` chained
+  to 0008, and the `watch_later` table added). All three were written so the
+  *next* `db:generate` sees no drift and doesn't emit the table twice — but that
+  claim is unverified. **First thing next session: run `npm run db:generate` and
+  confirm it reports no changes**, then `npm run db:migrate`. If it does emit a
+  0010 for `watch_later`, delete the hand-written trio and keep what it makes.
+- `npm run typecheck`, `npx eslint`, `npx vitest run` — not run.
+- No browser verification. The two rails and `/watch-later` have not been seen
+  rendered.
+
+Three new specs were written but not executed: `HomeRailCard.spec.ts`,
+`HomeHistoryCard.spec.ts`, `HomeWatchLaterCard.spec.ts`.
+
+### Owed / next steps
+
+1. Generate + apply the migration, then run typecheck, eslint and vitest.
+2. Seed some `watch_later` rows (there's no seed script; the same gap
+   `watch_progress` has — see the watch-history session's "Not done").
+3. No membership state: a grid card can't show "already saved". That needs an
+   ids endpoint; the Undo toast covers the mistake case for now.
+4. `/watch-later` doesn't page — 60 saves is the ceiling on one response.

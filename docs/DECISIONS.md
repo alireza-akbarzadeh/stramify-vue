@@ -952,3 +952,121 @@ list whose entire job is to be complete — signed out that arm is empty, so
 everyone past the cap is still in the rail and the manage list. `docs/following.md`
 carries the full write-up, including where a real "unseen" marker would go if
 one is ever wanted.
+
+---
+
+## ADR-022: `@vite-pwa/nuxt` for the PWA layer; `@nuxtjs/pwa` is Nuxt 2 only
+
+**Context**: The app should be installable — home-screen icon, standalone
+window, precached assets. The obvious candidate by name is `@nuxtjs/pwa`
+(pwa.nuxtjs.org), which is what the Nuxt ecosystem page still surfaces for the
+search term "pwa".
+
+**Decision**: `@vite-pwa/nuxt@1` — the Vite PWA org's Nuxt 3/4 module, wrapping
+`vite-plugin-pwa` and Workbox's `generateSW`. Configured in `nuxt.config.ts`
+under `pwa`, with:
+
+1. **`registerType: 'autoUpdate'`.** A streaming app is left open for hours;
+   the `prompt` strategy would strand a viewer on a stale bundle for most of a
+   session.
+2. **`registerWebManifestInRouteRules: true`.** In production Nitro serves the
+   app, not Vite. Without the route rule `/manifest.webmanifest` 404s outside
+   dev, and nothing is installable.
+3. **No `workbox.navigateFallback`.** This is the one setting worth arguing
+   about. `generateSW`'s navigation route is all-or-nothing: set a fallback and
+   *every* navigation is answered from one precached HTML shell. On an SSR app
+   that silently replaces server-rendered pages — including auth-gated ones —
+   with a static document. Navigations therefore go to the network and only
+   build assets are precached. The cost is that an uncached navigation while
+   offline shows the browser's error page rather than ours.
+4. **Two runtime caches, both for Google Fonts.** `assets/css/main.css`
+   `@import`s Inter, which puts a third-party request on the critical path;
+   `gstatic` responses are opaque, hence `cacheableResponse.statuses: [0, 200]`.
+   Nothing under `/api` is cached — session, feeds and chat are request-scoped.
+5. **`devOptions.enabled` behind `NUXT_PWA_DEV`.** A worker sitting in front of
+   HMR turns every edit into a cache-invalidation puzzle, so dev is opt-in.
+
+**Icons** are three hand-authored SVGs in `app/assets/icons/`, rasterised to
+`public/icons/*.png` by `npm run icons:pwa` (`scripts/generate-pwa-icons.mjs`,
+`sharp` as a devDependency). Three sources rather than one because the three
+consumers crop differently: `purpose: "any"` is drawn as authored and carries
+its own rounded tile; `purpose: "maskable"` is cropped to the platform's shape
+so it is full-bleed with the glyph inside the 80%-diameter safe zone; and iOS
+composites alpha onto black, so `apple-touch-icon` is full-bleed and opaque
+with no authored corners. `public/favicon.svg` is hand-authored separately and
+drops the film-strip perforations, which turn to mush below ~32px.
+
+**Rejected**: *`@nuxtjs/pwa`* — its registry entry declares
+`compatibility: "^2.0.0"`, it has been frozen at 3.3.5 for years, and it is
+built on the Nuxt 2 module API. Installing it into Nuxt 4.5 does not produce a
+degraded PWA, it fails to load. *`@vite-pwa/assets-generator`* — the idiomatic
+companion, but its presets derive every variant by padding a single source, so
+the maskable icon is just the "any" icon shrunk inside its own rounded tile
+(double-rounded once Android masks it). Authoring the three framings by hand is
+a smaller amount of work than fighting the preset. *`strategies: 'injectManifest'`
+with a custom worker* — the only way to get a real offline fallback page
+(`setCatchHandler`) alongside live SSR navigation, and worth revisiting, but it
+means owning worker source for a feature nothing else needs yet. *Manifest
+`screenshots`* — omitted rather than faked; Android shows the compact install
+UI instead of the rich one until real captures exist.
+
+**Consequences**: `public/sw.js` — the self-destructing worker added to clear a
+previous project's stale registration on `localhost:3000` — is deleted. It had
+to go regardless: `vite-plugin-pwa` emits its own `sw.js` at the site root, and
+a file in `public/` would shadow it. Its own header comment anticipated this
+("If this app ever adopts a real service worker (PWA), that worker replaces
+this file"). Anyone whose browser still holds the old registration gets the new
+worker on next load, which is the same outcome the stub was there to produce.
+`public/icons/` is committed, since Nitro serves `public/` verbatim and the
+manifest has to resolve at request time. No new environment variables: the PWA
+layer is entirely build-time, and `NUXT_PWA_DEV` is a local dev toggle, not
+configuration. Full write-up in [pwa.md](./pwa.md).
+
+## ADR-023: Watch later is its own table, not a system playlist and not the localStorage watchlist
+
+**Context**: The home page needed two more personal shelves — the last ten
+videos watched, and the last ten saved for later. The first is a query change:
+`/api/history` already took `?limit=`, so a rail is that endpoint asked for ten.
+The second had nothing behind it at all. `/watch-later` was a `ComingSoon` page
+the sidebar linked to, and there was no way to save a video for later anywhere
+in the app. Three plausible homes existed for the data.
+
+**Decision**: A new `watch_later` table — `(id, user_id, clip_id, added_at)`,
+`unique(user_id, clip_id)`, indexed `(user_id, added_at)` — plus
+`GET/POST /api/watch-later` and `DELETE /api/watch-later/[clipId]`, all three
+idempotent. Clips only, with a real foreign key, matching `watch_progress`: a
+live session is over by the time "later" arrives.
+
+No `position` column. The only order a queue has is when you saved something, so
+there is nothing to renumber and a save is one insert with no read first —
+unlike `playlist_items`, which reads `max(position) + 1`.
+
+`onConflictDoNothing` on the unique index is what makes the ⋮ menu item able to
+fire without checking membership first, and it keeps the *original* `added_at`
+so re-saving doesn't quietly jump an old item to the front of the queue.
+
+**Rejected**: *A system playlist* — a reserved row in `playlists` with a magic
+title. It reuses a table and three endpoints, but every playlist query then
+grows an "…except the special one" clause, and every rename, delete and
+visibility path has to refuse it. That is a conditional in a dozen places to
+save one migration. *The localStorage watchlist* (`stores/watchlist`, `/watchlist`)
+— it already stores saved videos, but it's bound to a browser, and a queue you
+can't reach from your phone isn't a queue. It stays as-is: it's the only save a
+signed-out visitor can make, which is precisely why it can't be the account-bound
+one. *A `kind` discriminator on `watch_progress`* — "saved" and "watched" would
+share a table and then fight over `updated_at`, which means two different
+questions ordered by one column.
+
+**Consequences**: `docs/watch-later.md` is the subsystem write-up. `/watch-later`
+stops being a placeholder. `HomeShelves` goes from six shelves to eight, and the
+three personal ones (continue, watch later, recently watched) now share one card,
+`HomeRailCard` — extracted from `HomeContinueCard`, which was the only card of
+that shape until this session (CLAUDE.md rule 10). The recently-watched rail is
+cached at `['home', 'history']` rather than under `['history']` on purpose: the
+history mutations patch every entry under that prefix as `InfiniteData`, and a
+flat ten-row array in the same namespace would be read as a page list that has
+no `pages`. Saving is add-only from the grid — there is no membership endpoint,
+so a card doesn't know whether its video is already queued. Undo lives on the
+toast, which is the pattern `useHomeFeedback` already set; a "Saved ✓" state on
+the menu item would need that endpoint and is the obvious next step if it's
+wanted.

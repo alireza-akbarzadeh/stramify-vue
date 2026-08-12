@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { Button } from '@/components/ui/button'
 import { useHomeFeedback } from '@/composables/useHomeFeedback'
+import { useSaveToWatchLater } from '@/composables/useWatchLater'
 import { useWatchlistStore } from '@/stores/watchlist'
 import { relatedToItem } from '@/utils/watchlist'
 import HomeVideoCard from './HomeVideoCard.vue'
@@ -38,6 +39,9 @@ const watchlist = useWatchlistStore()
  * of it. Hiding a card rewrites this grid's own cache — see `useHomeFeedback`.
  */
 const feedback = useHomeFeedback()
+
+/** Owned here for the same reason the feedback mutation is — one per grid. */
+const watchLater = useSaveToWatchLater()
 
 /**
  * One literal, used by the real grid and by both skeleton grids, so a
@@ -96,6 +100,7 @@ const MORE_SKELETONS = 4
           :saved="watchlist.isSaved(video.id)"
           :video="video"
           @toggle-save="watchlist.toggle(relatedToItem(video))"
+          @save-later="watchLater.submit(video.id)"
           @feedback="feedback.submit($event)"
         />
         <!-- The next page lands in these slots, so the page grows downward

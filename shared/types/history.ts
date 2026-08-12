@@ -45,3 +45,13 @@ export const HISTORY_PAGE_SIZE = 30
 
 /** Longest accepted search term, enforced by Zod at the API boundary. */
 export const HISTORY_QUERY_MAX = 100
+
+/**
+ * Cards in the home page's "Recently watched" rail.
+ *
+ * Ten, not thirty: the rail is a glance back at what you've been watching, and
+ * `/history` — one click away on the rail's own heading — is where the full,
+ * searchable, day-grouped list lives. Same count as the Watch later rail beside
+ * it, so the two shelves scroll at the same rhythm.
+ */
+export const HISTORY_RAIL_LIMIT = 10

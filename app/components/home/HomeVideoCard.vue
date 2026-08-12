@@ -28,7 +28,10 @@ const props = withDefaults(
   }>(),
   { allowFeedback: true }
 )
-defineEmits<{ (e: 'toggle-save'): void; (e: 'feedback', value: HomeFeedback): void }>()
+defineEmits<{
+  (e: 'toggle-save' | 'save-later'): void
+  (e: 'feedback', value: HomeFeedback): void
+}>()
 
 const to = computed(() => `/watch/${encodeURIComponent(props.video.slug)}`)
 const reason = computed(() =>
@@ -83,6 +86,7 @@ const reason = computed(() =>
         :allow-feedback="allowFeedback"
         class="relative z-10 -mr-1"
         @toggle-save="$emit('toggle-save')"
+        @save-later="$emit('save-later')"
         @feedback="$emit('feedback', $event)"
       />
     </div>

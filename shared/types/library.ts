@@ -20,6 +20,36 @@ export interface ContinueWatchingItem extends RelatedItem {
 }
 
 /**
+ * A clip in the viewer's Watch later queue.
+ *
+ * `RelatedItem` again, plus who published it and when you saved it — the two
+ * things a saved card shows that a recommendation doesn't. `kind` is always
+ * `'clip'`: the queue can't hold a live session (see `watch_later`).
+ */
+export interface WatchLaterItem extends RelatedItem {
+  /**
+   * When it was saved, ISO 8601.
+   *
+   * Raw rather than pre-formatted, for the same reason `HistoryItem.watchedAt`
+   * is: "Saved yesterday" depends on the viewer's timezone, which the server
+   * doesn't know.
+   */
+  addedAt: string
+  avatarUrl: string | null
+}
+
+/**
+ * Cards in the home page's Watch later rail.
+ *
+ * Ten, matching the recently-watched rail beside it: a rail is a glance at a
+ * list, not the list — `/watch-later` is where the rest lives.
+ */
+export const WATCH_LATER_RAIL_LIMIT = 10
+
+/** Ceiling on `?limit=` at the API boundary. The page asks for a screenful. */
+export const WATCH_LATER_MAX_LIMIT = 60
+
+/**
  * What the player sends up as it plays.
  *
  * Position and "did it finish", and nothing else — the runtime is *not* on the
