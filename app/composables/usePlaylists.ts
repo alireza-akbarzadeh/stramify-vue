@@ -1,9 +1,21 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import type { MaybeRefOrGetter } from 'vue'
 import { useAuthStore } from '@/stores/auth'
-import type { PlaylistDetail, PlaylistDraft, PlaylistSummary } from '#shared/types/library'
+import { movedPlaylistItems } from '#shared/utils/library'
+import type {
+  PlaylistDetail,
+  PlaylistDraft,
+  PlaylistMove,
+  PlaylistPatch,
+  PlaylistSummary
+} from '#shared/types/library'
 
 export const PLAYLISTS_KEY = ['playlists']
+
+/** The detail query's key. Exported so the mutations below can invalidate it. */
+export function playlistKey(id: string) {
+  return ['playlist', id]
+}
 
 /**
  * The viewer's playlists.
@@ -26,7 +38,34 @@ export function usePlaylists() {
 export function usePlaylist(id: MaybeRefOrGetter<string>) {
   return useQuery({
     queryKey: ['playlist', computed(() => toValue(id))],
+    enabled: computed(() => !!toValue(id)),
     queryFn: () => $fetch<PlaylistDetail>(`/api/playlists/${encodeURIComponent(toValue(id))}`)
+  })
+}
+
+/**
+ * Rename a playlist, or change its description or visibility.
+ *
+ * Both caches are invalidated: the library grid draws the title and the lock
+ * icon, and the detail page draws all three, so refreshing only the one the
+ * edit was launched from would leave the other showing the old name.
+ */
+export function useUpdatePlaylist() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: ({ id, patch }: { id: string; patch: PlaylistPatch }) =>
+      $fetch<PlaylistSummary>(`/api/playlists/${encodeURIComponent(id)}`, {
+        method: 'PATCH',
+        body: patch
+      }),
+
+    onSuccess: async (_updated, { id }) => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: PLAYLISTS_KEY }),
+        queryClient.invalidateQueries({ queryKey: playlistKey(id) })
+      ])
+    }
   })
 }
 
@@ -101,9 +140,52 @@ export function useRemovePlaylistItem(playlistId: MaybeRefOrGetter<string>) {
 
     onSuccess: async () => {
       await Promise.all([
-        queryClient.invalidateQueries({ queryKey: ['playlist', toValue(playlistId)] }),
+        queryClient.invalidateQueries({ queryKey: playlistKey(toValue(playlistId)) }),
         queryClient.invalidateQueries({ queryKey: PLAYLISTS_KEY })
       ])
     }
+  })
+}
+
+/**
+ * Move a video one slot up or down.
+ *
+ * Optimistic, and it has to be: reordering is a direct-manipulation gesture, so
+ * a row that only moves once the server answers reads as a dropped click and
+ * invites a second press. The swap mirrors the server's — neighbours trade
+ * places — and `onSettled` refetches so the stored positions, which the client
+ * never computes, come back authoritative either way.
+ */
+export function useMovePlaylistItem(playlistId: MaybeRefOrGetter<string>) {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: ({ clipId, direction }: { clipId: string; direction: PlaylistMove }) =>
+      $fetch<{ moved: boolean }>(
+        `/api/playlists/${encodeURIComponent(toValue(playlistId))}/items/${encodeURIComponent(clipId)}`,
+        { method: 'PATCH', body: { direction } }
+      ),
+
+    onMutate: async ({ clipId, direction }) => {
+      const key = playlistKey(toValue(playlistId))
+      await queryClient.cancelQueries({ queryKey: key })
+      const previous = queryClient.getQueryData<PlaylistDetail>(key)
+
+      queryClient.setQueryData<PlaylistDetail>(key, (detail) => {
+        if (!detail) return detail
+        const items = movedPlaylistItems(detail.items, clipId, direction)
+        // Same reference back when the move was a no-op — see `movedPlaylistItems`.
+        return items === detail.items ? detail : { ...detail, items }
+      })
+
+      return { previous, key }
+    },
+
+    onError: (_error, _variables, context) => {
+      if (context?.previous) queryClient.setQueryData(context.key, context.previous)
+    },
+
+    onSettled: () =>
+      queryClient.invalidateQueries({ queryKey: playlistKey(toValue(playlistId)) })
   })
 }

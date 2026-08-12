@@ -2,11 +2,12 @@
 import { ListVideo } from '@lucide/vue'
 import { toast } from 'vue-sonner'
 import { useCreatePlaylist, useDeletePlaylist, usePlaylists } from '@/composables/usePlaylists'
+import { usePlaylistEditor } from '@/composables/usePlaylistEditor'
 import { useAuthStore } from '@/stores/auth'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import PlaylistCard from './PlaylistCard.vue'
-import PlaylistCreateDialog from './PlaylistCreateDialog.vue'
+import PlaylistFormDialog from './PlaylistFormDialog.vue'
 import type { PlaylistDraft } from '#shared/types/library'
 
 /**
@@ -21,6 +22,13 @@ const auth = useAuthStore()
 const { data, isPending, isError, refetch } = usePlaylists()
 const create = useCreatePlaylist()
 const remove = useDeletePlaylist()
+const {
+  open: editOpen,
+  target: editTarget,
+  edit,
+  submit: saveEdit,
+  pending: editPending
+} = usePlaylistEditor()
 
 const playlists = computed(() => data.value ?? [])
 const createOpen = ref(false)
@@ -55,11 +63,11 @@ const SKELETONS = 8
           Your own collections of clips, in the order you put them.
         </p>
       </div>
-      <PlaylistCreateDialog
+      <PlaylistFormDialog
         v-if="auth.isAuthenticated"
         v-model:open="createOpen"
         :pending="create.isPending.value"
-        @create="onCreate"
+        @submit="onCreate"
       />
     </div>
 
@@ -117,7 +125,17 @@ const SKELETONS = 8
         deletable
         :playlist="playlist"
         @delete="onDelete(playlist.id, playlist.title)"
+        @edit="edit(playlist)"
       />
     </div>
+
+    <!-- One dialog for the whole grid — see `usePlaylistEditor`. -->
+    <PlaylistFormDialog
+      v-model:open="editOpen"
+      hide-trigger
+      :playlist="editTarget"
+      :pending="editPending"
+      @submit="saveEdit"
+    />
   </div>
 </template>

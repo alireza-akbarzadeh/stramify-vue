@@ -4,10 +4,10 @@
   smudges at 16–32px, which is the only size range a favicon is ever seen
   at. The play glyph is scaled up to fill the space they vacate.
 
-  Shipped as SVG so it stays sharp on any DPI; `favicon.ico` remains
-  alongside it for browsers that ignore `rel="icon" type="image/svg+xml"`.
-  This file is hand-authored, not generated — `npm run icons:pwa` does not
-  touch it.
+  Shipped as SVG so it stays sharp on any DPI. This file is hand-authored;
+  `npm run icons:pwa` reads it (never writes it) to build `favicon.ico`
+  alongside, at 16/32/48, for browsers that ignore
+  `rel="icon" type="image/svg+xml"`.
 -->
 <svg
   xmlns="http://www.w3.org/2000/svg"

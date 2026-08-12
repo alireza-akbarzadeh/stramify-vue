@@ -63,10 +63,18 @@ differently:
 | `pwa-icon-maskable.svg` | `maskable-512x512` | Cropped to the platform's shape — full-bleed, glyph scaled to 72% to sit inside the 80%-diameter safe zone |
 | `pwa-icon-apple.svg` | `apple-touch-icon-180x180` | iOS composites alpha onto black and applies its own squircle, so: opaque, no authored corners |
 
-`public/favicon.svg` is hand-authored separately and **not** generated: it
-drops the film-strip perforations, which turn into grey smudges below
-~32px — the only size a favicon is ever seen at. `public/favicon.ico`
-remains as the fallback for browsers that ignore SVG favicons.
+`public/favicon.svg` is hand-authored separately: it drops the film-strip
+perforations, which turn into grey smudges below ~32px — the only size a
+favicon is ever seen at. The script **reads** it (never writes it) to build
+`public/favicon.ico` at 16/32/48, for browsers that ignore SVG favicons and
+for anything hitting `/favicon.ico` directly. The `.ico` is assembled by
+hand in `generate-pwa-icons.mjs` rather than via `png-to-ico` — the format
+is a 6-byte header, a 16-byte entry per image, then PNG payloads.
+
+**The two `<link rel="icon">` entries in `app.head` are ordered `.ico`
+first, SVG second, and that order is load-bearing.** Chrome and Firefox use
+the *last* icon link they can consume, so putting the SVG first makes them
+serve the `.ico` indefinitely. This is the opposite of how it reads.
 
 The mark itself is a rose-gradient tile (tracking `--primary: #ff335f` from
 `app/assets/css/main.css`) with film-strip perforations and a play glyph.
@@ -125,6 +133,16 @@ The mark itself is a rose-gradient tile (tracking `--primary: #ff335f` from
   exempt), a registered worker with a fetch handler, and *both* a 192×192
   and a 512×512 `purpose: "any"` icon. Dropping either icon disables the
   prompt with no error — check devtools → Application → Manifest.
+- **Tab still shows the old favicon after a change.** Check the `<link>`
+  order first (`.ico` before SVG — see above); getting it backwards is
+  silent. If the order is right, it's Chrome's favicon store, which a hard
+  reload does not clear — confirm in an incognito window, which bypasses it.
+- **Installed app shows the wrong name and icon entirely.** The manifest at
+  a scope does not rename an app that is already installed; identity is
+  captured at install time. On a reused origin like `localhost:3000` that
+  means a previous project's installed PWA wraps this app's content in its
+  own name and icon. Uninstall it (`chrome://apps`) and clear site data
+  before installing again.
 - **Home-screen icon has black corners on iOS.** Something reintroduced
   alpha into `apple-touch-icon-180x180.png`. It must stay opaque and
   full-bleed; `generate-pwa-icons.mjs` flattens it for exactly this reason.

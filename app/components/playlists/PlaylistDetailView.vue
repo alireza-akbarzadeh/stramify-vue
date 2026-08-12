@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import { ArrowLeft, Lock, Play, X } from '@lucide/vue'
+import { ArrowLeft, Lock, Pencil, Play } from '@lucide/vue'
 import { toast } from 'vue-sonner'
-import { usePlaylist, useRemovePlaylistItem } from '@/composables/usePlaylists'
+import {
+  useMovePlaylistItem,
+  usePlaylist,
+  useRemovePlaylistItem
+} from '@/composables/usePlaylists'
+import { usePlaylistEditor } from '@/composables/usePlaylistEditor'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import PlaylistRow from './PlaylistRow.vue'
-import { playlistCountLabel } from '#shared/utils/library'
+import PlaylistFormDialog from './PlaylistFormDialog.vue'
+import PlaylistItemRow from './PlaylistItemRow.vue'
+import { playlistCountLabel, playlistWatchHref } from '#shared/utils/library'
+import type { PlaylistMove } from '#shared/types/library'
 
 /**
  * `/playlists/[id]` — one playlist, header beside its contents.
@@ -14,27 +21,50 @@ import { playlistCountLabel } from '#shared/utils/library'
  * the point, which a wall of equal-weight cards hides. Same reasoning as the
  * watch page's up-next rail using rows.
  *
- * Removal only renders for the owner, and the server re-checks that on every
- * write — the missing button is a convenience, not the authorization.
+ * The owner-only controls (edit, reorder, remove) only render for the owner,
+ * and the server re-checks that on every write — the missing buttons are a
+ * convenience, not the authorization.
  */
 const props = defineProps<{ id: string }>()
 
 const { data, isPending, isError, error, refetch } = usePlaylist(() => props.id)
 const removeItem = useRemovePlaylistItem(() => props.id)
+const moveItem = useMovePlaylistItem(() => props.id)
+const {
+  open: editOpen,
+  target: editTarget,
+  edit,
+  submit: saveEdit,
+  pending: editPending
+} = usePlaylistEditor()
 
 const notFound = computed(
   () => (error.value as { statusCode?: number } | null)?.statusCode === 404
 )
 const items = computed(() => data.value?.items ?? [])
+
+/**
+ * "Play all" opens the first video *with the playlist attached* — `?list=` is
+ * what makes the watch page queue the rest and auto-advance, instead of
+ * dropping the viewer into a single clip surrounded by unrelated
+ * recommendations.
+ */
 const playAllHref = computed(() => {
   const first = items.value[0]
-  return first ? `/watch/${encodeURIComponent(first.slug)}` : null
+  return first ? playlistWatchHref(first.slug, props.id) : null
 })
 
 function onRemove(clipId: string) {
   removeItem.mutate(clipId, {
     onError: () => toast.error("Couldn't remove that video.")
   })
+}
+
+function onMove(clipId: string, direction: PlaylistMove) {
+  moveItem.mutate(
+    { clipId, direction },
+    { onError: () => toast.error("Couldn't reorder that video.") }
+  )
 }
 
 useHead({
@@ -96,12 +126,24 @@ useHead({
             {{ data.description }}
           </p>
 
-          <Button v-if="playAllHref" as-child class="mt-4" size="sm">
-            <NuxtLink :to="playAllHref">
-              <Play class="fill-current" />
-              Play all
-            </NuxtLink>
-          </Button>
+          <div class="mt-4 flex flex-wrap items-center gap-2">
+            <Button v-if="playAllHref" as-child size="sm">
+              <NuxtLink :to="playAllHref">
+                <Play class="fill-current" />
+                Play all
+              </NuxtLink>
+            </Button>
+            <Button
+              v-if="data.isOwner"
+              type="button"
+              size="sm"
+              variant="outline"
+              @click="edit(data)"
+            >
+              <Pencil />
+              Edit
+            </Button>
+          </div>
         </template>
       </header>
 
@@ -130,22 +172,27 @@ useHead({
         </div>
 
         <ol v-else class="space-y-2">
-          <li v-for="(item, index) in items" :key="item.id" class="group relative">
-            <PlaylistRow :item="item" :index="index + 1" />
-            <Button
-              v-if="data?.isOwner"
-              type="button"
-              variant="ghost"
-              size="icon"
-              class="absolute right-1 top-1 size-8 rounded-full opacity-0 transition-opacity focus-visible:opacity-100 group-hover:opacity-100"
-              :aria-label="`Remove ${item.title} from this playlist`"
-              @click="onRemove(item.id)"
-            >
-              <X class="size-4" />
-            </Button>
+          <li v-for="(item, index) in items" :key="item.id">
+            <PlaylistItemRow
+              :item="item"
+              :index="index + 1"
+              :owner="data?.isOwner"
+              :first="index === 0"
+              :last="index === items.length - 1"
+              @remove="onRemove(item.id)"
+              @move="onMove(item.id, $event)"
+            />
           </li>
         </ol>
       </section>
     </div>
+
+    <PlaylistFormDialog
+      v-model:open="editOpen"
+      hide-trigger
+      :playlist="editTarget"
+      :pending="editPending"
+      @submit="saveEdit"
+    />
   </div>
 </template>

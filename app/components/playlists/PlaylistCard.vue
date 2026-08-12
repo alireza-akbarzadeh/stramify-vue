@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Lock, MoreVertical, Trash2 } from '@lucide/vue'
+import { Lock, MoreVertical, Pencil, Trash2 } from '@lucide/vue'
 import CoverStack from '@/components/CoverStack.vue'
 import { Button } from '@/components/ui/button'
 import {
@@ -27,11 +27,15 @@ import type { PlaylistSummary } from '#shared/types/library'
  *
  * The delete path is an `AlertDialog`, not a bare menu item: deleting cascades
  * to every item in the list and there's no undo, so it's the one action here
- * that has to be confirmed. The menu itself is optional chrome — pass
- * `deletable: false` (the home rail) to render the card as a plain link.
+ * that has to be confirmed. Editing isn't confirmed, because it's reversible by
+ * editing again. The menu itself is optional chrome — pass `deletable: false`
+ * (the home rail) to render the card as a plain link.
+ *
+ * `edit` is emitted rather than handled here: the form dialog is owned by the
+ * library, so opening one shared dialog beats mounting a copy per card.
  */
 const props = defineProps<{ playlist: PlaylistSummary; deletable?: boolean }>()
-defineEmits<{ (e: 'delete'): void }>()
+defineEmits<{ (e: 'delete'): void; (e: 'edit'): void }>()
 
 const to = computed(() => `/playlists/${encodeURIComponent(props.playlist.id)}`)
 const count = computed(() => playlistCountLabel(props.playlist.itemCount))
@@ -76,6 +80,11 @@ const count = computed(() => playlistCountLabel(props.playlist.itemCount))
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
+        <DropdownMenuItem @select="$emit('edit')">
+          <Pencil class="size-4" />
+          Edit
+        </DropdownMenuItem>
+
         <AlertDialog>
           <AlertDialogTrigger as-child>
             <!-- `@select.prevent` keeps the menu from closing before the

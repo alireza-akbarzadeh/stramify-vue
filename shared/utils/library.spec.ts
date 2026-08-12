@@ -3,7 +3,9 @@ import { describe, expect, it } from 'vitest'
 import {
   formatRemaining,
   isResumable,
+  movedPlaylistItems,
   playlistCountLabel,
+  playlistWatchHref,
   progressPercent,
   RESUME_MAX_FRACTION,
   RESUME_MIN_SECONDS,
@@ -80,5 +82,50 @@ describe('playlistCountLabel', () => {
   it('is singular at one', () => {
     expect(playlistCountLabel(1)).toBe('1 video')
     expect(playlistCountLabel(2)).toBe('2 videos')
+  })
+})
+
+describe('playlistWatchHref', () => {
+  it('carries the playlist as ?list= so the queue survives the hop', () => {
+    expect(playlistWatchHref('clip-rendering', 'pl-1')).toBe('/watch/clip-rendering?list=pl-1')
+  })
+
+  it('is a plain watch link with no playlist', () => {
+    expect(playlistWatchHref('clip-rendering', '')).toBe('/watch/clip-rendering')
+  })
+
+  it('encodes both halves', () => {
+    expect(playlistWatchHref('a b', 'p/1')).toBe('/watch/a%20b?list=p%2F1')
+  })
+})
+
+describe('movedPlaylistItems', () => {
+  const items = [{ id: 'a' }, { id: 'b' }, { id: 'c' }]
+
+  it('swaps an item with the one above it', () => {
+    expect(movedPlaylistItems(items, 'b', 'up').map((item) => item.id)).toEqual(['b', 'a', 'c'])
+  })
+
+  it('swaps an item with the one below it', () => {
+    expect(movedPlaylistItems(items, 'b', 'down').map((item) => item.id)).toEqual(['a', 'c', 'b'])
+  })
+
+  it('leaves the source array untouched', () => {
+    movedPlaylistItems(items, 'b', 'up')
+    expect(items.map((item) => item.id)).toEqual(['a', 'b', 'c'])
+  })
+
+  // The same reference is the signal callers use to skip a cache write, so
+  // these assert identity rather than deep equality.
+  it('returns the same array at the top of the list', () => {
+    expect(movedPlaylistItems(items, 'a', 'up')).toBe(items)
+  })
+
+  it('returns the same array at the bottom of the list', () => {
+    expect(movedPlaylistItems(items, 'c', 'down')).toBe(items)
+  })
+
+  it('returns the same array for an id that is not in the list', () => {
+    expect(movedPlaylistItems(items, 'nope', 'up')).toBe(items)
   })
 })

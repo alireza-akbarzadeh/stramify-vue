@@ -39,6 +39,52 @@ export interface WatchLaterItem extends RelatedItem {
 }
 
 /**
+ * A clip this viewer gave a thumbs up — one row of `/liked`.
+ *
+ * `RelatedItem` again, the same vocabulary every other card speaks, plus when
+ * the like happened. **Clips only**: a `reactions` row can also point at a live
+ * session (`target_kind`), but a session ends, and a library page full of dead
+ * links to streams that finished last month isn't a library. The session's VOD
+ * is a clip and shows up here on its own.
+ */
+export interface LikedItem extends RelatedItem {
+  /**
+   * When it was liked, ISO 8601.
+   *
+   * Raw rather than pre-formatted, for the same reason `addedAt` above is:
+   * "Liked yesterday" depends on the viewer's clock, which the server can't see.
+   */
+  likedAt: string
+  avatarUrl: string | null
+}
+
+/** One page of liked videos. `nextCursor` is null once there are no more. */
+export interface LikedPage {
+  items: LikedItem[]
+  nextCursor: number | null
+}
+
+/**
+ * How `/liked` is ordered.
+ *
+ * A tuple rather than a bare union so Zod can validate `?sort=` against the
+ * exact same list the UI offers — one place to add a fourth order, not two that
+ * can drift apart.
+ */
+export const LIKED_SORTS = ['recent', 'oldest', 'popular'] as const
+
+export type LikedSort = (typeof LIKED_SORTS)[number]
+
+/**
+ * Cards per request. A multiple of 2, 3 and 4 so the last row of the grid is
+ * full at every breakpoint the page uses instead of trailing one lonely card.
+ */
+export const LIKED_PAGE_SIZE = 24
+
+/** Longest accepted search term, enforced by Zod at the API boundary. */
+export const LIKED_QUERY_MAX = 100
+
+/**
  * Cards in the home page's Watch later rail.
  *
  * Ten, matching the recently-watched rail beside it: a rail is a glance at a
@@ -115,6 +161,21 @@ export interface PlaylistDraft {
   description?: string
   visibility?: PlaylistVisibility
 }
+
+/**
+ * What editing one takes — every field optional, because the form may be sent
+ * with only the one thing that changed. A `description` of `''` clears it.
+ */
+export type PlaylistPatch = Partial<PlaylistDraft>
+
+/**
+ * Which way a playlist item is being moved.
+ *
+ * A direction rather than a target index: reordering swaps the item with its
+ * neighbour (see `movePlaylistItem`), so the server never has to trust — or
+ * renumber against — an index the client worked out from a possibly stale list.
+ */
+export type PlaylistMove = 'up' | 'down'
 
 /** Longest a playlist title may be — enforced by Zod at the API boundary. */
 export const PLAYLIST_TITLE_MAX = 120

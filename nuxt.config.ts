@@ -10,10 +10,13 @@ export default defineNuxtConfig({
       // a document with no language, and Nuxt does not set one by default.
       htmlAttrs: { lang: 'en' },
       link: [
-        // SVG first — browsers that understand it get a mark that stays sharp
-        // at any DPI. `favicon.ico` stays behind it for the ones that don't.
+        // Order matters and is the opposite of what reads naturally: Chrome
+        // and Firefox pick the *last* icon link they can use, so the `.ico`
+        // goes first and the SVG second. Put the SVG first and Chrome quietly
+        // serves the `.ico` forever. Browsers with no SVG favicon support
+        // skip the second entry and fall back to the first.
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico', sizes: '32x32' },
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         // iOS never reads the manifest's `icons` array for the home screen —
         // this link is the only thing it looks at.
         {

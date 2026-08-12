@@ -1,4 +1,4 @@
-import { and, eq, sql } from 'drizzle-orm'
+import { and, asc, desc, eq, gt, lt, sql } from 'drizzle-orm'
 import { db } from '../db/client'
 import { clips, playlistItems, playlists } from '../db/schema'
 import { formatAge, formatDuration } from './format'
@@ -8,6 +8,8 @@ import type {
   PlaylistDraft,
   PlaylistItem,
   PlaylistMembership,
+  PlaylistMove,
+  PlaylistPatch,
   PlaylistSummary
 } from '#shared/types/library'
 
@@ -162,6 +164,41 @@ export async function createPlaylist(
 }
 
 /**
+ * Rename a playlist, rewrite its description, or change who can see it.
+ *
+ * Ownership is in the `where` for the same reason it is in `deletePlaylist` —
+ * one statement, no check-then-act window, and someone else's id affects no
+ * rows. The summary is re-read afterwards rather than assembled from the
+ * `returning()` row, because the card this feeds also shows the item count and
+ * the cover stack, and neither lives on `playlists`.
+ *
+ * An empty description clears the column: the edit form sends `''` when the
+ * field is emptied, and storing that would render as a blank paragraph rather
+ * than as "no description".
+ */
+export async function updatePlaylist(
+  userId: string,
+  id: string,
+  patch: PlaylistPatch
+): Promise<PlaylistSummary | null> {
+  const [row] = await db
+    .update(playlists)
+    .set({
+      ...(patch.title !== undefined && { title: patch.title }),
+      ...(patch.description !== undefined && { description: patch.description || null }),
+      ...(patch.visibility !== undefined && { visibility: patch.visibility }),
+      updatedAt: new Date()
+    })
+    .where(and(eq(playlists.id, id), eq(playlists.userId, userId)))
+    .returning({ id: playlists.id })
+
+  if (!row) return null
+
+  const [summary] = [...(await db.execute<SummaryRow>(summarySelect(sql`p.id = ${id}`)))]
+  return summary ? toSummary(summary) : null
+}
+
+/**
  * Delete a playlist you own.
  *
  * Ownership is in the `where`, not in a read-then-delete: scoping the write
@@ -240,6 +277,69 @@ export async function removeFromPlaylist(
   await db
     .delete(playlistItems)
     .where(and(eq(playlistItems.playlistId, playlistId), eq(playlistItems.clipId, clipId)))
+
+  await touch(playlistId)
+  return true
+}
+
+/**
+ * Move a clip one slot up or down its playlist.
+ *
+ * Swaps the two rows' `position` values rather than renumbering the list. That
+ * keeps the sparse-position invariant `playlist_items` is built on (see the
+ * schema): a swap is two updates whatever the list's length, where "move to
+ * index N" would rewrite every row below the move. There is no unique index on
+ * `(playlist_id, position)`, so the pair can cross without an intermediate
+ * value, and the transaction is what stops a crash between the two statements
+ * leaving both rows on the same position.
+ *
+ * An item already at the end it's moving towards returns `true` with no write:
+ * that's the state the caller asked for, and the arrow it pressed is disabled
+ * in the UI anyway.
+ */
+export async function movePlaylistItem(
+  userId: string,
+  playlistId: string,
+  clipId: string,
+  direction: PlaylistMove
+): Promise<boolean> {
+  if (!(await ownsPlaylist(userId, playlistId))) return false
+
+  const [item] = await db
+    .select({ id: playlistItems.id, position: playlistItems.position })
+    .from(playlistItems)
+    .where(and(eq(playlistItems.playlistId, playlistId), eq(playlistItems.clipId, clipId)))
+    .limit(1)
+
+  if (!item) return false
+
+  const up = direction === 'up'
+  const [neighbour] = await db
+    .select({ id: playlistItems.id, position: playlistItems.position })
+    .from(playlistItems)
+    .where(
+      and(
+        eq(playlistItems.playlistId, playlistId),
+        up
+          ? lt(playlistItems.position, item.position)
+          : gt(playlistItems.position, item.position)
+      )
+    )
+    .orderBy(up ? desc(playlistItems.position) : asc(playlistItems.position))
+    .limit(1)
+
+  if (!neighbour) return true
+
+  await db.transaction(async (tx) => {
+    await tx
+      .update(playlistItems)
+      .set({ position: neighbour.position })
+      .where(eq(playlistItems.id, item.id))
+    await tx
+      .update(playlistItems)
+      .set({ position: item.position })
+      .where(eq(playlistItems.id, neighbour.id))
+  })
 
   await touch(playlistId)
   return true

@@ -14,6 +14,7 @@ import { useWatchReaction } from '@/composables/useWatchEngagement'
 import { useChannelFollow } from '@/composables/useChannel'
 import { useViewCounter } from '@/composables/useViewCounter'
 import { useWatchProgress } from '@/composables/useWatchProgress'
+import { useWatchPlaylist } from '@/composables/useWatchPlaylist'
 import { useAuthStore } from '@/stores/auth'
 import { useWatchlistStore } from '@/stores/watchlist'
 import { watchTargetToItem } from '@/utils/watchlist'
@@ -38,6 +39,7 @@ const { reactions, toggle: react } = useWatchReaction(slug)
 const { channel, toggle: follow, notify } = useChannelFollow(channelName)
 const { count } = useViewCounter(slug)
 const { start, track, finish } = useWatchProgress(slug)
+const queue = useWatchPlaylist(slug)
 const { user } = storeToRefs(useAuthStore())
 const watchlist = useWatchlistStore()
 
@@ -112,6 +114,20 @@ function onPlayStart() {
   count()
   start()
 }
+/**
+ * Playback finished: record the completion, then advance if the viewer is
+ * playing through a playlist (`?list=`).
+ *
+ * Only ever forward, and only to a clip the queue actually names — the guard
+ * lives in `useWatchPlaylist`'s `next`, which is `null` both at the end of the
+ * list and when the current clip isn't in it. Nothing auto-advances outside a
+ * playlist: the up-next rail is a suggestion, not a queue the viewer opted into.
+ */
+function onEnded() {
+  finish()
+  if (queue.next.value) navigateTo(queue.hrefFor(queue.next.value))
+}
+
 function onSave() {
   if (target.data.value) watchlist.toggle(watchTargetToItem(target.data.value))
 }
@@ -197,7 +213,7 @@ function onShare() {
       :resume-at="resumeAt"
       @play-start="onPlayStart"
       @progress="track"
-      @ended="finish"
+      @ended="onEnded"
       @react="onReact"
       @toggle-save="onSave"
       @share="onShare"

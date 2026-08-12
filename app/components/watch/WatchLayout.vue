@@ -10,6 +10,7 @@ import WatchChannelBar from './WatchChannelBar.vue'
 import WatchDescription from './WatchDescription.vue'
 import WatchComments from './WatchComments.vue'
 import WatchChat from './WatchChat.vue'
+import WatchPlaylistQueue from './WatchPlaylistQueue.vue'
 import WatchUpNext from './WatchUpNext.vue'
 import { useTheaterMode, useTheaterShortcut } from '@/composables/useTheaterMode'
 
@@ -151,6 +152,10 @@ useTheaterShortcut()
           @send="$emit('send-chat', $event)"
           @retry="$emit('retry-chat')"
         />
+        <!-- Above "Up next" and self-fetching for the same reason
+             `WatchSaveToPlaylist` is: it renders only when the URL carries
+             `?list=`, and nothing else on the page reads the queue. -->
+        <WatchPlaylistQueue :slug="target.slug" />
         <WatchUpNext
           :items="related.items"
           :pending="related.pending"

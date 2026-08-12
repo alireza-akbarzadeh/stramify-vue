@@ -74,3 +74,39 @@ export function playlistCountLabel(itemCount: number): string {
   if (itemCount === 0) return 'No videos yet'
   return itemCount === 1 ? '1 video' : `${itemCount} videos`
 }
+
+/**
+ * Where a clip opens when it's being played *as part of* a playlist.
+ *
+ * `?list=` is the same deep-link convention as `?t=` above: the queue lives in
+ * the URL, so it survives a refresh and a shared link puts the recipient in the
+ * playlist too, rather than on one loose video.
+ */
+export function playlistWatchHref(slug: string, playlistId: string): string {
+  const path = `/watch/${encodeURIComponent(slug)}`
+  return playlistId ? `${path}?list=${encodeURIComponent(playlistId)}` : path
+}
+
+/**
+ * One playlist item swapped with its neighbour — the optimistic half of a
+ * reorder, and the same operation the server performs.
+ *
+ * Returns the array unchanged (the identical reference) when the move can't
+ * happen: an unknown id, or an item already at the end it's moving towards.
+ * Callers write the result straight into the query cache, so "no move" has to
+ * mean "no re-render", not "a new array of the same items".
+ */
+export function movedPlaylistItems<T extends { id: string }>(
+  items: T[],
+  clipId: string,
+  direction: 'up' | 'down'
+): T[] {
+  const from = items.findIndex((item) => item.id === clipId)
+  const to = direction === 'up' ? from - 1 : from + 1
+  if (from === -1 || to < 0 || to >= items.length) return items
+
+  const next = [...items]
+  next[from] = items[to]!
+  next[to] = items[from]!
+  return next
+}

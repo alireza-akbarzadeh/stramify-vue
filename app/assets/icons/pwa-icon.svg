@@ -9,9 +9,13 @@
   because "any" icons are shown as-authored (Chrome desktop install UI,
   Windows tiles, the manifest preview in devtools).
 
-  Colours track the design tokens in `app/assets/css/main.css`:
-  `--primary: #ff335f` (light) / `#ff4b6e` (dark), spread into a gradient
-  so the tile has depth at large sizes.
+  Colours track the `primary` design token in `app/assets/css/main.css`
+  (#ff335f light, #ff4b6e dark), spread into a gradient so the tile has
+  depth at large sizes.
+
+  Note for editors: XML forbids a double hyphen inside a comment, so the
+  CSS custom-property names these hex values come from cannot be written
+  out here — librsvg rejects the whole file if you do.
 -->
 <svg
   xmlns="http://www.w3.org/2000/svg"

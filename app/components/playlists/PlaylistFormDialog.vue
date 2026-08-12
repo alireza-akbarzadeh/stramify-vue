@@ -14,23 +14,31 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { PLAYLIST_DESCRIPTION_MAX, PLAYLIST_TITLE_MAX } from '#shared/types/library'
-import type { PlaylistDraft, PlaylistVisibility } from '#shared/types/library'
+import type { PlaylistDraft, PlaylistSummary, PlaylistVisibility } from '#shared/types/library'
 
 /**
- * "New playlist".
+ * The playlist form — "New playlist" and "Edit playlist" are the same three
+ * fields, so they're the same dialog.
  *
- * A dialog rather than an inline form because it's launched from two places
- * (the library header and the save-to-playlist menu) and both need the same
- * fields. `v-model:open` is exposed so the save menu can open it without
- * rendering the trigger — hence `hideTrigger`.
+ * Pass `playlist` to edit it and the dialog seeds from it, retitles itself and
+ * emits the changed fields; leave it out and it's a create form. Launched from
+ * four places (the library header, a library card's menu, the detail page
+ * header, and the watch page's save menu), which is why the fields live here
+ * rather than inline in any of them.
  *
- * Validation is a mirror of the endpoint's Zod schema, not a replacement for
- * it: this is here so the button can be disabled rather than the server having
- * to reject an obviously empty title (CLAUDE.md §5 — the real check stays
- * server-side).
+ * `v-model:open` is exposed so the menu-driven callers can open it without
+ * rendering a trigger — hence `hideTrigger`.
+ *
+ * Validation mirrors the endpoint's Zod schema rather than replacing it: it's
+ * here so the button can be disabled, not so the server can trust the client
+ * (CLAUDE.md §5 — the real check stays server-side).
  */
-const props = defineProps<{ pending?: boolean; hideTrigger?: boolean }>()
-const emit = defineEmits<{ (e: 'create', draft: PlaylistDraft): void }>()
+const props = defineProps<{
+  pending?: boolean
+  hideTrigger?: boolean
+  playlist?: PlaylistSummary | null
+}>()
+const emit = defineEmits<{ (e: 'submit', draft: PlaylistDraft): void }>()
 
 const open = defineModel<boolean>('open', { default: false })
 
@@ -38,7 +46,15 @@ const title = ref('')
 const description = ref('')
 const visibility = ref<PlaylistVisibility>('private')
 
+const editing = computed(() => !!props.playlist)
 const valid = computed(() => title.value.trim().length > 0)
+
+// Scoped ids: a library page can have this dialog mounted more than once (the
+// header's and a card's), and duplicate DOM ids would point every label at the
+// first one's input.
+const titleId = useId()
+const descriptionId = useId()
+const visibilityName = useId()
 
 const VISIBILITIES: { value: PlaylistVisibility; label: string; hint: string }[] = [
   { value: 'private', label: 'Private', hint: 'Only you' },
@@ -48,20 +64,22 @@ const VISIBILITIES: { value: PlaylistVisibility; label: string; hint: string }[]
 
 function submit() {
   if (!valid.value || props.pending) return
-  emit('create', {
+  emit('submit', {
     title: title.value.trim(),
-    description: description.value.trim() || undefined,
+    // `''` rather than `undefined` when editing: the patch endpoint reads an
+    // empty string as "clear it", where an absent field means "leave it".
+    description: editing.value ? description.value.trim() : description.value.trim() || undefined,
     visibility: visibility.value
   })
 }
 
-// Cleared on close, not on open: a failed create leaves the dialog up with
-// what was typed still in it, so nothing has to be retyped.
+// Seeded on open, not cleared on close, so a failed submit leaves the dialog up
+// with what was typed still in it and nothing has to be retyped.
 watch(open, (isOpen) => {
-  if (isOpen) return
-  title.value = ''
-  description.value = ''
-  visibility.value = 'private'
+  if (!isOpen) return
+  title.value = props.playlist?.title ?? ''
+  description.value = props.playlist?.description ?? ''
+  visibility.value = props.playlist?.visibility ?? 'private'
 })
 </script>
 
@@ -76,7 +94,7 @@ watch(open, (isOpen) => {
 
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>New playlist</DialogTitle>
+        <DialogTitle>{{ editing ? 'Edit playlist' : 'New playlist' }}</DialogTitle>
         <DialogDescription>
           Collect clips to watch later or share. You can change who can see it at any time.
         </DialogDescription>
@@ -84,9 +102,9 @@ watch(open, (isOpen) => {
 
       <form class="grid gap-4" @submit.prevent="submit">
         <div class="grid gap-2">
-          <Label for="playlist-title">Title</Label>
+          <Label :for="titleId">Title</Label>
           <Input
-            id="playlist-title"
+            :id="titleId"
             v-model="title"
             :maxlength="PLAYLIST_TITLE_MAX"
             placeholder="Late night sets"
@@ -95,9 +113,11 @@ watch(open, (isOpen) => {
         </div>
 
         <div class="grid gap-2">
-          <Label for="playlist-description">Description <span class="text-muted-foreground">(optional)</span></Label>
+          <Label :for="descriptionId">
+            Description <span class="text-muted-foreground">(optional)</span>
+          </Label>
           <Textarea
-            id="playlist-description"
+            :id="descriptionId"
             v-model="description"
             :maxlength="PLAYLIST_DESCRIPTION_MAX"
             placeholder="What's in this one?"
@@ -115,7 +135,7 @@ watch(open, (isOpen) => {
             <input
               v-model="visibility"
               type="radio"
-              name="playlist-visibility"
+              :name="visibilityName"
               :value="option.value"
               class="accent-primary"
             />
@@ -127,7 +147,8 @@ watch(open, (isOpen) => {
         <DialogFooter>
           <Button type="button" variant="outline" @click="open = false">Cancel</Button>
           <Button type="submit" :disabled="!valid || pending">
-            {{ pending ? 'Creating…' : 'Create' }}
+            <template v-if="editing">{{ pending ? 'Saving…' : 'Save' }}</template>
+            <template v-else>{{ pending ? 'Creating…' : 'Create' }}</template>
           </Button>
         </DialogFooter>
       </form>

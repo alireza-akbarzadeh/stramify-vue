@@ -14,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import PlaylistCreateDialog from '@/components/playlists/PlaylistCreateDialog.vue'
+import PlaylistFormDialog from '@/components/playlists/PlaylistFormDialog.vue'
 import type { PlaylistDraft } from '#shared/types/library'
 
 /**
@@ -126,10 +126,10 @@ function onCreate(draft: PlaylistDraft) {
   </DropdownMenu>
 
   <!-- Outside the menu so closing the menu doesn't take the dialog with it. -->
-  <PlaylistCreateDialog
+  <PlaylistFormDialog
     v-model:open="createOpen"
     hide-trigger
     :pending="create.isPending.value"
-    @create="onCreate"
+    @submit="onCreate"
   />
 </template>
