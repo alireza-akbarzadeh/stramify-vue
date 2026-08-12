@@ -1,0 +1,1 @@
+CREATE INDEX "reactions_user_created_idx" ON "reactions" USING btree ("user_id","created_at");
