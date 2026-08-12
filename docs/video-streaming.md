@@ -61,15 +61,15 @@ shipped with.
 ## How to run / modify
 
 ```bash
-npm run db:generate    # after changing a schema file under server/db/schema/
-npm run db:migrate     # apply to $DATABASE_URL
-npm run db:seed        # (re-)seed everything — safe to re-run, upserts by id
-npm run db:seed:clips  # clips only
-npm run db:seed:live   # live channels only (also resets their uptime clock)
+pnpm db:generate    # after changing a schema file under server/db/schema/
+pnpm db:migrate     # apply to $DATABASE_URL
+pnpm db:seed        # (re-)seed everything — safe to re-run, upserts by id
+pnpm db:seed:clips  # clips only
+pnpm db:seed:live   # live channels only (also resets their uptime clock)
 ```
 
 To add a new sample clip, add a row to the `clips` array in
-`scripts/seed-clips.mjs` and re-run `npm run db:seed:clips` (same for
+`scripts/seed-clips.mjs` and re-run `pnpm db:seed:clips` (same for
 `scripts/seed-live-streams.mjs` / `db:seed:live`). To point at real
 creator uploads once Cloudflare Stream (ADR-005) is configured, write
 `videoUrl` as the Stream HLS manifest URL — no schema or component change
@@ -84,7 +84,7 @@ needed, the player treats it as an opaque playable source.
   `gtv-videos-bucket` — it died mid-project once already).
 - **A live channel's uptime looks absurd ("47h 12m")**: seed data, not a
   bug — `started_at` is fixed at seed time and there's no ingest keeping it
-  honest yet (Phase 7). Re-run `npm run db:seed:live`.
+  honest yet (Phase 7). Re-run `pnpm db:seed:live`.
 - **`media-player` etc. show up as unknown-element warnings in the
   console**: `vidstack.client.ts` didn't register in time, or
   `isCustomElement` in `nuxt.config.ts` got reverted. Both are required.

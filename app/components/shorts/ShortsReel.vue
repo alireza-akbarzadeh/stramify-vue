@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Short } from '#shared/types/shorts'
+import { useAutoplayGate } from '@/composables/useAutoplayGate'
 import { useShortsKeys } from '@/composables/useShortsKeys'
 import { useSnapReel } from '@/composables/useSnapReel'
 import { useShortsStore } from '@/stores/shorts'
@@ -27,6 +28,7 @@ const count = computed(() => props.items.length)
 const { index, step } = useSnapReel(container, count)
 
 useShortsKeys(step)
+useAutoplayGate()
 
 const shorts = useShortsStore()
 const router = useRouter()

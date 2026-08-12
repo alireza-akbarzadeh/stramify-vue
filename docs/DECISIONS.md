@@ -1070,3 +1070,111 @@ so a card doesn't know whether its video is already queued. Undo lives on the
 toast, which is the pattern `useHomeFeedback` already set; a "Saved ✓" state on
 the menu item would need that endpoint and is the obvious next step if it's
 wanted.
+
+## ADR-024: `/liked` reads the `reactions` table directly; its writes set rather than toggle
+
+**Context**: `/liked` was the last `ComingSoon` page the sidebar linked to, and
+its placeholder copy still said "playlist". Likes themselves already worked —
+the watch page's thumbs-up writes a `reactions` row and `readReactionSummary`
+counts them — but nothing read them back, so a like was write-only. Following
+ADR-023's shape, the obvious move was a fourth library table.
+
+**Decision**: No new table. A like **is** a `reactions` row with
+`value = 'like'`, and `/liked` is a read over those rows joined to `clips` —
+the same join shape as `selectHistory` and `selectWatchLater`. One index is
+added, `reactions_user_created_idx` on `(user_id, created_at)`, which is what
+the default "recently liked" order scans.
+
+The page's two writes are deliberately **not** the existing
+`POST /api/watch/[slug]/reaction`, which toggles. `DELETE /api/liked/[clipId]`
+means remove, and `POST /api/liked` means like, whatever the row currently says.
+On a page whose entire premise is "these are liked", a toggle arriving against a
+row that changed underneath would re-like the video the viewer just asked to
+drop — and the same hazard in reverse would make the Undo toast delete instead
+of restore. The delete is additionally scoped to `value = 'like'`, so an unlike
+racing a change of mind on the watch page can't silently clear a dislike.
+
+Clips only: `target_kind` can be `'live'`, but a session ends, and a library of
+dead links to streams that finished last month isn't a library. Vertical clips
+(shorts) *are* included — a liked short is a liked video, and `/watch` already
+redirects verticals to `/shorts`.
+
+**Rejected**: *A `liked` table alongside `watch_later`* — symmetric with
+ADR-023, but it would mean two writes per thumbs-up and a whole class of bug
+where the page and the button disagree about the same like. The asymmetry is
+real and load-bearing: Watch later had no existing store, likes already had one.
+*Reusing the toggle endpoint for both writes* — one fewer route, at the cost of
+a UI whose "remove" can add and whose "undo" can remove. *Filtering the list to
+landscape clips* — it would make every card a tidy 16:9, by quietly dropping
+videos the viewer had explicitly chosen. *Ordering `recent` by
+`(created_at, id)` for keyset paging* — correct, but the second column defeats
+the index, and offset paging is what `/history` already takes for the same
+trade-off.
+
+**Consequences**: `docs/liked.md` is the subsystem write-up. `/liked` stops
+being a placeholder and becomes the third searchable library surface, sharing
+the search-field shape with `/history` and the grid and card with the home
+shelves (`HomeRailCard` again, per CLAUDE.md rule 10 — a fourth near-identical
+card was not written). It's the first surface with a **sort** control:
+`LIKED_SORTS` is one tuple, used by Zod at the boundary and by the menu that
+renders it, so the two can't drift. `?q=` and `?sort=` are mirrored into the
+URL by a single watcher — `useHistorySearch`'s one-parameter version would race
+with itself if copied twice, which is why that composable wasn't generalised.
+The reaction summary on `/watch` is invalidated by clip id on both writes, so
+un-liking here un-lights the button there.
+
+---
+
+## ADR-025: pnpm is the project's package manager, pinned via `packageManager`
+
+**Context**: The repo was installed with npm (`package-lock.json`), while the
+README still offered four package managers and the `.npmrc` escape hatch for
+`@vee-validate/zod`'s stale Zod 3 peer range was written in npm's vocabulary
+(`legacy-peer-deps`, top-level `overrides`). A Nuxt install of this size is
+mostly duplicated transitive dependencies on disk, and "whatever manager you
+like" plus one committed lockfile is a lie the next session pays for.
+
+**Decision**: pnpm, single supported manager, pinned in `package.json` via
+`packageManager` so Corepack (and pnpm itself) resolves the same version for
+everyone. `pnpm-lock.yaml` is the only committed lockfile; `package-lock.json`
+is deleted. (The pin and the lockfile swap are the one part of this ADR not yet
+executed — see PROGRESS.md; the exact version has to come from the pnpm that
+actually runs the first install, not from a guess.) Three things move with it:
+
+- `overrides.zod` → `pnpm.overrides.zod`. pnpm ignores npm's top-level
+  `overrides`, so leaving it there would have silently un-pinned Zod — the one
+  pin stopping the shadcn-vue CLI from dragging Zod 3 back in.
+- `.npmrc` keeps `legacy-peer-deps=true` **and** gains
+  `strict-peer-dependencies=false`. pnpm ignores `legacy-peer-deps`; it stays
+  because CLIs that shell out to `npm install` regardless of the project's
+  manager still hit the same stale peer range.
+- Scripts that shelled out to `npm run` (the `db:seed` chain) and
+  `playwright.config.ts`'s `webServer.command` now call `pnpm`, so they don't
+  resurrect an npm-managed `node_modules` mid-run.
+
+**On `shamefully-hoist`**: `.npmrc` has picked up `shamefully-hoist=true` from a
+concurrent session in this repo, and it is left in place rather than reverted
+under someone's feet — but the intended end state is the default symlinked
+`node_modules`. Hoisting everything to placate one package that reaches for an
+undeclared dependency hides that bug repo-wide and gives back the flat-tree
+ambiguity pnpm exists to remove. Once an install has actually been run and the
+suite is green, drop the line and see whether anything genuinely needs it; if
+something does, declare the missing dependency instead.
+
+**Rejected**: *Staying on npm* — works, but keeps the disk cost and the
+four-manager README fiction. *Bun* — fastest installer of the three and it would
+also replace the `node --env-file=.env` seed runner, but the runtime is not what
+Nitro, Drizzle and Playwright are exercised against here, and swapping package
+manager and runtime in one move makes any breakage ambiguous. *Yarn (Berry)* —
+PnP would fight Nuxt's and Vidstack's file resolution for no gain over pnpm.
+*Not pinning `packageManager`* — leaves lockfile-version drift between whoever
+has pnpm 9 and whoever has 10.
+
+**Consequences**: One install command in the README (`pnpm install`), and every
+`npm run x` in the docs is now `pnpm x`. pnpm 10 blocks dependency build scripts
+by default, so packages that legitimately need one — `sharp` for the PWA icon
+raster, esbuild, the Tailwind oxide binary — must be listed in
+`pnpm.onlyBuiltDependencies`; a missing entry shows up as "Ignored build
+scripts" at install time and as a broken native binary later. Prior session logs
+in PROGRESS.md still say `npm run` where that's what was actually run; they're
+history, not instructions.

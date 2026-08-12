@@ -1,7 +1,12 @@
 import {defineStore, skipHydrate} from 'pinia'
 import {toast} from 'vue-sonner'
 
-const MUTED_KEY = 'streamify.shorts.muted.v1'
+// `.v2` because the default flipped from muted to unmuted, and because the old
+// autoplay fallback wrote `true` into `.v1` on the first refusal — every viewer
+// who ever loaded the old page has a `true` saved under that key, and reusing it
+// would carry a silent feed forward past this change for exactly the people who
+// have used the page most.
+const MUTED_KEY = 'streamify.shorts.muted.v2'
 
 /**
  * Player state for the vertical feed: which short is on screen, whether it's
@@ -20,15 +25,33 @@ const MUTED_KEY = 'streamify.shorts.muted.v1'
  */
 export const useShortsStore = defineStore('shorts', () => {
     /**
-     * Sound is off until the viewer asks for it, and the choice is remembered.
+     * The viewer's own choice about sound, remembered across visits.
      *
-     * Not a stylistic default: browsers refuse to autoplay a video with sound
-     * that the user hasn't interacted with, so an unmuted feed would simply
-     * fail to start. `skipHydrate` + `initOnMounted` for the same reason as
+     * Sound is *on* by default. A short is a video with a soundtrack and
+     * opening it silent is a worse default than the browser's own refusal —
+     * which is a separate thing, tracked below, and not a preference.
+     *
+     * `skipHydrate` + `initOnMounted` for the same reason as
      * `stores/watchlist` — the value persists itself, so Pinia must not restore
      * the server's default over it.
      */
-    const muted = skipHydrate(useLocalStorage(MUTED_KEY, true, {initOnMounted: true}))
+    const prefersMuted = skipHydrate(useLocalStorage(MUTED_KEY, false, {initOnMounted: true}))
+
+    /**
+     * The browser refused to play this feed with sound.
+     *
+     * Every browser blocks audible autoplay until the page has been interacted
+     * with, and the only way through that refusal is to drop to silent playback
+     * and start anyway — the alternative is a feed stranded on its poster. That
+     * is the browser's decision rather than the viewer's, so it deliberately
+     * does not persist and never touches `prefersMuted`; `useAutoplayGate`
+     * clears it on the first gesture, which is the same moment the browser
+     * starts allowing sound.
+     */
+    const autoplayBlocked = ref(false)
+
+    /** Whether the short on screen is actually silent, for either reason. */
+    const muted = computed(() => prefersMuted.value || autoplayBlocked.value)
 
     const activeId = ref<string | null>(null)
     const paused = ref(false)
@@ -73,8 +96,29 @@ export const useShortsStore = defineStore('shorts', () => {
         commentsFor.value = null
     }
 
+    /**
+     * Sound off/on, from the button and from `m`.
+     *
+     * Reads `muted` rather than `prefersMuted` so the control always does what
+     * its icon says: a feed silenced by an autoplay block shows the muted icon,
+     * and pressing it has to turn sound *on* — the press is itself the gesture
+     * that lifts the block. Clearing the block here rather than leaving it to
+     * `useAutoplayGate` is what makes that one press enough.
+     */
     function toggleMuted() {
-        muted.value = !muted.value
+        const nextMuted = !muted.value
+        prefersMuted.value = nextMuted
+        autoplayBlocked.value = false
+    }
+
+    /** The browser refused audible playback — fall back to silent playback. */
+    function blockAudio() {
+        autoplayBlocked.value = true
+    }
+
+    /** A gesture landed, so audible playback is allowed again. */
+    function unblockAudio() {
+        autoplayBlocked.value = false
     }
 
     /** Tapping the video. Also the gesture that pins the feed to this short. */
@@ -117,6 +161,8 @@ export const useShortsStore = defineStore('shorts', () => {
         commentsOpen,
         setActive,
         toggleMuted,
+        blockAudio,
+        unblockAudio,
         togglePaused,
         toggleRepeat,
         openComments,

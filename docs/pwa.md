@@ -46,7 +46,7 @@ Sources are three hand-authored SVGs in `app/assets/icons/`. Rasterised to
 `public/icons/*.png` by:
 
 ```bash
-npm run icons:pwa
+pnpm icons:pwa
 ```
 
 (`scripts/generate-pwa-icons.mjs`, `sharp`, rendered at ~5× then
@@ -86,13 +86,13 @@ The mark itself is a rose-gradient tile (tracking `--primary: #ff335f` from
   need to test install or update behaviour:
 
   ```bash
-  NUXT_PWA_DEV=true npm run dev
+  NUXT_PWA_DEV=true pnpm dev
   ```
 
 - **Verify a real build** (dev mode does not exercise `generateSW`):
 
   ```bash
-  npm run build && npm run preview
+  pnpm build && pnpm preview
   ```
 
   Then in devtools → Application: Manifest (no errors, icons resolve),
@@ -155,7 +155,7 @@ The mark itself is a rose-gradient tile (tracking `--primary: #ff335f` from
   devtools → Application → Service Workers.
 - **A worker is active in dev when you didn't ask for one.** Either
   `NUXT_PWA_DEV=true` is still exported in the shell, or the browser is
-  holding a registration from a previous production `npm run preview` on the
+  holding a registration from a previous production `pnpm preview` on the
   same origin. Unregister it in devtools.
 
 > `public/sw.js` used to hold a self-destructing worker that cleared a stale

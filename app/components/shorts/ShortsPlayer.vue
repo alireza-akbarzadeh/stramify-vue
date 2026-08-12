@@ -56,9 +56,9 @@ function sync() {
   // Both routes, because each covers a half of the element's life that the
   // other cannot. The attribute goes first and above the readiness guard: it is
   // what Vidstack reads when it builds its initial state, so it is the only way
-  // the very first `<video>` is created already muted — and an unmuted first
-  // frame is exactly what the browser's autoplay policy refuses, which strands
-  // the short on its poster with no way back.
+  // the very first `<video>` can be created already muted — which is what the
+  // `NotAllowedError` fallback below needs on its second pass, since by then
+  // the element may still be mid-upgrade.
   el.toggleAttribute('muted', muted.value)
 
   // `state` is Vidstack's own, so its absence means the custom element hasn't
@@ -88,13 +88,15 @@ function sync() {
   el.play().catch((error: unknown) => {
     // Browsers refuse to autoplay audio until the viewer has interacted with
     // the page, and `NotAllowedError` is the only name they give that refusal.
-    // Narrow, because the fallback is destructive: it writes the viewer's
-    // sound preference to storage, so treating every rejection as an autoplay
-    // block is what silently re-mutes a feed they asked to hear.
+    // Narrow, because everything else — a provider that isn't ready, a source
+    // that failed — is a bug to see, not a reason to silence a feed.
     if ((error as DOMException | null)?.name !== 'NotAllowedError') return
-    // Dropping to muted keeps the feed moving instead of stranding it on a
-    // poster; the watcher below replays this with sound off.
-    if (!muted.value) shorts.muted = true
+    // Dropping to silent playback keeps the feed moving instead of stranding it
+    // on a poster; the watcher below replays this with sound off. It goes to
+    // the store's block rather than the viewer's saved preference, so the
+    // browser's refusal lasts exactly as long as the browser enforces it —
+    // `useAutoplayGate` lifts it on the first gesture.
+    shorts.blockAudio()
   })
 }
 

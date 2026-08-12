@@ -79,13 +79,13 @@ then have to enforce somewhere.
    `server/api/channels/[name]/notify.post.ts`). Migrations `0000`–`0004` exist
    on disk and cover every table, but **not** that column.
 
-   Run `npm run db:generate` **first**, on its own, so `0005_*` contains only
+   Run `pnpm db:generate` **first**, on its own, so `0005_*` contains only
    `follows.notify`. Then generate the shorts column as `0006_*`. Do not let
    the two get bundled into one migration — if the notify work is reverted,
    you'd have to unpick shorts out of the same file.
 
    ```bash
-   npm run db:generate && npm run db:migrate
+   pnpm db:generate && pnpm db:migrate
    ```
 
 2. **Confirm the toolchain is green before you add to it.** Four consecutive
@@ -94,7 +94,7 @@ then have to enforce somewhere.
    baseline so a failure during this work is known to be yours:
 
    ```bash
-   npm run lint && npm run typecheck && npm run test
+   pnpm lint && pnpm typecheck && pnpm test
    ```
 
    If it's already red, note what's red in PROGRESS.md and move on — don't
@@ -186,8 +186,12 @@ handler steals `Space` from the comment composer.
 
 ### Accessibility (non-negotiable, PROMPT.md §17)
 
-- **Autoplay starts muted.** Required by browsers anyway, and it's WCAG 1.4.2
-  (no auto audio > 3s).
+- **Autoplay starts with sound**, and drops to silent only when the browser
+  refuses (see `useAutoplayGate`). WCAG 1.4.2 asks for *a mechanism* to stop
+  auto-playing audio over 3s, not for silence: the mute button sits at the top
+  of the frame, `m` is bound globally on the page, and `Space` stops playback
+  outright — so the SC is met by the controls rather than by the default. If
+  that trade is ever revisited, revisit it here first.
 - **A real pause control** exists in the rail, not just the tap surface — WCAG
   2.2.2, since the content auto-plays for more than 5s.
 - **`prefers-reduced-motion`**: every UI animation gets `motion-reduce:
@@ -224,7 +228,7 @@ New unless marked. Paths are final — use them.
 - `server/utils/shorts.ts` — `selectShorts()`
 - `server/api/shorts/index.get.ts` — Zod-validated `cursor` / `seed`
 - *(modify)* `server/utils/{discovery,home,channels,search}.ts` — landscape filter
-- `scripts/seed-shorts.mjs` + a `db:seed:shorts` npm script
+- `scripts/seed-shorts.mjs` + a `db:seed:shorts` package script
 
 **Client**
 - `app/pages/shorts/index.vue` *(replaces `app/pages/shorts.vue`)*
@@ -260,7 +264,7 @@ next one until the previous one's **Done when** is actually true.
 ### M1 — Data and the endpoint
 
 1. Add `clipOrientationEnum` + `orientation` to `server/db/schema/clips.ts`.
-2. `npm run db:generate && npm run db:migrate` (after the precondition
+2. `pnpm db:generate && pnpm db:migrate` (after the precondition
    migration, as its own file).
 3. **Exclude verticals from the five landscape surfaces.** Add
    `orientation = 'landscape'` to:
@@ -418,7 +422,7 @@ feed in one press.
   hard-coding a slug (`e2e/watch.spec.ts` learned this the hard way): feed
   renders, `↓` advances, exactly one video plays, `/shorts/[id]` deep link
   lands, 375×812 has no horizontal overflow.
-- `npm run lint && npm run typecheck && npm run test && npm run test:e2e`.
+- `pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e`.
 - ADR-021 in `docs/DECISIONS.md`; append a session block to `docs/PROGRESS.md`;
   rewrite this file's header from "plan" to "how it works".
 - `graphify update .`

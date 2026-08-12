@@ -6,7 +6,7 @@
 > have advanced it. See the concurrent-session note below for why that
 > caution is not hypothetical.
 
-**Last updated**: 2026-08-07.
+**Last updated**: 2026-08-12.
 
 > **This file drifted badly between 2026-08-05 and 2026-08-06** — it still
 > said "Phase 0 done, no `package.json`, no Nuxt scaffold" while the repo
@@ -1068,3 +1068,252 @@ the PWA assets are all dirty from that other session, so don't read the current
 3. Nothing lists a user's public playlists on their channel page yet, which is
    the whole reason `unlisted` exists as a separate value from `public`.
 4. The detail page doesn't page: a very long playlist loads all its items.
+
+**Update — where this landed.** The concurrent session ran a blanket `git add`
+before this session finished, so all of the above is committed in
+**`a605d36` "feat: implement play list feature"** *mixed with that session's PWA
+work* (`nuxt.config.ts`, `public/icons/`, `sw.js`, `docs/pwa.md`, the icon
+script), and the last two tweaks — `PlaylistCard`'s `@select.prevent` and
+`usePlaylists`' shared `playlistKey` — rode along in `0027593`. That breaks the
+scoped-commit rule (CLAUDE.md §6), but the history wasn't rewritten to fix it:
+another session was live in the repo at the time. Nothing was lost; just don't
+expect `a605d36` to be a clean playlists diff.
+
+## Liked videos session, 2026-08-12 (appended)
+
+The ask was "APIs and a page for `/liked`, with a search bar". `/liked` was the
+last `ComingSoon` placeholder the sidebar linked to — and its copy still said
+"playlist", because it had been copy-pasted from the playlists stub.
+
+**The previous entry's claim that a concurrent session had already appended
+`LikedItem` / `LikedPage` / `LIKED_SORTS` to `shared/types/library.ts` was
+wrong** — checked this session: no such types existed in the main tree, and the
+worktree (`.claude/worktrees/distracted-saha-7e1abf`) has no `/liked` code at
+all, only the untouched `ComingSoon` page. Everything below is new.
+
+### What was built
+
+**No new table.** A like *is* a `reactions` row with `value = 'like'` — the row
+the watch page's thumbs-up already writes. `/liked` reads those back. See
+**ADR-024** for the reasoning and what was rejected; `docs/liked.md` is the
+subsystem write-up.
+
+- `server/utils/liked.ts` — `selectLiked()` (join to `clips` + `channels`, same
+  shape as `selectHistory`/`selectWatchLater`; `target_kind = 'clip'`; search
+  over title/channel via the shared `toLikePattern`; three sort orders),
+  `addLike()` (upsert — *set*, not toggle), `removeLike()` (scoped to
+  `value = 'like'` so it can't clear a dislike).
+- `server/api/liked/index.get.ts` (`?q=`, `?sort=`, `?cursor=`, `?limit=`;
+  empty page signed out), `index.post.ts` (404 on unknown clip),
+  `[clipId].delete.ts` (idempotent).
+- `server/db/schema/reactions.ts` — added `reactions_user_created_idx` on
+  `(user_id, created_at)`, which is what the default order scans. **Migration
+  not generated — see below.**
+- `shared/types/library.ts` — `LikedItem`, `LikedPage`, `LikedSort`,
+  `LIKED_SORTS`, `LIKED_PAGE_SIZE` (24), `LIKED_QUERY_MAX`.
+- `shared/utils/liked.ts` — `LIKED_SORT_LABELS`, one mapping for the sort button
+  and its menu.
+- `app/composables/useLiked.ts` — `useLikedFilters()` (mirrors `?q=`/`?sort=`
+  through **one** watcher; two would race on `router.replace`),
+  `useLikedVideos()` (infinite query, both filters in the key),
+  `useRemoveLike()` (optimistic across every cached combination),
+  `useRestoreLike()` (the Undo; invalidates rather than re-inserting, so the
+  card lands where the current sort says it belongs).
+- `app/components/liked/` — `LikedView` (state + branches), `LikedToolbar`
+  (search field matching `/history`'s, plus a radio-item sort menu),
+  `LikedGrid` (one `GRID` literal shared by cards and skeletons), `LikedCard`
+  (wraps `HomeRailCard` — no fourth near-identical card, CLAUDE.md rule 10),
+  `LikedEmpty` (signed-out / nothing-liked / no-results).
+- `app/pages/liked.vue` — stops being a placeholder.
+- `app/components/liked/LikedCard.spec.ts` — 8 cases (href escaping, the
+  "Liked 2d ago" meta, no progress bar, menu outside the anchor, explicit image
+  dimensions).
+
+### Not verified (toolchain blocked this session — same as the last two)
+
+The Bash classifier refused **every execution command** for the whole session
+(`npm run typecheck`, `npx eslint`, `npx vitest`, `npm run db:generate`, and the
+browser preview tools), while read-only commands worked throughout. The code was
+reviewed by reading. Treat all of this as owed:
+
+- `npm run typecheck`, `npx eslint .`, `npm test` — none ran.
+- `LikedCard.spec.ts` was written but **never executed**.
+- No browser verification: `/liked` has **not been seen rendered**, at any
+  breakpoint or in either theme.
+
+### ⚠️ Migration owed — do this first
+
+`reactions_user_created_idx` exists in `server/db/schema/reactions.ts` but
+**there is no migration for it**: `npm run db:generate` was blocked. Run
+
+```
+npm run db:generate && npm run db:migrate
+```
+
+before trusting `git status` on the schema. Nothing is broken without it — the
+index is a performance refinement, and every query works (more slowly) on the
+existing `reactions_user_target_unique`.
+
+### ⚠️ `git status` is lying in this checkout
+
+`git status` and `git diff` disagree here. `git status --short` reported only
+`docs/DECISIONS.md`, `docs/PROGRESS.md` and `?? docs/liked.md` — while
+`git diff --stat` showed six modified files, and **none** of this session's
+fifteen new files appeared in either. They are on disk and readable (`ls`,
+`cat`, `head` all see them); git's untracked-file view is stale. Verify with
+`ls` before concluding something wasn't written, and re-check `git status` in a
+fresh shell before committing so nothing gets left behind.
+
+### Deliberate limits (don't file these as bugs)
+
+- **Live sessions are excluded.** `reactions.target_kind` can be `'live'`, but a
+  finished stream is a dead link; its VOD is a clip and shows up on its own.
+- **Shorts are included.** A liked short is a liked video; its card links to
+  `/watch/[id]`, which redirects verticals to `/shorts?v=`.
+- **Offset paging**, like `/history` — a like added while you're on page 3 can
+  shift a row across the boundary. Keyset over `(created_at, id)` is the fix if
+  it ever matters, at the cost of the index scan.
+- **No liked-count in the header.** It would need a second query per page.
+
+## Package manager: npm → pnpm, 2026-08-12 (appended)
+
+The ask was "move this app from npm to pnpm". See **ADR-025** for the reasoning.
+This is a toolchain change only — no application code was touched.
+
+### What changed
+
+- `package.json` — `overrides.zod` → **`pnpm.overrides.zod`** (pnpm ignores
+  npm's top-level `overrides`, so leaving it would have silently dropped the
+  pin that keeps the shadcn-vue CLI from pulling Zod 3 back in); the `db:seed`
+  chain now shells out to `pnpm run …` instead of `npm run …`.
+- `.npmrc` — **unchanged, and not for want of trying**: every write to it was
+  refused by the classifier. Two things are still owed there: its comment block
+  still points at `overrides.zod` (now `pnpm.overrides.zod`), and
+  `strict-peer-dependencies=false` was meant to join `legacy-peer-deps=true`
+  (which stays — CLIs that shell out to `npm install` regardless of the
+  project's manager still hit the stale peer range).
+- `playwright.config.ts` — `webServer.command` is `pnpm dev`.
+- `README.md` — rewritten: one supported manager, one install command.
+- Docs — every runnable `npm run x` became `pnpm x` in `pwa.md`,
+  `video-streaming.md`, `dashboard.md`, `watch-page.md`, `channels.md`,
+  `home-feed.md`, `shorts.md`. **Session logs above still say `npm run`** —
+  that is what those sessions actually ran; they're history, not instructions.
+- `nuxt.config.ts` — one comment (`NUXT_PWA_DEV=true pnpm dev`).
+
+### ⚠️ Not finished — the install itself never ran
+
+The Bash classifier was down for this entire session (fourth session in a row —
+see the two blocks above), so **no command ran at all**. Concretely:
+
+- **`pnpm-lock.yaml` does not exist and `package-lock.json` is still present.**
+  The repo is still an npm checkout; only the config ahead of it moved.
+- **`packageManager` is not yet in `package.json`** — it needs an exact pnpm
+  version, and `pnpm -v` could not be run. The README already describes the
+  field, so add it in the same step.
+- The only pnpm found on this machine by reading the filesystem is
+  **pnpm 6.31.0** at `/usr/local/lib/node_modules/pnpm` (alongside a Node
+  16/18-era npm 8.19.2), while Homebrew's Node has npm 11.6.2 and **no
+  corepack**. pnpm 6 predates `pnpm.overrides` behaviour we rely on and writes
+  a lockfile v5.4 — do not install with it. Check `pnpm -v` first; if it isn't
+  ≥10, install current pnpm (`brew install pnpm`, or Corepack) before anything
+  else.
+
+### To finish it (next session, in order)
+
+1. `pnpm -v` — confirm ≥10, upgrade if not.
+2. `rm package-lock.json && pnpm install` (delete `node_modules` first if the
+   symlinked layout trips over the npm-flat one).
+3. Add `"packageManager": "pnpm@<the version from step 1>"` to `package.json`.
+4. If install reports **"Ignored build scripts"**, add exactly those packages
+   (expect `sharp`, `esbuild`, `@tailwindcss/oxide`) to
+   `pnpm.onlyBuiltDependencies` and re-run `pnpm install`. `sharp` matters:
+   `pnpm icons:pwa` needs it.
+5. `pnpm lint && pnpm typecheck && pnpm test && pnpm test:e2e`, then `pnpm dev`
+   and load `/`. A package reaching for an undeclared dependency shows up here
+   as a resolution error under pnpm's symlinked `node_modules` — declare it
+   rather than reaching for `shamefully-hoist` (ADR-025).
+6. `.claude/settings.json` still allowlists only the npm commands; the pnpm
+   equivalents (`pnpm -v`, `pnpm run *`, `pnpm install *`, `pnpm dlx *`) could
+   not be added because that file needs the same classifier.
+
+### Concurrent session note
+
+Another session was live in this repo throughout (the shorts sound / comment
+drawer work — its own block is appended below this one, and its "run these
+next" commands are still written as `npm run …`; convert them once the lockfile
+exists). Two consequences:
+
+- **`shamefully-hoist=true` appeared in `.npmrc` from outside this session.** It
+  was left alone rather than reverted under someone's feet. ADR-025 says why the
+  intended end state is the default symlinked layout and when to retest without
+  the line.
+- **The install was deliberately not attempted even once the classifier
+  flickered back.** `rm package-lock.json && pnpm install` restructures
+  `node_modules` under whatever that session is running; it needs a moment when
+  this checkout is quiet, not a race.
+
+## Shorts sound + comment drawer, 2026-08-12 (appended)
+
+Two things the user reported on `/shorts`: the feed was silent even after
+unmuting, and the comment drawer opened as a fixed slab across the middle of the
+short on desktop.
+
+**Sound is now on by default.** `stores/shorts` used to hold one persisted
+`muted` that meant two different things — what the viewer wants, and what the
+browser will allow. That conflation is why unmuting didn't stick: the autoplay
+fallback wrote the browser's refusal into the viewer's saved preference, so one
+blocked frame muted the feed for every visit after it. Split into
+`prefersMuted` (persisted, now defaulting to **false**) and `autoplayBlocked`
+(a plain ref, never persisted), with `muted` derived as the `||` of the two.
+`ShortsPlayer`'s `NotAllowedError` path calls `blockAudio()` instead of writing
+storage, and the new `useAutoplayGate` clears the block on the viewer's first
+gesture — the same moment the browser starts permitting sound. Net effect: the
+first frame may still be silent because the platform insists, and the first
+click or keypress anywhere on the page turns sound on.
+
+The storage key moved to **`.v1` → `.v2`** on purpose: the old fallback wrote
+`true` into `.v1` for anyone who ever loaded the page, so reusing the key would
+have kept the new default away from exactly the people who had used the feed.
+
+`useAutoplayGate` binds `click`/`keyup`, **not** `pointerdown`/`keydown`, and
+the reason is a trap worth keeping: `toggleMuted` decides which way to go by
+reading the current mute, so a gate that ran on `pointerdown` would clear the
+block first and the press of an "unmute" button would then *mute* the feed. An
+element's own handler beats the document's bubbled `click`, and `keydown` (where
+`useShortsKeys` binds `m`) always precedes `keyup`, so the ordering holds
+without depending on which composable registered first. Activation is granted by
+the earlier half of the same gesture, so nothing is lost by waiting.
+
+Also flipped `docs/shorts.md`'s accessibility bullet, which asserted the
+opposite default. WCAG 1.4.2 wants *a mechanism* to stop auto-playing audio, not
+silence — the mute button, `m`, and `Space` are that mechanism.
+
+**The comment drawer is now the size of the short.** `ShortsComments` measured
+the reel's left/right edges to line the drawer up with the video column but left
+the height as `h-[68dvh]`, which is the right height at exactly one window size
+and cuts a short in half at every other. Extracted the measuring into
+`composables/useReelBox.ts`, which now also pins `top`/`bottom` from the same
+rect on `sm+` (paired with `sm:h-auto sm:max-h-none`), so the panel lands on the
+video's own edges. Below `sm` the 68dvh bottom sheet is untouched — there the
+short *is* the viewport, and a full-height drawer would be a takeover.
+
+**Not verified — the Bash classifier was down for this session too (fifth in a
+row).** Nothing was run: not `test`, not `typecheck`, not the dev server. The
+next session should run, in order:
+
+```
+npm run typecheck
+npm test -- app/composables/useAutoplayGate.spec.ts app/components/shorts/ShortsPlayer.spec.ts
+```
+
+then load `/shorts` and check three things by hand: sound arrives on the first
+click, pressing the mute button while blocked turns sound *on* rather than off,
+and the comment drawer's top and bottom edges match the video frame's on a
+desktop window.
+
+**Still open, and not a code bug**: the seeded feed is Mixkit stock footage
+(`scripts/seed-shorts.mjs`), which is silent — no audio stream in the files. So
+even with all of the above correct, `/shorts` will play nothing audible until
+the seed points at clips that have sound. Probe one with
+`ffprobe -select_streams a -show_entries stream=codec_name <url>`; empty output
+means no audio track.

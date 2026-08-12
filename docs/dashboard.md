@@ -127,7 +127,7 @@ endpoints don't each re-implement it.
 ## Running it
 
 ```bash
-npm run db:migrate && npm run db:seed && npm run dev
+pnpm db:migrate && pnpm db:seed && pnpm dev
 ```
 
 No new migration — the dashboard adds no tables. It reads what `0003_*`

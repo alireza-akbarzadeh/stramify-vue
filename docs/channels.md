@@ -115,7 +115,7 @@ channel instead of walking back through every tab.
 ## Seeding
 
 ```bash
-npm run db:seed          # clips → live → channels → follows → comments → chat
+pnpm db:seed          # clips → live → channels → follows → comments → chat
 ```
 
 Order matters: `channels` handles must match seeded creators/streamers, and
@@ -137,7 +137,7 @@ delete from "user" where id like 'demo-follower-%';
   handles contain underscores, so never match them with `ilike` (`_` is a
   single-character wildcard in LIKE — that's why `readChannelProfile` uses
   `lower(...) = ...`).
-- **Follower counts are all zero** — `npm run db:seed:follows` hasn't run.
+- **Follower counts are all zero** — `pnpm db:seed:follows` hasn't run.
 - **Follow button does nothing** — signed out. The UI toasts; the server
   returns 401 from `requireUser`.
 - **Directory order looks wrong** — check `?sort=`; `top` is a blend, not

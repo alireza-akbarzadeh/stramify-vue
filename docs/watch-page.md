@@ -142,7 +142,7 @@ Plus a nullable `description` on `clips` and `live_streams`.
 ## Running it
 
 ```bash
-npm run db:migrate && npm run db:seed && npm run dev
+pnpm db:migrate && pnpm db:seed && pnpm dev
 ```
 
 `db:seed` runs clips → live → comments → chat in that order; comments and chat
@@ -154,7 +154,7 @@ Try `/watch/clip-midnight-echo` (VOD), `/watch/Viper_Squadron` (live),
 ## Failure modes
 
 - **Comments/chat seed fails with a foreign-key violation** — clips or live
-  streams weren't seeded first. Run `npm run db:seed`, not the sub-scripts.
+  streams weren't seeded first. Run `pnpm db:seed`, not the sub-scripts.
 - **Chat is stuck / doesn't update** — polling pauses when the tab is hidden,
   by design. It resumes on focus. If it's still stale, the poll is erroring:
   the panel shows "Chat disconnected" with a Reconnect button.
@@ -163,14 +163,14 @@ Try `/watch/clip-midnight-echo` (VOD), `/watch/Viper_Squadron` (live),
 - **Like button snaps back after clicking** — the optimistic update was rolled
   back because the POST failed. Check the session; reactions require auth.
 - **Live uptime keeps growing** — seeded `started_at` is fixed. Re-run
-  `npm run db:seed:live` to reset it. Real values arrive with Phase 7 ingest.
+  `pnpm db:seed:live` to reset it. Real values arrive with Phase 7 ingest.
 - **Viewer count never changes on a live page** — correct. It's a seeded
   value; `POST /view` deliberately doesn't touch it (ADR-014 point 8).
 - **A clip 404s but exists** — the id must match exactly. Only live handles
   are case-insensitive.
 - **A clip shows "No comments on this one yet"** — that clip has no seeded
   rows. Every seeded clip should have some; `e2e/watch.spec.ts` guards this
-  by walking `/api/discovery/clips`. Re-run `npm run db:seed:comments`.
+  by walking `/api/discovery/clips`. Re-run `pnpm db:seed:comments`.
 - **A comment's like count jumps after clicking** — the displayed total is
   `comments.likes` (seeded baseline) **plus** real `comment_likes` rows. If
   the optimistic +1 and the server's total disagree, that sum is where to

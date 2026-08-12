@@ -141,9 +141,9 @@ evaporates on reload.
 ## Common failure modes
 
 - **Grid is empty for everyone.** The feed reads `clips` and `live_streams`
-  directly — if both are empty, seed them: `npm run db:seed`.
+  directly — if both are empty, seed them: `pnpm db:seed`.
 - **No subscriptions rail while signed in.** Expected when you follow nobody.
-  `npm run db:seed:follows` seeds follows, but only for seeded users; follow a
+  `pnpm db:seed:follows` seeds follows, but only for seeded users; follow a
   channel from `/watch/…` or `/channel/…` to see your own.
 - **Chips show only All and Live.** `/api/discovery/categories` returned
   nothing, which means `clips` is empty — see above.

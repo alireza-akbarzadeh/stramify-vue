@@ -157,7 +157,7 @@ export default defineNuxtConfig({
     },
     devOptions: {
       // Off by default: a service worker in front of HMR turns every edit into
-      // a cache-invalidation puzzle. Opt in with `NUXT_PWA_DEV=true npm run dev`
+      // a cache-invalidation puzzle. Opt in with `NUXT_PWA_DEV=true pnpm dev`
       // when you specifically need to test install or update behaviour.
       enabled: process.env.NUXT_PWA_DEV === 'true',
       type: 'module',

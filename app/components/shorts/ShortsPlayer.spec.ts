@@ -43,10 +43,15 @@ const mounted: { unmount: () => void }[] = []
 /**
  * Mount, then settle the store to `muted`.
  *
- * The store persists the mute to local storage and reads it back on mount, so
- * without the clear one test's fallback is the next one's starting state. The
- * `nextTick` is for the same reason from the other side — the read lands in the
- * component's own mounted hook, after `mountSuspended` has handed back.
+ * Through `toggleMuted` rather than by assignment, because the store's `muted`
+ * is derived — the viewer's saved preference or the browser's autoplay block —
+ * and going through the action is what these assert against anyway.
+ *
+ * The store persists the preference to local storage and reads it back on
+ * mount, so without the clear one test's state is the next one's starting
+ * point. The `nextTick` is for the same reason from the other side — the read
+ * lands in the component's own mounted hook, after `mountSuspended` has handed
+ * back.
  */
 async function mount(muted: boolean) {
   const wrapper = await mountSuspended(ShortsPlayer, {
@@ -55,7 +60,7 @@ async function mount(muted: boolean) {
   mounted.push(wrapper)
   const shorts = useShortsStore()
   await nextTick()
-  shorts.muted = muted
+  if (shorts.muted !== muted) shorts.toggleMuted()
   await nextTick()
   return { wrapper, shorts }
 }
@@ -97,6 +102,24 @@ describe('ShortsPlayer', () => {
     await syncOnce(el)
 
     expect(shorts.muted).toBe(true)
+  })
+
+  it('keeps an autoplay block out of the saved preference, so a gesture restores sound', async () => {
+    const { wrapper, shorts } = await mount(false)
+
+    const el = stub(wrapper.element as HTMLElement, true, () =>
+      Promise.reject(new DOMException('blocked', 'NotAllowedError'))
+    )
+    await syncOnce(el)
+    expect(shorts.muted).toBe(true)
+
+    // The browser's refusal, not the viewer's choice: nothing was written to
+    // storage, and the gesture `useAutoplayGate` waits for gives sound back.
+    // The old fallback persisted `true` here, which is what made a feed that
+    // was only *temporarily* blocked stay muted for every visit after it.
+    expect(localStorage.getItem('streamify.shorts.muted.v2')).not.toBe('true')
+    shorts.unblockAudio()
+    expect(shorts.muted).toBe(false)
   })
 
   it('waits for the provider before asking it to play', async () => {

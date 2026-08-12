@@ -2,9 +2,9 @@
 import { storeToRefs } from 'pinia'
 import { toast } from 'vue-sonner'
 import type { CommentDraft, CommentSort } from '#shared/types/watch'
-import { useEventListener } from '@vueuse/core'
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import WatchComments from '@/components/watch/WatchComments.vue'
+import { useReelBox } from '@/composables/useReelBox'
 import { useShortsActions } from '@/composables/useShortsActions'
 import { useWatchComments } from '@/composables/useWatchComments'
 import { useWatchCommentMutations } from '@/composables/useWatchCommentMutations'
@@ -20,7 +20,9 @@ import { useShortsStore } from '@/stores/shorts'
  * visible relationship to a 9:16 column in the middle of it. Width is tied to
  * that column's own geometry — the reel is `100dvh` minus the top bar, the
  * frame inside it is 9:16, so `height × 9/16` is exactly how wide the video is
- * and the drawer lines up with its edges at any viewport height.
+ * and the drawer lines up with its edges at any viewport height. On desktop the
+ * height comes from the same place (`useReelBox`), which is what makes the
+ * panel the size of the short rather than a fixed slab cutting one in half.
  *
  * `Sheet` (Reka UI Dialog) rather than a new drawer dependency: `side="bottom"`
  * already ships the slide-up/slide-down `data-state` animation, and Reka's
@@ -51,30 +53,8 @@ const open = computed({
   set: (value: boolean) => !value && shorts.closeComments()
 })
 
-/**
- * Pin the drawer's box to the reel's box.
- *
- * It is portalled to `<body>`, so centring it centres it on the *window* while
- * the short is centred inside the reel — which the sidebar has pushed right and
- * the up/down nav rail has trimmed on the right. Guessing either from CSS means
- * re-deriving two widths that already move on their own (the sidebar collapses,
- * the rail hides on mobile), so this reads the reel's real edges instead and
- * lets `mx-auto` centre inside them.
- */
-const railInset = ref({ left: '0px', right: '0px' })
-
-function measureReel() {
-  const el = document.querySelector('[data-shorts-reel]')
-  if (!el) return
-  const rect = el.getBoundingClientRect()
-  railInset.value = {
-    left: `${rect.left}px`,
-    right: `${window.innerWidth - rect.right}px`
-  }
-}
-
-watch(open, (isOpen) => isOpen && measureReel())
-useEventListener('resize', () => open.value && measureReel())
+/** The drawer's box, pinned to the reel's — including its height on desktop. */
+const sheetBox = useReelBox(open)
 
 function onPost(draft: CommentDraft) {
   if (!user.value) return toast.error('Log in to comment.')
@@ -104,10 +84,16 @@ function onLike(id: string) {
 
 <template>
   <Sheet v-model:open="open">
+    <!--
+      `sm:h-auto` hands the height over to the `top`/`bottom` that `useReelBox`
+      pins on desktop, so the panel is exactly as tall as the short. The
+      `68dvh` slab stays below `sm`, where the short is the whole viewport and a
+      full-height drawer would be a takeover rather than a sheet.
+    -->
     <SheetContent
       side="bottom"
-      class="mx-auto h-[68dvh] max-h-[calc(100dvh-5rem)] gap-0 rounded-t-2xl border-x motion-reduce:animate-none sm:max-w-[min(32rem,calc((100dvh-4rem)*9/16))]"
-      :style="railInset"
+      class="mx-auto h-[68dvh] max-h-[calc(100dvh-5rem)] gap-0 rounded-t-2xl border-x motion-reduce:animate-none sm:h-auto sm:max-h-none sm:max-w-[min(32rem,calc((100dvh-4rem)*9/16))] sm:rounded-2xl"
+      :style="sheetBox"
     >
       <!--
         The title is the dialog's accessible name and nothing else — `WatchComments`

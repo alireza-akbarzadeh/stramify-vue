@@ -11,8 +11,8 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
-import { LIKED_SORT_LABELS } from '#shared/utils/liked'
 import { LIKED_SORTS } from '#shared/types/library'
+import { LIKED_SORT_LABELS } from '#shared/utils/liked'
 import type { LikedSort } from '#shared/types/library'
 
 /**

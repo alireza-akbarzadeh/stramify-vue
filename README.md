@@ -1,41 +1,28 @@
-# Nuxt Minimal Starter
+# Streamify
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A Twitch + YouTube-style streaming platform built on Nuxt 4. See
+[docs/PROGRESS.md](./docs/PROGRESS.md) for where the project stands and
+[docs/DECISIONS.md](./docs/DECISIONS.md) for the architecture decisions.
 
 ## Setup
 
-Make sure to install dependencies:
+This repo uses **pnpm** (10 or newer — `brew install pnpm`, or
+`corepack enable pnpm`). Other package managers are not supported: only
+`pnpm-lock.yaml` is committed.
 
 ```bash
-# npm
-npm install
-
-# pnpm
 pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
+
+See [ADR-025](./docs/DECISIONS.md) for why, and `docs/PROGRESS.md` for the
+migration's remaining steps — the lockfile swap itself hasn't been run yet.
 
 ## Development Server
 
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
 pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
 ## Production
@@ -43,33 +30,24 @@ bun run dev
 Build the application for production:
 
 ```bash
-# npm
-npm run build
-
-# pnpm
 pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
 Locally preview production build:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
 pnpm preview
+```
 
-# yarn
-yarn preview
+## Everything else
 
-# bun
-bun run preview
+```bash
+pnpm lint          # eslint
+pnpm typecheck     # nuxt typecheck
+pnpm test          # vitest
+pnpm test:e2e      # playwright
+pnpm db:migrate    # apply drizzle migrations
+pnpm db:seed       # (re-)seed dev data
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
