@@ -52,7 +52,9 @@ export function useAmbientVideo(source: () => string | null) {
   const allowed = computed(
     () => hydrated.value && !!source() && !failed.value && reducedMotion.value !== 'reduce'
   )
-  const shouldPlay = computed(() => allowed.value && inView.value && visibility.value === 'visible')
+  const shouldPlay = computed(
+    () => allowed.value && inView.value && visibility.value === 'visible'
+  )
 
   useIntersectionObserver(
     root,
@@ -62,6 +64,20 @@ export function useAmbientVideo(source: () => string | null) {
     // A hero is tall; a sliver on screen isn't worth decoding for.
     { threshold: 0.25 }
   )
+
+  /**
+   * The source can change under a mounted element — the hero is a carousel,
+   * and each slide brings its own loop. Both flags are about the *previous*
+   * file: leaving `failed` set would black-hole every later slide behind one
+   * unplayable source, and leaving `playing` set would hold the crossfade open
+   * over a `<video>` that is back to loading. Setting the `src` attribute
+   * restarts the media load algorithm on its own, so `loadedmetadata` fires
+   * again and picks the playback back up from `onLoadedMetadata`.
+   */
+  watch(source, () => {
+    failed.value = false
+    playing.value = false
+  })
 
   watch(shouldPlay, (play) => {
     const el = video.value
@@ -81,6 +97,10 @@ export function useAmbientVideo(source: () => string | null) {
       failed.value = true
       return
     }
+
+    // See the same line in `useHoverPreview`: autoplay policy gates on the
+    // `muted` property, which the content attribute only seeds.
+    el.muted = true
 
     try {
       await el.play()

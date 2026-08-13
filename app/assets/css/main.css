@@ -145,6 +145,54 @@
     }
 }
 
+/* The two below belong to the `/music` hero carousel.
+
+   `dwell` is the bar that drains while a slide is on screen. Its duration is
+   passed per use (`--dwell`) because it has to match the slideshow's own timer,
+   and it pauses with `[animation-play-state:paused]` the moment the carousel
+   does — a bar that kept filling while the rotation was held would be lying. */
+@keyframes dwell {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+/* A slow push into the artwork for as long as a slide is up. The scale is
+   small and the duration is far longer than the dwell, so it never reaches
+   the end and snaps — the frame just never sits perfectly still. */
+@keyframes ken-burns {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.14);
+    }
+}
+
+/*
+ * Tailwind stops at `2xl` (1536px), which is where our page containers stop
+ * growing too — and a 2560px or 3440px display then renders a 1560px column
+ * floating in ~700px of empty background. These two steps exist so wide
+ * surfaces can keep filling the screen past that point.
+ *
+ * They're deliberately viewport-based, like every other breakpoint in the app,
+ * even though the sidebar eats 256px of it: the numbers below already account
+ * for that (at `3xl` a page has ~1660px to work with, at `4xl` ~2290px).
+ *
+ * In `rem`, not `px`, and not for readability: Tailwind orders breakpoint
+ * variants by comparing these values against its own scale, which is in `rem`.
+ * Mixing units sorts `3xl`/`4xl` *before* `2xl`, and the `2xl` rule — same
+ * specificity, later in the sheet — then wins on a 2560px display while the
+ * wide variants silently do nothing. 120rem = 1920px, 160rem = 2560px.
+ */
+@theme {
+    --breakpoint-3xl: 120rem;
+    --breakpoint-4xl: 160rem;
+}
+
 /* ===========================================================
    STREAMIFY DESIGN SYSTEM
    Premium Streaming Platform

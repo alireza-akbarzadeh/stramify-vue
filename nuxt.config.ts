@@ -186,6 +186,19 @@ export default defineNuxtConfig({
     cloudflareR2SecretAccessKey: process.env.CLOUDFLARE_R2_SECRET_ACCESS_KEY,
     cloudflareR2Bucket: process.env.CLOUDFLARE_R2_BUCKET,
     sentryDsn: process.env.SENTRY_DSN,
+    // Watch-page AI assistant (ADR-027). Absent key = feature off, not broken:
+    // `/api/ai/config` reports `enabled: false` and the panel says so.
+    gemini: {
+      apiKey: process.env.GEMINI_API_KEY,
+      /**
+       * Free-tier flash model by default. Moving to a paid model — the
+       * intended upgrade is `gemini-2.5-pro` — is this env var and nothing
+       * else; `server/utils/gemini.ts` derives the billing tier from the id
+       * and the UI labels it. Empty string here rather than the default
+       * literal so the default lives in one place.
+       */
+      model: process.env.GEMINI_MODEL || ''
+    },
     public: {
       appUrl: process.env.PUBLIC_APP_URL || 'http://localhost:3000'
     }

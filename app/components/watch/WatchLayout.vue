@@ -12,6 +12,8 @@ import WatchComments from './WatchComments.vue'
 import WatchChat from './WatchChat.vue'
 import WatchPlaylistQueue from './WatchPlaylistQueue.vue'
 import WatchUpNext from './WatchUpNext.vue'
+import WatchAiPanel from './ai/WatchAiPanel.vue'
+import WatchAiPicks from './ai/WatchAiPicks.vue'
 import { useTheaterMode, useTheaterShortcut } from '@/composables/useTheaterMode'
 
 /**
@@ -26,10 +28,19 @@ import { useTheaterMode, useTheaterShortcut } from '@/composables/useTheaterMode
  * passed as a function prop. The preview page sets the stores instead of
  * passing props.
  *
- * Layout: one column below `lg`, two columns at `lg` and up. Below `lg` the
- * grid children fall in DOM order — player, metadata, sidebar, comments — which
- * is what puts live chat directly under the video on a phone and the comment
- * list last.
+ * Layout: one column below `lg`, two at `lg`, three from `3xl` (1920px).
+ * Below `lg` the grid children fall in DOM order — player, metadata, sidebar,
+ * assistant, comments — which is what puts live chat directly under the video
+ * on a phone and the comment list last.
+ *
+ * The third column exists because two columns stop growing at about 1560px and
+ * a 4K desktop or a TV then renders a page that is mostly margin. Rather than
+ * stretch the player to fill it — a 2000px-wide video is not a better video —
+ * the extra width buys a column: the AI assistant moves out of the main flow
+ * and sits beside the player, where it can be read without scrolling past the
+ * description. It starts at `3xl` rather than `2xl` because at 1536px three
+ * columns leave the player around 600px, which is worse than the empty space.
+ * The container's own `max-w` steps up in `WatchView` to match.
  *
  * On a phone the metadata cell is a *sheet*: it bleeds past the page's side
  * padding to the screen edges and rides up over the bottom of the video on a
@@ -50,10 +61,11 @@ import { useTheaterMode, useTheaterShortcut } from '@/composables/useTheaterMode
  * have to be cancelled before it could be overlapped.
  *
  * At `lg` and up each child is placed explicitly, because theater mode moves
- * two of them: the player grows from the first column to both, and the sidebar
- * drops from row 1 (beside the video) to row 2 (beside the metadata). Keeping
- * the player in its own cell rather than nested with the metadata is what makes
- * that a two-class change instead of a second copy of the markup.
+ * three of them: the player grows from the first column to every column, and
+ * the two asides drop from row 1 (beside the video) to row 2 (beside the
+ * metadata). Keeping the player in its own cell rather than nested with the
+ * metadata is what makes that a class change instead of a second copy of the
+ * markup.
  */
 defineProps<{
   target: WatchTarget
@@ -73,7 +85,7 @@ const sort = defineModel<CommentSort>('sort', { required: true })
  * a comment id, so all three are one `string` signature; everything the viewer
  * merely *pressed* carries nothing.
  */
-defineEmits<{
+const emit = defineEmits<{
   (e: 'react', value: ReactionValue): void
   (e: 'set-notify', mode: ChannelNotifyMode): void
   (e: 'post-comment', draft: CommentDraft): void
@@ -94,22 +106,39 @@ defineEmits<{
 
 const { theater } = useTheaterMode()
 useTheaterShortcut()
+
+/**
+ * The playhead, kept in a plain variable and handed to the assistant as a
+ * getter rather than a prop.
+ *
+ * Vidstack fires `time-update` several times a second, and the only thing on
+ * this page that reads the position does so once, when someone presses send on
+ * a question. A ref would re-render the conversation continuously to carry a
+ * number nobody is looking at. The event is still emitted unchanged — this is
+ * a mirror, not a second source of truth; `useWatchProgress` remains the one
+ * that persists it.
+ */
+let playhead = 0
+function onProgress(currentTime: number) {
+  playhead = currentTime
+  emit('progress', currentTime)
+}
 </script>
 
 <template>
   <div
-    class="grid grid-cols-1 gap-x-8 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-y-4"
+    class="grid grid-cols-1 gap-x-8 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-y-4 3xl:grid-cols-[minmax(0,1fr)_400px_400px] 4xl:gap-x-10 4xl:grid-cols-[minmax(0,1fr)_440px_440px]"
     :data-theater="theater ? '' : undefined"
   >
     <div
       class="min-w-0 lg:row-start-1"
-      :class="theater ? 'lg:col-span-2' : 'lg:col-start-1'"
+      :class="theater ? 'lg:col-span-2 3xl:col-span-3' : 'lg:col-start-1'"
     >
       <WatchPlayer
         :target="target"
         :resume-at="resumeAt"
         @play-start="$emit('play-start')"
-        @progress="$emit('progress', $event)"
+        @progress="onProgress"
         @ended="$emit('ended')"
       />
     </div>
@@ -165,8 +194,8 @@ useTheaterShortcut()
     </div>
 
     <aside
-      class="mt-6 min-w-0 lg:col-start-2 lg:mt-0"
-      :class="theater ? 'lg:row-span-2 lg:row-start-2' : 'lg:row-span-3 lg:row-start-1'"
+      class="mt-6 min-w-0 lg:col-start-2 lg:mt-0 3xl:col-start-3"
+      :class="theater ? 'lg:row-span-3 lg:row-start-2' : 'lg:row-span-4 lg:row-start-1'"
     >
       <div class="space-y-6 lg:sticky lg:top-20">
         <WatchChat
@@ -182,6 +211,11 @@ useTheaterShortcut()
              `WatchSaveToPlaylist` is: it renders only when the URL carries
              `?list=`, and nothing else on the page reads the queue. -->
         <WatchPlaylistQueue :slug="target.slug" />
+        <!-- The same catalogue "Up next" draws, reordered by the model with a
+             reason per row. Directly above it, and silent when it has nothing
+             — the plain rail underneath is the fallback, so this never has to
+             render an apology. -->
+        <WatchAiPicks :slug="target.slug" />
         <WatchUpNext
           :items="related.items"
           :pending="related.pending"
@@ -191,7 +225,26 @@ useTheaterShortcut()
       </div>
     </aside>
 
-    <div v-if="target.kind === 'clip'" class="mt-8 min-w-0 lg:col-start-1 lg:row-start-3 lg:mt-0">
+    <!--
+      The assistant. Placed after the sidebar in the DOM so that on a phone —
+      where the grid falls back to source order — live chat still lands
+      directly under the video, and pulled up to row 3 from `lg` where explicit
+      placement takes over. From `3xl` it leaves the main column entirely and
+      becomes the middle one, which is the whole reason that breakpoint exists.
+    -->
+    <div
+      class="mt-6 min-w-0 lg:col-start-1 lg:row-start-3 lg:mt-0 3xl:col-start-2 3xl:row-span-4"
+      :class="theater ? '3xl:row-start-2' : '3xl:row-start-1'"
+    >
+      <div class="3xl:sticky 3xl:top-20">
+        <WatchAiPanel :target="target" :playhead="() => playhead" />
+      </div>
+    </div>
+
+    <div
+      v-if="target.kind === 'clip'"
+      class="mt-8 min-w-0 lg:col-start-1 lg:row-start-4 lg:mt-0 3xl:row-start-3"
+    >
       <WatchComments
         v-model:sort="sort"
         :comments="comments.items"

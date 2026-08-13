@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "app/components/channel/ChannelVideoGrid.vue": {
-    "mtime": 1786127521.645379,
-    "ast_hash": "585bd16af313e5b4887655b95a4fcf87",
+    "mtime": 1786629558.9480743,
+    "ast_hash": "2f3cd4b1b2c0f8facf7bcc3f8f7940c9",
     "semantic_hash": ""
   },
   "app/components/channel/ChannelView.vue": {
@@ -535,8 +535,8 @@
     "semantic_hash": ""
   },
   "app/components/discovery/CategoryDetail.vue": {
-    "mtime": 1786127455.2781203,
-    "ast_hash": "46dc834f6617dd120971faefda5060b9",
+    "mtime": 1786629552.4231548,
+    "ast_hash": "0183dd031c6f1dbab74190b54b9347c7",
     "semantic_hash": ""
   },
   "app/components/discovery/CategoryGrid.vue": {
@@ -550,13 +550,13 @@
     "semantic_hash": ""
   },
   "app/components/discovery/ClipGrid.vue": {
-    "mtime": 1786127343.5550888,
-    "ast_hash": "2c7ab0a81002def1f931109314799862",
+    "mtime": 1786629545.3591352,
+    "ast_hash": "94207416c5f737210b785054c1f27794",
     "semantic_hash": ""
   },
   "app/components/discovery/DiscoveryFeed.vue": {
-    "mtime": 1786129148.4749565,
-    "ast_hash": "b255edb1eb79b790dbae5a8270ac370a",
+    "mtime": 1786629742.3682182,
+    "ast_hash": "f64d6f09285f51dbd679c2493b274d46",
     "semantic_hash": ""
   },
   "app/components/discovery/FeaturedClip.vue": {
@@ -565,13 +565,13 @@
     "semantic_hash": ""
   },
   "app/components/discovery/LiveChannelCard.vue": {
-    "mtime": 1786090424.6263313,
-    "ast_hash": "87c1242a0d70428e4257bdb4eab71359",
+    "mtime": 1786629704.4947865,
+    "ast_hash": "b4c40fd36f9fc7ce893d95ca9ff800da",
     "semantic_hash": ""
   },
   "app/components/discovery/LiveChannelGrid.vue": {
-    "mtime": 1786127350.145582,
-    "ast_hash": "f316240f554700e6f870ddf56b4ccc47",
+    "mtime": 1786629656.8925793,
+    "ast_hash": "95c6ba9a4eb30bf705e9aa91f24fa854",
     "semantic_hash": ""
   },
   "app/components/discovery/LiveDirectory.vue": {
@@ -580,13 +580,13 @@
     "semantic_hash": ""
   },
   "app/components/discovery/LiveSignalsRail.vue": {
-    "mtime": 1786127358.0356154,
-    "ast_hash": "ceb180fbcc5a3b3bc5c9070511883365",
+    "mtime": 1786629652.1969852,
+    "ast_hash": "b0325191b5fc57f54e2135118d75a722",
     "semantic_hash": ""
   },
   "app/components/discovery/SaveButton.vue": {
-    "mtime": 1786030698.5900548,
-    "ast_hash": "091f1535b2da6b5379691415848198b3",
+    "mtime": 1786629408.5586467,
+    "ast_hash": "af625e3d08e37ccaf7f1674759e711ba",
     "semantic_hash": ""
   },
   "app/components/discovery/WatchlistCard.vue": {
@@ -595,8 +595,8 @@
     "semantic_hash": ""
   },
   "app/components/discovery/WatchlistPanel.vue": {
-    "mtime": 1786127442.5076213,
-    "ast_hash": "7338e14448ac9145b2ef22fca93b0b09",
+    "mtime": 1786629745.8649285,
+    "ast_hash": "0c70bc3934eefdd67af859c646626b60",
     "semantic_hash": ""
   },
   "app/components/landing/AreaChart.vue": {
@@ -725,8 +725,8 @@
     "semantic_hash": ""
   },
   "app/components/search/SearchResultsView.vue": {
-    "mtime": 1786305734.968,
-    "ast_hash": "9ccc3138ba81cd5812238108581c981c",
+    "mtime": 1786629591.560688,
+    "ast_hash": "7733df27fdea5b7440065beadfa01128",
     "semantic_hash": ""
   },
   "app/components/search/SearchSuggestions.vue": {
@@ -995,13 +995,13 @@
     "semantic_hash": ""
   },
   "app/components/watch/WatchActions.vue": {
-    "mtime": 1786297905.4888916,
-    "ast_hash": "3e83ae671bae6b8fceecd598c1bb8298",
+    "mtime": 1786631254.0116875,
+    "ast_hash": "88e5caf8c035858779db5d6c2182a8f1",
     "semantic_hash": ""
   },
   "app/components/watch/WatchChannelBar.vue": {
-    "mtime": 1786298079.302374,
-    "ast_hash": "b5775a0c073d43085b30bbb8f7475d21",
+    "mtime": 1786631964.7938595,
+    "ast_hash": "d9831649aeb55d1739bebbdff837fbdd",
     "semantic_hash": ""
   },
   "app/components/watch/WatchChat.spec.ts": {
@@ -1010,8 +1010,8 @@
     "semantic_hash": ""
   },
   "app/components/watch/WatchChat.vue": {
-    "mtime": 1786127302.1235194,
-    "ast_hash": "2d34d2302dec8cf3f448059f42c5245e",
+    "mtime": 1786631838.3930137,
+    "ast_hash": "ab16ba712a29ad232655bf0d946e0677",
     "semantic_hash": ""
   },
   "app/components/watch/WatchChatMessage.vue": {
@@ -1040,13 +1040,13 @@
     "semantic_hash": ""
   },
   "app/components/watch/WatchLayout.vue": {
-    "mtime": 1786523825.088491,
-    "ast_hash": "190e265731006071d5411239c3c7df96",
+    "mtime": 1786631519.719643,
+    "ast_hash": "511d48d7a6d10c23c35a586c246800e1",
     "semantic_hash": ""
   },
   "app/components/watch/WatchMeta.vue": {
-    "mtime": 1786109256.8806837,
-    "ast_hash": "c6bafe55c54537f9385a0594b2d5b5c8",
+    "mtime": 1786631246.1172905,
+    "ast_hash": "1b5a989454c34c6a8b8fa911b987caba",
     "semantic_hash": ""
   },
   "app/components/watch/WatchPlayer.vue": {
@@ -1055,13 +1055,13 @@
     "semantic_hash": ""
   },
   "app/components/watch/WatchSkeleton.vue": {
-    "mtime": 1786109237.671028,
-    "ast_hash": "8896eca83f43aecef79e492556afb0e8",
+    "mtime": 1786631681.9390407,
+    "ast_hash": "f36c4260dc924c748b14522a7b444bec",
     "semantic_hash": ""
   },
   "app/components/watch/WatchUpNext.vue": {
-    "mtime": 1786127316.2326968,
-    "ast_hash": "36961225774953c08f93f61e77f5a1ee",
+    "mtime": 1786632948.237457,
+    "ast_hash": "6a0f01149c7ac89302124431655b0502",
     "semantic_hash": ""
   },
   "app/components/watch/WatchUpNextCard.spec.ts": {
@@ -1070,18 +1070,18 @@
     "semantic_hash": ""
   },
   "app/components/watch/WatchUpNextCard.vue": {
-    "mtime": 1786109426.2251294,
-    "ast_hash": "244648986074ede5f8ba7bb5f95ad0b6",
+    "mtime": 1786631629.4191084,
+    "ast_hash": "048a89803b48c7a824867ea63238594e",
     "semantic_hash": ""
   },
   "app/components/watch/WatchView.vue": {
-    "mtime": 1786523845.4125915,
-    "ast_hash": "05fdc9239bb3a834680bab882d9333b4",
+    "mtime": 1786631138.0224571,
+    "ast_hash": "3ea17f4e618a57425d9d72b6460e1003",
     "semantic_hash": ""
   },
   "app/components/watch/__fixtures__/watch.ts": {
-    "mtime": 1786393590.7272058,
-    "ast_hash": "112a9b232d24932e3560a171ded3483e",
+    "mtime": 1786633251.3124728,
+    "ast_hash": "13f4bef49565d51d4044721f9eec3687",
     "semantic_hash": ""
   },
   "app/components/watch/player/PlayerControls.vue": {
@@ -1580,8 +1580,8 @@
     "semantic_hash": ""
   },
   "scripts/seed-clips.mjs": {
-    "mtime": 1786115731.8088756,
-    "ast_hash": "600e86ef7a249b1242a22703aa48a67f",
+    "mtime": 1786631641.9564104,
+    "ast_hash": "bf8d233cea5872d4f471245766001d08",
     "semantic_hash": ""
   },
   "scripts/seed-comments.mjs": {
@@ -2660,13 +2660,13 @@
     "semantic_hash": ""
   },
   "docs/DECISIONS.md": {
-    "mtime": 1786617646.0788848,
-    "ast_hash": "1d55120e6aa99765e68a1b301ad8bfc1",
+    "mtime": 1786632299.8219116,
+    "ast_hash": "f2b49de4445b24276e50484c3fdc8f3c",
     "semantic_hash": ""
   },
   "docs/PROGRESS.md": {
-    "mtime": 1786618402.44742,
-    "ast_hash": "fce5f9327bbba76acd7dc8338288e6a9",
+    "mtime": 1786633321.7773972,
+    "ast_hash": "534922e44456bdaea55dbf5fbcbf95c2",
     "semantic_hash": ""
   },
   "docs/PROMPT.md": {
@@ -2690,8 +2690,8 @@
     "semantic_hash": ""
   },
   "docs/watch-page.md": {
-    "mtime": 1786540583.0794642,
-    "ast_hash": "af8570fd5b3171863178e4d0918b9f84",
+    "mtime": 1786633061.98618,
+    "ast_hash": "a8cbbae9c148fff4fabccd90801ae295",
     "semantic_hash": ""
   },
   "public/robots.txt": {
@@ -2945,8 +2945,8 @@
     "semantic_hash": ""
   },
   "app/components/home/HomeFollowingRail.vue": {
-    "mtime": 1786520034.2710295,
-    "ast_hash": "3c7c614945fa783ed907c8b431e7e34a",
+    "mtime": 1786629524.0391972,
+    "ast_hash": "41f0cf0317cfc69834a5ef303ed44bbc",
     "semantic_hash": ""
   },
   "app/components/home/HomeMixCard.vue": {
@@ -2995,8 +2995,8 @@
     "semantic_hash": ""
   },
   "app/components/home/HomeVideoCard.vue": {
-    "mtime": 1786612836.9677408,
-    "ast_hash": "70734fc812c8705d1ec406debff95514",
+    "mtime": 1786629472.7496557,
+    "ast_hash": "68bdc301f448d87e8eb7d57be84f953b",
     "semantic_hash": ""
   },
   "app/components/home/HomeVideoCardMenu.spec.ts": {
@@ -3005,8 +3005,8 @@
     "semantic_hash": ""
   },
   "app/components/home/HomeVideoCardMenu.vue": {
-    "mtime": 1786627416.217707,
-    "ast_hash": "746846575088f8d0df70e85014b720c8",
+    "mtime": 1786630682.909297,
+    "ast_hash": "b48bcb4088a0c5b8868896b128a9c74c",
     "semantic_hash": ""
   },
   "app/components/home/HomeVideoCardSkeleton.vue": {
@@ -3015,8 +3015,8 @@
     "semantic_hash": ""
   },
   "app/components/home/HomeVideoGrid.vue": {
-    "mtime": 1786613011.1277092,
-    "ast_hash": "2cd7a959914c9dfcf33d2dc0df6976b6",
+    "mtime": 1786629496.419263,
+    "ast_hash": "85f1fbeae81015430eb78f3f98514862",
     "semantic_hash": ""
   },
   "app/components/home/HomeView.vue": {
@@ -3025,8 +3025,8 @@
     "semantic_hash": ""
   },
   "app/components/mix/MixView.vue": {
-    "mtime": 1786468458.8904238,
-    "ast_hash": "034945f67cabe1b9f874320fa565b082",
+    "mtime": 1786629597.5056028,
+    "ast_hash": "b966b517f58878237c102eef351df721",
     "semantic_hash": ""
   },
   "app/components/motion/PopBurst.spec.ts": {
@@ -3085,8 +3085,8 @@
     "semantic_hash": ""
   },
   "app/components/shorts/ShortsActionRail.vue": {
-    "mtime": 1786469501.3556416,
-    "ast_hash": "591e14c114bf4c767899fdfde318ce69",
+    "mtime": 1786629763.5891361,
+    "ast_hash": "35ed5bb540f6844b2e6d94639b97f1ef",
     "semantic_hash": ""
   },
   "app/components/shorts/ShortsComments.vue": {
@@ -3250,13 +3250,13 @@
     "semantic_hash": ""
   },
   "app/components/ui/dropdown-menu/DropdownMenuCheckboxItem.vue": {
-    "mtime": 1786307379.485714,
-    "ast_hash": "e67fd115c2ffb4caaab61788e8b42c8c",
+    "mtime": 1786629186.691171,
+    "ast_hash": "f259787827b27154c35dac9af189aabb",
     "semantic_hash": ""
   },
   "app/components/ui/dropdown-menu/DropdownMenuContent.vue": {
-    "mtime": 1786307379.5118828,
-    "ast_hash": "956e2f7ef5d4ce96b4aa8549b030af38",
+    "mtime": 1786629213.0931377,
+    "ast_hash": "a4a485cede1706dc406cce910ff26536",
     "semantic_hash": ""
   },
   "app/components/ui/dropdown-menu/DropdownMenuGroup.vue": {
@@ -3265,13 +3265,13 @@
     "semantic_hash": ""
   },
   "app/components/ui/dropdown-menu/DropdownMenuItem.vue": {
-    "mtime": 1786307379.5553513,
-    "ast_hash": "f7b329bbbddb4de051333fe98ea97b5b",
+    "mtime": 1786629168.0337322,
+    "ast_hash": "afc7bbbfed65835f66c0f6ca093d5a4c",
     "semantic_hash": ""
   },
   "app/components/ui/dropdown-menu/DropdownMenuLabel.vue": {
-    "mtime": 1786307379.5757809,
-    "ast_hash": "22aa796250053c1e22edae81a9e72533",
+    "mtime": 1786629250.6382792,
+    "ast_hash": "d99a5470a43948d32bbce51bf4d3f62f",
     "semantic_hash": ""
   },
   "app/components/ui/dropdown-menu/DropdownMenuRadioGroup.vue": {
@@ -3280,13 +3280,13 @@
     "semantic_hash": ""
   },
   "app/components/ui/dropdown-menu/DropdownMenuRadioItem.vue": {
-    "mtime": 1786307379.621967,
-    "ast_hash": "92852dcf45ed17d506490b7051bb578f",
+    "mtime": 1786629190.9309704,
+    "ast_hash": "58a356e69b1ab33e987a7752ab5a569d",
     "semantic_hash": ""
   },
   "app/components/ui/dropdown-menu/DropdownMenuSeparator.vue": {
-    "mtime": 1786307379.6394567,
-    "ast_hash": "c337c00dfe447501b934fe7e7912392d",
+    "mtime": 1786629265.5394723,
+    "ast_hash": "50a3a99dd0aef98736a89ec4464019a0",
     "semantic_hash": ""
   },
   "app/components/ui/dropdown-menu/DropdownMenuShortcut.vue": {
@@ -3300,13 +3300,13 @@
     "semantic_hash": ""
   },
   "app/components/ui/dropdown-menu/DropdownMenuSubContent.vue": {
-    "mtime": 1786307379.7108347,
-    "ast_hash": "60a3e93e52de993663097f69b968740d",
+    "mtime": 1786629218.7532234,
+    "ast_hash": "ea10d70fa4a4a814d727b54b8d66d714",
     "semantic_hash": ""
   },
   "app/components/ui/dropdown-menu/DropdownMenuSubTrigger.vue": {
-    "mtime": 1786307379.7502084,
-    "ast_hash": "f30aab2e202075f5fef4e1aebe06df21",
+    "mtime": 1786629181.7212014,
+    "ast_hash": "dcf9ef41beb9ba10157eae5a3cef3a2c",
     "semantic_hash": ""
   },
   "app/components/ui/dropdown-menu/DropdownMenuTrigger.vue": {
@@ -3315,8 +3315,8 @@
     "semantic_hash": ""
   },
   "app/components/ui/dropdown-menu/index.ts": {
-    "mtime": 1786307379.8082173,
-    "ast_hash": "fdfcd5760943f5ef81c083398fbc5138",
+    "mtime": 1786629220.4947534,
+    "ast_hash": "1d2612f8eb7ff422703d7f6de8bc3817",
     "semantic_hash": ""
   },
   "app/components/ui/form/FormControl.vue": {
@@ -3550,8 +3550,8 @@
     "semantic_hash": ""
   },
   "app/pages/music.vue": {
-    "mtime": 1786384567.4484255,
-    "ast_hash": "b76daefe971231dafc9efd68e1ef0522",
+    "mtime": 1786631102.5535245,
+    "ast_hash": "6d5e0698fa2684687ef5e95a7a6a8549",
     "semantic_hash": ""
   },
   "app/pages/news.vue": {
@@ -4460,8 +4460,8 @@
     "semantic_hash": ""
   },
   "app/components/following/FollowingChannelShelf.vue": {
-    "mtime": 1786471421.7442555,
-    "ast_hash": "6fb65bb67238ad2fb1251287abfafd80",
+    "mtime": 1786629608.861875,
+    "ast_hash": "07898ebd6e341a22c1b18f72decd62bd",
     "semantic_hash": ""
   },
   "app/components/following/FollowingEmpty.vue": {
@@ -4595,8 +4595,8 @@
     "semantic_hash": ""
   },
   "app/composables/useWatchLater.ts": {
-    "mtime": 1786519955.2734532,
-    "ast_hash": "89b2e6881daba5586921f88276f011c3",
+    "mtime": 1786629348.541782,
+    "ast_hash": "8940326d95c2d25352202a82745e1959",
     "semantic_hash": ""
   },
   "app/utils/channel.spec.ts": {
@@ -4680,8 +4680,8 @@
     "semantic_hash": ""
   },
   "server/utils/watch-later.ts": {
-    "mtime": 1786519564.973909,
-    "ast_hash": "f12a63292d492a4c5a533757b0715e72",
+    "mtime": 1786629286.011767,
+    "ast_hash": "cd6cb19351f270d3d7f0c8a87cac93ee",
     "semantic_hash": ""
   },
   "shared/types/following.ts": {
@@ -4720,8 +4720,8 @@
     "semantic_hash": ""
   },
   "docs/watch-later.md": {
-    "mtime": 1786520881.0227535,
-    "ast_hash": "26daa9dcd9143704e80162c48e568570",
+    "mtime": 1786630099.3570433,
+    "ast_hash": "dbc72b33c83dc7ab0a07f668867f8d12",
     "semantic_hash": ""
   },
   "app/assets/icons/pwa-icon-apple.svg": {
@@ -4860,7 +4860,7 @@
     "semantic_hash": ""
   },
   "server/api/billing/subscription.get.ts": {
-    "mtime": 1786617188.699278,
+    "mtime": 1786642990.9123535,
     "ast_hash": "59473c7cc081f36c96f54827ccab9d51",
     "semantic_hash": ""
   },
@@ -5002,6 +5002,126 @@
   "public/icons/pwa-64x64.png": {
     "mtime": 1786523560.3454556,
     "ast_hash": "24699702e3d42f9cdfb1cea16933080d",
+    "semantic_hash": ""
+  },
+  ".context-bridge/edit-journal.json": {
+    "mtime": 1786642992.1138377,
+    "ast_hash": "c2821b7141688d79d17dd4f515b2fe8f",
+    "semantic_hash": ""
+  },
+  "app/components/music/MusicCard.spec.ts": {
+    "mtime": 1786631249.837094,
+    "ast_hash": "ccead0ff2f3eb86a7a14e9c29fcd6a9b",
+    "semantic_hash": ""
+  },
+  "app/components/music/MusicCard.vue": {
+    "mtime": 1786630875.1102326,
+    "ast_hash": "e3fa0076baac9458bf4544e1c94debb2",
+    "semantic_hash": ""
+  },
+  "app/components/music/MusicHero.vue": {
+    "mtime": 1786633308.3922536,
+    "ast_hash": "b32f3b5259cf52f3f927addbfc46a773",
+    "semantic_hash": ""
+  },
+  "app/components/music/MusicShelf.vue": {
+    "mtime": 1786630939.3190002,
+    "ast_hash": "fcc73cae39e9e4f5847e7d9ed482e774",
+    "semantic_hash": ""
+  },
+  "app/components/music/MusicSkeleton.vue": {
+    "mtime": 1786633913.0908678,
+    "ast_hash": "df6cb0bfda0b88d2184d265dab4f574a",
+    "semantic_hash": ""
+  },
+  "app/components/music/MusicView.vue": {
+    "mtime": 1786631087.1491804,
+    "ast_hash": "7cf683d11c76f6061ad69aa1fb984258",
+    "semantic_hash": ""
+  },
+  "app/components/music/NowPlayingBars.vue": {
+    "mtime": 1786630702.0419185,
+    "ast_hash": "704de848486a31634ac0502985a07ed3",
+    "semantic_hash": ""
+  },
+  "app/components/ui/dropdown-menu/variants.ts": {
+    "mtime": 1786629156.5385177,
+    "ast_hash": "bb3c500a3c16ee82db66a3cd7a2826c3",
+    "semantic_hash": ""
+  },
+  "app/components/watch/WatchUpNextFilters.vue": {
+    "mtime": 1786632881.2761762,
+    "ast_hash": "30c12da94f94eb8be97f2e6f880b93fd",
+    "semantic_hash": ""
+  },
+  "app/composables/useAmbientVideo.ts": {
+    "mtime": 1786633932.2573845,
+    "ast_hash": "243d878ad9af8184b81b188496eb9ab4",
+    "semantic_hash": ""
+  },
+  "app/composables/useHoverPreview.ts": {
+    "mtime": 1786633259.1766486,
+    "ast_hash": "6af73972873f22acd768ad2bece4385e",
+    "semantic_hash": ""
+  },
+  "app/composables/useMusic.ts": {
+    "mtime": 1786630090.8418205,
+    "ast_hash": "2e7775b176f95bad7118b897fb7cbdc6",
+    "semantic_hash": ""
+  },
+  "app/composables/useSavedVideos.spec.ts": {
+    "mtime": 1786629968.533564,
+    "ast_hash": "32c849971e3cf934fe40b325695d6516",
+    "semantic_hash": ""
+  },
+  "app/composables/useSavedVideos.ts": {
+    "mtime": 1786629383.231718,
+    "ast_hash": "b57a32a3217d62ecc0ea104a0c13df0b",
+    "semantic_hash": ""
+  },
+  "app/utils/preview.spec.ts": {
+    "mtime": 1786633644.7238073,
+    "ast_hash": "d6337e9e12f6106dd3c1a55d1f7ae556",
+    "semantic_hash": ""
+  },
+  "app/utils/preview.ts": {
+    "mtime": 1786630177.6973374,
+    "ast_hash": "1ac329e948988b56bcfd4eee6acf5d28",
+    "semantic_hash": ""
+  },
+  "app/utils/upNext.spec.ts": {
+    "mtime": 1786632836.6079524,
+    "ast_hash": "8a0d9f99323613ab07d6de50f25d4f5e",
+    "semantic_hash": ""
+  },
+  "app/utils/upNext.ts": {
+    "mtime": 1786632811.6906826,
+    "ast_hash": "69984ea73ffe2d40ddedcb00ccfe4782",
+    "semantic_hash": ""
+  },
+  "server/api/music/index.get.ts": {
+    "mtime": 1786629946.4375367,
+    "ast_hash": "0723e2e153a26c7b2af47abb7efc2a67",
+    "semantic_hash": ""
+  },
+  "server/api/watch-later/ids.get.ts": {
+    "mtime": 1786629291.407488,
+    "ast_hash": "a11ef588312a86c4c024882bbf9b777e",
+    "semantic_hash": ""
+  },
+  "server/utils/music.ts": {
+    "mtime": 1786631595.8836832,
+    "ast_hash": "4ce387aade4a64490dd20059be27657f",
+    "semantic_hash": ""
+  },
+  "shared/types/music.ts": {
+    "mtime": 1786629735.6019244,
+    "ast_hash": "77363e1814710caacf1ea0b7d0225dd5",
+    "semantic_hash": ""
+  },
+  "docs/music.md": {
+    "mtime": 1786632127.918675,
+    "ast_hash": "cbfed02a5a05123a0e3cfcd0bcb8cf2a",
     "semantic_hash": ""
   }
 }

@@ -1574,3 +1574,126 @@ so **none of this has been exercised in a browser**. Everything below is owed:
 - The watch page's Save button still reads "Save"/"Saved" rather than naming
   Watch later — `WatchActions` doesn't receive the target's kind, and threading
   it through `WatchLayout` for a label wasn't worth the prop.
+
+---
+
+## Music page session, 2026-08-13 (appended)
+
+Built `/music` — it was a `ComingSoon` placeholder. Full write-up in
+[music.md](./music.md), decision record in **ADR-028**.
+
+### What was built
+
+A browse surface over the `Music` slice of `clips`: a cinematic hero with an
+ambient muted loop, an "up next" strip, and horizontal shelves whose cards
+**play a muted ~9s preview of the real track on hover**.
+
+- `shared/types/music.ts` — `MusicTrack` is an **alias of `Clip`**, not a new
+  shape. There is no music table and no playlist model; this page is a *view*.
+- `server/utils/music.ts` — `selectMusicPage()`: **one** query (landscape
+  `Music` clips, newest first) re-ordered in memory into four shelves, each
+  derived from a real column: recency, `views`, `duration_seconds`, and
+  `follows.channel = clips.creator`. No invented editorial taxonomy. Derived
+  shelves under 3 items are dropped; "New this week" is exempt.
+- `server/api/music/index.get.ts` — reads **without** a session (signed out you
+  get the page minus the follows shelf), like `/api/home/mixes`.
+- `app/composables/useMusic.ts` — TanStack query, viewer id in the key so
+  signing in/out moves the page instead of serving a stale follows shelf.
+- `app/composables/useHoverPreview.ts` + `app/utils/preview.ts` — the preview
+  state machine: 450ms intent delay before anything loads, **one preview
+  page-wide** (module-level token), always muted, fine-pointer only, reduced
+  motion opts out entirely, elements unmounted rather than paused.
+- `app/composables/useAmbientVideo.ts` — the hero loop. Pauses off-screen and
+  on a backgrounded tab. **Client-only render** (`hydrated`), because SSR
+  can't know `prefers-reduced-motion` and would mismatch on the page's largest
+  element.
+- `app/components/music/` — `MusicView` (loading/error/empty/loaded),
+  `MusicHero`, `MusicShelf` (wraps the existing `HomeRail`), `MusicCard`,
+  `NowPlayingBars`, `MusicSkeleton`.
+- `main.css` — one new `equalize` keyframe + `--animate-equalize`, following
+  the file's existing convention.
+- `scripts/seed-clips.mjs` — **5 new Music clips**, on progressive mp4 sources
+  already curl-verified at the top of that file. Two Music clips wasn't enough
+  to fill the derived shelves (min 3), and the existing pair includes an HLS
+  source that can't preview outside Safari.
+
+### The HLS caveat (don't "fix" this without reading ADR-028)
+
+A bare `<video>` plays HLS **only where the browser supports it natively**
+(Safari yes, Chrome/Firefox no), and there's no standalone `hls.js` here.
+`canPreviewSource()` therefore declines `.m3u8` off Safari and those cards keep
+their still. **That is the design**, not a bug — pulling a media-source loader
+or a Vidstack instance into a hover affordance was explicitly rejected.
+
+### ⚠️ Verification status — READ BEFORE TRUSTING ANY OF THE ABOVE
+
+**Same failure mode this doc already records twice**: the shell tool's safety
+classifier was down for effectively this entire session. Read-only commands
+(`cat`/`grep`/`sed`/`ls`) worked; **anything that executes did not**. So:
+
+1. **`npm run typecheck` — NOT RUN.** Attempted ~8 times, blocked every time.
+2. **`npm run lint` — NOT RUN.**
+3. **`npm run test` — NOT RUN.** Two new spec files
+   (`app/utils/preview.spec.ts`, `app/components/music/MusicCard.spec.ts`)
+   have never been executed.
+4. **`npm run db:seed:clips` — NOT RUN.** The 5 new Music rows are **not in
+   the database yet**. Until this runs, `/music` will render a hero plus a
+   single 2-item "New this week" rail, and the hero will be the HLS clip
+   (static still in Chrome — see above). Run this first; it's `on conflict do
+   update`, so it's safe to re-run.
+5. **The page has never been rendered in a browser.** No screenshot, no
+   console check, no responsive pass, no dark/light pass. The hover preview —
+   the entire point of the feature — has never actually been seen to fire.
+
+Do this before anything else:
+
+```bash
+npm run db:seed:clips && npm run typecheck && npm run lint && npm run test
+```
+
+then open `/music` and hover a card. Specifically worth eyeballing, because
+none of it has been:
+- Does the crossfade land on a playing frame, or a black one? (`showVideo` is
+  deliberately later than `mounted` to prevent the latter.)
+- Does sweeping fast across a rail start anything? (It shouldn't — 450ms.)
+- Does a second card stop the first? (Module-level token.)
+- 375×812: no horizontal overflow, no preview firing on tap.
+- `prefers-reduced-motion: reduce`: no hero loop, no card previews, page still
+  fully readable.
+
+Treat the whole page as review-ready work, not as done.
+
+### Appended same session: Up next search + filter
+
+A second, smaller ask on top of the Watch later work above — "more features on
+the watch page, like search filter". Scoped with the user to: a search box and
+All/Live/Clips chips over the **Up next** rail, filtering client-side over the
+twelve items already loaded. Documented under "Filtering Up next" in
+[watch-page.md](./watch-page.md).
+
+- `app/utils/upNext.ts` (+ spec) — `filterUpNext` (pure) and
+  `upNextHasBothKinds`. Terms are AND-ed across title and channel, so "nova
+  ranked" finds nova's "Ranked ladder push"; `meta` is deliberately excluded
+  from the haystack because it's a formatted "12.4k views · 3 days ago" and
+  searching it makes "3" match everything published this week.
+- `app/components/watch/WatchUpNextFilters.vue` — control surface only, no list.
+  `aria-pressed` toggles in a `role="group"`, *not* `HomeChipBar`'s
+  `role="tablist"`: those chips swap panels and name them with `aria-controls`,
+  these narrow a list that's already rendered. An `sr-only role="status"`
+  speaks "Showing 3 of 12 videos".
+- `WatchUpNext.vue` — owns `query`/`kind`, derives `visible`, and gained a
+  distinct "nothing matches" empty state with a Clear button (separate from the
+  existing "nothing else in this category").
+- The control row hides below five items (`FILTERABLE_FROM`), and the kind chips
+  hide unless the rail holds both kinds — the category rail is usually all
+  clips, where a Live chip can only empty the list.
+- The filter resets when the *video* changes, keyed on item ids rather than on
+  the array, so walking to the next watch page clears it but a background
+  refetch of the same twelve doesn't wipe mid-sentence typing.
+- `__fixtures__/watch.ts` grew two clips (4 → 6) so `/zz-watch-preview` renders
+  the controls at all, and so a channel search returns more than one card.
+
+**Same verification gap as everything above** — `pnpm typecheck`, `pnpm test`,
+`pnpm lint` and the dev server were all unavailable this session. `upNext.spec.ts`
+is new and has never run. Fastest way to eyeball this without a seeded DB is
+`/zz-watch-preview`.

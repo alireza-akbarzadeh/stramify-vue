@@ -1,6 +1,7 @@
-import { eq, ilike } from 'drizzle-orm'
+import { and, desc, eq, ilike, ne } from 'drizzle-orm'
 import { db } from '../db/client'
 import { clips, liveStreams } from '../db/schema'
+import { landscapeClips } from './discovery'
 import type { ClipRow, LiveStreamRow } from './discovery'
 import { formatAge, formatDuration, formatUptime } from './format'
 import type { RelatedItem, WatchTarget } from '#shared/types/watch'
@@ -113,4 +114,50 @@ export function liveToRelated(row: LiveStreamRow): RelatedItem {
     videoUrl: row.videoUrl,
     meta: `${formatCount(row.viewerCount)} watching`
   }
+}
+
+/**
+ * Everything else in this target's category, live channels first (something
+ * happening now beats a recording), each side ordered by its own popularity
+ * signal. Category is the only signal available — there's no watch history or
+ * recommender, and inventing a relevance score off nothing would be theatre.
+ *
+ * Shared by the up-next rail and by the AI picks endpoint, which asks a model
+ * to *reorder* this list rather than to name videos from memory. That's the
+ * whole reason it lives here instead of inside `related.get.ts`: the candidate
+ * set the model chooses from has to be the same real catalogue the rail draws,
+ * or the two panels start disagreeing about what exists.
+ */
+export async function selectRelated(
+  resolved: ResolvedTarget,
+  limit: number
+): Promise<RelatedItem[]> {
+  const { category } = resolved.target
+
+  const [liveRows, clipRows] = await Promise.all([
+    db
+      .select()
+      .from(liveStreams)
+      .where(
+        resolved.kind === 'live'
+          ? and(eq(liveStreams.category, category), ne(liveStreams.id, resolved.row.id))
+          : eq(liveStreams.category, category)
+      )
+      .orderBy(desc(liveStreams.viewerCount))
+      .limit(limit),
+    db
+      .select()
+      .from(clips)
+      .where(
+        and(
+          eq(clips.category, category),
+          landscapeClips,
+          resolved.kind === 'clip' ? ne(clips.id, resolved.row.id) : undefined
+        )
+      )
+      .orderBy(desc(clips.views))
+      .limit(limit)
+  ])
+
+  return [...liveRows.map(liveToRelated), ...clipRows.map(clipToRelated)].slice(0, limit)
 }

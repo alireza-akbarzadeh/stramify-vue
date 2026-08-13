@@ -91,6 +91,33 @@ export const relatedItems: RelatedItem[] = [
     image: 'https://picsum.photos/seed/canvas-queen/960/540',
     videoUrl: 'https://media.w3.org/2010/05/bunny/trailer.mp4',
     meta: '2.3k watching'
+  },
+  // The last two exist to push this list past `FILTERABLE_FROM`, so the
+  // preview page renders the rail's search box and kind chips rather than
+  // hiding them the way a four-item rail does. `Patch_Bay` appears twice on
+  // purpose: it's what makes a channel search return more than one card, and
+  // "modular" vs "Patch_Bay modular" is the AND-across-fields case.
+  {
+    id: 'clip-tape-loops',
+    slug: 'clip-tape-loops',
+    kind: 'clip',
+    title: 'Building a tape loop from scratch',
+    channel: 'Patch_Bay',
+    image: 'https://picsum.photos/seed/tape-loops/960/540',
+    videoUrl: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+    meta: '5.2k views · 1d ago',
+    duration: '04:18'
+  },
+  {
+    id: 'clip-clutch-defuse',
+    slug: 'clip-clutch-defuse',
+    kind: 'clip',
+    title: 'One-second clutch defuse',
+    channel: 'GhostOperator',
+    image: 'https://picsum.photos/seed/clutch-defuse/960/540',
+    videoUrl: 'https://media.w3.org/2010/05/bunny/trailer.mp4',
+    meta: '31.7k views · 4h ago',
+    duration: '00:21'
   }
 ]
 

@@ -71,9 +71,13 @@ export function useHoverPreview(source: () => string) {
     () => finePointer.value && reducedMotion.value !== 'reduce' && !unsupported.value
   )
 
-  /** True from the moment the element mounts, so the crossfade has something to fade to. */
+  /**
+   * Whether the video should be *visible*. Strictly later than `mounted`: the
+   * element buffers behind the still first, so the crossfade lands on a
+   * playing frame instead of a black one.
+   */
   const showVideo = computed(() => state.value === 'playing')
-  /** The element only exists while it's wanted — see `stop()`. */
+  /** Whether the element should exist at all — an idle rail holds none. */
   const mounted = computed(() => state.value === 'loading' || state.value === 'playing')
 
   const { start: arm, stop: disarm } = useTimeoutFn(begin, ARM_MS, { immediate: false })
@@ -100,19 +104,23 @@ export function useHoverPreview(source: () => string) {
     disarm()
     if (activeCard.value === token) activeCard.value = null
 
-    const el = video.value
-    if (el) {
-      el.pause()
-      // Drop the buffer rather than leaving a paused element holding it: a rail
-      // the viewer has swept twice would otherwise pin a dozen decoded videos
-      // in memory. `removeAttribute` before `load()` is what actually releases
-      // the resource — `load()` alone would re-fetch the same src.
-      el.removeAttribute('src')
-      el.load()
-    }
-
+    // Idle *before* the element is touched, and not after: detaching a source
+    // can itself fire `error`, and with the state still reading `playing` at
+    // that point `onError` would mark a perfectly good track `unsupported` and
+    // the card would never preview again. The guard there keys off this.
     state.value = 'idle'
     progress.value = 0
+
+    const el = video.value
+    if (!el) return
+
+    el.pause()
+    // Drop the buffer rather than leaving a paused element holding it: a rail
+    // the viewer has swept twice would otherwise pin a dozen decoded videos in
+    // memory. Removing the attribute before `load()` is what releases the
+    // resource — `load()` alone would just re-fetch the same src.
+    el.removeAttribute('src')
+    el.load()
   }
 
   /**
@@ -130,6 +138,11 @@ export function useHoverPreview(source: () => string) {
       return
     }
 
+    // Belt and braces: the `muted` *content attribute* seeds `defaultMuted`,
+    // and every autoplay policy gates on the `muted` *property*. Setting it
+    // outright removes the single most common reason a silent preview gets
+    // refused, and costs one assignment.
+    el.muted = true
     el.currentTime = previewStartTime(el.duration)
 
     try {
@@ -159,8 +172,15 @@ export function useHoverPreview(source: () => string) {
     if (elapsed >= PREVIEW_SECONDS) stop()
   }
 
-  /** A dead source shouldn't keep re-arming on every pass of the cursor. */
+  /**
+   * A dead source shouldn't keep re-arming on every pass of the cursor — so a
+   * genuine failure is sticky. An `error` raised while already idle is the
+   * teardown in `stop()` detaching the source, not the track failing, and
+   * marking that `unsupported` would disable the card after its first
+   * successful preview.
+   */
   function onError() {
+    if (state.value === 'idle') return
     unsupported.value = true
     stop()
   }

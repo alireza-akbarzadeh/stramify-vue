@@ -39,6 +39,11 @@ const emit = defineEmits<{ (e: 'toggle-save'): void }>()
         </h3>
         <p class="mt-1 truncate text-xs text-muted-foreground">{{ item.channel }}</p>
         <p class="truncate text-xs text-muted-foreground">{{ item.meta }}</p>
+        <!-- Empty in the up-next rail. The AI picks list fills it with the
+             model's one-line reason, which is the only thing that separates
+             the two lists — worth a slot rather than a second copy of this
+             card that drifts from it. -->
+        <slot name="note" />
       </div>
     </NuxtLink>
     <!-- Revealed on hover only where there *is* a hover: on a touch screen

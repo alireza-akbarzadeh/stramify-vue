@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ChevronLeft, ChevronRight } from '@lucide/vue'
+import { motion } from 'motion-v'
 import { Button } from '@/components/ui/button'
 
 /**
@@ -41,6 +42,16 @@ const track = useTemplateRef<HTMLUListElement>('track')
 function scroll(direction: -1 | 1) {
   track.value?.scrollBy({ left: direction * props.step, behavior: 'smooth' })
 }
+
+/**
+ * Spring rather than a duration on the arrows: a press should read as
+ * something with weight being pushed, and springs are interruptible — clicking
+ * through a rail quickly never queues up a line of settling animations behind
+ * the scrolling. The chevron's nudge is CSS on the button's own hover, because
+ * it's a hint about direction, not a reaction to a press.
+ */
+const PRESS = { type: 'spring' as const, stiffness: 420, damping: 26 }
+const NUDGE = 'transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none'
 </script>
 
 <template>
@@ -81,26 +92,30 @@ function scroll(direction: -1 | 1) {
       </div>
 
       <div class="hidden shrink-0 gap-2 sm:flex">
-        <Button
-          type="button"
-          variant="outline"
-          size="icon"
-          :aria-label="`Scroll ${title} left`"
-          class="size-9 rounded-full"
-          @click="scroll(-1)"
-        >
-          <ChevronLeft />
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          size="icon"
-          :aria-label="`Scroll ${title} right`"
-          class="size-9 rounded-full"
-          @click="scroll(1)"
-        >
-          <ChevronRight />
-        </Button>
+        <motion.div :while-hover="{ scale: 1.08 }" :while-press="{ scale: 0.9 }" :transition="PRESS">
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            :aria-label="`Scroll ${title} left`"
+            class="group/arrow size-9 rounded-full"
+            @click="scroll(-1)"
+          >
+            <ChevronLeft :class="[NUDGE, 'group-hover/arrow:-translate-x-0.5']" />
+          </Button>
+        </motion.div>
+        <motion.div :while-hover="{ scale: 1.08 }" :while-press="{ scale: 0.9 }" :transition="PRESS">
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            :aria-label="`Scroll ${title} right`"
+            class="group/arrow size-9 rounded-full"
+            @click="scroll(1)"
+          >
+            <ChevronRight :class="[NUDGE, 'group-hover/arrow:translate-x-0.5']" />
+          </Button>
+        </motion.div>
       </div>
     </div>
 

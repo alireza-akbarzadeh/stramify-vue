@@ -29,11 +29,21 @@
  */
 :root {
   --player-sheet-overlap: 1.25rem;
+  /*
+   * The video's own corner, deliberately rounder than the app's `--radius` on
+   * a phone. At 1rem the inset video read as a full-bleed strip that happened
+   * to be indented rather than as a card sitting on the page — the corner has
+   * to be big enough to see against a busy first frame. Back to the app radius
+   * from `lg`, where the player is large enough that a phone-sized corner
+   * looks soft.
+   */
+  --player-radius: 1.5rem;
 }
 
 @media (min-width: 64rem) {
   :root {
     --player-sheet-overlap: 0px;
+    --player-radius: var(--radius);
   }
 }
 
@@ -43,7 +53,7 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  border-radius: var(--radius);
+  border-radius: var(--player-radius);
   background: #000;
   /* Makes the player a query container so the `cqw` caption size below scales
      with the video box rather than the viewport — without this it silently

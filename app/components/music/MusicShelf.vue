@@ -16,6 +16,11 @@ import type { MusicShelf } from '#shared/types/music'
  * Card widths are percentages so the rail shows a partial card at the right
  * edge at every breakpoint. That cut-off card is the affordance: it's what
  * tells a viewer the row scrolls, without an arrow they might not see.
+ *
+ * The ladder keeps going past `2xl` — six cards at `3xl`, seven at `4xl` —
+ * rather than letting five cards stretch across an ultrawide. Held roughly
+ * constant across the whole ladder is the *card*, ~230–300px wide; what
+ * changes with the display is how many of them fit.
  */
 defineProps<{ shelf: MusicShelf }>()
 
@@ -36,7 +41,7 @@ const headingId = (id: string) => `music-shelf-${id}`
     <li
       v-for="(track, index) in shelf.items"
       :key="track.id"
-      class="w-[70%] shrink-0 snap-start sm:w-[46%] lg:w-[31%] xl:w-[23.5%] 2xl:w-[19%]"
+      class="w-[70%] shrink-0 snap-start sm:w-[46%] lg:w-[31%] xl:w-[23.5%] 2xl:w-[19%] 3xl:w-[15.5%] 4xl:w-[13.4%]"
     >
       <!-- Staggered so a rail assembles left-to-right instead of flashing in
            as a block. Capped inside `Reveal`'s consumers elsewhere for the same

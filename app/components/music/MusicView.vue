@@ -23,7 +23,16 @@ const shelves = computed(() => data.value?.shelves ?? [])
 </script>
 
 <template>
-  <div class="mx-auto min-w-0 max-w-[1560px] px-4 py-8 sm:px-8">
+  <!--
+    The cap keeps climbing past `2xl` instead of stopping at 1560px, because a
+    rail page is one of the few layouts that genuinely gets better with width —
+    extra room becomes more cards, not longer lines of text. It still stops:
+    2400px on a 3440px ultrawide is the point where another card stops helping
+    and the hero starts looking like a billboard.
+  -->
+  <div
+    class="mx-auto min-w-0 max-w-[1560px] px-4 py-8 sm:px-8 3xl:max-w-[1800px] 3xl:px-10 4xl:max-w-[2400px] 4xl:px-12"
+  >
     <MusicSkeleton v-if="isPending" />
 
     <div

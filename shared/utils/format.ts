@@ -8,6 +8,18 @@
  * never sent. Two implementations would have drifted.
  */
 
+/**
+ * Seconds → `"04:07"`. Lived in `server/utils/format.ts` until Creator Studio
+ * needed it in the browser: the upload wizard reads a file's duration off a
+ * `<video>` element and shows it before the server has ever seen the file.
+ * Still re-exported from there, so the nine server call sites are unchanged.
+ */
+export function formatDuration(totalSeconds: number): string {
+  const minutes = Math.floor(totalSeconds / 60)
+  const seconds = totalSeconds % 60
+  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+}
+
 /** `842` → `"842"`, `12400` → `"12.4k"`. */
 export function formatCount(count: number): string {
   if (count < 1000) return String(count)

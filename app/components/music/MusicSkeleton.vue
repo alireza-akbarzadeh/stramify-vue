@@ -8,12 +8,15 @@
  * `MusicShelf`'s breakpoints exactly; if those change, these have to follow.
  */
 const SHELVES = 2
-const CARDS = 5
+/** Enough to fill the widest rail (`4xl` shows seven); the row clips the rest. */
+const CARDS = 7
 </script>
 
 <template>
   <div aria-label="Loading music" class="space-y-12" role="status">
-    <div class="aspect-[4/5] w-full animate-pulse rounded-2xl bg-muted sm:aspect-[16/10] lg:aspect-[21/9]" />
+    <div
+      class="aspect-[4/5] w-full animate-pulse rounded-2xl bg-muted sm:aspect-[16/10] lg:aspect-[21/9] 3xl:max-h-[720px] 4xl:max-h-[780px]"
+    />
 
     <div v-for="shelf in SHELVES" :key="shelf" class="min-w-0 space-y-4">
       <div class="space-y-2">
@@ -24,7 +27,7 @@ const CARDS = 5
         <div
           v-for="card in CARDS"
           :key="card"
-          class="w-[70%] shrink-0 space-y-3 sm:w-[46%] lg:w-[31%] xl:w-[23.5%] 2xl:w-[19%]"
+          class="w-[70%] shrink-0 space-y-3 sm:w-[46%] lg:w-[31%] xl:w-[23.5%] 2xl:w-[19%] 3xl:w-[15.5%] 4xl:w-[13.4%]"
         >
           <div class="aspect-video w-full animate-pulse rounded-xl bg-muted" />
           <div class="h-4 w-4/5 animate-pulse rounded bg-muted" />

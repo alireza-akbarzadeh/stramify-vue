@@ -4,11 +4,9 @@
 // relative path, not the `#shared` alias, because `format.spec.ts` runs in
 // the plain vitest environment where Nuxt's aliases aren't applied.
 
-export function formatDuration(totalSeconds: number): string {
-  const minutes = Math.floor(totalSeconds / 60)
-  const seconds = totalSeconds % 60
-  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
-}
+// `formatDuration` moved to `shared/` for the same reason and on the same
+// terms — see the note on it there.
+export { formatDuration } from '../../shared/utils/format'
 
 /**
  * How long a live session has been running, e.g. `"9m"`, `"3h 17m"`.

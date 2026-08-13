@@ -10,7 +10,7 @@ both VOD clips and live channels — see [ADR-014](./DECISIONS.md) for why, and
 |---|---|---|
 | Player | Custom skin on Vidstack, on-demand | Same skin, `stream-type="live"` + LIVE badge |
 | Meta line | views · published · duration | viewers · uptime |
-| Sidebar | Up next | Live chat **+** Up next |
+| Sidebar | Up next (searchable) | Live chat **+** Up next (searchable) |
 | Below | Comments — post, reply, like, delete | — |
 | Always | like/dislike · share · save · follow channel · description | |
 
@@ -74,7 +74,8 @@ app/pages/watch/[slug].vue          thin page
       ├─ WatchChannelBar / WatchDescription
       ├─ WatchComments → WatchCommentItem     (clips)
       └─ aside: WatchChat → WatchChatMessage  (live)
-                WatchUpNext → WatchUpNextCard
+                WatchUpNext → WatchUpNextFilters
+                              WatchUpNextCard
 ```
 
 `WatchLayout` takes no data of its own, which is what lets
@@ -96,6 +97,42 @@ below the video**, with `order-2` keeping it above the comment list so live
 chat sits directly under the player on a phone. On desktop the aside is
 `lg:row-span-2` with a `lg:sticky lg:top-20` inner div (`top-20` clears the
 fixed 4rem `AppHeader`).
+
+### Filtering Up next
+
+The rail carries a search box and All/Live/Clips chips
+(`WatchUpNextFilters.vue`). Both narrow **the twelve items already on screen**
+— `filterUpNext` in `app/utils/upNext.ts` is a pure function over the loaded
+array, so there is no request, no debounce and no loading state. Searching
+wider than the rail is what `/search` is for; a sidebar that quietly turns into
+a second search page is a worse sidebar.
+
+Three things it does that a naive substring filter wouldn't:
+
+- **Terms are AND-ed across fields.** "nova ranked" finds nova's "Ranked ladder
+  push" even though those words never sit together in either the title or the
+  channel.
+- **`meta` is not searched.** It's a pre-formatted "12.4k views · 3 days ago",
+  so matching it would make "3" hit everything published in the last nine days
+  — a result the viewer can't see the reason for.
+- **The kind chips only render when the rail actually holds both kinds**
+  (`upNextHasBothKinds`). The category-matched rail is often all clips, where a
+  "Live" chip can do exactly one thing: empty the list.
+
+The whole control row is hidden below five items (`FILTERABLE_FROM`) — two rows
+of chrome to filter four cards you can already see is worse than four cards.
+
+The filter resets when the **video** changes, keyed on the item ids rather than
+on the array: the component stays mounted as you walk between watch pages, so a
+stale query would read as "nothing is related to this video" — but a background
+refetch returning the same twelve must not wipe what you're mid-way through
+typing.
+
+Chips are `aria-pressed` toggle buttons in a `role="group"`, deliberately *not*
+the `role="tablist"` `HomeChipBar` uses: those chips swap which panel is shown
+and name it via `aria-controls`, these narrow a list that's already there. A
+visually-hidden `role="status"` announces "Showing 3 of 12 videos", since a
+screen-reader user gets no equivalent of watching the list shorten.
 
 ## API
 
@@ -188,5 +225,7 @@ Try `/watch/clip-midnight-echo` (VOD), `/watch/Viper_Squadron` (live),
 - The captions button is present but inert: no seeded source ships caption
   tracks. It lights up when one does.
 - Chat is up to 5s behind. Phase 8 replaces the interval with crossws.
-- Up-next is category-only — no watch history, no recommender.
+- Up-next is category-only — no watch history, no recommender. Its search is
+  likewise only as wide as those twelve results; it can't surface a video the
+  endpoint didn't return.
 - Renaming a channel orphans its follows until a `channels` table exists.

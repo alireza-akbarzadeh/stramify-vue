@@ -1,10 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import { canPreviewSource, previewStartTime, PREVIEW_SECONDS } from './preview'
 
+// Return types are annotated rather than inferred: a ternary over two string
+// literals widens to `string`, which isn't assignable to `CanPlayTypeResult`.
+
 /** Stands in for a browser with no native HLS (Chrome, Firefox). */
-const noHls = () => '' as const
+const noHls = (): CanPlayTypeResult => ''
 /** Stands in for Safari, which answers `maybe` for HLS. */
-const nativeHls = (type: string) => (type.toLowerCase().includes('mpegurl') ? 'maybe' : '')
+const nativeHls = (type: string): CanPlayTypeResult =>
+  type.toLowerCase().includes('mpegurl') ? 'maybe' : ''
 
 describe('canPreviewSource', () => {
   it.each(['clip.mp4', 'clip.webm', 'clip.ogv', 'clip.mov', 'clip.m4v'])(
@@ -32,7 +36,8 @@ describe('canPreviewSource', () => {
   })
 
   it('accepts the legacy x-mpegURL spelling', () => {
-    const onlyLegacy = (type: string) => (type === 'application/x-mpegURL' ? 'maybe' : '')
+    const onlyLegacy = (type: string): CanPlayTypeResult =>
+      type === 'application/x-mpegURL' ? 'maybe' : ''
     expect(canPreviewSource('https://cdn.test/a.m3u8', onlyLegacy)).toBe(true)
   })
 

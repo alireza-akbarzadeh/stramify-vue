@@ -1,16 +1,16 @@
-# Graph Report - stramify  (2026-08-12)
+# Graph Report - stramify  (2026-08-13)
 
 ## Corpus Check
-- 938 files · ~611,067 words
+- 982 files · ~622,104 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 6813 nodes · 8100 edges · 805 communities (584 shown, 221 thin omitted)
-- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 152 edges (avg confidence: 0.66)
+- 7052 nodes · 8432 edges · 823 communities (595 shown, 228 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 153 edges (avg confidence: 0.65)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8ea75c0a`
+- Built from commit: `9de0514b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -21,7 +21,7 @@
 - spacing
 - Track B - motion-v content animation
 - Slides Reference (Overview)
-- schema/index.ts
+- schema/auth.ts
 - WatchView.vue
 - TestTailwindConfigGenerator
 - .claude/skills/ui-ux-pro-max/scripts/design_system.py
@@ -37,10 +37,10 @@
 - UI Styling Skill
 - generate-slide.py
 - TailwindConfigGenerator
-- client.ts
+- schema/index.ts
 - color
 - test_design_system_mode.py
-- notifications.ts
+- formatAge
 - fetch-background.py
 - Watchlist Feature (Favorites)
 - DiscoveryFeed.vue
@@ -236,10 +236,10 @@
 - drizzle-orm
 - Design Audit
 - Component Specifications
-- utils/watch-later.ts
+- LikedView.vue
 - shadcn/ui Accessibility Patterns
 - ioredis
-- @lucide/vue
+- types/billing.ts
 - motion-v
 - HomeWatchLaterCard.vue
 - Analysis & Synthesis Instructions
@@ -311,6 +311,7 @@
 - Primitive z-index scale
 - Brand-compliant slide system (design tokens + Chart.js + decision CSVs)
 - SKILL: Industrial Brutalism & Tactical Telemetry UI
+- PricingCard.vue
 - Vue Best Practices Workflow
 - trend.ts
 - tasteskill: Anti-Slop Frontend Skill
@@ -320,6 +321,7 @@
 - graphify benchmark (token reduction)
 - graphify export wiki (--wiki)
 - FAB formula (Features-Advantages-Benefits)
+- ADR-0009
 - ADR-0022
 - Nuxt Minimal Starter README
 - Appendix B - Canonical Sources (read these before reinventing)
@@ -335,7 +337,7 @@
 - 4. DESIGN ENGINEERING DIRECTIVES (Bias Correction)
 - Directive Best Practices
 - Asset Approval Checklist
-- types/channel.ts
+- Design System Master File
 - State-driven Animations with CSS Transitions and Style Bindings
 - 10. REFERENCE VOCABULARY (Pattern Names the Agent Should Know)
 - CORE DIRECTIVE: AWWWARDS-LEVEL DESIGN ENGINEERING
@@ -412,15 +414,15 @@
 - [handle].vue
 - search.vue
 - app/utils/channel.spec.ts
-- HomeVideoGrid.vue
+- HomeView.vue
 - SYNC.md
 - CIP Deliverable Guide
 - stores/watchlist.ts
 - @better-auth/infra
 - useHistory.ts
 - PWA (installability, app icons, service worker)
-- @tailwindcss/vite
-- chat.post.ts
+- billing-plugin.ts
+- server/utils/comments.ts
 - CreateMenu.vue
 - BM25
 - States and Variants
@@ -430,9 +432,9 @@
 - Design System
 - Tailwind CSS Customization
 - DesignSystemGenerator
-- PlaylistCreateDialog.vue
+- PlaylistFormDialog.vue
 - spacing
-- progress.ts
+- formatDuration
 - Hooks Recommendations
 - Routing by Task Type
 - .agents/skills/design-system/scripts/generate-slide.py
@@ -477,7 +479,7 @@
 - Layout Patterns
 - search
 - .generate
-- HomeShortsRail.vue
+- Billing
 - shared/utils/mix.ts
 - brand/references/update.md
 - Logo Design Reference
@@ -493,7 +495,7 @@
 - Styling & Customization
 - .generate_config_string
 - HomeShelves.vue
-- HomeView.vue
+- Streamify Architecture doc
 - Tools
 - Styling & Customization
 - Core Visual Elements
@@ -512,7 +514,7 @@
 - usePlaylists.ts
 - Commands
 - shadcn-vue
-- server/utils/shorts.ts
+- server/utils/liked.ts
 - Brand
 - Slide Strategies
 - .agents/skills/design/scripts/logo/generate.py
@@ -537,7 +539,7 @@
 - Prerequisites
 - HomeVideoCard.vue
 - HomeVideoCardMenu.vue
-- PlaylistDetailView.vue
+- utils/subscriptions.ts
 - ShortsPlayer.vue
 - WatchPlayer.vue
 - app/utils/home.spec.ts
@@ -552,13 +554,13 @@
 - UI/UX Pro Max - Design Intelligence
 - HomeRailCard.vue
 - HomeRail.vue
-- HomeShortCard.vue
+- utils/library.ts
 - dropdown-menu/index.ts
 - Slides Reference
 - HTML Slide Template
 - Critical Rules
 - HTML Slide Template
-- .agents/skills/ui-ux-pro-max/scripts/tests/test_core.py
+- detect_domain
 - _select_palette_for_mode
 - How to Use This Skill
 - ShortsOverlay.vue
@@ -620,12 +622,12 @@
 - none
 - .agents/skills/brand/scripts/tests/test_sync_brand_to_tokens.py
 - main
-- Cloud Infrastructure
-- padding-x
-- md
+- useBilling.ts
+- useLiked.ts
+- Databases
 - 8
 - destructive
-- 0
+- BillingPlanGrid.vue
 - 16
 - 3
 - destructive-foreground
@@ -645,7 +647,7 @@
 - secondary-foreground
 - 8
 - .temp_project
-- SidebarMenuSkeleton.vue
+- Switch.vue
 - shadcnVue
 - slides-create.md
 - extraction-spec.md
@@ -697,8 +699,8 @@
 - .test_custom_output_path
 - .test_default_content_paths_react
 - nuxt
-- @nuxt/eslint
-- @tanstack/vue-query
+- useAutoplayGate.spec.ts
+- logger.ts
 - vee-validate
 - vidstack
 - vue-router
@@ -707,16 +709,34 @@
 - [slug]/index.get.ts
 - view.post.ts
 - NOTIFY_OFF_ICON
+- BillingStatusCard.vue
 - 2
-- 6
+- billing.vue
 - primary
-- eslint-config-prettier
+- lg
 - @heroicons/vue
 - pino-pretty
 - sharp
-- @types/qrcode
+- 1. THE THREE DIALS (Core Configuration)
 - typescript
 - vitest
+- WatchDescription.vue
+- 1
+- imagegen-frontend-web/SKILL.md
+- 4
+- productEnvKey
+- BillingIntervalToggle.vue
+- SidebarGroupContent.vue
+- SidebarInset.vue
+- clsx
+- eslint
+- @nuxtjs/color-mode
+- @polar-sh/sdk
+- vue
+- @vueuse/core
+- @playwright/test
+- tw-animate-css
+- @vue/test-utils
 
 ## God Nodes (most connected - your core abstractions)
 1. `TailwindConfigGenerator` - 60 edges
@@ -727,8 +747,8 @@
 6. `ShadcnInstaller` - 35 edges
 7. `TestTailwindConfigGenerator` - 35 edges
 8. `TestTailwindConfigGenerator` - 35 edges
-9. `ShadcnInstaller` - 33 edges
-10. `db` - 32 edges
+9. `db` - 34 edges
+10. `ShadcnInstaller` - 33 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `TestDomainDetection` --uses--> `BM25`  [INFERRED]
@@ -756,13 +776,12 @@
 - **Ponytail skill family (mode + review + audit + debt + gain + help)** — claude_skills_ponytail_skill_ponytail, claude_skills_ponytail_review_skill_ponytailreview, claude_skills_ponytail_audit_skill_ponytailaudit, claude_skills_ponytail_debt_skill_ponytaildebt, claude_skills_ponytail_gain_skill_ponytailgain, claude_skills_ponytail_help_skill_ponytailhelp [EXTRACTED 1.00]
 - **Slides skill routing pipeline (skill + subcommand + references)** — claude_skills_slides_skill_slidesskill, claude_skills_slides_references_create_createsubcommand, claude_skills_slides_references_layout_patterns_layoutselection, claude_skills_slides_references_copywriting_formulas_pas, claude_skills_slides_references_slide_strategies_ycseeddeck [EXTRACTED 1.00]
 - **Phase 0/1 foundational planning documents (prompt, research, decisions, architecture)** — docs_prompt, docs_architecture_research, docs_decisions, docs_architecture [EXTRACTED 1.00]
-- **Installing and using the ui-ux-pro-max-cli design skill family** — docs_decisions_adr009_uiuxpromaxcli, claude_skills_ui_ux_pro_max_skill, claude_skills_ui_styling_skill, design_system_streamify_master [INFERRED 0.80]
 - **Video playback pipeline: Cloudflare Stream decision, Vidstack player, real live_streams table** — docs_decisions_adr005_cloudflarestream, docs_decisions_adr012_vidstackclips, docs_decisions_adr013_livestreamstable, docs_video_streaming [EXTRACTED 1.00]
 - **Migration 0003 table set backing the watch page** — docs_watch_page_comments_table, docs_watch_page_chat_messages_table, docs_watch_page_reactions_table, docs_watch_page_follows_table [EXTRACTED 1.00]
 - **Watch page component tree** — docs_watch_page_watchview, docs_watch_page_watchlayout, docs_watch_page_props_only_layout, docs_watch_page_responsive_layout [EXTRACTED 1.00]
 - **Deliberate watch-page limitations** — docs_watch_page_readonly_comments_limit, docs_watch_page_chat_polling, docs_watch_page_category_only_upnext [EXTRACTED 1.00]
 
-## Communities (805 total, 221 thin omitted)
+## Communities (823 total, 228 thin omitted)
 
 ### Community 0 - "gray"
 Cohesion: 0.05
@@ -788,21 +807,21 @@ Nodes (34): Discrete confidence-score rubric, Graphify extraction subagent promp
 Cohesion: 0.09
 Nodes (33): Banner Sizes & Art Direction Styles Reference, CIP Deliverable Guide, CIP Design Reference, CIP Mockup Prompt Engineering, CIP Design Style Guide, Design Routing Guide, Icon Design Reference, Logo Color Psychology (+25 more)
 
-### Community 6 - "schema/index.ts"
-Cohesion: 0.11
-Nodes (22): account, session, ADR-0007, twoFactor, user, verification, ADR-0015, clipCategoryEnum (+14 more)
+### Community 6 - "schema/auth.ts"
+Cohesion: 0.07
+Nodes (29): account, session, ADR-0007, twoFactor, user, verification, clipCategoryEnum, clipOrientationEnum (+21 more)
 
 ### Community 7 - "WatchView.vue"
 Cohesion: 0.05
-Nodes (25): { channel, toggle: follow, notify }, channelName, chat, chatPanel, commentActions, comments, commentsPanel, { count } (+17 more)
+Nodes (26): { channel, toggle: follow, notify }, channelName, chat, chatPanel, commentActions, comments, commentsPanel, { count } (+18 more)
 
 ### Community 8 - "TestTailwindConfigGenerator"
 Cohesion: 0.07
 Nodes (15): Test adding colors multiple times., Test adding full color palette., Test adding custom breakpoints., Test TailwindConfigGenerator class., Test that adding same plugin twice doesn't duplicate., Test plugin recommendations for Next.js., Test generating config with plugins., Test validating valid configuration. (+7 more)
 
 ### Community 9 - ".claude/skills/ui-ux-pro-max/scripts/design_system.py"
-Cohesion: 0.09
-Nodes (27): ansi_ljust(), _detect_page_type(), format_ascii_box(), format_markdown(), format_master_md(), format_page_override_md(), generate_design_system(), _generate_intelligent_overrides() (+19 more)
+Cohesion: 0.10
+Nodes (25): ansi_ljust(), _detect_page_type(), format_ascii_box(), format_markdown(), format_master_md(), format_page_override_md(), generate_design_system(), _generate_intelligent_overrides() (+17 more)
 
 ### Community 10 - "sheet/index.ts"
 Cohesion: 0.07
@@ -813,8 +832,8 @@ Cohesion: 0.14
 Nodes (24): get_context(), is_allowed_exception(), is_allowed_rgba(), is_inside_block(), load_css_variables(), main(), print_result(), print_summary() (+16 more)
 
 ### Community 12 - "BM25"
-Cohesion: 0.11
-Nodes (19): BM25, _domain_keywords(), _get_bm25(), _load_csv(), _load_product_keywords(), _normalize(), Apply synonym substitution before tokenizing., BM25 ranking algorithm for text search (+11 more)
+Cohesion: 0.13
+Nodes (16): BM25, _domain_keywords(), _get_bm25(), _load_csv(), _load_product_keywords(), _normalize(), Apply synonym substitution before tokenizing., BM25 ranking algorithm for text search (+8 more)
 
 ### Community 13 - "FollowingView.vue"
 Cohesion: 0.06
@@ -822,11 +841,11 @@ Nodes (19): busy, notify, { unfollow }, headingId, props, to, watchlist, props (
 
 ### Community 14 - "types/watch.ts"
 Cohesion: 0.17
-Nodes (14): ChannelNotifyMode, ClipOrientation, FollowedChannel, ChannelSummary, ChatMessage, CommentDraft, CommentSort, ReactionSummary (+6 more)
+Nodes (14): ClipOrientation, Short, ShortsPage, ChatMessage, CommentDraft, CommentSort, ReactionSummary, ReactionValue (+6 more)
 
 ### Community 15 - "sidebar/index.ts"
 Cohesion: 0.11
-Nodes (9): props, props, props, props, props, props, props, props (+1 more)
+Nodes (9): props, props, props, props, props, props, props, width (+1 more)
 
 ### Community 16 - "BM25"
 Cohesion: 0.12
@@ -838,11 +857,11 @@ Nodes (7): _palette_is_dark(), WCAG relative luminance of a #RRGGBB string, or N
 
 ### Community 18 - "scripts"
 Cohesion: 0.06
-Nodes (31): scripts, build, db:generate, db:migrate, db:seed, db:seed:channels, db:seed:chat, db:seed:clips (+23 more)
+Nodes (32): scripts, build, db:generate, db:migrate, db:seed, db:seed:channels, db:seed:chat, db:seed:clips (+24 more)
 
 ### Community 19 - "UI Styling Skill"
-Cohesion: 0.11
-Nodes (20): ui-styling skill LICENSE (Apache License 2.0), Canvas Design System reference, shadcn/ui Accessibility Patterns reference, shadcn/ui Component Reference, shadcn/ui Theming & Customization reference, Tailwind CSS Customization reference, Tailwind CSS Responsive Design reference, Tailwind CSS Utility Reference (+12 more)
+Cohesion: 0.13
+Nodes (17): ui-styling skill LICENSE (Apache License 2.0), Canvas Design System reference, shadcn/ui Accessibility Patterns reference, shadcn/ui Component Reference, shadcn/ui Theming & Customization reference, Tailwind CSS Customization reference, Tailwind CSS Responsive Design reference, Tailwind CSS Utility Reference (+9 more)
 
 ### Community 20 - "generate-slide.py"
 Cohesion: 0.15
@@ -852,9 +871,9 @@ Nodes (19): _e(), generate_chart_slide(), generate_cta_slide(), generate_deck(),
 Cohesion: 0.11
 Nodes (10): Generate Tailwind CSS configuration files., Add full color palette (50-950 shades) for a base color. Args: name: Color name…, TailwindConfigGenerator, Test adding custom fonts., Test adding custom spacing., Test plugin recommendations., Test validating config with empty theme extensions., Test initialization for JavaScript config. (+2 more)
 
-### Community 22 - "client.ts"
-Cohesion: 0.08
-Nodes (44): paramsSchema, paramsSchema, paramsSchema, paramsSchema, querySchema, paramsSchema, CommentLikeResult, paramsSchema (+36 more)
+### Community 22 - "schema/index.ts"
+Cohesion: 0.11
+Nodes (31): paramsSchema, paramsSchema, paramsSchema, querySchema, bodySchema, paramsSchema, paramsSchema, bodySchema (+23 more)
 
 ### Community 23 - "color"
 Cohesion: 0.11
@@ -864,9 +883,9 @@ Nodes (19): $type, $value, background, destructive, foreground, muted-foreground
 Cohesion: 0.16
 Nodes (10): _filter_anti_patterns_for_mode(), _query_wants_dark(), True when a styles.csv row describes itself as dark-first., True when the query explicitly asks for a dark theme., Resolve the mode the rest of the output has to agree with., Drop "avoid dark mode" advice once dark mode is the resolved answer., _resolve_color_mode(), _style_is_dark_primary() (+2 more)
 
-### Community 25 - "notifications.ts"
-Cohesion: 0.24
-Nodes (10): notificationReads, Event, followedChannels(), handlesFor(), liveEvents(), markNotificationsRead(), readCursor(), readNotifications() (+2 more)
+### Community 25 - "formatAge"
+Cohesion: 0.11
+Nodes (22): formatAge(), formatUptime(), toMeta(), Event, followedChannels(), handlesFor(), liveEvents(), markNotificationsRead() (+14 more)
 
 ### Community 26 - "fetch-background.py"
 Cohesion: 0.17
@@ -899,7 +918,7 @@ Nodes (16): aliases, components, composables, lib, ui, utils, iconLibrary, $sche
 
 ### Community 32 - "devDependencies"
 Cohesion: 0.09
-Nodes (23): drizzle-kit, eslint, happy-dom, @nuxt/test-utils, @nuxtjs/color-mode, devDependencies, drizzle-kit, eslint (+15 more)
+Nodes (23): drizzle-kit, eslint-config-prettier, happy-dom, husky, @nuxt/eslint, @nuxt/test-utils, devDependencies, drizzle-kit (+15 more)
 
 ### Community 33 - "icon/generate.py"
 Cohesion: 0.20
@@ -914,16 +933,16 @@ Cohesion: 0.23
 Nodes (9): main(), Add all available shadcn/ui components. Args: overwrite: If True, overwrite…, Handle shadcn/ui component installation., List installed components. Returns: Tuple of (success, message with component…, Check if shadcn is initialized in project. Returns: True if components.json…, Get list of already installed components. Returns: List of installed component…, Read shadcn version from project package.json; fall back to a pinned default., Add shadcn/ui components. Args: components: List of component names to add… (+1 more)
 
 ### Community 36 - "utils/auth.ts"
-Cohesion: 0.17
-Nodes (9): auth, configuredProviders, ENV_KEYS, SOCIAL_PROVIDERS, SocialProvider, ADR-0007, logger, Mail (+1 more)
+Cohesion: 0.24
+Nodes (7): auth, configuredProviders, ENV_KEYS, SOCIAL_PROVIDERS, SocialProvider, ADR-0007, ADR-0026
 
 ### Community 37 - "main"
 Cohesion: 0.12
 Nodes (8): main(), Add custom font families. Args: fonts: Dict of font_type: [font_names] e.g.,…, Add custom spacing values. Args: spacing: Dict of name: value e.g., {'18':…, Add custom breakpoints. Args: breakpoints: Dict of name: width e.g., {'3xl':…, Add plugin requirements. Args: plugins: List of plugin names e.g.,…, Get plugin recommendations based on configuration. Returns: List of recommended…, Validate configuration. Returns: Tuple of (valid, message), Add custom colors to theme. Args: colors: Dict of color_name: color_value Value…
 
 ### Community 38 - "Architecture Decision Record (ADR log)"
-Cohesion: 0.10
-Nodes (32): Streamify Architecture doc, Auth & authorization architecture, Backend architecture (Nitro domain routes), Deployment architecture, Observability architecture, Realtime architecture (chat, notifications, viewer counts), Auth research (nuxt-auth-utils vs better-auth), Backend research (Nitro server routes vs dedicated API service) (+24 more)
+Cohesion: 0.16
+Nodes (19): Deployment architecture, Realtime architecture (chat, notifications, viewer counts), Realtime research (chat & viewer counts), Architecture Decision Record (ADR log), ADR-005: Cloudflare Stream over Mux for video infrastructure, ADR-006: Nitro WebSockets + Redis pub/sub for realtime, ADR-012: Vidstack for clip playback; clips table replaces discovery fixtures, ADR-013: Real live_streams table backs /live; LiveSignal extended (+11 more)
 
 ### Community 39 - "Video Preview Modal"
 Cohesion: 0.14
@@ -950,16 +969,16 @@ Cohesion: 0.25
 Nodes (13): checkManifest(), formatBytes(), formatOutput(), fs, main(), parseFilename(), path, RULES (+5 more)
 
 ### Community 46 - "search"
-Cohesion: 0.19
-Nodes (8): Main search function with auto-domain detection, Search stack-specific guidelines, search(), search_stack(), format_output(), Format results for Claude consumption (token-optimized), Known query -> expected top-domain sanity checks (not exact-row pinning, since…, TestSearchDomains
+Cohesion: 0.14
+Nodes (11): All indexed terms, for suggestion/typo-recovery purposes., Nearest known vocabulary terms for a query that returned 0 hits, so the caller…, Main search function with auto-domain detection, Search stack-specific guidelines, search(), search_stack(), _suggest_terms(), format_output() (+3 more)
 
 ### Community 47 - "DesignSystemGenerator"
-Cohesion: 0.14
-Nodes (10): DesignSystemGenerator, Generates design system recommendations from aggregated searches., Load reasoning rules from CSV., Execute searches across multiple domains., Find matching reasoning rule for a category., Apply reasoning rules to search results., Select best matching result based on priority keywords., Extract results list from search result dict. (+2 more)
+Cohesion: 0.12
+Nodes (12): DesignSystemGenerator, Generates design system recommendations from aggregated searches., Load reasoning rules from CSV., Execute searches across multiple domains., Find matching reasoning rule for a category., Apply reasoning rules to search results., Select best matching result based on priority keywords., Extract results list from search result dict. (+4 more)
 
 ### Community 48 - "WatchLayout.vue"
 Cohesion: 0.17
-Nodes (12): AsyncPanel, ChatPanel, CommentsPanel, RelatedPanel, WatchEngagement, clippable, expanded, props (+4 more)
+Nodes (12): AsyncPanel, ChatPanel, CommentsPanel, RelatedPanel, WatchEngagement, sort, { theater }, categoryHref (+4 more)
 
 ### Community 49 - "login.vue"
 Cohesion: 0.19
@@ -1002,8 +1021,8 @@ Cohesion: 0.20
 Nodes (12): $type, $value, bg, bg, padding, shadow, card, bg (+4 more)
 
 ### Community 59 - "input"
-Cohesion: 0.29
-Nodes (8): padding-y, input, $type, $value, focus-ring, padding-y, $type, $value
+Cohesion: 0.20
+Nodes (12): padding-x, padding-y, input, $type, $value, focus-ring, padding-x, padding-y (+4 more)
 
 ### Community 60 - "Layout selection by use case (25 layouts)"
 Cohesion: 0.20
@@ -1023,7 +1042,7 @@ Nodes (11): Template: Color Palette section, Template: Logo Usage section, Brand
 
 ### Community 64 - "dependencies"
 Cohesion: 0.15
-Nodes (13): better-auth, clsx, dependencies, better-auth, clsx, @vee-validate/zod, vue, @vueuse/core (+5 more)
+Nodes (13): better-auth, @lucide/vue, dependencies, better-auth, @lucide/vue, @polar-sh/better-auth, @tanstack/vue-query, @vee-validate/zod (+5 more)
 
 ### Community 65 - "inject-brand-context.cjs"
 Cohesion: 0.31
@@ -1046,8 +1065,8 @@ Cohesion: 0.08
 Nodes (15): noResults, props, props, to, watchedAt, clear, term, auth (+7 more)
 
 ### Community 70 - "Master Prompt (product spec)"
-Cohesion: 0.11
-Nodes (22): Database architecture, Architecture Research (Phase 0), CI/CD & deployment research, Database & ORM research (Drizzle vs Prisma), Frontend framework research (Nuxt 4 + Vue 3.5), State management research (Pinia + TanStack Query), Storage, CDN, search, observability research, Streaming infrastructure research (Cloudflare Stream vs Mux) (+14 more)
+Cohesion: 0.10
+Nodes (25): Auth & authorization architecture, Database architecture, Architecture Research (Phase 0), Auth research (nuxt-auth-utils vs better-auth), CI/CD & deployment research, Database & ORM research (Drizzle vs Prisma), Frontend framework research (Nuxt 4 + Vue 3.5), State management research (Pinia + TanStack Query) (+17 more)
 
 ### Community 71 - "gray"
 Cohesion: 0.05
@@ -1126,8 +1145,8 @@ Cohesion: 0.14
 Nodes (10): channel, chat, comments, engagement, mode, reactions, related, saved (+2 more)
 
 ### Community 90 - "radius"
-Cohesion: 0.18
-Nodes (15): $type, $value, lg, $type, $value, $type, $value, primitive (+7 more)
+Cohesion: 0.19
+Nodes (14): $type, $value, $type, $value, $type, $value, primitive, radius (+6 more)
 
 ### Community 91 - "Watch API Surface"
 Cohesion: 0.25
@@ -1262,8 +1281,8 @@ Cohesion: 0.60
 Nodes (5): radius, radius, radius, $type, $value
 
 ### Community 127 - "Watch history (`/history`)"
-Cohesion: 0.11
-Nodes (17): Authorization, Common failure modes, Files, History vs. Continue watching, It reuses `watch_progress` — and what that implies, Paging and search, States, Watch history (`/history`) (+9 more)
+Cohesion: 0.05
+Nodes (36): Authorization, Common failure modes, Files, History vs. Continue watching, It reuses `watch_progress` — and what that implies, Paging and search, States, Watch history (`/history`) (+28 more)
 
 ### Community 128 - "seed-chat.mjs"
 Cohesion: 0.40
@@ -1326,8 +1345,8 @@ Cohesion: 0.83
 Nodes (3): _check_file(), main(), _read_rows()
 
 ### Community 148 - "package.json"
-Cohesion: 0.33
-Nodes (5): name, overrides, zod, private, type
+Cohesion: 0.29
+Nodes (6): name, zod, pnpm, overrides, private, type
 
 ### Community 149 - "Card tokens (--card-bg, --card-shadow, ...)"
 Cohesion: 0.67
@@ -1390,12 +1409,12 @@ Cohesion: 0.67
 Nodes (3): Optimistic Reaction Update with Rollback, Polymorphic (target_id, target_kind) Reactions, reactions Table
 
 ### Community 184 - "utils/channels.ts"
-Cohesion: 0.10
-Nodes (24): querySchema, paramsSchema, bodySchema, paramsSchema, paramsSchema, paramsSchema, querySchema, querySchema (+16 more)
+Cohesion: 0.17
+Nodes (17): paramsSchema, querySchema, querySchema, ChannelRow, FOLLOWED_ORDER, formatJoined(), listChannels(), listFollowedChannels() (+9 more)
 
 ### Community 192 - "utils/dashboard.ts"
-Cohesion: 0.16
-Nodes (23): querySchema, ADR-0014, channelHandle(), countCommentsOnClips(), countLikesOnClips(), EMPTY_ANALYTICS(), metric(), readCreatorOverview() (+15 more)
+Cohesion: 0.18
+Nodes (21): channelHandle(), countCommentsOnClips(), countLikesOnClips(), EMPTY_ANALYTICS(), metric(), readCreatorOverview(), readDashboardAnalytics(), readDashboardOverview() (+13 more)
 
 ### Community 194 - "app/utils/following.ts"
 Cohesion: 0.23
@@ -1414,8 +1433,8 @@ Cohesion: 0.06
 Nodes (35): 1. Visual Communication First, 2. Minimal Text Integration, 3. Expert Craftsmanship, 4. Systematic Patterns, Analog Meditation, Approach, Canvas Boundaries, Canvas Design System (+27 more)
 
 ### Community 220 - "session.ts"
-Cohesion: 0.08
-Nodes (31): paramsSchema, paramsSchema, paramsSchema, paramsSchema, bodySchema, paramsSchema, bodySchema, querySchema (+23 more)
+Cohesion: 0.05
+Nodes (49): querySchema, paramsSchema, paramsSchema, bodySchema, paramsSchema, paramsSchema, querySchema, ADR-0014 (+41 more)
 
 ### Community 221 - "Form & Input Components"
 Cohesion: 0.06
@@ -1449,13 +1468,17 @@ Nodes (19): Code Quality, Color and Surfaces, Component Patterns, Content, Desig
 Cohesion: 0.07
 Nodes (28): Alert, Anatomy, Anatomy, Anatomy, Anatomy, Anatomy, Badge, Button (+20 more)
 
-### Community 233 - "utils/watch-later.ts"
-Cohesion: 0.24
-Nodes (8): paramsSchema, bodySchema, watchLater, addToWatchLater(), removeFromWatchLater(), selectWatchLater(), toWatchLaterItem(), WatchLaterRow
+### Community 233 - "LikedView.vue"
+Cohesion: 0.08
+Nodes (16): meta, props, TWO_DAYS_AGO, to, noResults, props, sort, term (+8 more)
 
 ### Community 234 - "shadcn/ui Accessibility Patterns"
 Cohesion: 0.07
 Nodes (28): Accordion, Alert, ARIA Labels, Checkbox and Radio, Color Contrast, Command Palette Navigation, Component-Specific Patterns, Dialog/Modal Navigation (+20 more)
+
+### Community 236 - "types/billing.ts"
+Cohesion: 0.12
+Nodes (19): BILLING_INTERVALS, BillingState, checkoutSlug, ENTITLED_STATUSES, isEntitled(), PAID_TIERS, Plan, PLAN_RANK (+11 more)
 
 ### Community 238 - "HomeWatchLaterCard.vue"
 Cohesion: 0.22
@@ -1474,8 +1497,8 @@ Cohesion: 0.11
 Nodes (14): category, channels, { data, isPending, isError, isFetching, refetch }, debouncedSearch, filters, follow, isFiltered, search (+6 more)
 
 ### Community 249 - ".agents/skills/ui-ux-pro-max/scripts/design_system.py"
-Cohesion: 0.13
-Nodes (20): ansi_ljust(), _detect_page_type(), format_ascii_box(), format_master_md(), format_page_override_md(), _generate_intelligent_overrides(), hex_to_ansi(), persist_design_system() (+12 more)
+Cohesion: 0.10
+Nodes (25): ansi_ljust(), _detect_page_type(), format_ascii_box(), format_markdown(), format_master_md(), format_page_override_md(), generate_design_system(), _generate_intelligent_overrides() (+17 more)
 
 ### Community 251 - ".agents/skills/design-system/scripts/html-token-validator.py"
 Cohesion: 0.14
@@ -1505,6 +1528,10 @@ Nodes (18): emits, forwarded, props, props, delegatedProps, DialogContentPropert
 Cohesion: 0.12
 Nodes (16): 1. Skill Meta, 2.1 Swiss Industrial Print, 2.2 Tactical Telemetry & CRT Terminal, 2. Visual Archetypes, 3.1 Macro-Typography (Structural Headers), 3.2 Micro-Typography (Data & Telemetry), 3.3 Textural Contrast (Artistic Disruption), 3. Typographic Architecture (+8 more)
 
+### Community 321 - "PricingCard.vue"
+Cohesion: 0.40
+Nodes (4): isFree, period, price, props
+
 ### Community 329 - "Vue Best Practices Workflow"
 Cohesion: 0.12
 Nodes (16): 1.1 Must-read core references (required), 1.2 Plan component boundaries before coding (required), 1) Confirm architecture before coding (required), 2) Apply essential Vue foundations (required), 3.1 Standard optional features, 3.2 Less-common optional features, 3) Consider optional features only when requirements call for them, 4) Run performance optimization after behavior is correct (+8 more)
@@ -1514,8 +1541,8 @@ Cohesion: 0.24
 Nodes (13): AnalyticsRange, TrendPoint, TrendSeries, addSeries(), dayWindow(), fillDailySeries(), RANGE_DAYS, rangeToDays() (+5 more)
 
 ### Community 331 - "tasteskill: Anti-Slop Frontend Skill"
-Cohesion: 0.13
-Nodes (15): 0.A Read these signals first, 0.B Output a one-line "Design Read" before generating, 0. BRIEF INFERENCE (Read the Room Before Anything Else), 0.C If the brief is ambiguous, ask one question, do not guess, 0.D Anti-Default Discipline, 13. OUT OF SCOPE, 14. FINAL PRE-FLIGHT CHECK, 1.A Dial Inference (design read → dial values) (+7 more)
+Cohesion: 0.18
+Nodes (11): 0.A Read these signals first, 0.B Output a one-line "Design Read" before generating, 0. BRIEF INFERENCE (Read the Room Before Anything Else), 0.C If the brief is ambiguous, ask one question, do not guess, 0.D Anti-Default Discipline, 13. OUT OF SCOPE, 14. FINAL PRE-FLIGHT CHECK, 2.A When to reach for a real design system (use official packages) (+3 more)
 
 ### Community 357 - "Appendix B - Canonical Sources (read these before reinventing)"
 Cohesion: 0.13
@@ -1534,8 +1561,8 @@ Cohesion: 0.14
 Nodes (10): box, root, field, props, box, props, emit, ICONS (+2 more)
 
 ### Community 361 - "CORE DIRECTIVE: AWWWARDS-LEVEL IMAGE ART DIRECTION"
-Cohesion: 0.12
-Nodes (16): 10. SECTION RHYTHM RULE, 12. DENSITY & SPACING DISCIPLINE, 14. IMAGE / MEDIA DIRECTION, 16. MULTI-IMAGE CONSISTENCY RULE, 17. CLARITY CHECK, 19. RESPONSE BEHAVIOR, 1. ACTIVE BASELINE CONFIGURATION, 21. FINAL GOAL (+8 more)
+Cohesion: 0.14
+Nodes (14): 10. SECTION RHYTHM RULE, 12. DENSITY & SPACING DISCIPLINE, 14. IMAGE / MEDIA DIRECTION, 16. MULTI-IMAGE CONSISTENCY RULE, 17. CLARITY CHECK, 19. RESPONSE BEHAVIOR, 1. ACTIVE BASELINE CONFIGURATION, 21. FINAL GOAL (+6 more)
 
 ### Community 362 - "2. THE COMBINATORIAL VARIATION ENGINE"
 Cohesion: 0.14
@@ -1554,8 +1581,8 @@ Cohesion: 0.15
 Nodes (12): API, Charts, Component tree, Dashboard, Failure modes, Filling the series, Known limits, Overlap with `server/utils/channels.ts` — read before extending (+4 more)
 
 ### Community 366 - "ClipCategory"
-Cohesion: 0.17
-Nodes (14): CategoryShare, ClipPerformance, CreatorOverview, DashboardAnalytics, DashboardMetric, DashboardOverview, PlatformPulse, ADR-0013 (+6 more)
+Cohesion: 0.11
+Nodes (23): CHANNEL_NOTIFY_MODES, CHANNEL_SORTS, CHANNEL_VIDEO_SORTS, ChannelIdentity, ChannelLiveSession, ChannelNotifyMode, ChannelProfile, ChannelSort (+15 more)
 
 ### Community 367 - "4. DESIGN ENGINEERING DIRECTIVES (Bias Correction)"
 Cohesion: 0.17
@@ -1569,9 +1596,9 @@ Nodes (11): Avoid Directives on Components, Clean Up Side Effects in `unmounted`
 Cohesion: 0.08
 Nodes (25): Accessibility, Archival, Asset Approval Checklist, Automation Support, Color Compliance, Common Issues & Fixes, Content Accessibility, Content Quality (+17 more)
 
-### Community 370 - "types/channel.ts"
-Cohesion: 0.23
-Nodes (10): CHANNEL_NOTIFY_MODES, CHANNEL_SORTS, CHANNEL_VIDEO_SORTS, ChannelIdentity, ChannelListItem, ChannelLiveSession, ChannelProfile, ChannelSort (+2 more)
+### Community 370 - "Design System Master File"
+Cohesion: 0.12
+Nodes (16): Additional Forbidden Patterns, Anti-Patterns (Do NOT Use), Buttons, Cards, Color Palette, Component Specs, Design System Master File, Global Rules (+8 more)
 
 ### Community 371 - "State-driven Animations with CSS Transitions and Style Bindings"
 Cohesion: 0.18
@@ -1726,8 +1753,8 @@ Cohesion: 0.29
 Nodes (5): badge, { feed, isPending, isError, refetch, markAllRead }, { isAuthenticated }, label, ICONS
 
 ### Community 410 - "types/discovery.ts"
-Cohesion: 0.11
-Nodes (22): CategorySlug, CategorySummary, Clip, LiveSignal, WatchlistItem, WatchlistKind, FollowingShelf, FollowingShelfChannel (+14 more)
+Cohesion: 0.13
+Nodes (18): CategorySlug, CategorySummary, Clip, LiveSignal, WatchlistItem, WatchlistKind, HOME_FEEDBACK_KINDS, HomeChip (+10 more)
 
 ### Community 411 - "29. ANTI-AI-SLOP RULES"
 Cohesion: 0.33
@@ -1778,8 +1805,8 @@ Cohesion: 0.40
 Nodes (3): emit, rail, watchlist
 
 ### Community 424 - "MCP Server Recommendations"
-Cohesion: 0.07
-Nodes (28): AI & ML, Browser & Frontend, Communication, Containers & DevOps, context7, Convex MCP, Databases, Datadog MCP (+20 more)
+Cohesion: 0.08
+Nodes (26): AI & ML, AWS MCP, Browser & Frontend, Cloud Infrastructure, Cloudflare MCP, Communication, Containers & DevOps, context7 (+18 more)
 
 ### Community 425 - "play-ground.vue"
 Cohesion: 0.40
@@ -1849,9 +1876,9 @@ Nodes (3): props, to, remove
 Cohesion: 0.67
 Nodes (3): channelGradient(), channelHue(), channelRing()
 
-### Community 447 - "HomeVideoGrid.vue"
-Cohesion: 0.25
-Nodes (5): TITLE_WIDTHS, emit, feedback, watchLater, watchlist
+### Community 447 - "HomeView.vue"
+Cohesion: 0.12
+Nodes (12): TITLE_WIDTHS, emit, feedback, watchLater, watchlist, activeChip, activeId, chips (+4 more)
 
 ### Community 449 - "CIP Deliverable Guide"
 Cohesion: 0.08
@@ -1861,9 +1888,13 @@ Nodes (24): Apparel, Business Card, Car/Sedan, CIP Deliverable Guide, Core Ident
 Cohesion: 0.25
 Nodes (7): Common failure modes, How it works, How to run / modify it, Icons, PWA (installability, app icons, service worker), What it is, What this does *not* do (yet)
 
-### Community 461 - "chat.post.ts"
-Cohesion: 0.29
-Nodes (6): paramsSchema, querySchema, bodySchema, paramsSchema, chatMessages, resolveLiveStream()
+### Community 460 - "billing-plugin.ts"
+Cohesion: 0.22
+Nodes (13): BillingResponse, billingPlugins(), SUBSCRIPTION_EVENTS, subscriptionHandlers(), ADR-0026, availableSlugs(), isBillingConfigured(), isWebhookConfigured() (+5 more)
+
+### Community 461 - "server/utils/comments.ts"
+Cohesion: 0.18
+Nodes (13): paramsSchema, querySchema, bodySchema, paramsSchema, CommentRow, findClipComment(), LikeState, noLikes() (+5 more)
 
 ### Community 474 - "BM25"
 Cohesion: 0.12
@@ -1897,17 +1928,23 @@ Nodes (22): @apply Directive, Best Practices, Color Customization, Complete Tail
 Cohesion: 0.14
 Nodes (11): DesignSystemGenerator, _palette_is_dark(), WCAG relative luminance of a #RRGGBB string, or None if unparseable., True when a colors.csv row's Background is a dark surface., Generates design system recommendations from aggregated searches., Load reasoning rules from CSV., _relative_luminance(), TestReasoningMatch (+3 more)
 
-### Community 482 - "PlaylistCreateDialog.vue"
-Cohesion: 0.09
-Nodes (18): count, props, to, description, emit, open, props, submit() (+10 more)
+### Community 482 - "PlaylistFormDialog.vue"
+Cohesion: 0.05
+Nodes (32): count, props, to, { data, isPending, isError, error, refetch }, items, moveItem, notFound, {
+  open: editOpen,
+  target: editTarget,
+  edit,
+  submit: saveEdit,
+  pending: editPending
+} (+24 more)
 
 ### Community 483 - "spacing"
 Cohesion: 0.09
 Nodes (22): $type, $value, $type, $value, $type, $value, $type, $value (+14 more)
 
-### Community 484 - "progress.ts"
-Cohesion: 0.10
-Nodes (19): querySchema, paramsSchema, bodySchema, paramsSchema, channels, ADR-0014, watchProgress, clearHistory() (+11 more)
+### Community 484 - "formatDuration"
+Cohesion: 0.08
+Nodes (25): querySchema, paramsSchema, querySchema, bodySchema, channels, ADR-0014, formatDuration(), clearHistory() (+17 more)
 
 ### Community 485 - "Hooks Recommendations"
 Cohesion: 0.10
@@ -2038,8 +2075,8 @@ Cohesion: 0.13
 Nodes (14): AIDA (Attention-Interest-Desire-Action), Before-After-Bridge, Contrast Patterns, Copywriting Formulas, Core Formulas, Cost of Inaction, FAB (Features-Advantages-Benefits), Formula-to-Slide Mapping (+6 more)
 
 ### Community 517 - "ShortsComments.vue"
-Cohesion: 0.13
-Nodes (10): actions, { bumpCommentCount }, comments, { commentsFor }, open, railInset, shorts, slug (+2 more)
+Cohesion: 0.14
+Nodes (10): actions, { bumpCommentCount }, comments, { commentsFor }, open, sheetBox, shorts, slug (+2 more)
 
 ### Community 518 - "Banner Design - Multi-Format Creative Banner System"
 Cohesion: 0.14
@@ -2085,13 +2122,13 @@ Nodes (8): Main search function with auto-domain detection, Search stack-specifi
 Cohesion: 0.14
 Nodes (8): Execute searches across multiple domains., Find matching reasoning rule for a category., Apply reasoning rules to search results., Select best matching result based on priority keywords., Extract results list from search result dict., Generate complete design system recommendation. variance/motion/density are…, Bucket a 1-10 dial value into its tier config. Returns None if value is None., _resolve_dial()
 
-### Community 529 - "HomeShortsRail.vue"
-Cohesion: 0.19
-Nodes (12): activeIndex, cardTransition, direction, getCardStyle(), getOffset(), handleDragEnd(), isLargeDesktop, next() (+4 more)
+### Community 529 - "Billing"
+Cohesion: 0.14
+Nodes (13): 1. Create an organization and token, 2. Create four products, 3. Webhook, 4. Environment, 5. Migration, Billing, Common failure modes, Gating a feature (+5 more)
 
 ### Community 530 - "shared/utils/mix.ts"
-Cohesion: 0.33
-Nodes (9): MixSeed, MixSummary, mixHref(), mixId(), mixReason, mixSubtitle(), mixTitle(), parseMixId() (+1 more)
+Cohesion: 0.25
+Nodes (12): FollowingShelf, HomeVideo, MixDetail, MixSeed, MixSummary, mixHref(), mixId(), mixReason (+4 more)
 
 ### Community 531 - "brand/references/update.md"
 Cohesion: 0.15
@@ -2149,9 +2186,9 @@ Nodes (6): Generate configuration file content. Returns: Configuration file as s
 Cohesion: 0.13
 Nodes (14): auth, { data: channels, isPending: channelsPending }, { data: continueItems, isPending: continuePending }, { data: following, isPending: followingPending }, { data: mixes }, { data: playlists }, { data: shorts }, { data: watched, isPending: watchedPending } (+6 more)
 
-### Community 545 - "HomeView.vue"
-Cohesion: 0.25
-Nodes (7): activeChip, activeId, chips, { data: categories, isPending: categoriesPending }, { data, isPending, isError, refetch, fetchNextPage, hasNextPage, isFetchingNextPage }, showShelves, videos
+### Community 545 - "Streamify Architecture doc"
+Cohesion: 0.17
+Nodes (12): Streamify Architecture doc, Backend architecture (Nitro domain routes), Frontend architecture, Observability architecture, Backend research (Nitro server routes vs dedicated API service), Scaling architecture, Security architecture, Streaming architecture (video) (+4 more)
 
 ### Community 546 - "Tools"
 Cohesion: 0.17
@@ -2214,8 +2251,8 @@ Cohesion: 0.20
 Nodes (10): auth, create, createOpen, { data, isPending }, onCreate(), onToggle(), playlists, props (+2 more)
 
 ### Community 561 - "usePlaylists.ts"
-Cohesion: 0.24
-Nodes (4): PLAYLISTS_KEY, membershipsKey(), usePlaylistMemberships(), useTogglePlaylistMembership()
+Cohesion: 0.18
+Nodes (11): usePlaylistEditor(), playlistKey(), PLAYLISTS_KEY, useMovePlaylistItem(), usePlaylist(), useRemovePlaylistItem(), useUpdatePlaylist(), membershipsKey() (+3 more)
 
 ### Community 562 - "Commands"
 Cohesion: 0.18
@@ -2225,9 +2262,9 @@ Nodes (11): `add` — Add components, `apply` — Apply a preset to an existing 
 Cohesion: 0.18
 Nodes (11): Component Docs, Examples, and Usage, Component Selection, Current Project Context, Detailed References, Key Fields, Key Patterns, Principles, Quick Reference (+3 more)
 
-### Community 564 - "server/utils/shorts.ts"
-Cohesion: 0.25
-Nodes (9): querySchema, COMMENT_STATS, myFollows(), myReactions(), REACTION_STATS, selectShortsPage(), ShortRow, ShortsPageOptions (+1 more)
+### Community 564 - "server/utils/liked.ts"
+Cohesion: 0.23
+Nodes (10): bodySchema, addLike(), LikedQuery, LikedRow, orderFor(), removeLike(), searchFilter(), selectLiked() (+2 more)
 
 ### Community 565 - "Brand"
 Cohesion: 0.20
@@ -2286,8 +2323,8 @@ Cohesion: 0.20
 Nodes (9): active, { count }, emit, loaded, loop, { muted, paused, held, repeat }, props, shorts (+1 more)
 
 ### Community 579 - "types/library.ts"
-Cohesion: 0.25
-Nodes (10): ContinueWatchingItem, PlaylistDetail, PlaylistDraft, PlaylistItem, PlaylistMembership, PlaylistSummary, PlaylistVisibility, WatchLaterItem (+2 more)
+Cohesion: 0.13
+Nodes (18): ChannelListItem, ContinueWatchingItem, LikedItem, LikedPage, LikedSort, PlaylistDetail, PlaylistDraft, PlaylistItem (+10 more)
 
 ### Community 580 - ".agents/skills/brand/scripts/sync-brand-to-tokens.cjs"
 Cohesion: 0.33
@@ -2325,9 +2362,9 @@ Nodes (6): feedback, watchLater, watchlist, props, reason, to
 Cohesion: 0.25
 Nodes (5): channelName, emit, props, open(), video()
 
-### Community 589 - "PlaylistDetailView.vue"
-Cohesion: 0.22
-Nodes (6): { data, isPending, isError, error, refetch }, items, notFound, playAllHref, props, removeItem
+### Community 589 - "utils/subscriptions.ts"
+Cohesion: 0.24
+Nodes (10): subscriptions, productGrant(), requirePlan(), PolarSubscriptionPayload, resolveBillingState(), selectBillingState(), SubscriptionRow, syncSubscription() (+2 more)
 
 ### Community 590 - "ShortsPlayer.vue"
 Cohesion: 0.22
@@ -2342,11 +2379,11 @@ Cohesion: 0.42
 Nodes (5): dropFromFollowing(), dropFromHomeFeed(), feedbackMessage(), HomeFeedCache, isSuppressed()
 
 ### Community 593 - ".claude/skills/shadcn-vue/SKILL.md"
-Cohesion: 0.22
+Cohesion: 0.25
 Nodes (4): Icons, Icons in Button use data-icon attribute, No sizing classes on icons inside components, Pass icons as component objects, not string keys
 
 ### Community 594 - "Forms & Inputs"
-Cohesion: 0.25
+Cohesion: 0.22
 Nodes (8): Buttons inside inputs use InputGroup + InputGroupAddon, Contents, Field validation and disabled states, FieldSet + FieldLegend for grouping related fields, Forms & Inputs, Forms use FieldGroup + Field, InputGroup requires InputGroupInput/InputGroupTextarea, Option sets (2–7 choices) use ToggleGroup
 
 ### Community 595 - "Home feed"
@@ -2378,12 +2415,12 @@ Cohesion: 0.15
 Nodes (5): props, to, remove, props, showProgress
 
 ### Community 603 - "HomeRail.vue"
-Cohesion: 0.22
-Nodes (4): props, to, props, track
+Cohesion: 0.15
+Nodes (6): props, to, props, track, props, to
 
-### Community 604 - "HomeShortCard.vue"
-Cohesion: 0.25
-Nodes (4): canScrollLeft, canScrollRight, carousel, props
+### Community 604 - "utils/library.ts"
+Cohesion: 0.42
+Nodes (7): formatRemaining(), isResumable(), movedPlaylistItems(), playlistCountLabel(), playlistWatchHref(), progressPercent(), resumeHref()
 
 ### Community 605 - "dropdown-menu/index.ts"
 Cohesion: 0.25
@@ -2405,9 +2442,9 @@ Nodes (7): CLI, Component Structure → [composition.md](./rules/composition.md)
 Cohesion: 0.29
 Nodes (6): Animation Classes, Background Images, Base Structure, Chart.js Integration, CSS Variables Reference, HTML Slide Template
 
-### Community 610 - ".agents/skills/ui-ux-pro-max/scripts/tests/test_core.py"
-Cohesion: 0.19
-Nodes (8): detect_domain(), Auto-detect the most relevant domain from query. Matches are weighted by…, format_markdown(), generate_design_system(), Format design system as markdown., Main entry point for design system generation. Args: query: Search query (e.g.,…, TestDomainDetection, TestPersistence
+### Community 610 - "detect_domain"
+Cohesion: 0.43
+Nodes (3): detect_domain(), Auto-detect the most relevant domain from query. Matches are weighted by…, TestDomainDetection
 
 ### Community 611 - "_select_palette_for_mode"
 Cohesion: 0.43
@@ -2430,12 +2467,12 @@ Cohesion: 0.47
 Nodes (5): listKey(), useRemoveFromWatchLater(), useSaveToWatchLater(), useWatchLater(), WATCH_LATER_KEY
 
 ### Community 616 - "shared/utils/history.ts"
-Cohesion: 0.21
-Nodes (14): HistoryItem, HistoryPage, groupHistoryByDay(), historyDayKey(), historyDayLabel(), HistoryGroup, historyHref(), historyProgressLabel() (+6 more)
+Cohesion: 0.32
+Nodes (9): HistoryItem, HistoryPage, groupHistoryByDay(), historyDayKey(), historyDayLabel(), HistoryGroup, historyHref(), historyProgressLabel() (+1 more)
 
 ### Community 617 - "generate-pwa-icons.mjs"
-Cohesion: 0.33
-Nodes (4): outDir, root, sourceDir, targets
+Cohesion: 0.22
+Nodes (6): faviconOut, faviconSource, outDir, root, sourceDir, targets
 
 ### Community 618 - "Decision Framework"
 Cohesion: 0.33
@@ -2621,17 +2658,17 @@ Nodes (3): delegatedProps, forwardedProps, props
 Cohesion: 0.67
 Nodes (4): $type, $value, none, none
 
-### Community 672 - "Cloud Infrastructure"
-Cohesion: 0.50
-Nodes (4): AWS MCP, Cloud Infrastructure, Cloudflare MCP, Vercel MCP
+### Community 672 - "useBilling.ts"
+Cohesion: 0.25
+Nodes (3): BILLING_KEY, BillingResponse, ADR-0026
 
-### Community 673 - "padding-x"
-Cohesion: 0.67
-Nodes (4): padding-x, padding-x, $type, $value
+### Community 673 - "useLiked.ts"
+Cohesion: 0.29
+Nodes (4): LIKED_ROOT, parseSort(), useLikedFilters(), LIKED_SORTS
 
-### Community 674 - "md"
-Cohesion: 0.67
-Nodes (4): $type, $value, md, md
+### Community 674 - "Databases"
+Cohesion: 0.33
+Nodes (6): Convex MCP, Databases, Neon MCP, PostgreSQL MCP, Supabase MCP, Turso MCP
 
 ### Community 675 - "8"
 Cohesion: 0.67
@@ -2641,9 +2678,9 @@ Nodes (3): $type, $value, 8
 Cohesion: 0.67
 Nodes (3): destructive, $type, $value
 
-### Community 677 - "0"
-Cohesion: 0.67
-Nodes (3): $type, $value, 0
+### Community 677 - "BillingPlanGrid.vue"
+Cohesion: 0.40
+Nodes (5): ctaFor(), { data: billing }, isAvailable(), props, { start, pending }
 
 ### Community 678 - "16"
 Cohesion: 0.67
@@ -2677,40 +2714,76 @@ Nodes (3): secondary-foreground, $type, $value
 Cohesion: 0.67
 Nodes (3): $type, $value, 8
 
+### Community 698 - "Switch.vue"
+Cohesion: 0.33
+Nodes (4): delegatedProps, emits, forwarded, props
+
 ### Community 729 - "12"
 Cohesion: 0.67
 Nodes (3): $type, $value, 12
+
+### Community 757 - "useAutoplayGate.spec.ts"
+Cohesion: 0.40
+Nodes (3): Harness, mounted, useAutoplayGate()
+
+### Community 758 - "logger.ts"
+Cohesion: 0.47
+Nodes (3): logger, Mail, sendMail()
+
+### Community 794 - "BillingStatusCard.vue"
+Cohesion: 0.40
+Nodes (4): { open, opening }, props, summary, TONE_CLASS
 
 ### Community 795 - "2"
 Cohesion: 0.67
 Nodes (3): $type, $value, 2
 
-### Community 796 - "6"
-Cohesion: 0.67
-Nodes (3): $type, $value, 6
+### Community 796 - "billing.vue"
+Cohesion: 0.40
+Nodes (4): { confirming }, { data: billing, isPending, isError, refetch }, interval, yearly
 
 ### Community 797 - "primary"
 Cohesion: 0.67
 Nodes (3): primary, $type, $value
+
+### Community 798 - "lg"
+Cohesion: 0.60
+Nodes (5): lg, $type, $value, lg, lg
+
+### Community 802 - "1. THE THREE DIALS (Core Configuration)"
+Cohesion: 0.50
+Nodes (4): 1.A Dial Inference (design read → dial values), 1.B Use-Case Presets, 1.C How the Dials Drive Output, 1. THE THREE DIALS (Core Configuration)
+
+### Community 805 - "WatchDescription.vue"
+Cohesion: 0.50
+Nodes (3): clippable, expanded, props
+
+### Community 806 - "1"
+Cohesion: 0.67
+Nodes (3): $type, $value, 1
+
+### Community 808 - "4"
+Cohesion: 0.67
+Nodes (3): $type, $value, 4
+
+### Community 809 - "productEnvKey"
+Cohesion: 0.67
+Nodes (3): productEnvKey(), BillingInterval, PaidTier
 
 ## Ambiguous Edges - Review These
 - `Design Skill Routing System` → `graphify Knowledge Graph Pipeline`  [AMBIGUOUS]
   .claude/skills/graphify/SKILL.md · relation: semantically_similar_to
 - `ui-styling skill LICENSE (Apache License 2.0)` → `UI Styling Skill`  [AMBIGUOUS]
   .claude/skills/ui-styling/SKILL.md · relation: references
-- `Streamify Design System Master File` → `Phase 2 — Design System`  [AMBIGUOUS]
-  design-system/streamify/MASTER.md · relation: conceptually_related_to
-- `Streamify Design System Master File` → `Frontend architecture`  [AMBIGUOUS]
-  docs/ARCHITECTURE.md · relation: conceptually_related_to
 - `Signal Brief side panel (AI-style engagement summary + duration/save/play)` → `Latency indicator chip ("44 ms") between Live Signals and Top Highlights`  [AMBIGUOUS]
   .scratch/feed.png · relation: suggests_realtime_streaming_infrastructure_for
 - `Video Preview Modal` → `Dev Performance Indicator ('44 ms' render badge, bottom center)`  [AMBIGUOUS]
   .scratch/modal.png · relation: measures_render_time_of
 
 ## Knowledge Gaps
-- **3368 isolated node(s):** `fs`, `path`, `fs`, `path`, `fs` (+3363 more)
+- **3497 isolated node(s):** `fs`, `path`, `fs`, `path`, `fs` (+3492 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **221 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **228 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -2719,13 +2792,13 @@ _Questions this graph is uniquely positioned to answer:_
   _Edge tagged AMBIGUOUS (relation: semantically_similar_to) - confidence is low._
 - **What is the exact relationship between `ui-styling skill LICENSE (Apache License 2.0)` and `UI Styling Skill`?**
   _Edge tagged AMBIGUOUS (relation: references) - confidence is low._
-- **What is the exact relationship between `Streamify Design System Master File` and `Phase 2 — Design System`?**
-  _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
-- **What is the exact relationship between `Streamify Design System Master File` and `Frontend architecture`?**
-  _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
 - **What is the exact relationship between `Signal Brief side panel (AI-style engagement summary + duration/save/play)` and `Latency indicator chip ("44 ms") between Live Signals and Top Highlights`?**
   _Edge tagged AMBIGUOUS (relation: suggests_realtime_streaming_infrastructure_for) - confidence is low._
 - **What is the exact relationship between `Video Preview Modal` and `Dev Performance Indicator ('44 ms' render badge, bottom center)`?**
   _Edge tagged AMBIGUOUS (relation: measures_render_time_of) - confidence is low._
-- **Why does `DesignSystemGenerator` connect `DesignSystemGenerator` to `detect_domain`, `.agents/skills/ui-ux-pro-max/scripts/tests/test_core.py`, `_select_palette_for_mode`, `_select_palette_for_mode`, `.claude/skills/ui-ux-pro-max/scripts/design_system.py`, `BM25`, `.agents/skills/ui-ux-pro-max/scripts/tests/test_design_system_mode.py`, `search`, `search`, `.generate`, `DesignSystemGenerator`, `_palette_is_dark`, `test_design_system_mode.py`, `.agents/skills/ui-ux-pro-max/scripts/design_system.py`, `BM25`?**
+- **Why does `DesignSystemGenerator` connect `DesignSystemGenerator` to `detect_domain`, `detect_domain`, `_select_palette_for_mode`, `_select_palette_for_mode`, `.claude/skills/ui-ux-pro-max/scripts/design_system.py`, `BM25`, `.agents/skills/ui-ux-pro-max/scripts/tests/test_design_system_mode.py`, `search`, `search`, `.generate`, `DesignSystemGenerator`, `_palette_is_dark`, `test_design_system_mode.py`, `.agents/skills/ui-ux-pro-max/scripts/design_system.py`, `BM25`?**
   _High betweenness centrality (0.002) - this node is a cross-community bridge._
+- **Why does `primitive` connect `radius` to `spacing`, `gray`, `.agents/skills/design-system/templates/design-tokens-starter.json`, `fontSize`, `duration`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
+- **Why does `toCategorySlug()` connect `category.ts` to `server/utils/home.ts`, `ClipCategory`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
