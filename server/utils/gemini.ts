@@ -6,7 +6,7 @@ import type { AiTier } from '#shared/types/ai'
  * Gemini transport. Two functions — text in, text out, and text in, validated
  * JSON out — over the `generateContent` REST endpoint.
  *
- * Deliberately not `@google/genai` (ADR-027): every call this app makes is a
+ * Deliberately not `@google/genai` (ADR-029): every call this app makes is a
  * POST with a JSON body and an API-key header, and the SDK would add a
  * dependency plus its own auth and retry behaviour for no gain. The trade
  * flips the day we need streaming, the Files API or context caching — at

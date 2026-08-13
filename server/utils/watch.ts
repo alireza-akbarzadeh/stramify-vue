@@ -1,7 +1,7 @@
-import { and, desc, eq, ilike, ne } from 'drizzle-orm'
+import { and, desc, eq, ilike, ne, or } from 'drizzle-orm'
 import { db } from '../db/client'
 import { clips, liveStreams } from '../db/schema'
-import { landscapeClips } from './discovery'
+import { landscapeClips, publishedClips } from './discovery'
 import type { ClipRow, LiveStreamRow } from './discovery'
 import { formatAge, formatDuration, formatUptime } from './format'
 import type { RelatedItem, WatchTarget } from '#shared/types/watch'
@@ -58,9 +58,28 @@ export function toWatchLive(row: LiveStreamRow): WatchTarget {
  * Clips are matched exactly and live handles case-insensitively, matching the
  * behaviour `/api/discovery/live/[streamer]` already has. Returns `null` for
  * an unknown slug so callers decide between 404 and a fallback.
+ *
+ * This is where `unlisted` earns its existence (ADR-028): browse surfaces drop
+ * unlisted and private alike, and resolution by id lets the unlisted one back
+ * in. A private clip resolves for its owner only — so a creator can preview a
+ * draft on the real watch page instead of a studio approximation of it — and
+ * for nobody else, which is why `viewerId` defaults to "no one" and every
+ * caller that doesn't care about ownership gets the stricter behaviour by
+ * doing nothing.
  */
-export async function resolveWatchTarget(slug: string): Promise<ResolvedTarget | null> {
-  const [clipRow] = await db.select().from(clips).where(eq(clips.id, slug)).limit(1)
+export async function resolveWatchTarget(
+  slug: string,
+  viewerId: string | null = null
+): Promise<ResolvedTarget | null> {
+  const viewable = viewerId
+    ? or(ne(clips.visibility, 'private'), eq(clips.ownerId, viewerId))
+    : ne(clips.visibility, 'private')
+
+  const [clipRow] = await db
+    .select()
+    .from(clips)
+    .where(and(eq(clips.id, slug), viewable))
+    .limit(1)
   if (clipRow) return { kind: 'clip', row: clipRow, target: toWatchClip(clipRow) }
 
   const [liveRow] = await db
@@ -150,6 +169,7 @@ export async function selectRelated(
       .from(clips)
       .where(
         and(
+          publishedClips,
           eq(clips.category, category),
           landscapeClips,
           resolved.kind === 'clip' ? ne(clips.id, resolved.row.id) : undefined

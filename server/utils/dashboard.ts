@@ -1,6 +1,7 @@
 import { and, count, desc, eq, gte, inArray, sql } from 'drizzle-orm'
 import { db } from '../db/client'
 import { chatMessages, clips, comments, follows, liveStreams, reactions } from '../db/schema'
+import { publishedClips } from './discovery'
 import { formatAge } from './format'
 import type { ClipRow } from './discovery'
 import type { SessionUser } from './session'
@@ -167,10 +168,14 @@ export async function readPlatformPulse(): Promise<PlatformPulse> {
         viewers: sql<number>`coalesce(sum(${liveStreams.viewerCount}), 0)::int`
       })
       .from(liveStreams),
-    db.select({ total: count(clips.id) }).from(clips),
+    // `publishedClips` here but deliberately *not* on the creator queries
+    // above: this is what the platform has published, while those are what
+    // *you* have — and your own drafts belong in your own numbers.
+    db.select({ total: count(clips.id) }).from(clips).where(publishedClips),
     db
       .select({ category: clips.category, total: count(clips.id) })
       .from(clips)
+      .where(publishedClips)
       .groupBy(clips.category)
       .orderBy(desc(count(clips.id)))
       .limit(1)

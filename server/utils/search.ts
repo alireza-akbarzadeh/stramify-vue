@@ -1,6 +1,7 @@
-import { desc, ilike, or, sql } from 'drizzle-orm'
+import { and, desc, ilike, or, sql } from 'drizzle-orm'
 import { db } from '../db/client'
 import { clips, liveStreams } from '../db/schema'
+import { publishedClips } from './discovery'
 import { clipToRelated, liveToRelated } from './watch'
 import type { RelatedItem } from '#shared/types/watch'
 
@@ -47,10 +48,13 @@ export async function searchVideos(query: string, limit: number): Promise<Relate
       .select()
       .from(clips)
       .where(
-        or(
-          ilike(clips.title, pattern),
-          ilike(clips.creator, pattern),
-          sql`${clips.category}::text ilike ${pattern}`
+        and(
+          publishedClips,
+          or(
+            ilike(clips.title, pattern),
+            ilike(clips.creator, pattern),
+            sql`${clips.category}::text ilike ${pattern}`
+          )
         )
       )
       .orderBy(desc(clips.views))

@@ -86,7 +86,11 @@ export function useSlideshow(count: () => number, dwell = 7000) {
     restart()
   }
 
-  watch(running, (on) => (on ? restart() : stopTimer()), { immediate: true })
+  // `sync`, not the default pre-flush: every input here is a user action that
+  // has to reach the timer *now* — a pointer entering one tick before the dwell
+  // ends would otherwise still get the slide yanked out from under it, because
+  // the watcher hadn't run yet when the interval fired.
+  watch(running, (on) => (on ? restart() : stopTimer()), { flush: 'sync', immediate: true })
 
   // A shorter list can strand the index past its end (a shelf refetch, a
   // signed-out response). Falling back to the first slide is the only landing

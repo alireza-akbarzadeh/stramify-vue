@@ -184,8 +184,17 @@ function onShare() {
     generous top margin the other browse views carry is a desktop-only
     affordance here — on a 375px screen it was pushing the player below the
     fold for no gain.
+
+    The cap steps up twice above 1920px. Held at 1560 everywhere, a 4K monitor
+    or a TV renders this page as a narrow strip with several hundred pixels of
+    dead margin either side; letting it grow is what gives `WatchLayout` room
+    for its third column. It is still capped rather than fluid — past about
+    2500px a full-bleed row of text is unreadable, and the player gets no
+    better for being wider than the room.
   -->
-  <div class="mx-auto max-w-[1560px] px-4 pb-10 pt-3 sm:px-6 lg:mt-12 lg:px-8 lg:py-8">
+  <div
+    class="mx-auto max-w-[1560px] px-4 pb-10 pt-3 sm:px-6 lg:mt-12 lg:px-8 lg:py-8 3xl:max-w-[2160px] 4xl:max-w-[2480px]"
+  >
     <WatchSkeleton v-if="target.isPending.value" />
 
     <div

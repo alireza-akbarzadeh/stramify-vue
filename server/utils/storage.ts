@@ -1,6 +1,7 @@
 import { createReadStream } from 'node:fs'
 import { mkdir, rm, stat, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
+import type { Readable } from 'node:stream'
 
 /**
  * Object storage for creator uploads — one seam, one implementation (ADR-029).
@@ -99,7 +100,8 @@ export interface ResolvedObject {
   path: string
   size: number
   contentType: string
-  open: (start?: number, end?: number) => NodeJS.ReadableStream
+  /** Inclusive byte offsets, or the whole object when both are omitted. */
+  open: (start?: number, end?: number) => Readable
 }
 
 /**

@@ -1,7 +1,7 @@
 import type { RelatedItem } from './watch'
 
 /**
- * Wire shapes for the watch-page AI assistant (ADR-027).
+ * Wire shapes for the watch-page AI assistant (ADR-029).
  *
  * One thing to hold on to while reading these: **the model never sees the
  * video**. Gemini's video understanding takes a file uploaded through the

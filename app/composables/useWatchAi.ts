@@ -3,7 +3,7 @@ import type { MaybeRefOrGetter } from 'vue'
 import type { AiAnswer, AiConfig, AiPick, AiTurn, WatchInsights } from '#shared/types/ai'
 
 /**
- * Client half of the watch-page AI assistant (ADR-027).
+ * Client half of the watch-page AI assistant (ADR-029).
  *
  * Three server queries and one mutation. The conversation itself is *not* a
  * query — it's local state replayed to the server on each ask, because a thread

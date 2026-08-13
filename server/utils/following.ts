@@ -1,5 +1,6 @@
 import { sql } from 'drizzle-orm'
 import { db } from '../db/client'
+import { publishedClipsSql } from './discovery'
 import { notSuppressed } from './feedback'
 import { toHomeVideo } from './home'
 import type { FeedRow } from './home'
@@ -71,7 +72,7 @@ export async function listFollowingShelves(userId: string | null): Promise<Follo
       join my_follows mf on mf.handle = lower(c.creator)
       -- Shorts have their own full-screen feed; a 9:16 video in a 16:9 card is
       -- two black bars. Same rule as CANDIDATES in utils/home.ts.
-      where c.orientation = 'landscape'
+      where c.orientation = 'landscape' and ${publishedClipsSql}
     ),
     -- Aliased \`cand\` because that is the relation name notSuppressed() is
     -- written against (it reads cand.id and cand.channel).

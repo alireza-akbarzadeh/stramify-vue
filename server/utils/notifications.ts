@@ -1,6 +1,7 @@
-import { desc, eq, inArray, sql } from 'drizzle-orm'
+import { and, desc, eq, inArray, sql } from 'drizzle-orm'
 import { db } from '../db/client'
 import { clips, follows, liveStreams, notificationReads } from '../db/schema'
+import { publishedClips } from './discovery'
 import { formatAge } from './format'
 import { toChannelHandle } from '#shared/utils/channel'
 import type { ChannelNotifyMode } from '#shared/types/channel'
@@ -81,7 +82,7 @@ async function uploadEvents(handles: string[]): Promise<Event[]> {
   const rows = await db
     .select()
     .from(clips)
-    .where(inArray(sql`lower(${clips.creator})`, handles))
+    .where(and(publishedClips, inArray(sql`lower(${clips.creator})`, handles)))
     .orderBy(desc(clips.createdAt))
     .limit(FEED_LIMIT)
 

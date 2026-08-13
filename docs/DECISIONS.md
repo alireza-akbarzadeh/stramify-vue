@@ -1383,3 +1383,85 @@ than a store. The hero's ambient loop renders client-side only: SSR cannot know
 hydration for the viewers who opted out, on the largest element of the page.
 `app/utils/preview.ts` holds the two pure decisions (can this play, where to
 start) so they are unit-testable away from element state.
+
+---
+
+## ADR-029: The watch-page assistant runs on Gemini over plain REST, grounded in metadata and in real catalogue rows
+
+**Context**: `/watch/[slug]` had two problems that turned out to have one
+answer. Viewers had no way to ask anything about what they were watching, and
+on a large desktop or a TV the page was mostly margin — a two-column layout
+capped at 1560px leaves several hundred dead pixels either side of a 4K screen.
+An assistant needed somewhere to live, and the empty column was somewhere.
+
+**Decision 1 — Gemini, on a free-tier flash model, configurable to a paid one
+by environment variable alone.** `GEMINI_MODEL` defaults to `gemini-3.5-flash`
+(free of charge on the standard tier); setting it to `gemini-2.5-pro` is the
+entire upgrade path. `modelTier()` classifies the id against a list of known
+free models and calls **anything unrecognised `pro`** — guessing "free" wrongly
+costs money, guessing "pro" wrongly mislabels a badge.
+
+**Rejected**: *`@google/genai`* — every call this app makes is a POST with a
+JSON body and an API-key header. The SDK would add a dependency and its own
+auth and retry behaviour to save nothing. The trade flips the day we want
+streaming, the Files API or context caching, at which point two functions in
+`server/utils/gemini.ts` are the whole migration. *Exposing the model through
+`runtimeConfig.public`* — the key must not reach the browser, and the enabled
+flag must be a runtime fact, so `/api/ai/config` reports it instead (a `public`
+value is baked at build time; an image built without a key and deployed with
+one would ship a panel permanently switched off).
+
+**Decision 2 — the model is told, in as many words, that it has not watched the
+video, and the UI repeats it.** Gemini's video understanding needs a Files API
+upload or a YouTube URL; our sources are arbitrary mp4/HLS. So the assistant is
+grounded in catalogue metadata, `WatchInsights.basis` records whether there was
+even a description, and `WatchAiInsights.vue` makes a weaker claim when there
+wasn't. An assistant that answered "at 0:23 she puts her hand on the glass"
+would be inventing it — the fake functionality PROMPT.md §21 forbids, wearing a
+sparkle icon.
+
+**Decision 3 — recommendations are a *ranking* of real rows, never a list of
+titles.** `/ai/picks` queries up to 24 real candidates with the same
+`selectRelated` the up-next rail uses, hands the model that list, asks it to
+choose six **by id** with a reason, and `groundPicks()` joins the ids back to
+the rows — dropping anything invented, anything duplicated, anything past the
+cap. The model contributes an order and a sentence; every card is a row that
+came out of Postgres. If nothing survives, the endpoint returns `[]` and the
+section hides itself behind the plain rail rather than apologising.
+
+**Rejected**: *Letting the model name videos from its own knowledge* — it does
+not know this catalogue, and a card that 404s is worse than no card. *Caching
+the rendered picks* — cached `{ id, reason }` re-joined per request means a clip
+pulled from the catalogue disappears immediately instead of sitting in a cache
+for two hours as a dead link.
+
+**Decision 4 — sign-in gates asking, not reading.** `insights` and `picks` are
+cached, say nothing a visitor can't read off the page, and stay anonymous;
+`ask` requires a session because each question is an uncacheable metered call
+and an anonymous route would be a public quota drain. That matches comments,
+chat and reactions on the same page.
+
+**Decision 5 — a third column from `3xl` (1920px), not a wider player.** Above
+that width the container cap steps to 2160px and then 2480px, and `WatchLayout`
+becomes `1fr / 400px / 400px`. Three columns start at `3xl` rather than `2xl`
+because at 1536px they leave the player around 600px, which is worse than the
+empty space they filled. The assistant is what moves into the new column; below
+`3xl` it sits in the main column under the description, and below `lg` it falls
+after the sidebar in source order so live chat still lands directly under the
+video on a phone.
+
+**Rejected**: *Stretching the player to fill the width* — a 2000px-wide video is
+not a better video, and the metadata under it becomes an unreadable single line.
+*A fluid container with no cap* — past about 2500px a full-bleed row of text is
+unreadable.
+
+**Consequences**: the app runs identically with no `GEMINI_API_KEY` — the panel
+renders nothing in production and a one-line setup hint in dev. Rate limiting
+(`server/utils/rate-limit.ts`) is in memory and per-instance, which is
+deliberate and documented: Redis has no client wired up yet (ADR-003), and an
+approximate limiter that costs nothing today is what actually protects the
+quota. It becomes `ZADD`/`ZCOUNT` behind the same `check()` when Redis lands in
+Phase 8. Titles and descriptions are user-supplied text entering a prompt, so
+the system instruction states that catalogue content is data rather than
+instructions, and nothing the model returns is executed, stored or used to
+build a request. Full write-up in [ai-assistant.md](./ai-assistant.md).

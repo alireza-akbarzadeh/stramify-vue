@@ -1697,3 +1697,110 @@ twelve items already loaded. Documented under "Filtering Up next" in
 `pnpm lint` and the dev server were all unavailable this session. `upNext.spec.ts`
 is new and has never run. Fastest way to eyeball this without a seeded DB is
 `/zz-watch-preview`.
+
+---
+
+## Watch-page AI assistant session, 2026-08-13 (appended)
+
+Added a Gemini-backed assistant to `/watch/[slug]`, and reworked the page's
+grid so a big monitor or a TV has somewhere to put it. Full write-up:
+[ai-assistant.md](./ai-assistant.md). Decisions: ADR-029.
+
+### ⚠️ Concurrent session note — read this
+
+This session ran **alongside** another one working on `/music` and on clip
+visibility. Partway through, that session committed
+`a04b6c6 "feat: ai and music page"`, which swept up this session's
+then-uncommitted AI files together with its own work. Nothing was lost or
+overwritten — `selectRelated` (extracted here from `related.get.ts`) came back
+with that session's `publishedClips` predicate correctly merged into it, and
+`resolveWatchTarget` gained an optional `viewerId` that the AI routes
+deliberately don't pass, so they get the stricter "no private clips" behaviour
+by default.
+
+Two things to be aware of:
+
+- The visibility work's code comments reference **ADR-028** for clip
+  visibility, but ADR-028 in `DECISIONS.md` is the `/music` hover-preview
+  entry. That session owes an ADR; this one took **ADR-029**, the next free
+  number at the time of writing. Check before claiming a number.
+- `docs/ai-assistant.md`, the ADR and this entry were written after that
+  commit, so they are not in it.
+
+### What was built
+
+**Server**
+
+- `server/utils/gemini.ts` — REST transport for `generateContent`. Free-tier
+  `gemini-3.5-flash` default, `GEMINI_MODEL` override for a paid model,
+  `modelTier()` treating unrecognised ids as paid. 20s timeout, upstream errors
+  mapped to stable status codes (429 → 429, timeout → 504, everything else →
+  502). Two entry points: `generateText` and `generateJson` (Zod-validated).
+- `server/utils/watch-ai.ts` — all prompt construction and the grounding
+  guard, kept pure so it's testable with no API key.
+- `server/utils/rate-limit.ts` — in-memory sliding window. Per-instance on
+  purpose; see the ADR.
+- `GET /api/ai/config`, `GET /api/watch/[slug]/ai/insights` (cached 6h),
+  `POST /api/watch/[slug]/ai/ask` (auth required), `GET
+  /api/watch/[slug]/ai/picks` (choice cached 2h, rows re-joined per request).
+- `selectRelated()` moved into `server/utils/watch.ts` so the rail and the AI
+  picks rank the same candidate set.
+
+**Client**
+
+- `app/composables/useWatchAi.ts` and `app/components/watch/ai/*` (panel,
+  insights, ask, turn, prompts, picks). Self-fetching, like
+  `WatchPlaylistQueue`. The playhead is passed as a getter, not a prop —
+  Vidstack fires `time-update` several times a second and it's read once.
+- `WatchUpNextCard` gained a `note` slot so the picks list reuses it instead of
+  forking a near-identical card.
+
+**Layout**
+
+- `WatchLayout` goes to three columns at `3xl` (1920px): player+metadata,
+  assistant, sidebar. `WatchView`'s cap steps 1560 → 2160 (`3xl`) → 2480
+  (`4xl`). Theater mode still works at every breakpoint. Below `lg` the
+  assistant falls after the sidebar in source order so live chat stays directly
+  under the video on a phone.
+
+### Verified this session (toolchain actually ran)
+
+- `pnpm lint` — clean (only the 10 pre-existing `vue/require-default-prop`
+  warnings in vendored `components/ui/*`).
+- `pnpm typecheck` — no new errors. The repo has a standing set of pre-existing
+  ones (`server/api/media`, `billing-plugin.ts`, `nuxt.config.ts`, the
+  `useTemplateRef`-vs-`ref` union blowups in `motion/*`, `AppSearch`,
+  `WatchChat`); nothing was added to it.
+- `pnpm vitest run server/utils/watch-ai.spec.ts server/utils/rate-limit.spec.ts`
+  — 23 passing.
+- In a real browser at `localhost:3000/watch/clip-rendering?t=23`: all watch
+  APIs 200 including `related` after the `selectRelated` refactor; `/api/ai/config`
+  returns `{"enabled":false,...}` with no key set; three-column layout confirmed
+  at 1920×1080 and 2560×1300; no horizontal overflow at 375×812.
+
+### ⚠️ Not verified — the live model path
+
+**No `GEMINI_API_KEY` was set in `.env` when this session ran**, so the disabled
+path is proven end to end and the *enabled* one is not. Nothing has ever called
+Gemini from this codebase. Before trusting the panel:
+
+1. Add `GEMINI_API_KEY=...` to `.env` (get one at aistudio.google.com).
+2. Reload a watch page. `/api/ai/config` should report `enabled: true`.
+3. Check the summary and topics render, sign in, ask a question, and confirm
+   the picks list appears above "Up next" with a reason per row.
+
+Specifically unproven: whether the free flash model honours `responseSchema`
+tightly enough that `generateJson`'s Zod check never trips (a 502 "unexpected
+shape" in the panel is the symptom), and whether `maxOutputTokens` is generous
+enough for the insights JSON.
+
+### Owed / next steps
+
+- E2E coverage (`e2e/watch-ai.spec.ts`) with the Gemini call stubbed — the unit
+  tests cover the pure parts, but nothing exercises the endpoints.
+- `.env.example` needs `GEMINI_API_KEY` and `GEMINI_MODEL` added. This session's
+  tooling was denied read/write on `.env*` and could not do it.
+- Move the rate limiter onto Redis when Phase 8 wires a client up.
+- Real video understanding (Files API upload) belongs with Cloudflare Stream in
+  Phase 6/7, not before — see the ADR for why the current grounding is
+  structural rather than cautious.

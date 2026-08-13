@@ -6,7 +6,7 @@ import type { Ref } from 'vue'
  * the reader scrolls up to read backlog, and resumes when they return to
  * the bottom, so new messages never yank the view out from under them.
  */
-export function useStickyScroll(el: Ref<HTMLElement | null>, count: () => number) {
+export function useStickyScroll(el: Readonly<Ref<HTMLElement | null>>, count: () => number) {
   const pinned = ref(true)
 
   function onScroll() {

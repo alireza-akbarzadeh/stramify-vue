@@ -1,5 +1,6 @@
 import { sql } from 'drizzle-orm'
 import { db } from '../db/client'
+import { publishedClipsSql } from './discovery'
 import { formatAge } from './format'
 import { formatCount } from '#shared/utils/format'
 import { SHORTS_PAGE_SIZE } from '#shared/types/shorts'
@@ -145,7 +146,7 @@ export async function selectShortsPage(options: ShortsPageOptions = {}): Promise
     left join my_reactions mr on mr.target_id = c.id
     left join my_follows mf on mf.handle = lower(c.creator)
     left join channels ch on ch.handle = lower(c.creator)
-    where c.orientation = 'vertical'
+    where c.orientation = 'vertical' and ${publishedClipsSql}
     order by ${startId ? sql`(c.id = ${startId}) desc,` : sql``}
              c.created_at desc,
              c.id asc

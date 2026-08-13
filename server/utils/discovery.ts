@@ -18,6 +18,34 @@ export type LiveStreamRow = typeof liveStreams.$inferSelect
  */
 export const landscapeClips = eq(clips.orientation, 'landscape')
 
+/**
+ * The filter every *browse* surface applies, now that creators can upload
+ * (ADR-028): a clip appears in a feed, a grid, a shelf, a search result or a
+ * channel's tab only if its owner published it.
+ *
+ * `unlisted` is excluded here alongside `private` — that is the entire
+ * difference between the two, and it lives in this one expression so the rule
+ * can't be half-applied. What `unlisted` keeps is resolution by id, which
+ * happens in `server/utils/watch.ts`, not here.
+ *
+ * Deliberately *not* applied to the surfaces keyed by a clip the viewer
+ * already chose — liked, watch later, playlists, history, continue-watching.
+ * A clip can only get into one of those by having been watchable when it was
+ * saved, and dropping it the moment its owner unpublishes would silently edit
+ * someone else's library rather than protect anything.
+ *
+ * Every seeded row is `public` (the migration's default backfilled them), so
+ * this changed no existing behaviour the day it landed.
+ */
+export const publishedClips = eq(clips.visibility, 'public')
+
+/**
+ * The same rule for the queries built as raw SQL (`home`, `following`,
+ * `shorts`, `channels`), where the table is aliased `c`. Kept beside its
+ * Drizzle twin so a change to one is an obvious prompt to change the other.
+ */
+export const publishedClipsSql = sql`c.visibility = 'public'`
+
 /** Live-stream row → wire shape. Same contract for the `/live` grid and the signals rail. */
 export function toLiveSignal(row: LiveStreamRow): LiveSignal {
   return {
@@ -86,7 +114,7 @@ export async function selectCategorySummaries(name?: ClipCategory): Promise<Cate
     .from(clips)
     // Counts have to agree with what `/category/[slug]` actually lists, and
     // that page is a 16:9 grid — so shorts are outside this total too.
-    .where(and(landscapeClips, name ? eq(clips.category, name) : undefined))
+    .where(and(publishedClips, landscapeClips, name ? eq(clips.category, name) : undefined))
     .groupBy(clips.category)
     .orderBy(desc(count(clips.id)))
 

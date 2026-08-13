@@ -1,5 +1,6 @@
 import { sql } from 'drizzle-orm'
 import { db } from '../db/client'
+import { publishedClipsSql } from './discovery'
 import { notSuppressed } from './feedback'
 import { formatAge, formatDuration, formatUptime } from './format'
 import { formatCount } from '#shared/utils/format'
@@ -87,7 +88,7 @@ export const CANDIDATES = sql`
   -- Shorts have their own full-screen feed at /shorts; a 9:16 video in this
   -- page's 16:9 card is two black bars. Same rule as landscapeClips in
   -- utils/discovery.ts, spelled in SQL because this query is raw.
-  where c.orientation = 'landscape'
+  where c.orientation = 'landscape' and ${publishedClipsSql}
   union all
   select l.id,
          l.streamer_name as slug,

@@ -6,8 +6,18 @@ import { db } from '../db/client'
 import * as schema from '../db/schema'
 import { sendMail } from './mailer'
 import { billingPlugins } from './billing-plugin'
+import { parseAllowedOrigins } from './cors'
 
 const appUrl = process.env.PUBLIC_APP_URL || 'http://localhost:3000'
+
+/**
+ * The same allowlist `server/middleware/cors.ts` uses. better-auth keeps its
+ * own origin check — it rejects requests and redirect targets from anywhere it
+ * doesn't trust — so letting an origin through CORS while better-auth still
+ * refuses it produces a request that passes preflight and then fails with a
+ * bare 403. One env var feeds both, which is the only way they stay in sync.
+ */
+const crossOrigins = parseAllowedOrigins(process.env.CORS_ORIGINS)
 
 /** Providers offered in the UI, in display order. */
 export const SOCIAL_PROVIDERS = ['google', 'apple', 'facebook', 'github'] as const
@@ -48,6 +58,23 @@ export const auth = betterAuth({
   }),
   secret: process.env.BETTER_AUTH_SECRET,
   baseURL: appUrl,
+  // `baseURL` is trusted implicitly; these are the extra origins allowed to
+  // sign in against this deployment. Note this also widens the set of legal
+  // OAuth `callbackURL` targets — an entry here can send a user back to itself
+  // after login, which is exactly what dev-against-prod needs and exactly why
+  // the list must stay short and hand-written.
+  trustedOrigins: crossOrigins,
+  advanced: {
+    // Cross-site cookies are opt-in for the same reason CORS is: `SameSite=Lax`
+    // is the safer default and is what a same-origin production deployment
+    // should keep. A cookie set by this deployment is only sent on a request
+    // from another origin if it says `None`, and a browser only accepts `None`
+    // together with `Secure` — so when the allowlist is empty, none of this
+    // applies and the defaults stand.
+    ...(crossOrigins.length > 0
+      ? { defaultCookieAttributes: { sameSite: 'none' as const, secure: true } }
+      : {})
+  },
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 8,

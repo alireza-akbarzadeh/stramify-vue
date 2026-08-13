@@ -5,6 +5,7 @@ import { clips } from '../../../db/schema'
 import {
   emptyCategorySummary,
   landscapeClips,
+  publishedClips,
   selectCategorySummaries,
   toClip
 } from '../../../utils/discovery'
@@ -25,7 +26,7 @@ export default defineEventHandler(async (event) => {
     db
       .select()
       .from(clips)
-      .where(and(eq(clips.category, category), landscapeClips))
+      .where(and(publishedClips, eq(clips.category, category), landscapeClips))
       .orderBy(desc(clips.createdAt)),
     selectCategorySummaries(category)
   ])

@@ -1,7 +1,7 @@
 import { and, desc, eq } from 'drizzle-orm'
 import { db } from '../db/client'
 import { clips, follows } from '../db/schema'
-import { landscapeClips, toClip } from './discovery'
+import { landscapeClips, publishedClips, toClip } from './discovery'
 import { MUSIC_MIN_SHELF_ITEMS, MUSIC_QUEUE_LIMIT, MUSIC_SHELF_LIMIT } from '#shared/types/music'
 import type { MusicPage, MusicShelf, MusicTrack } from '#shared/types/music'
 
@@ -24,7 +24,7 @@ export async function selectMusicPage(userId: string | null): Promise<MusicPage>
     db
       .select()
       .from(clips)
-      .where(and(eq(clips.category, 'Music'), landscapeClips))
+      .where(and(publishedClips, eq(clips.category, 'Music'), landscapeClips))
       .orderBy(desc(clips.createdAt)),
     selectFollowedCreators(userId)
   ])

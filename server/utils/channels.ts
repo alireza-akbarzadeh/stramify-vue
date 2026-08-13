@@ -3,7 +3,7 @@ import type { SQL } from 'drizzle-orm'
 import { db } from '../db/client'
 import { clips, follows, liveStreams } from '../db/schema'
 import {  formatUptime } from './format'
-import { landscapeClips, toClip } from './discovery'
+import { landscapeClips, publishedClips, publishedClipsSql, toClip } from './discovery'
 import { toChannelDisplayName, toChannelHandle } from '#shared/utils/channel'
 import type { Clip, ClipCategory } from '#shared/types/discovery'
 import type {
@@ -37,7 +37,7 @@ export async function readChannelSummary(
     db
       .select({ total: count(clips.id) })
       .from(clips)
-      .where(sql`lower(${clips.creator}) = lower(${name})`),
+      .where(and(publishedClips, sql`lower(${clips.creator}) = lower(${name})`)),
     userId
       ? db
           .select({ notify: follows.notify })
@@ -173,7 +173,11 @@ function selectChannelRows(options: {
              min(created_at) as first_published,
              max(created_at) as last_published,
              (array_agg(thumbnail_url order by views desc))[1] as top_thumbnail
-      from clips
+      -- Aliased purely so the shared visibility rule (which is written against
+      -- \`c\`) applies here too. A creator's private drafts are theirs alone and
+      -- must not inflate the clip count or total views on the directory card.
+      from clips c
+      where ${publishedClipsSql}
       group by lower(creator)
     ),
     live_stats as (
@@ -201,7 +205,7 @@ function selectChannelRows(options: {
         select handle, category, sum(n)::int as n
         from (
           select lower(creator) as handle, category::text as category, count(*)::int as n
-          from clips group by 1, 2
+          from clips c where ${publishedClipsSql} group by 1, 2
           union all
           select lower(streamer_name) as handle, category::text as category, count(*)::int as n
           from live_streams group by 1, 2
@@ -454,7 +458,9 @@ export async function readChannelVideos(
   const rows = await db
     .select()
     .from(clips)
-    .where(and(sql`lower(${clips.creator}) = ${toChannelHandle(name)}`, landscapeClips))
+    .where(
+      and(publishedClips, sql`lower(${clips.creator}) = ${toChannelHandle(name)}`, landscapeClips)
+    )
     .orderBy(VIDEO_ORDER[sort])
     .limit(60)
 
