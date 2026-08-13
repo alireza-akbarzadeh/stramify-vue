@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ArrowLeft, ListVideo, Play } from '@lucide/vue'
 import { useMix } from '@/composables/useMixes'
-import { useWatchlistStore } from '@/stores/watchlist'
+import { useSavedVideos } from '@/composables/useSavedVideos'
 import { relatedToItem } from '@/utils/watchlist'
 import HomeVideoCard from '@/components/home/HomeVideoCard.vue'
 import HomeVideoCardSkeleton from '@/components/home/HomeVideoCardSkeleton.vue'
@@ -18,7 +18,7 @@ import { Button } from '@/components/ui/button'
 const props = defineProps<{ id: string }>()
 
 const { data, isPending, isError, error, refetch } = useMix(() => props.id)
-const watchlist = useWatchlistStore()
+const saved = useSavedVideos()
 
 const notFound = computed(
   () => (error.value as { statusCode?: number } | null)?.statusCode === 404
@@ -116,9 +116,9 @@ const SKELETONS = 6
             v-for="video in data.items"
             :key="`${video.kind}-${video.id}`"
             :video="video"
-            :saved="watchlist.isSaved(video.id)"
+            :saved="saved.isSaved(video.id, video.kind)"
             :allow-feedback="false"
-            @toggle-save="watchlist.toggle(relatedToItem(video))"
+            @toggle-save="saved.toggle(relatedToItem(video))"
           />
         </div>
       </section>

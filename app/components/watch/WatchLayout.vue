@@ -31,6 +31,24 @@ import { useTheaterMode, useTheaterShortcut } from '@/composables/useTheaterMode
  * is what puts live chat directly under the video on a phone and the comment
  * list last.
  *
+ * On a phone the metadata cell is a *sheet*: it bleeds past the page's side
+ * padding to the screen edges and rides up over the bottom of the video on a
+ * rounded top edge, the way a native player screen does. That costs one
+ * `relative` — the player is positioned, so a static sibling would paint
+ * underneath it however late it comes in the DOM. Everything about the sheet
+ * is switched off again at `lg`, where the video and the metadata are stacked
+ * in a column with room to breathe and the overlap would read as a mistake.
+ *
+ * How far it rides up is `--player-sheet-overlap`, defined in `player.css`
+ * rather than written here, because the player's control row is pinned to the
+ * bottom of the video and has to be padded up by the same amount — see the
+ * comment on that variable. It is `0` from `lg`, which is what flattens the
+ * negative margin without a `lg:` override.
+ *
+ * Row gaps are per-cell rather than a grid `gap-y` below `lg`, because the
+ * sheet's whole point is a *negative* gap against the player; a grid gap would
+ * have to be cancelled before it could be overlapped.
+ *
  * At `lg` and up each child is placed explicitly, because theater mode moves
  * two of them: the player grows from the first column to both, and the sidebar
  * drops from row 1 (beside the video) to row 2 (beside the metadata). Keeping
@@ -80,7 +98,7 @@ useTheaterShortcut()
 
 <template>
   <div
-    class="grid grid-cols-1 gap-x-8 gap-y-4 lg:grid-cols-[minmax(0,1fr)_400px]"
+    class="grid grid-cols-1 gap-x-8 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-y-4"
     :data-theater="theater ? '' : undefined"
   >
     <div
@@ -96,11 +114,19 @@ useTheaterShortcut()
       />
     </div>
 
-    <div class="min-w-0 space-y-4 lg:col-start-1 lg:row-start-2">
+    <div
+      class="relative z-10 -mx-4 mt-[calc(var(--player-sheet-overlap)*-1)] min-w-0 space-y-4 rounded-t-xl bg-background px-4 pt-5 shadow-[0_-12px_32px_-16px_var(--shadow-color)] sm:-mx-6 sm:px-6 lg:mx-0 lg:rounded-none lg:px-0 lg:pt-0 lg:shadow-none lg:col-start-1 lg:row-start-2"
+    >
       <WatchMeta :target="target" />
-      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-border pb-4">
+      <!-- Below `lg` the channel and the actions are separate full-width rows.
+           Sharing one wrapping row is what squeezed the channel name down to a
+           couple of characters on a phone and stacked "N followers · N clips"
+           three lines deep next to it. -->
+      <div
+        class="flex flex-col gap-3 border-b border-border pb-4 lg:flex-row lg:flex-wrap lg:items-center lg:justify-between lg:gap-4"
+      >
         <WatchChannelBar
-          class="min-w-0 flex-1"
+          class="min-w-0 lg:flex-1"
           :channel="engagement.channel"
           :name="target.channel"
           :pending="engagement.followPending"
@@ -139,7 +165,7 @@ useTheaterShortcut()
     </div>
 
     <aside
-      class="mt-2 min-w-0 lg:col-start-2 lg:mt-0"
+      class="mt-6 min-w-0 lg:col-start-2 lg:mt-0"
       :class="theater ? 'lg:row-span-2 lg:row-start-2' : 'lg:row-span-3 lg:row-start-1'"
     >
       <div class="space-y-6 lg:sticky lg:top-20">
@@ -165,7 +191,7 @@ useTheaterShortcut()
       </div>
     </aside>
 
-    <div v-if="target.kind === 'clip'" class="mt-4 min-w-0 lg:col-start-1 lg:row-start-3">
+    <div v-if="target.kind === 'clip'" class="mt-8 min-w-0 lg:col-start-1 lg:row-start-3 lg:mt-0">
       <WatchComments
         v-model:sort="sort"
         :comments="comments.items"

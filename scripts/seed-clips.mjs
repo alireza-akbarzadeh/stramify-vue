@@ -112,6 +112,98 @@ const clips = [
     views: 9700,
     featured: false,
     createdAt: hoursAgo(12)
+  },
+
+  // ---------------------------------------------------------------------
+  // Music catalogue for `/music`.
+  //
+  // That page derives four shelves from these rows — recency, views, duration
+  // and the viewer's follows — and drops any derived shelf under three items
+  // (see `MUSIC_MIN_SHELF_ITEMS`), so two Music clips produced a page with one
+  // rail on it. These fill the shelves out with a spread of view counts,
+  // durations and ages so each ordering is visibly different from the others
+  // rather than the same rail relabelled.
+  //
+  // **Progressive mp4 only, on purpose.** `/music` previews a track on hover
+  // through a bare `<video>`, which plays HLS natively in Safari and nowhere
+  // else (see `app/utils/preview.ts`) — an all-HLS catalogue would show the
+  // still-image fallback on every card in Chrome and look like the feature was
+  // broken. The two HLS rows above stay HLS so the real player keeps exercising
+  // that path on `/watch`.
+  //
+  // Sources are reused from the verified set at the top of this file rather
+  // than new URLs: these are fixture stand-ins for artwork nobody has uploaded
+  // yet, and a fixture that 404s is worse than one that repeats.
+  // ---------------------------------------------------------------------
+  {
+    id: 'clip-neon-district',
+    title: 'Neon District — Full Rooftop Set',
+    creator: 'EchoCollective',
+    category: 'Music',
+    description:
+      'Ninety minutes condensed into the part everyone asks about: the transition at the top of the second hour, when the rain started and nobody left.\n\nRecorded live off the desk. Unmastered.',
+    videoUrl: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+    thumbnailUrl: placeholder('neon-district'),
+    durationSeconds: 312,
+    views: 48300,
+    featured: false,
+    createdAt: hoursAgo(20)
+  },
+  {
+    id: 'clip-analog-drift',
+    title: 'Analog Drift (Live Takes, No Overdubs)',
+    creator: 'Patch_Bay',
+    category: 'Music',
+    description:
+      'One take, two hands, no overdubs and no click. The drift you can hear around the two-minute mark is the oscillator warming up — it settles on its own and I stopped trying to fix it.',
+    videoUrl: 'https://media.w3.org/2010/05/video/movie_300.mp4',
+    thumbnailUrl: placeholder('analog-drift'),
+    durationSeconds: 186,
+    views: 27600,
+    featured: false,
+    createdAt: hoursAgo(30)
+  },
+  {
+    id: 'clip-basement-tape',
+    title: 'The Basement Tape',
+    creator: 'Nova_Beats',
+    category: 'Music',
+    description:
+      'Recorded on a borrowed four-track in a room with genuinely terrible acoustics, which turned out to be the whole sound.\n\nNo plugins on this one. The reverb is the room.',
+    videoUrl: 'https://media.w3.org/2010/05/bunny/trailer.mp4',
+    thumbnailUrl: placeholder('basement-tape'),
+    durationSeconds: 94,
+    views: 15800,
+    featured: false,
+    createdAt: hoursAgo(44)
+  },
+  {
+    id: 'clip-string-section',
+    title: 'String Section, 6AM',
+    creator: 'Nova_Beats',
+    category: 'Music',
+    description:
+      'The quartet had been awake for nineteen hours and this is the take we kept.\n\nTwo mics, both further back than anyone recommends. You can hear the building.',
+    videoUrl: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+    thumbnailUrl: placeholder('string-section'),
+    durationSeconds: 421,
+    views: 6200,
+    featured: false,
+    createdAt: hoursAgo(52)
+  },
+  {
+    id: 'clip-last-encore',
+    title: 'Last Encore Before the Lights Came Up',
+    creator: 'EchoCollective',
+    category: 'Music',
+    description:
+      'The house lights were already on. They played anyway, and the crowd sang loud enough that the desk feed clipped.\n\nThis is the audience mic, not the board — it is the better recording.',
+    videoUrl: 'https://media.w3.org/2010/05/video/movie_300.mp4',
+    thumbnailUrl: placeholder('last-encore'),
+    durationSeconds: 138,
+    views: 33900,
+    featured: false,
+    createdAt: hoursAgo(70)
   }
 ]
 

@@ -4,7 +4,7 @@ import ChannelAvatar from '@/components/ChannelAvatar.vue'
 import HomeRail from '@/components/home/HomeRail.vue'
 import HomeVideoCard from '@/components/home/HomeVideoCard.vue'
 import LiveBadge from '@/components/landing/LiveBadge.vue'
-import { useWatchlistStore } from '@/stores/watchlist'
+import { useSavedVideos } from '@/composables/useSavedVideos'
 import { videoCountLabel } from '@/utils/following'
 import { relatedToItem } from '@/utils/watchlist'
 import { toChannelPath } from '#shared/utils/channel'
@@ -27,7 +27,7 @@ import type { FollowingShelf } from '#shared/types/following'
  */
 const props = defineProps<{ shelf: FollowingShelf }>()
 
-const watchlist = useWatchlistStore()
+const saved = useSavedVideos()
 
 const headingId = computed(() => `following-shelf-${props.shelf.channel.handle}`)
 const to = computed(() => `${toChannelPath(props.shelf.channel.handle)}?tab=videos`)
@@ -72,9 +72,9 @@ const to = computed(() => `${toChannelPath(props.shelf.channel.handle)}?tab=vide
     >
       <HomeVideoCard
         :video="video"
-        :saved="watchlist.isSaved(video.id)"
+        :saved="saved.isSaved(video.id, video.kind)"
         :allow-feedback="false"
-        @toggle-save="watchlist.toggle(relatedToItem(video))"
+        @toggle-save="saved.toggle(relatedToItem(video))"
       />
     </li>
   </HomeRail>

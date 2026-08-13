@@ -130,6 +130,21 @@
     }
 }
 
+/* The four bars on a music card that's previewing (`components/music/NowPlayingBars.vue`).
+   `scaleY` from a bottom origin rather than `height`, so a bar that bounces
+   four times a second stays on the compositor instead of laying out its row
+   every frame. Each bar sets its own `animation-delay` and `--bar-peak`, which
+   is what stops the four reading as one thick blinking block. */
+@keyframes equalize {
+    0%,
+    100% {
+        transform: scaleY(0.25);
+    }
+    50% {
+        transform: scaleY(var(--bar-peak, 1));
+    }
+}
+
 /* ===========================================================
    STREAMIFY DESIGN SYSTEM
    Premium Streaming Platform
@@ -307,6 +322,11 @@
     /* Ambient, not busy. Six seconds a turn reads as "this channel is on air";
        anything near a spinner's pace would read as "the page is loading". */
     --animate-story-ring: story-ring 6s linear infinite;
+
+    /* Roughly the pace of a bar bouncing to a beat. Fast enough to read as
+       audio, slow enough not to strobe — the four bars offset themselves with
+       per-bar delays rather than four different durations. */
+    --animate-equalize: equalize 900ms ease-in-out infinite;
 }
 
 /* A quiet scrollbar for long in-app columns (the sidebar nav, chat, menus).

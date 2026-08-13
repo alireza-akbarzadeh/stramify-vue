@@ -13,7 +13,9 @@ const emit = defineEmits<{ (e: 'toggle-save'): void }>()
       :to="`/watch/${encodeURIComponent(item.slug)}`"
       class="flex min-w-0 flex-1 gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
-      <div class="relative aspect-video w-40 shrink-0 overflow-hidden rounded-lg bg-muted">
+      <!-- Narrower on a phone: at `w-40` the thumbnail plus the Save button's
+           reserved gutter left the title about two words per line. -->
+      <div class="relative aspect-video w-32 shrink-0 overflow-hidden rounded-lg bg-muted sm:w-40">
         <img
           :src="item.image"
           :alt="item.title"
@@ -39,10 +41,14 @@ const emit = defineEmits<{ (e: 'toggle-save'): void }>()
         <p class="truncate text-xs text-muted-foreground">{{ item.meta }}</p>
       </div>
     </NuxtLink>
+    <!-- Revealed on hover only where there *is* a hover: on a touch screen
+         `group-hover` never fires, so gating on it alone left Save visible
+         nowhere and reachable only by keyboard — i.e. not at all on a phone. -->
     <SaveButton
       :saved="saved"
+      :kind="item.kind"
       :label="item.title"
-      class="absolute right-0 top-0 size-8 opacity-0 transition-opacity focus-visible:opacity-100 group-hover:opacity-100"
+      class="absolute right-0 top-0 size-8 transition-opacity focus-visible:opacity-100 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100"
       @toggle="emit('toggle-save')"
     />
   </article>

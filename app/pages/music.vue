@@ -1,8 +1,10 @@
 <script lang="ts" setup>
-definePageMeta({layout: 'dashboard'})
-useHead({title: 'Music — Streamify'})
+import MusicView from '@/components/music/MusicView.vue'
+
+definePageMeta({ layout: 'dashboard' })
+useHead({ title: 'Music — Streamify' })
 </script>
 
 <template>
-  <ComingSoon description="we weill implement this as soone as possible" title="Music"/>
+  <MusicView />
 </template>

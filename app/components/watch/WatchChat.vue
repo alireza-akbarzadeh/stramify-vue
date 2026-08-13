@@ -33,7 +33,7 @@ function send() {
 
 <template>
   <section
-    class="flex h-[26rem] flex-col overflow-hidden rounded-xl border border-border bg-card lg:h-[32rem]"
+    class="flex h-[22rem] flex-col overflow-hidden rounded-xl border border-border bg-card sm:h-[26rem] lg:h-[32rem]"
     aria-labelledby="chat-heading"
   >
     <header class="flex items-center gap-2 border-b border-border px-4 py-3">

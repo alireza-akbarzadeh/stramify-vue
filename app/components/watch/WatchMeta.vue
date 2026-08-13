@@ -9,8 +9,8 @@ const categoryHref = computed(() => `/category/${toCategorySlug(props.target.cat
 </script>
 
 <template>
-  <div class="space-y-3">
-    <h1 class="text-xl font-semibold leading-snug text-foreground sm:text-2xl">
+  <div class="space-y-2 sm:space-y-3">
+    <h1 class="text-lg font-semibold leading-snug text-foreground sm:text-xl lg:text-2xl">
       {{ target.title }}
     </h1>
     <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted-foreground">

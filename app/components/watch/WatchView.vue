@@ -16,7 +16,7 @@ import { useViewCounter } from '@/composables/useViewCounter'
 import { useWatchProgress } from '@/composables/useWatchProgress'
 import { useWatchPlaylist } from '@/composables/useWatchPlaylist'
 import { useAuthStore } from '@/stores/auth'
-import { useWatchlistStore } from '@/stores/watchlist'
+import { useSavedVideos } from '@/composables/useSavedVideos'
 import { watchTargetToItem } from '@/utils/watchlist'
 import WatchLayout from './WatchLayout.vue'
 import WatchSkeleton from './WatchSkeleton.vue'
@@ -41,7 +41,7 @@ const { count } = useViewCounter(slug)
 const { start, track, finish } = useWatchProgress(slug)
 const queue = useWatchPlaylist(slug)
 const { user } = storeToRefs(useAuthStore())
-const watchlist = useWatchlistStore()
+const savedVideos = useSavedVideos()
 
 /**
  * `?t=` — a resume point from the "Continue watching" rail, or from a link
@@ -71,8 +71,15 @@ watch(
 const notFound = computed(
   () => (target.error.value as { statusCode?: number } | null)?.statusCode === 404
 )
+/**
+ * The Save button under the player. For a clip this is the account's Watch later
+ * queue — the same row `/watch-later` lists and the same bookmark every card in
+ * the app draws, so saving here lights the video up everywhere else. A live
+ * session has no queue to sit in, so it falls through to the on-device list
+ * (see `useSavedVideos`).
+ */
 const saved = computed(() =>
-  target.data.value ? watchlist.isSaved(target.data.value.id) : false
+  target.data.value ? savedVideos.isSaved(target.data.value.id, target.data.value.kind) : false
 )
 
 const engagement = computed(() => ({
@@ -129,7 +136,7 @@ function onEnded() {
 }
 
 function onSave() {
-  if (target.data.value) watchlist.toggle(watchTargetToItem(target.data.value))
+  if (target.data.value) savedVideos.toggle(watchTargetToItem(target.data.value))
 }
 function onReact(value: ReactionValue) {
   if (!user.value) return toast.error('Log in to react to this video.')
@@ -171,7 +178,14 @@ function onShare() {
 </script>
 
 <template>
-  <div class="mx-auto mt-12 max-w-[1560px] px-4 py-8 sm:px-8">
+  <!--
+    Phone: the video sits just under the sticky top bar with only its side
+    inset, so the thing you came for is the first thing on screen. The
+    generous top margin the other browse views carry is a desktop-only
+    affordance here — on a 375px screen it was pushing the player below the
+    fold for no gain.
+  -->
+  <div class="mx-auto max-w-[1560px] px-4 pb-10 pt-3 sm:px-6 lg:mt-12 lg:px-8 lg:py-8">
     <WatchSkeleton v-if="target.isPending.value" />
 
     <div

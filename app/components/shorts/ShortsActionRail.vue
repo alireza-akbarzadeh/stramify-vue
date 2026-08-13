@@ -7,15 +7,15 @@ import type {ReactionValue} from '#shared/types/watch'
 import {formatCount} from '#shared/utils/format'
 import {useShortsActions} from '@/composables/useShortsActions'
 import {useAuthStore} from '@/stores/auth'
+import {useSavedVideos} from '@/composables/useSavedVideos'
 import {useShortsStore} from '@/stores/shorts'
-import {useWatchlistStore} from '@/stores/watchlist'
 import {shortToItem} from '@/utils/shorts'
 import ShortsActionButton from './ShortsActionButton.vue'
 
 /**
  * The right-hand rail: like, dislike, comments, share, save.
  *
- * It reaches for what it needs itself — the reaction mutation, the watchlist,
+ * It reaches for what it needs itself — the reaction mutation, the bookmark,
  * the comment sheet's open state — instead of taking five callbacks from the
  * reel above it. That's the whole reason `stores/shorts` exists: the rail is
  * three components deep and none of the layers in between have any business
@@ -25,10 +25,12 @@ const props = defineProps<{ short: Short }>()
 
 const {user} = storeToRefs(useAuthStore())
 const shorts = useShortsStore()
-const watchlist = useWatchlistStore()
+// A short is a vertical clip, so its bookmark is the same account-bound Watch
+// later queue every other clip's is.
+const savedVideos = useSavedVideos()
 const {react} = useShortsActions()
 
-const saved = computed(() => watchlist.isSaved(props.short.id))
+const saved = computed(() => savedVideos.isSaved(props.short.id, 'clip'))
 const shares = ref(0)
 
 function onReact(value: ReactionValue) {
@@ -89,9 +91,9 @@ function onShare() {
         :burst="saved"
         :caption="saved ? 'Saved' : 'Save'"
         :icon="saved ? BookmarkCheck : Bookmark"
-        :label="saved ? 'Remove from watchlist' : 'Save to watchlist'"
+        :label="saved ? 'Remove from Watch later' : 'Save to Watch later'"
         :pressed="saved"
-        @click="watchlist.toggle(shortToItem(short))"
+        @click="savedVideos.toggle(shortToItem(short))"
     />
   </ul>
 </template>

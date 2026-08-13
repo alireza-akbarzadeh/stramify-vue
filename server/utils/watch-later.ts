@@ -46,6 +46,30 @@ export async function selectWatchLater(userId: string, limit: number): Promise<W
 }
 
 /**
+ * Just the clip ids in the queue — what a bookmark button needs to know.
+ *
+ * A separate read from `selectWatchLater` rather than a `.map()` over it,
+ * because the two answer different questions. The list is a screenful of cards
+ * and is capped at `WATCH_LATER_MAX_LIMIT`; this is "is *this* video saved",
+ * asked by every card on every grid in the app, and a cap would make the
+ * bookmark on an older save quietly render as unsaved — pressing it would then
+ * try to re-save something already in the queue.
+ *
+ * Uncapped is affordable precisely because it's ids and nothing else: no joins,
+ * one index-only scan of `watch_later_user_added_idx`, and the row count is
+ * bounded by the viewer's own saves.
+ */
+export async function selectWatchLaterIds(userId: string): Promise<string[]> {
+  const rows = await db
+    .select({ clipId: watchLater.clipId })
+    .from(watchLater)
+    .where(eq(watchLater.userId, userId))
+    .orderBy(desc(watchLater.addedAt))
+
+  return rows.map((row) => row.clipId)
+}
+
+/**
  * Save a clip.
  *
  * `onConflictDoNothing` on the `(user, clip)` unique index makes this

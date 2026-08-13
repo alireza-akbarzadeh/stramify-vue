@@ -49,6 +49,7 @@ const emit = defineEmits<{ (e: 'play' | 'toggle-save'): void }>()
       <SaveButton
         :saved="saved"
         :label="signal.name"
+        kind="live"
         class="absolute right-2 top-2"
         @toggle="emit('toggle-save')"
       />

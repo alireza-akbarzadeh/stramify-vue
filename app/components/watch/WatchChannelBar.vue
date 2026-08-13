@@ -18,6 +18,12 @@ import { toChannelPath } from '#shared/utils/channel'
  * row, so there's nothing for it to store otherwise. It slides in beside the
  * button rather than appearing, which is what makes the two read as one
  * control rather than the layout jumping.
+ *
+ * The row is one line at every width and never wraps: the identity takes
+ * whatever space the buttons leave and truncates into it. Wrapping looks fine
+ * until the viewport is narrow, at which point the name and the follower count
+ * each fold onto their own line and collide with the button beside them —
+ * which is exactly what a phone-width watch page used to show.
  */
 defineProps<{
   channel: ChannelSummary | null
@@ -33,17 +39,17 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="flex flex-wrap items-center justify-between gap-4">
+  <div class="flex items-center justify-between gap-3">
     <NuxtLink
       :to="toChannelPath(name)"
-      class="group flex min-w-0 items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      class="group flex min-w-0 flex-1 items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
-      <ChannelAvatar :name="name" class="size-11" />
+      <ChannelAvatar :name="name" class="size-10 shrink-0 sm:size-11" />
       <div class="min-w-0">
         <p class="truncate font-semibold text-foreground transition-colors group-hover:text-primary">
           {{ name }}
         </p>
-        <p class="text-xs text-muted-foreground">
+        <p class="truncate text-xs text-muted-foreground">
           <template v-if="channel">
             {{ channel.followers }} followers · {{ channel.clipCount }} clips
           </template>
@@ -52,7 +58,7 @@ const emit = defineEmits<{
       </div>
     </NuxtLink>
 
-    <div class="flex items-center gap-2">
+    <div class="flex shrink-0 items-center gap-2">
       <Button
         type="button"
         size="sm"

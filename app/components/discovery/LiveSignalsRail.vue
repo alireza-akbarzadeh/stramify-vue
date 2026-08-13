@@ -3,14 +3,14 @@ import { ArrowLeft, ArrowRight, Play } from '@lucide/vue'
 import type { LiveSignal } from '#shared/types/discovery'
 import { Button } from '@/components/ui/button'
 import LiveBadge from '@/components/landing/LiveBadge.vue'
-import { useWatchlistStore } from '@/stores/watchlist'
+import { useSavedVideos } from '@/composables/useSavedVideos'
 import { liveToItem } from '@/utils/watchlist'
 import SaveButton from './SaveButton.vue'
 
 defineProps<{ signals: LiveSignal[] }>()
 const emit = defineEmits<{ (e: 'play', signal: LiveSignal): void }>()
 
-const watchlist = useWatchlistStore()
+const saved = useSavedVideos()
 const rail = useTemplateRef<HTMLDivElement>('rail')
 
 function scroll(direction: 'left' | 'right') {
@@ -84,10 +84,11 @@ function scroll(direction: 'left' | 'right') {
             </span>
           </button>
           <SaveButton
-            :saved="watchlist.isSaved(signal.id)"
+            :saved="saved.isSaved(signal.id, 'live')"
             :label="signal.name"
+            kind="live"
             class="absolute right-3 top-3"
-            @toggle="watchlist.toggle(liveToItem(signal))"
+            @toggle="saved.toggle(liveToItem(signal))"
           />
         </div>
         <div class="flex items-center justify-between gap-2 text-xs">

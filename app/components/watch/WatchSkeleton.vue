@@ -8,7 +8,7 @@
     </div>
     <div class="space-y-4">
       <div v-for="n in 5" :key="n" class="flex gap-3">
-        <div class="aspect-video w-40 shrink-0 animate-pulse rounded-lg bg-muted" />
+        <div class="aspect-video w-32 shrink-0 animate-pulse rounded-lg bg-muted sm:w-40" />
         <div class="flex-1 space-y-2 py-1">
           <div class="h-4 w-full animate-pulse rounded bg-muted" />
           <div class="h-3 w-2/3 animate-pulse rounded bg-muted" />

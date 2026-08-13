@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { Button } from '@/components/ui/button'
 import { useHomeFeedback } from '@/composables/useHomeFeedback'
-import { useSaveToWatchLater } from '@/composables/useWatchLater'
-import { useWatchlistStore } from '@/stores/watchlist'
+import { useSavedVideos } from '@/composables/useSavedVideos'
 import { relatedToItem } from '@/utils/watchlist'
 import HomeVideoCard from './HomeVideoCard.vue'
 import HomeVideoCardSkeleton from './HomeVideoCardSkeleton.vue'
@@ -12,9 +11,9 @@ import type { HomeVideo } from '#shared/types/home'
  * The recommended grid and its four states: loading, failed, empty, and
  * results with a "Load more" tail.
  *
- * The watchlist store is read here rather than passed down, the same way
- * `ClipGrid` does it — every card needs its own saved flag, and threading a
- * lookup function through props would only move the coupling.
+ * The saved state is read here rather than passed down, the same way `ClipGrid`
+ * does it — every card needs its own saved flag, and threading a lookup function
+ * through props would only move the coupling.
  */
 defineProps<{
   videos: HomeVideo[]
@@ -31,17 +30,14 @@ defineProps<{
 }>()
 const emit = defineEmits<{ (e: 'retry' | 'load-more'): void }>()
 
-const watchlist = useWatchlistStore()
+const saved = useSavedVideos()
 
 /**
- * Owned here, not by the card, for the same reason the watchlist is: one
+ * Owned here, not by the card, for the same reason the bookmark is: one
  * mutation patches every cached page, and per-card copies would be twenty-four
  * of it. Hiding a card rewrites this grid's own cache — see `useHomeFeedback`.
  */
 const feedback = useHomeFeedback()
-
-/** Owned here for the same reason the feedback mutation is — one per grid. */
-const watchLater = useSaveToWatchLater()
 
 /**
  * One literal, used by the real grid and by both skeleton grids, so a
@@ -105,10 +101,9 @@ const MORE_SKELETONS = 4
           v-for="video in videos"
           :key="`${video.kind}-${video.id}`"
           flush
-          :saved="watchlist.isSaved(video.id)"
+          :saved="saved.isSaved(video.id, video.kind)"
           :video="video"
-          @toggle-save="watchlist.toggle(relatedToItem(video))"
-          @save-later="watchLater.submit(video.id)"
+          @toggle-save="saved.toggle(relatedToItem(video))"
           @feedback="feedback.submit($event)"
         />
         <!-- The next page lands in these slots, so the page grows downward

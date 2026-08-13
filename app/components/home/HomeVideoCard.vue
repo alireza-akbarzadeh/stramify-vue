@@ -42,7 +42,7 @@ const props = withDefaults(
   { allowFeedback: true, flush: false }
 )
 defineEmits<{
-  (e: 'toggle-save' | 'save-later'): void
+  (e: 'toggle-save'): void
   (e: 'feedback', value: HomeFeedback): void
 }>()
 
@@ -115,7 +115,6 @@ const reason = computed(() =>
         :allow-feedback="allowFeedback"
         class="relative z-10 -mr-1"
         @toggle-save="$emit('toggle-save')"
-        @save-later="$emit('save-later')"
         @feedback="$emit('feedback', $event)"
       />
     </div>
@@ -125,11 +124,12 @@ const reason = computed(() =>
       behind `@media (hover: hover)`, so on a phone this button never became
       visible — while staying perfectly clickable, an invisible 36px target
       parked on the thumbnail's corner swallowing taps meant for the video.
-      Touch reaches the same action through the ⋮ menu ("Save to watchlist"),
+      Touch reaches the same action through the ⋮ menu ("Save to Watch later"),
       which is where a phone expects to find it anyway.
     -->
     <SaveButton
       :saved="saved"
+      :kind="video.kind"
       :label="video.title"
       class="absolute right-2 top-2 z-10 hidden opacity-0 transition-opacity focus-visible:opacity-100 group-hover:opacity-100 sm:inline-flex"
       @toggle="$emit('toggle-save')"

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { RelatedItem } from '#shared/types/watch'
 import { Button } from '@/components/ui/button'
-import { useWatchlistStore } from '@/stores/watchlist'
+import { useSavedVideos } from '@/composables/useSavedVideos'
 import { relatedToItem } from '@/utils/watchlist'
 import WatchUpNextCard from './WatchUpNextCard.vue'
 
@@ -12,7 +12,7 @@ defineProps<{
 }>()
 const emit = defineEmits<{ (e: 'retry'): void }>()
 
-const watchlist = useWatchlistStore()
+const saved = useSavedVideos()
 </script>
 
 <template>
@@ -21,7 +21,7 @@ const watchlist = useWatchlistStore()
 
     <div v-if="pending" class="space-y-4">
       <div v-for="n in 5" :key="n" class="flex gap-3">
-        <div class="aspect-video w-40 shrink-0 animate-pulse rounded-lg bg-muted" />
+        <div class="aspect-video w-32 shrink-0 animate-pulse rounded-lg bg-muted sm:w-40" />
         <div class="flex-1 space-y-2 py-1">
           <div class="h-4 w-full animate-pulse rounded bg-muted" />
           <div class="h-3 w-2/3 animate-pulse rounded bg-muted" />
@@ -51,8 +51,8 @@ const watchlist = useWatchlistStore()
         v-for="item in items"
         :key="item.id"
         :item="item"
-        :saved="watchlist.isSaved(item.id)"
-        @toggle-save="watchlist.toggle(relatedToItem(item))"
+        :saved="saved.isSaved(item.id, item.kind)"
+        @toggle-save="saved.toggle(relatedToItem(item))"
       />
     </div>
   </section>

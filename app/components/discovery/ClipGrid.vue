@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Clip, ClipCategory } from '#shared/types/discovery'
 import { Button } from '@/components/ui/button'
-import { useWatchlistStore } from '@/stores/watchlist'
+import { useSavedVideos } from '@/composables/useSavedVideos'
 import { clipToItem } from '@/utils/watchlist'
 import ClipCard from './ClipCard.vue'
 
@@ -18,7 +18,7 @@ const emit = defineEmits<{
   (e: 'play', clip: Clip): void
 }>()
 
-const watchlist = useWatchlistStore()
+const saved = useSavedVideos()
 </script>
 
 <template>
@@ -49,9 +49,9 @@ const watchlist = useWatchlistStore()
         v-for="clip in clips"
         :key="clip.id"
         :clip="clip"
-        :saved="watchlist.isSaved(clip.id)"
+        :saved="saved.isSaved(clip.id, 'clip')"
         @play="emit('play', clip)"
-        @toggle-save="watchlist.toggle(clipToItem(clip))"
+        @toggle-save="saved.toggle(clipToItem(clip))"
       />
     </div>
     <div v-else class="rounded-lg border border-dashed border-border py-16 text-center">

@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import {Ban, Bookmark, BookmarkCheck, Clock, EllipsisVertical, Link2, UserMinus,} from '@lucide/vue'
+import {Ban, Bookmark, BookmarkCheck, EllipsisVertical, Link2, UserMinus,} from '@lucide/vue'
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
 import {toast} from 'vue-sonner'
+import {savedListName} from '@/composables/useSavedVideos'
 import type {HomeFeedback, HomeVideo} from '#shared/types/home'
 import {toChannelDisplayName} from '#shared/utils/channel'
 
@@ -27,13 +27,24 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   'toggle-save': []
-  'save-later': []
   feedback: [value: HomeFeedback]
 }>()
 
 const channelName = computed(() =>
     toChannelDisplayName(props.video.channel),
 )
+
+/**
+ * One save action, not two. This menu used to offer "Save to watchlist" *and*
+ * "Save to Watch later" — two rows a sentence apart that wrote to two different
+ * places, only one of which the sidebar links to. The bookmark now means the
+ * account's Watch later queue for a clip and the on-device list for a live
+ * session, and the label says which (see `useSavedVideos`).
+ */
+const saveLabel = computed(() => {
+  const list = savedListName(props.video.kind)
+  return props.saved ? `Remove from ${list}` : `Save to ${list}`
+})
 
 const copyLink = async () => {
   const link = `${window.location.origin}/watch/${encodeURIComponent(
@@ -50,9 +61,6 @@ const copyLink = async () => {
     toast.error("Couldn't copy the link")
   }
 }
-
-const ITEM =
-    'flex cursor-pointer items-start gap-2.5 rounded-lg px-2.5 py-2 text-sm text-foreground outline-none transition-colors data-highlighted:bg-surface-2'
 </script>
 
 <template>
@@ -77,109 +85,74 @@ const ITEM =
       </button>
     </DropdownMenuTrigger>
 
-    <DropdownMenuPortal>
-      <DropdownMenuContent
-          :side-offset="6"
-          align="end"
-          class="z-50 w-64 rounded-xl border border-border bg-popover p-1.5 shadow-[0_24px_60px_-24px_var(--shadow-color)] backdrop-blur-xl"
-      >
-        <DropdownMenuItem
-            :class="ITEM"
-            @select="emit('toggle-save')"
-        >
-          <component
-              :is="saved ? BookmarkCheck : Bookmark"
-              :class="
-              saved
-                ? 'text-primary'
-                : 'text-muted-foreground'
-            "
-              class="size-4 shrink-0"
-          />
+    <DropdownMenuContent
+        :side-offset="6"
+        align="end"
+        class="w-64"
+    >
+      <DropdownMenuItem @select="emit('toggle-save')">
+        <component
+            :is="saved ? BookmarkCheck : Bookmark"
+            :class="saved ? 'text-primary' : 'text-muted-foreground'"
+            class="size-4 shrink-0"
+        />
 
-          {{ saved ? 'Remove from watchlist' : 'Save to watchlist' }}
-        </DropdownMenuItem>
+        {{ saveLabel }}
+      </DropdownMenuItem>
 
-        <!-- Only for clips. A live session has no queue to sit in — it's over
-             by the time "later" arrives — which is also why `watch_later` is
-             keyed straight at `clips.id`. -->
-        <DropdownMenuItem
-            v-if="video.kind === 'clip'"
-            :class="ITEM"
-            @select="emit('save-later')"
-        >
-          <Clock
-              class="size-4 shrink-0 text-muted-foreground"
-          />
+      <DropdownMenuItem @select="copyLink">
+        <Link2 class="size-4 shrink-0"/>
 
-          Save to Watch later
-        </DropdownMenuItem>
+        Copy link
+      </DropdownMenuItem>
+
+      <template v-if="allowFeedback">
+        <DropdownMenuSeparator/>
 
         <DropdownMenuItem
-            :class="ITEM"
-            @select="copyLink"
-        >
-          <Link2
-              class="size-4 shrink-0 text-muted-foreground"
-          />
-
-          Copy link
-        </DropdownMenuItem>
-
-        <template v-if="allowFeedback">
-          <DropdownMenuSeparator
-              class="my-1 h-px bg-border"
-          />
-
-          <DropdownMenuItem
-              :class="ITEM"
-              @select="
+            class="items-start"
+            @select="
               emit('feedback', {
                 kind: 'video',
                 target: video.id,
               })
             "
-          >
-            <Ban
-                class="size-4 shrink-0 text-muted-foreground"
-            />
+        >
+          <Ban class="mt-0.5 size-4 shrink-0"/>
 
-            <span class="min-w-0 flex-1">
-              <span class="block font-medium">
-                Not interested
-              </span>
-
-              <span class="block text-xs text-muted-foreground">
-                Fewer videos like this one.
-              </span>
+          <span class="min-w-0 flex-1">
+            <span class="block font-medium">
+              Not interested
             </span>
-          </DropdownMenuItem>
 
-          <DropdownMenuItem
-              :class="ITEM"
-              @select="
+            <span class="block text-xs text-muted-foreground">
+              Fewer videos like this one.
+            </span>
+          </span>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem
+            class="items-start"
+            @select="
               emit('feedback', {
                 kind: 'channel',
                 target: video.channel,
               })
             "
-          >
-            <UserMinus
-                class="size-4 shrink-0 text-muted-foreground"
-            />
+        >
+          <UserMinus class="mt-0.5 size-4 shrink-0"/>
 
-            <span class="min-w-0 flex-1">
-              <span class="block font-medium">
-                Don't recommend this channel
-              </span>
-
-              <span class="block truncate text-xs text-muted-foreground">
-                Nothing from {{ channelName }} on your home page.
-              </span>
+          <span class="min-w-0 flex-1">
+            <span class="block font-medium">
+              Don't recommend this channel
             </span>
-          </DropdownMenuItem>
-        </template>
-      </DropdownMenuContent>
-    </DropdownMenuPortal>
+
+            <span class="block truncate text-xs text-muted-foreground">
+              Nothing from {{ channelName }} on your home page.
+            </span>
+          </span>
+        </DropdownMenuItem>
+      </template>
+    </DropdownMenuContent>
   </DropdownMenu>
 </template>

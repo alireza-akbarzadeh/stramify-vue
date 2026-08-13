@@ -4,7 +4,7 @@ import type { ChannelVideoSort } from '#shared/types/channel'
 import { CHANNEL_VIDEO_SORTS } from '#shared/types/channel'
 import { Button } from '@/components/ui/button'
 import ClipCard from '@/components/discovery/ClipCard.vue'
-import { useWatchlistStore } from '@/stores/watchlist'
+import { useSavedVideos } from '@/composables/useSavedVideos'
 import { clipToItem } from '@/utils/watchlist'
 
 /**
@@ -29,7 +29,7 @@ const props = withDefaults(
 const sort = defineModel<ChannelVideoSort>('sort', { default: 'latest' })
 const emit = defineEmits<{ (e: 'retry'): void }>()
 
-const watchlist = useWatchlistStore()
+const saved = useSavedVideos()
 const skeletonCount = computed(() => Math.max(4, Math.min(props.clips.length || 8, 8)))
 </script>
 
@@ -82,9 +82,9 @@ const skeletonCount = computed(() => Math.max(4, Math.min(props.clips.length || 
         v-for="clip in clips"
         :key="clip.id"
         :clip="clip"
-        :saved="watchlist.isSaved(clip.id)"
+        :saved="saved.isSaved(clip.id, 'clip')"
         @play="navigateTo(`/watch/${encodeURIComponent(clip.id)}`)"
-        @toggle-save="watchlist.toggle(clipToItem(clip))"
+        @toggle-save="saved.toggle(clipToItem(clip))"
       />
     </div>
 

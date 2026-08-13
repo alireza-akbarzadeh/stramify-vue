@@ -1250,6 +1250,65 @@ native multi-seller split. Doing it would mean either a Polar organization per
 creator (and no platform cut) or manual payout accounting we'd own end to end.
 That needs its own ADR and its own phase; nothing in this one assumes it away.
 
+---
+
+## ADR-027: The bookmark means Watch later; the localStorage watchlist keeps live channels only
+
+**Supersedes part of [ADR-023](#adr-023-watch-later-is-its-own-table-not-a-system-playlist-and-not-the-localstorage-watchlist).** ADR-023's decision — Watch later
+is its own table — stands unchanged. What changes is which control writes to it.
+
+**Context**: ADR-023 shipped `watch_later` alongside the pre-existing
+`stores/watchlist` (localStorage, `/watchlist`) and reached the new queue
+through a single ⋮ entry, "Save to Watch later", present only on the home grid
+and the home following rail. Every other save affordance in the app — the
+bookmark on every card, the shorts rail's Save, the Save button under the
+player, and a *second* ⋮ entry one row above called "Save to watchlist" — wrote
+to localStorage.
+
+That produced a reproducible bug report: bookmark a video, open Watch later from
+the sidebar, find it empty. Nothing had failed. The bookmark had written to a
+list whose only page, `/watchlist`, is in no nav — `libraryLinks` links Watch
+later, not it — so the obvious control saved to a destination the product never
+offers to show you.
+
+Two entries a sentence apart, "Save to watchlist" and "Save to Watch later", is
+also not a distinction any viewer can be expected to hold.
+
+**Decision**: One bookmark, routed by kind at a single seam
+(`composables/useSavedVideos.ts`):
+
+- **Clips → `watch_later`.** Account-bound, on every device, and what
+  `/watch-later` renders. This is the overwhelming majority of what gets saved.
+- **Live sessions → `stores/watchlist`.** Not a preference: `watch_later` is
+  keyed at `clips.id` with a real foreign key (ADR-023), and a stream is over by
+  the time "later" arrives. There is nowhere on the server to put one.
+  `/watchlist` stays their home.
+
+Every surface calls `useSavedVideos()` rather than reaching for a store, so
+"saved" means one thing wherever it's pressed. The duplicate ⋮ entry is gone;
+the remaining one names its destination, and so does `SaveButton`'s
+`aria-label`, via `savedListName(kind)`.
+
+Saved state comes from a new **`GET /api/watch-later/ids`** — ids and nothing
+else, cached once under `['watch-later', 'ids']` and shared by every card on the
+page. Deliberately uncapped, unlike the sixty-row list: a cap would render the
+bookmark on an older save as unsaved, and pressing it would then try to re-save
+something already in the queue.
+
+**Rejected**: *Leaving both systems and only adding "Save to Watch later" to
+more surfaces* — the smaller change, and it keeps the two-similarly-named-saves
+problem that caused the report. *Deleting `stores/watchlist` outright* — it is
+the only save a signed-out visitor can make (ADR-023), and live channels have no
+server-side home; removing it would delete a working feature to tidy a name.
+*Adding a `target_kind` to `watch_later` so live sessions fit* — it would model
+"come back later" for something that has already ended, and it would cost the
+foreign key that keeps deleted content out of the queue. *Deriving saved state
+by fetching the sixty-row list on every page* — sixty joined rows, on `/search`
+and every channel page, to colour in an icon. *Migrating existing localStorage
+clips into `watch_later` on first load* — a background write to the account from
+data the browser happens to hold, for a store that was never presented as a
+sync'd list; the entries stay visible under `/watchlist`'s "Saved clips" instead.
+
 **Consequences**: `/settings/billing` is a new authenticated page, and
 `/api/auth/polar/webhooks` is a new public endpoint whose only authentication is
 Polar's signature — so it isn't mounted at all unless `POLAR_WEBHOOK_SECRET` is
@@ -1260,3 +1319,67 @@ places — the catalog for display, Polar for what's charged — and changing on
 without the other silently misprices the pricing page. Polar redirects the
 browser back on payment before the webhook necessarily lands, so the billing
 page polls for ~7 seconds after checkout rather than trusting its first read.
+
+---
+
+## ADR-028: `/music` previews on hover with a bare `<video>`; no HLS shim, and shelves stay derived
+
+**Context**: `/music` was a `ComingSoon` placeholder. The product ask was a
+browse page where hovering a card plays a few seconds of the track — the
+affordance YouTube and Spotify both use, and the thing that makes a wall of
+thumbnails feel like a music library rather than a grid of links.
+
+Three things had to be decided before any of it could be built.
+
+**Decision 1 — the page is a view over `clips`, not a new content type.**
+`shared/types/music.ts` aliases `MusicTrack = Clip`. There is no `music` table,
+no playlist model and no audio-only path; `/music` is the `Music` slice of
+`clips` with a hero and four shelves over it. `toClip` stays the single wire
+mapper, so a change to how a clip is presented reaches this page for free.
+
+**Decision 2 — every shelf is derived from a column that already exists.**
+Recency, `views`, `duration_seconds`, and `follows.channel = clips.creator`. No
+editorial taxonomy ("Chill", "Workout", "Late night") that the database cannot
+justify and no human is curating — that would be exactly the hard-coded fake
+functionality PROMPT.md §21 forbids, dressed as product. `selectMusicPage` runs
+**one** query and re-orders it in memory: all four shelves are orderings of the
+same rows, so four `order by` round trips would read the same slice four times
+for a category that fills a browse page, not a catalogue.
+
+A derived shelf under three items is dropped rather than shipped, because at
+that size it is the first rail again with a different heading.
+
+**Decision 3 — the preview is a bare muted `<video>`, and HLS sources simply
+don't preview outside Safari.** `canPreviewSource()` accepts progressive
+containers everywhere and `.m3u8` only where `canPlayType` reports native
+support. Elsewhere the card keeps its still and its hover lift.
+
+**Rejected**: *Adding `hls.js`* — a media-source loader plus its bundle, on a
+browse page, so that a decorative nine-second affordance covers two seeded
+clips. *Reusing the Vidstack player already in the project* — it is the right
+tool for `/watch` and far too much for a hover state: a full player instance per
+card, on a rail of twelve. *Generating short preview clips or animated thumbnails
+server-side* — the honest long-term answer, and it belongs with Cloudflare
+Stream in Phase 6 rather than being faked now. *Previewing whatever the source
+is and letting it fail* — a stalled element and a wasted request per hover, with
+no visible difference from success.
+
+The consequence is deliberate and documented in [music.md](./music.md): a card
+that won't preview in Chrome is working as designed, not broken. The seeded
+Music catalogue is progressive mp4 so the feature is visible by default; the two
+HLS clips stay HLS so `/watch`'s real player keeps exercising that path.
+
+**Also decided**: the hero is seated on **most-watched, not `clips.featured`**.
+That column reads like an editorial pick but `toClip` treats it as a liveness
+flag — a featured row renders its age as `"Now"` and its count as `"watching"`
+— so a featured hero would caption a not-live track "Now · 12.4k watching".
+
+**Consequences**: hover-to-preview is a fine-pointer, non-reduced-motion
+enhancement only, layered over a card that is fully readable and clickable
+without it — touch gets a plain link, which is correct there anyway. One
+preview plays page-wide at a time, arbitrated by a module-level token rather
+than a store. The hero's ambient loop renders client-side only: SSR cannot know
+`prefers-reduced-motion`, so rendering it on the server would mismatch on
+hydration for the viewers who opted out, on the largest element of the page.
+`app/utils/preview.ts` holds the two pure decisions (can this play, where to
+start) so they are unit-testable away from element state.

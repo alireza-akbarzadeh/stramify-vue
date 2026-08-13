@@ -56,8 +56,14 @@ const total = computed(() => savedClips.value.length + savedLive.value.length)
       class="rounded-lg border border-dashed border-border py-16 text-center"
     >
       <p class="text-lg font-semibold text-foreground">Nothing saved yet</p>
+      <!-- Live channels only, now that a clip's bookmark writes to the
+           account's Watch later queue (see `useSavedVideos`). The clip section
+           below still renders whatever this device saved before that. -->
       <p class="mt-2 text-sm text-muted-foreground">
-        Tap the bookmark on any clip or live channel to keep it here.
+        Tap the bookmark on any live channel to keep it here. Saved clips go to
+        <NuxtLink to="/watch-later" class="font-medium text-primary underline-offset-4 hover:underline"
+          >Watch later</NuxtLink
+        >.
       </p>
       <Button type="button" class="mt-6" @click="emit('browse')">Browse highlights</Button>
     </div>

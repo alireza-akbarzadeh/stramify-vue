@@ -13,6 +13,30 @@
  * every level to reach into custom elements that render their own children.
  */
 
+/*
+ * How far the watch page's metadata sheet rides up over the bottom of the
+ * video on a phone — see the sheet cell in `WatchLayout.vue`, which reads this
+ * as its negative top margin.
+ *
+ * It lives here, and as a variable, because the control row is pinned to the
+ * bottom of the player: the same number has to become extra bottom padding on
+ * `.player-controls` or the sheet covers play / volume / fullscreen. Two
+ * hard-coded copies would drift the first time someone tuned the overlap, and
+ * the symptom — unreachable controls — wouldn't obviously point back here.
+ *
+ * Zero from `lg` up, where the layout puts the metadata in a column below the
+ * video instead of over it.
+ */
+:root {
+  --player-sheet-overlap: 1.25rem;
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --player-sheet-overlap: 0px;
+  }
+}
+
 .player {
   --player-ease: cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -31,6 +55,9 @@
 .player[data-fullscreen] {
   border-radius: 0;
   aspect-ratio: auto;
+  /* Nothing overlaps a fullscreen player, so the control row goes back to
+     sitting on the bottom edge. */
+  --player-sheet-overlap: 0px;
 }
 
 /* Theater mode: the grid cell already spans both columns (see WatchLayout), so
@@ -91,7 +118,9 @@ media-gesture {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  padding: 2.5rem 0.5rem 0.5rem;
+  /* Bottom padding clears the metadata sheet on a phone; see
+     `--player-sheet-overlap` above. */
+  padding: 2.5rem 0.5rem calc(0.5rem + var(--player-sheet-overlap));
   background: linear-gradient(to top, rgb(0 0 0 / 0.85), rgb(0 0 0 / 0.4) 60%, transparent);
   opacity: 0;
   /* Hidden rather than merely transparent so a keyboard user doesn't tab into

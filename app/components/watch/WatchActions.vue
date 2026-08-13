@@ -35,7 +35,7 @@ const active = 'bg-primary/10 text-primary hover:bg-primary/15'
 
 <template>
   <div class="flex flex-wrap items-center gap-2">
-    <div class="flex items-center rounded-md border border-border bg-surface-2">
+    <div class="flex shrink-0 items-center rounded-md border border-border bg-surface-2">
       <Button
         type="button"
         variant="ghost"

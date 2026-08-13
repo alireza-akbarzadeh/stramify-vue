@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useDiscoveryClips } from '@/composables/useDiscoveryClips'
 import { useLiveSignals } from '@/composables/useLiveSignals'
+import { useSavedVideos } from '@/composables/useSavedVideos'
 import { useWatchlistStore } from '@/stores/watchlist'
 import { clipToItem } from '@/utils/watchlist'
 import { Search, X } from '@lucide/vue'
@@ -21,6 +22,10 @@ const {
   refetch: refetchClips
 } = useDiscoveryClips()
 const { data: liveSignalsData, isPending: livePending } = useLiveSignals()
+const saved = useSavedVideos()
+// Still the store here, and only here: the tab's badge counts what the panel
+// beside it renders, which is the on-device list. The bookmark itself goes
+// through `saved` above, so a clip lands in Watch later — see `useSavedVideos`.
 const watchlist = useWatchlistStore()
 
 const view = ref<'feed' | 'watchlist'>('feed')
@@ -136,9 +141,9 @@ function openClip(clip: Clip) {
         v-else-if="featured"
         class="mb-12"
         :clip="featured"
-        :saved="watchlist.isSaved(featured.id)"
+        :saved="saved.isSaved(featured.id, 'clip')"
         @play="openClip(featured)"
-        @toggle-save="watchlist.toggle(clipToItem(featured))"
+        @toggle-save="saved.toggle(clipToItem(featured))"
       />
 
       <div v-if="livePending" class="mb-12 flex gap-4">

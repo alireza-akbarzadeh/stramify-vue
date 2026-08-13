@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button'
 import WatchUpNextCard from '@/components/watch/WatchUpNextCard.vue'
 import { useSearch } from '@/composables/useSearch'
-import { useWatchlistStore } from '@/stores/watchlist'
+import { useSavedVideos } from '@/composables/useSavedVideos'
 import { relatedToItem } from '@/utils/watchlist'
 import SearchChannelRow from './SearchChannelRow.vue'
 
@@ -15,7 +15,7 @@ import SearchChannelRow from './SearchChannelRow.vue'
 const props = defineProps<{ query: string }>()
 
 const { data, isPending, isError, isFetching, refetch } = useSearch(computed(() => props.query))
-const watchlist = useWatchlistStore()
+const saved = useSavedVideos()
 
 const videos = computed(() => data.value?.videos ?? [])
 const channels = computed(() => data.value?.channels ?? [])
@@ -90,8 +90,8 @@ const total = computed(() => videos.value.length + channels.value.length)
           <li v-for="video in videos" :key="video.id">
             <WatchUpNextCard
               :item="video"
-              :saved="watchlist.isSaved(video.id)"
-              @toggle-save="watchlist.toggle(relatedToItem(video))"
+              :saved="saved.isSaved(video.id, video.kind)"
+              @toggle-save="saved.toggle(relatedToItem(video))"
             />
           </li>
         </ul>

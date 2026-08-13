@@ -1478,3 +1478,99 @@ scoping-out of channel subscriptions are in **ADR-026**; the operational guide
   gated either; wiring the first real gate is the natural next task.
 - The 14-day trial in the CTA copy is a Polar product setting, not code. If the
   products are created without one, that copy is wrong.
+
+---
+
+## Watch later completion + dropdown-menu theming session, 2026-08-13 (appended)
+
+Two bug reports that turned out to share a root: the bookmark on a video card
+did not save to Watch later, and the ⋮ menu's hover state was invisible in light
+mode. Both were "the component looks finished, so nobody checked what it was
+wired to".
+
+### The bug, precisely
+
+Two save systems existed side by side. Every bookmark in the app — the card
+corner button, the shorts rail's Save, the Save button under the player, and a
+"Save to watchlist" ⋮ entry — wrote to `stores/watchlist`, a **localStorage**
+list whose only page (`/watchlist`) is in no nav. The DB-backed `watch_later`
+queue, which the sidebar *does* link, was reachable from exactly one ⋮ entry
+("Save to Watch later") present only on the home grid and the home following
+rail. So bookmarking a video and then opening Watch later correctly showed
+nothing: the save had gone somewhere the product never offers to show you.
+
+### What was built
+
+Rationale and rejected alternatives: **ADR-027**. Operational detail:
+**[watch-later.md](./watch-later.md)**, updated throughout.
+
+- `app/composables/useSavedVideos.ts` (+ spec) — the single seam every bookmark
+  now goes through. Clips route to `watch_later`; **live sessions stay on the
+  local store**, not as a preference but because `watch_later` is keyed at
+  `clips.id` with a real FK and a stream has ended by the time "later" arrives.
+  `savedListName(kind)` is what labels and `aria-label`s call the destination,
+  so nothing promises the wrong list.
+- `GET /api/watch-later/ids` + `selectWatchLaterIds` — saved ids and nothing
+  else, so a grid of 24 cards costs one small request between them instead of
+  60 joined rows. Deliberately uncapped; a cap would draw an older save's
+  bookmark as hollow.
+- `useWatchLaterIds` / `useWatchLaterToggle` in `app/composables/useWatchLater.ts`.
+  The cache prefix now has two shapes (`'list'` and `'ids'`), and the optimistic
+  patches target them separately — a `setQueriesData` over the bare prefix would
+  hand the id array to a callback written for cards. Saving is now optimistic on
+  `'ids'` (the bookmark has to fill at once) and invalidate-only on the lists.
+- 14 call sites swapped from `useWatchlistStore()` to `useSavedVideos()`:
+  home grid + following rail, clip/category/channel/live grids, live rail,
+  search, mix, up-next, discovery featured, shorts rail, and the watch page.
+- The ⋮ menu lost its duplicate save row. One entry, named for where it goes.
+
+### Dropdown menu (`app/components/ui/dropdown-menu`)
+
+The stock shadcn item styles `focus:bg-accent focus:text-accent-foreground`, on
+the assumption that `--accent` is a neutral hover tint. In this design system
+`--accent` is the **brand cyan**, so a hovered row went cyan-on-white; and
+`HomeVideoCardMenu` had overridden just the background with `surface-2`, one
+shade off `--popover`, which left white text on near-white. That override is
+what the report was looking at.
+
+- New `variants.ts` holds the shared row/panel classes — the four item
+  components had four copies of a 400-character string. Highlight is now
+  `surface-3`, and **nothing sets a highlight text colour**, so it can't go
+  invisible again.
+- Highlight keys off `[data-highlighted]` as well as `:focus`. Reka focuses the
+  row it highlights *except* when focus already sits in an input
+  (`Menu/MenuItemImpl` line 47), where a `:focus`-only rule shows nothing.
+- Panels moved to the project's popover language (`rounded-xl`, the long low
+  `--shadow-color` shadow) so consumers stop re-skinning them inline;
+  `HomeVideoCardMenu` now passes `class="w-64"` and nothing else.
+
+### Not verified (toolchain blocked this session — same as several before it)
+
+`pnpm typecheck`, `pnpm test` and `pnpm lint` could not be run: the Bash tool's
+safety classifier was unavailable for the whole session and refused every
+command that needed it. The dev server could not be started for the same reason,
+so **none of this has been exercised in a browser**. Everything below is owed:
+
+1. `pnpm typecheck` — the widest risk is the 14 swapped call sites, where
+   `isSaved(id, kind)` takes an argument the old store method didn't.
+2. `pnpm test` — `app/composables/useSavedVideos.spec.ts` is new and has never
+   run. It mocks `useWatchLaterToggle` via `vi.hoisted`.
+3. `pnpm lint`.
+4. **In a browser, signed in**: bookmark a clip from the home grid → it appears
+   at `/watch-later`; the same card's bookmark is filled on `/search` and the
+   channel page; the ⋮ hover is visible in **light** mode.
+5. Live channels: `/live` bookmark still lands in `/watchlist`, label says
+   "watchlist".
+
+### Deliberate limits (don't file these as bugs)
+
+- **Clips saved to localStorage before this change are not migrated.** They stay
+  under `/watchlist`'s "Saved clips" but read as unsaved on cards. Migrating
+  would mean a silent background write to the account from whatever the browser
+  happens to hold. Pressing the bookmark saves them properly.
+- `/watchlist` is still not in any nav. It's now a live-channels page, reachable
+  from the Watchlist tab on the discovery feed. Whether it earns a sidebar row
+  is a product call, not a bug.
+- The watch page's Save button still reads "Save"/"Saved" rather than naming
+  Watch later — `WatchActions` doesn't receive the target's kind, and threading
+  it through `WatchLayout` for a label wasn't worth the prop.

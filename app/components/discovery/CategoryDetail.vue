@@ -2,14 +2,14 @@
 import { ArrowLeft } from '@lucide/vue'
 import { Button } from '@/components/ui/button'
 import { useDiscoveryCategoryClips } from '@/composables/useDiscoveryCategoryClips'
-import { useWatchlistStore } from '@/stores/watchlist'
+import { useSavedVideos } from '@/composables/useSavedVideos'
 import { clipToItem } from '@/utils/watchlist'
 import ClipCard from './ClipCard.vue'
 
 const props = defineProps<{ slug: string }>()
 
 const { data, isPending, isError, error, refetch } = useDiscoveryCategoryClips(() => props.slug)
-const watchlist = useWatchlistStore()
+const saved = useSavedVideos()
 
 const category = computed(() => data.value?.category ?? null)
 const clips = computed(() => data.value?.clips ?? [])
@@ -76,9 +76,9 @@ const notFound = computed(() => (error.value as { statusCode?: number } | null)?
         >
           <ClipCard
             :clip="clip"
-            :saved="watchlist.isSaved(clip.id)"
+            :saved="saved.isSaved(clip.id, 'clip')"
             @play="navigateTo(`/watch/${encodeURIComponent(clip.id)}`)"
-            @toggle-save="watchlist.toggle(clipToItem(clip))"
+            @toggle-save="saved.toggle(clipToItem(clip))"
           />
         </Reveal>
       </div>
