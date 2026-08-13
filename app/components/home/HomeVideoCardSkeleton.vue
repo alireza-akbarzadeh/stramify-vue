@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Skeleton } from '@/components/ui/skeleton'
+import { cn } from '@/lib/utils'
 
 /**
  * One card's placeholder, built to occupy the **exact** height of a real
@@ -18,12 +19,24 @@ import { Skeleton } from '@/components/ui/skeleton'
  * a minority of cards, and reserving space for it would leave a gap under
  * every card that doesn't have one.
  */
+defineProps<{
+  /** Mirrors `HomeVideoCard`'s prop of the same name — see it for the why. */
+  flush?: boolean
+}>()
+
 const TITLE_WIDTHS = ['w-full', 'w-3/5']
 </script>
 
 <template>
   <article aria-hidden="true">
-    <Skeleton class="aspect-video w-full rounded-xl" />
+    <Skeleton
+      :class="
+        cn(
+          'aspect-video',
+          flush ? '-mx-4 rounded-none sm:mx-0 sm:rounded-xl' : 'w-full rounded-xl'
+        )
+      "
+    />
 
     <div class="mt-3 flex gap-3">
       <Skeleton class="size-9 shrink-0 rounded-full" />

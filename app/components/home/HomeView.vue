@@ -48,9 +48,20 @@ const PANEL_ID = 'home-feed-panel'
 </script>
 
 <template>
-  <div class="mx-auto max-w-[1600px] px-4 pb-16 sm:px-6 lg:px-8">
-    <!-- Sticky under the 4rem app bar, so the filters stay reachable while you scroll. -->
-    <div class="sticky top-16 z-20 -mx-4 bg-background px-4 py-3 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+  <div class="mx-auto max-w-[1600px] px-4 pb-8 sm:px-6 sm:pb-16 lg:px-8">
+    <!--
+      Sticky directly under the app bar, so the filters stay reachable while you
+      scroll. The offset has to track the bar's own height — `DashboardTopBar` is
+      `h-14` on a phone and `h-16` from `sm` up, and a flat `top-16` left an 8px
+      strip of feed scrolling through the gap on every phone.
+
+      Translucent rather than opaque, matching the bar above it and `ChannelTabs`:
+      solid `bg-background` over the body's fixed gradient reads as a pale block
+      sliding over the page.
+    -->
+    <div
+      class="sticky top-14 z-20 -mx-4 bg-background/85 px-4 py-2 backdrop-blur-xl sm:top-16 sm:-mx-6 sm:px-6 sm:py-3 lg:-mx-8 lg:px-8"
+    >
       <HomeChipBar
         :chips="chips"
         :active-id="activeId"
@@ -60,7 +71,9 @@ const PANEL_ID = 'home-feed-panel'
       />
     </div>
 
-    <div class="space-y-10 pt-4">
+    <!-- Tighter between shelves on a phone, where 40px of air costs a whole
+         thumbnail's worth of screen. -->
+    <div class="space-y-6 pt-4 sm:space-y-10">
       <HomeShelves v-if="showShelves" />
 
       <HomeVideoGrid

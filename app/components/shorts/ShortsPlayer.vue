@@ -29,9 +29,9 @@ type PlayerElement = HTMLElement & {
 const props = defineProps<{ short: Short; active: boolean; loop: boolean }>()
 const emit = defineEmits<{
   /** First frame played — the slide counts the view off it. */
-  (e: 'play'): void
+  play: []
   /** Played to the end without looping — the reel advances off it. */
-  (e: 'ended'): void
+  ended: []
 }>()
 
 const shorts = useShortsStore()

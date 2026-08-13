@@ -48,8 +48,13 @@ const watchLater = useSaveToWatchLater()
  * placeholder can never sit in a different column count than the cards
  * replacing it. Written out in full because Tailwind scans source text —
  * a composed string wouldn't be seen.
+ *
+ * The row gap tightens on a phone: the single column there is a stack of
+ * full-bleed thumbnails (see `flush` below), and 32px of air between them
+ * pushes the second card off a 667px screen for no gain in legibility.
  */
-const GRID = 'grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'
+const GRID =
+  'grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2 sm:gap-y-8 xl:grid-cols-3 2xl:grid-cols-4'
 
 /** A first screenful — enough to fill four columns twice over. */
 const INITIAL_SKELETONS = 8
@@ -65,12 +70,12 @@ const MORE_SKELETONS = 4
          query key, so switching to one that hasn't been fetched is pending
          again, and switching back to a cached one skips this entirely. -->
     <div v-if="pending" :class="GRID" aria-label="Loading recommendations" role="status">
-      <HomeVideoCardSkeleton v-for="n in INITIAL_SKELETONS" :key="n" />
+      <HomeVideoCardSkeleton v-for="n in INITIAL_SKELETONS" :key="n" flush />
     </div>
 
     <div
       v-else-if="errored"
-      class="rounded-xl border border-dashed border-destructive/40 py-16 text-center"
+      class="rounded-xl border border-dashed border-destructive/40 px-6 py-12 text-center sm:py-16"
     >
       <p class="text-lg font-semibold text-foreground">Couldn't load your feed</p>
       <p class="mt-2 text-sm text-muted-foreground">The request didn't reach the server.</p>
@@ -81,7 +86,7 @@ const MORE_SKELETONS = 4
 
     <div
       v-else-if="!videos.length"
-      class="rounded-xl border border-dashed border-border py-16 text-center"
+      class="rounded-xl border border-dashed border-border px-6 py-12 text-center sm:py-16"
     >
       <p class="text-lg font-semibold text-foreground">Nothing in {{ filterLabel }} yet</p>
       <p class="mt-2 text-sm text-muted-foreground">
@@ -94,9 +99,12 @@ const MORE_SKELETONS = 4
 
     <template v-else>
       <div :class="GRID">
+        <!-- `flush` only bites below `sm`, where this grid is one column wide and
+             a thumbnail should reach both screen edges — see `HomeVideoCard`. -->
         <HomeVideoCard
           v-for="video in videos"
           :key="`${video.kind}-${video.id}`"
+          flush
           :saved="watchlist.isSaved(video.id)"
           :video="video"
           @toggle-save="watchlist.toggle(relatedToItem(video))"
@@ -106,12 +114,21 @@ const MORE_SKELETONS = 4
         <!-- The next page lands in these slots, so the page grows downward
              instead of jumping when the request resolves. -->
         <template v-if="loadingMore">
-          <HomeVideoCardSkeleton v-for="n in MORE_SKELETONS" :key="`more-${n}`" />
+          <HomeVideoCardSkeleton v-for="n in MORE_SKELETONS" :key="`more-${n}`" flush />
         </template>
       </div>
 
-      <div v-if="hasMore" class="mt-10 flex justify-center">
-        <Button :disabled="loadingMore" type="button" variant="outline" @click="emit('load-more')">
+      <!-- Full-width on a phone: a centred pill is a small target at the end of
+           a long scroll, and a bar across the column is what a native "load
+           more" looks like. -->
+      <div v-if="hasMore" class="mt-8 flex justify-center sm:mt-10">
+        <Button
+          :disabled="loadingMore"
+          class="w-full sm:w-auto"
+          type="button"
+          variant="outline"
+          @click="emit('load-more')"
+        >
           {{ loadingMore ? 'Loading…' : 'Load more' }}
         </Button>
       </div>

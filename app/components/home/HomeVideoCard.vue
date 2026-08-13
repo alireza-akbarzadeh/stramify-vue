@@ -2,6 +2,7 @@
 import ChannelAvatar from '@/components/ChannelAvatar.vue'
 import SaveButton from '@/components/discovery/SaveButton.vue'
 import LiveBadge from '@/components/landing/LiveBadge.vue'
+import { cn } from '@/lib/utils'
 import HomeVideoCardMenu from './HomeVideoCardMenu.vue'
 import { homeReasonLabel } from '#shared/utils/home'
 import type { HomeFeedback, HomeVideo } from '#shared/types/home'
@@ -25,8 +26,20 @@ const props = withDefaults(
     saved: boolean
     /** Passed through to the ⋮ menu — see `HomeVideoCardMenu`. */
     allowFeedback?: boolean
+    /**
+     * Let the thumbnail bleed to the screen edges *below `sm`* — the one-column
+     * feed on a phone, where a 16:9 image inset by the page gutter is the
+     * clearest tell that you're looking at a web page rather than an app. Off by
+     * default because the other place this card renders is a rail slide, which
+     * is narrower than the gutter it would be bleeding past.
+     *
+     * Only the base breakpoint is affected: from `sm` up the card is in a
+     * multi-column grid where a full-width thumbnail makes no sense, and the
+     * gutter is no longer 1rem anyway.
+     */
+    flush?: boolean
   }>(),
-  { allowFeedback: true }
+  { allowFeedback: true, flush: false }
 )
 defineEmits<{
   (e: 'toggle-save' | 'save-later'): void
@@ -41,7 +54,14 @@ const reason = computed(() =>
 
 <template>
   <article class="group relative">
-    <div class="relative aspect-video overflow-hidden rounded-xl bg-muted">
+    <div
+      :class="
+        cn(
+          'relative aspect-video overflow-hidden bg-muted',
+          flush ? '-mx-4 rounded-none sm:mx-0 sm:rounded-xl' : 'rounded-xl'
+        )
+      "
+    >
       <img
         :src="video.image"
         :alt="video.title"
@@ -67,9 +87,18 @@ const reason = computed(() =>
       />
       <div class="min-w-0 flex-1">
         <h3 class="text-sm font-semibold leading-snug">
+          <!-- When the thumbnail bleeds past the card's box, the stretched
+               overlay has to bleed with it — otherwise the outer 1rem of the
+               image on each side isn't part of the link, and a thumb landing
+               near the screen edge hits nothing. -->
           <NuxtLink
             :to="to"
-            class="line-clamp-2 rounded text-foreground transition-colors after:absolute after:inset-0 after:rounded-xl group-hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            :class="
+              cn(
+                'line-clamp-2 rounded text-foreground transition-colors after:absolute after:inset-0 after:rounded-xl group-hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                flush && 'after:-left-4 after:-right-4 sm:after:left-0 sm:after:right-0'
+              )
+            "
           >
             {{ video.title }}
           </NuxtLink>
@@ -91,10 +120,18 @@ const reason = computed(() =>
       />
     </div>
 
+    <!--
+      Pointer-only, and not because it's decoration: Tailwind v4 gates `hover:`
+      behind `@media (hover: hover)`, so on a phone this button never became
+      visible — while staying perfectly clickable, an invisible 36px target
+      parked on the thumbnail's corner swallowing taps meant for the video.
+      Touch reaches the same action through the ⋮ menu ("Save to watchlist"),
+      which is where a phone expects to find it anyway.
+    -->
     <SaveButton
       :saved="saved"
       :label="video.title"
-      class="absolute right-2 top-2 z-10 opacity-0 transition-opacity focus-visible:opacity-100 group-hover:opacity-100"
+      class="absolute right-2 top-2 z-10 hidden opacity-0 transition-opacity focus-visible:opacity-100 group-hover:opacity-100 sm:inline-flex"
       @toggle="$emit('toggle-save')"
     />
   </article>

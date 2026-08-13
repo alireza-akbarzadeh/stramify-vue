@@ -1178,3 +1178,85 @@ raster, esbuild, the Tailwind oxide binary — must be listed in
 scripts" at install time and as a broken native binary later. Prior session logs
 in PROGRESS.md still say `npm run` where that's what was actually run; they're
 history, not instructions.
+
+## ADR-026: Polar for platform subscriptions, mirrored locally for entitlement checks
+
+**Context**: `PricingSection.vue` had advertised Creator ($19/mo) and Studio
+($49/mo) since the landing page was built, with both CTAs pointing at `/signup`
+— three tiers of copy and no way to pay for any of them. PROMPT.md §18 lists
+`SubscriptionPlan` and `Payment` among the models to consider, and §10 wants a
+subscription system. Nothing had been decided about who processes the money.
+
+Two separately-shaped problems hide under "payments" here: creators paying
+Streamify for platform features, and viewers paying creators for a channel
+subscription. This ADR covers the first only.
+
+**Decision**: Polar, via its first-party better-auth plugin
+(`@polar-sh/better-auth`), for platform plans. Four products — Creator and
+Studio × monthly and yearly — created in Polar's dashboard and referenced from
+`POLAR_PRODUCT_*` env vars. Checkout and the customer portal are Polar's hosted
+pages; we don't reimplement either.
+
+Three things follow from that, and they're the parts worth arguing about:
+
+- **A local `subscriptions` table mirrors Polar, and Polar stays the source of
+  truth.** Entitlement is checked per request by `requirePlan()`, and putting a
+  third party's latency and uptime in front of every gated route is not a
+  trade we'd make for freshness we don't need. Webhooks write the mirror; no
+  application code does. Rows are keyed by Polar's subscription id so a
+  redelivered webhook converges instead of duplicating.
+- **Tier, not product id, is what the app asks about.** The webhook resolves the
+  Polar product to `creator`/`studio` at write time via `productGrant()`. A
+  product this deployment doesn't map is logged and dropped rather than
+  guessed — an unrecognised product granting *something* is how you hand out
+  entitlements nobody configured.
+- **`past_due` grants nothing.** Polar retries a failed renewal for days.
+  Serving paid features throughout is a free month for an expired card. The
+  status is still surfaced on `/settings/billing`, so the user is asked to fix
+  their card rather than silently downgraded.
+
+Billing is optional per deployment, exactly like each entry in
+`socialProviders()`: no `POLAR_ACCESS_TOKEN` (or no product ids) means the
+plugin doesn't register, the app boots, and the UI says checkout isn't available
+here instead of discovering it through a 500. `POLAR_SERVER` defaults to
+`sandbox`; production billing has to be opted into by name.
+
+The plan catalog moved out of `PricingSection.vue` into `shared/types/billing.ts`
+so the tier the landing page advertises is the same one `requirePlan()`
+enforces. Marketing copy that can drift from the entitlement it sells is a
+checkout that takes money for nothing.
+
+**Rejected**: *Stripe direct* — the default, and more flexible, but it leaves us
+as merchant of record: EU VAT and US sales-tax registration, thresholds and
+filings become this project's problem. Polar is the merchant of record and
+handles them. Stripe also has no auth integration, so the customer↔user mapping,
+checkout session routes and portal redirects would all be hand-written. *Lemon
+Squeezy* — also merchant of record, comparable pricing, but after the Stripe
+acquisition its roadmap is a question mark and there's no better-auth plugin.
+*Paddle* — same MoR benefit, heavier onboarding, no auth integration. *Rolling
+our own with a `payments` table* — over-engineering per CLAUDE.md §3, and PCI
+scope for no gain. *No local mirror, querying Polar's customer-state API per
+request* — simpler to write and wrong at the first Polar hiccup: an outage
+would revoke every paid feature simultaneously. *Caching customer state in the
+session* — a ban-style staleness problem (ADR-007 rejected signed-cookie
+sessions for the same reason): a cancellation wouldn't take effect until the
+session rotated.
+
+**Also rejected, and bigger than a rejection**: *channel subscriptions on the
+same mechanism*. A viewer subscribing to a creator is a marketplace — money
+splits between the platform and a third party, who needs onboarding, KYC and
+payouts. Polar's model is one organization selling its own products; it has no
+native multi-seller split. Doing it would mean either a Polar organization per
+creator (and no platform cut) or manual payout accounting we'd own end to end.
+That needs its own ADR and its own phase; nothing in this one assumes it away.
+
+**Consequences**: `/settings/billing` is a new authenticated page, and
+`/api/auth/polar/webhooks` is a new public endpoint whose only authentication is
+Polar's signature — so it isn't mounted at all unless `POLAR_WEBHOOK_SECRET` is
+set. Anyone bringing the app up for real now has a Polar dashboard step (four
+products, one webhook) documented in [billing.md](./billing.md); the repo can't
+do it for them because product ids are per-organization. Prices exist in two
+places — the catalog for display, Polar for what's charged — and changing one
+without the other silently misprices the pricing page. Polar redirects the
+browser back on payment before the webhook necessarily lands, so the billing
+page polls for ~7 seconds after checkout rather than trusting its first read.

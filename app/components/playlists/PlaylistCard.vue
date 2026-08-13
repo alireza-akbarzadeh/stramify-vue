@@ -35,7 +35,7 @@ import type { PlaylistSummary } from '#shared/types/library'
  * library, so opening one shared dialog beats mounting a copy per card.
  */
 const props = defineProps<{ playlist: PlaylistSummary; deletable?: boolean }>()
-defineEmits<{ (e: 'delete'): void; (e: 'edit'): void }>()
+defineEmits<{ delete: []; edit: [] }>()
 
 const to = computed(() => `/playlists/${encodeURIComponent(props.playlist.id)}`)
 const count = computed(() => playlistCountLabel(props.playlist.itemCount))

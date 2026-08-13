@@ -349,6 +349,25 @@
     }
 }
 
+/* No scrollbar at all — for the horizontal rails (home shelves, the chip bar,
+   the live-signals row), where the gesture is a swipe or the arrow buttons and
+   a bar under every shelf would be five bars down the page. Vertical columns
+   keep `scrollbar-slim` instead: hiding the only affordance on a tall list is
+   a different, worse trade.
+
+   Both properties are needed: `scrollbar-width` covers Firefox and Chrome 121+,
+   the pseudo-element covers older WebKit/Blink. On a phone this is mostly a
+   no-op — mobile scrollbars are already overlays — which is why it was easy to
+   miss that the class was being used on three rails without ever being
+   defined. */
+@utility scrollbar-none {
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
 @layer base {
 
     * {

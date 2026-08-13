@@ -18,6 +18,11 @@ import type { HomeChip } from '#shared/types/home'
  * `chipDomId`, which both sides use to agree on the id. The scroll arrows are
  * `aria-hidden`: they duplicate what scrolling and the keyboard already do, so
  * announcing them would add two stops that lead nowhere.
+ *
+ * Below `sm` the arrows don't render at all — same rule `HomeRail` follows.
+ * They're a pointer affordance, and on a 360px bar the two buttons plus their
+ * fade gradients sat *on top of* the first and last chips, eating the taps that
+ * were aimed at them.
  */
 const props = defineProps<{
   chips: HomeChip[]
@@ -63,6 +68,19 @@ function scroll(direction: -1 | 1) {
  */
 const SKELETON_WIDTHS = ['w-14', 'w-16', 'w-20', 'w-24', 'w-[5.5rem]']
 
+/**
+ * The track runs to the screen edges on a phone and pulls its own gutter back
+ * in as padding, so a chip scrolls *under* the edge instead of stopping an inch
+ * short of it — the difference between a row that reads as continuing offscreen
+ * and one that reads as a boxed widget. `scroll-px` keeps a snapped/focused chip
+ * off the very edge, and `overscroll-x-contain` stops a flick past the last chip
+ * from chaining into the browser's back gesture.
+ *
+ * The 1rem matches the page container's `px-4`; it's only claimed below `sm`,
+ * where that gutter is the same on every surface this bar renders on.
+ */
+const TRACK = '-mx-4 px-4 scroll-px-4 overscroll-x-contain sm:mx-0 sm:px-0 sm:scroll-px-0'
+
 /** Roving focus: arrow keys move the selection, which is also what moves focus. */
 function onArrowKey(direction: -1 | 1) {
   const index = props.chips.findIndex((chip) => chip.id === props.activeId)
@@ -75,15 +93,15 @@ function onArrowKey(direction: -1 | 1) {
   <div class="relative">
     <div
       v-if="loading"
-      class="flex gap-3 overflow-hidden py-1"
+      :class="cn('flex gap-3 overflow-hidden py-1', TRACK)"
       role="status"
       aria-label="Loading filters"
     >
-      <!-- h-8 is exactly a real chip: py-1.5 twice over a text-sm line box. -->
+      <!-- Exactly a real chip: py-2/py-1.5 twice over a text-sm line box. -->
       <Skeleton
         v-for="chipWidth in SKELETON_WIDTHS"
         :key="chipWidth"
-        :class="['h-8 shrink-0 rounded-full', chipWidth]"
+        :class="['h-9 shrink-0 rounded-full sm:h-8', chipWidth]"
       />
     </div>
 
@@ -92,7 +110,7 @@ function onArrowKey(direction: -1 | 1) {
         ref="rail"
         role="tablist"
         aria-label="Filter the feed by category"
-        class="flex gap-3 overflow-x-auto py-1 scrollbar-none"
+        :class="cn('flex gap-3 overflow-x-auto py-1 scrollbar-none', TRACK)"
         @keydown.left.prevent="onArrowKey(-1)"
         @keydown.right.prevent="onArrowKey(1)"
       >
@@ -107,7 +125,11 @@ function onArrowKey(direction: -1 | 1) {
           :tabindex="chip.id === activeId ? 0 : -1"
           :class="
             cn(
-              'shrink-0 whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+              // py-2 is a 36px chip on touch (32px from `sm` up), and
+              // `active:scale-95` is the press feedback a native chip gives —
+              // `hover:` never fires on a phone, so without it a tap looks like
+              // nothing happened until the feed swaps underneath.
+              'shrink-0 touch-manipulation whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-[background-color,color,transform] active:scale-95 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:py-1.5',
               chip.id === activeId
                 ? 'bg-foreground text-background'
                 : 'bg-muted text-foreground hover:bg-muted/70'
@@ -123,7 +145,7 @@ function onArrowKey(direction: -1 | 1) {
       <template v-if="overflows">
         <div
           v-show="!arrivedState.left"
-          class="pointer-events-none absolute inset-y-0 left-0 flex items-center bg-gradient-to-r from-background via-background to-transparent pr-8"
+          class="pointer-events-none absolute inset-y-0 left-0 hidden items-center bg-gradient-to-r from-background via-background to-transparent pr-8 sm:flex"
         >
           <Button
             type="button"
@@ -139,7 +161,7 @@ function onArrowKey(direction: -1 | 1) {
         </div>
         <div
           v-show="!arrivedState.right"
-          class="pointer-events-none absolute inset-y-0 right-0 flex items-center bg-gradient-to-l from-background via-background to-transparent pl-8"
+          class="pointer-events-none absolute inset-y-0 right-0 hidden items-center bg-gradient-to-l from-background via-background to-transparent pl-8 sm:flex"
         >
           <Button
             type="button"

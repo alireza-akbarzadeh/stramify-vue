@@ -67,10 +67,14 @@ function scroll(direction: -1 | 1) {
             {{ title }}
           </h2>
         </slot>
+        <!-- `-my-2 py-2` grows the tap target to ~36px without moving anything:
+             the padding pads the box, the negative margin gives the space back
+             to the layout. A 20px line of text is a miss-prone target on a
+             phone, and this is the only way off the shelf. -->
         <NuxtLink
           v-if="to"
           :to="to"
-          class="shrink-0 rounded text-sm font-medium text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          class="-my-2 shrink-0 rounded py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           {{ toLabel ?? 'See all' }}
         </NuxtLink>
@@ -100,9 +104,19 @@ function scroll(direction: -1 | 1) {
       </div>
     </div>
 
+    <!--
+      On a phone the track runs to the screen edges and carries the page's own
+      1rem gutter as padding instead, so a card scrolls under the edge rather
+      than stopping short of it — the shape a native carousel has. `scroll-px-4`
+      makes `snap-start` land the card *on* the gutter rather than flush against
+      the edge, and `overscroll-x-contain` keeps a flick past the last card from
+      chaining into the browser's back-swipe or bouncing the whole page
+      sideways. Both surfaces that render this rail (`HomeView`, `FollowingView`)
+      use the same `px-4` container below `sm`, so the 1rem is theirs.
+    -->
     <ul
       ref="track"
-      class="flex min-w-0 snap-x snap-mandatory gap-4 overflow-x-auto pb-2 scrollbar-none"
+      class="-mx-4 flex min-w-0 snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-4 pb-2 scroll-px-4 scrollbar-none sm:mx-0 sm:px-0 sm:scroll-px-0"
     >
       <slot />
     </ul>

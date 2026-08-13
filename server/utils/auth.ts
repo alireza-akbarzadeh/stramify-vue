@@ -5,6 +5,7 @@ import { dash } from '@better-auth/infra'
 import { db } from '../db/client'
 import * as schema from '../db/schema'
 import { sendMail } from './mailer'
+import { billingPlugins } from './billing-plugin'
 
 const appUrl = process.env.PUBLIC_APP_URL || 'http://localhost:3000'
 
@@ -70,7 +71,10 @@ export const auth = betterAuth({
     }
   },
   socialProviders: socialProviders(),
-  plugins: [twoFactor({ issuer: 'Streamify' }), dash()]
+  // `billingPlugins()` is empty when Polar isn't configured, for the same
+  // reason `socialProviders()` skips a provider with no credentials — a clone
+  // without billing credentials still boots (ADR-026).
+  plugins: [twoFactor({ issuer: 'Streamify' }), dash(), ...billingPlugins()]
 })
 
 /** Which social providers have credentials — the UI marks the rest unavailable. */

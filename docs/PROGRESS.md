@@ -1317,3 +1317,164 @@ even with all of the above correct, `/shorts` will play nothing audible until
 the seed points at clips that have sound. Probe one with
 `ffprobe -select_streams a -show_entries stream=codec_name <url>`; empty output
 means no audio track.
+
+## Home page — native-mobile pass, 2026-08-13 (appended)
+
+The home feed (`/`) at phone widths. Three of these were bugs rather than
+polish, and the first two were invisible on a desktop browser at a narrow
+window — they only exist on a device with no pointer.
+
+**Hover-revealed controls were unreachable *and* still clickable on touch.**
+Tailwind v4 gates `hover:` behind `@media (hover: hover)`, so
+`opacity-0 group-hover:opacity-100` on a phone means permanently transparent —
+but an `opacity-0` button is still a hit target. Both the save button on
+`HomeVideoCard` and the ⋮ on `HomeRailCard` were therefore invisible 32–36px
+targets parked on a thumbnail corner, eating taps meant for the video.
+`HomeVideoCard`'s save button is now pointer-only (`hidden sm:inline-flex`) —
+touch reaches the same action through the ⋮ menu, which is where a phone
+expects it — and `HomeRailCard`'s ⋮ is visible from the start on touch,
+hover-revealed only from `sm` up. Note the reveal classes on that one are all
+`sm:`-scoped (`sm:opacity-0 sm:group-hover:opacity-100 …`): a bare
+`group-hover:` would lose to `sm:opacity-0`, since breakpoint utilities are
+emitted after unprefixed ones.
+
+**`scrollbar-none` was never defined.** Three rails (`HomeRail`,
+`HomeChipBar`, `LiveSignalsRail`) have been asking for it since they were
+written; only `scrollbar-slim` existed in `main.css`. Added as an `@utility`
+next to it. Easy to miss from a Mac (overlay scrollbars) — it's a permanent
+gutter under every shelf on Windows/Linux.
+
+**The sticky chip bar was 8px off on phones.** `HomeView` pinned it at
+`top-16` while `DashboardTopBar` is `h-14` below `sm`, so a strip of feed
+scrolled through the gap. Now `top-14 sm:top-16`, and the bar is translucent
+(`bg-background/85 backdrop-blur-xl`) like the bar above it and `ChannelTabs`,
+rather than an opaque block sliding over the body gradient.
+
+The rest is the native-app shape:
+
+- **Full-bleed feed thumbnails below `sm`**, via a new `flush` prop on
+  `HomeVideoCard` + `HomeVideoCardSkeleton` that `HomeVideoGrid` sets. Opt-in
+  because the card's other home is a rail slide narrower than the gutter it
+  would bleed past. The stretched link's `after:` overlay bleeds with it, or
+  the outer 1rem of each thumbnail wouldn't be part of the link.
+- **Edge-to-edge scroll tracks** on `HomeRail` and `HomeChipBar`: `-mx-4 px-4`
+  below `sm` so a card scrolls *under* the screen edge instead of stopping an
+  inch short, `scroll-px-4` so `snap-start` lands it on the gutter, and
+  `overscroll-x-contain` so a flick past the end doesn't chain into the
+  browser's back-swipe. Safe for `FollowingView` too — it uses the same `px-4`
+  container.
+- **Touch targets**: chips 36px with `active:scale-95` press feedback (nothing
+  else confirms a tap, since `hover:` never fires), the feed card's ⋮ 36px, and
+  each shelf's "See all" padded to ~36px with `-my-2 py-2` (pads the box, gives
+  the space back to the layout).
+- **No chip-bar arrows below `sm`** — same rule `HomeRail` already followed.
+  On a 360px bar the buttons and their fade gradients sat on top of the first
+  and last chips.
+- Density and edges: shelf spacing `space-y-6 sm:space-y-10`, feed row gap
+  `gap-y-6 sm:gap-y-8`, empty/error panels padded so their copy clears the
+  screen edge, "Load more" full-width on a phone.
+
+### Not verified (toolchain blocked — sixth session in a row)
+
+The Bash classifier and the browser preview were both unavailable for this
+session's whole span, so **nothing was run**: no `prettier`, no `vitest`, no
+typecheck, no dev server, no device-width screenshot. Everything above is
+static reasoning about markup and Tailwind semantics. Next session, before
+anything else:
+
+```
+npm run format:check && npm run typecheck && npm test -- app/components/home
+```
+
+then open `/` at 390×844 and check: (1) no horizontal scrollbar and no gap
+between the app bar and the chip bar while scrolling, (2) thumbnails in the
+feed touch both screen edges while their titles stay inset, (3) the ⋮ on a
+Continue-watching card is visible without hovering and opens its menu, (4) a
+shelf swipes to the edge and doesn't trigger the browser's back gesture, and
+(5) no scrollbar under any shelf.
+
+### Owed / adjacent, deliberately not done here
+
+- `ChannelTabs` (`app/components/channel/ChannelTabs.vue:22`) has the same
+  `top-16`-under-an-`h-14`-bar bug this fixed on the home page.
+- `PlaylistCard`'s ⋮ on `/playlists` is hover-only, the same trap as
+  `HomeRailCard`'s was. Not touched because it doesn't render on the home rail
+  (`deletable` is unset there).
+- `-webkit-tap-highlight-color` is still the browser default app-wide — the
+  grey flash on every tapped link is the loudest remaining "this is a web page"
+  tell on iOS. It's a one-line base-layer change but a global one, so it was
+  left for a session that owns the shell rather than one page.
+- `app/components/dashboard/MobileTabBar.vue` is wrapped in literal markdown
+  code fences (` ```vue ` on line 1, ` ``` ` on the last). The SFC compiler
+  ignores top-level text outside blocks so it renders, but it shouldn't be
+  there.
+
+## Polar billing session, 2026-08-13 (appended)
+
+**Status: code complete, NOT verified — the machine's disk filled up mid-session
+(368 MiB free on a 460 GiB volume) and `pnpm add` never ran.** Everything below
+is written and self-consistent, but nothing has been type-checked, tested or
+run. Treat it as "ready to verify", not "working".
+
+### What was built
+
+Platform subscriptions through Polar — creators paying Streamify for the Creator
+and Studio tiers that `PricingSection.vue` had been advertising with CTAs that
+dead-ended at `/signup`. Rationale, rejected alternatives and the explicit
+scoping-out of channel subscriptions are in **ADR-026**; the operational guide
+(Polar dashboard steps, env, failure modes) is **[billing.md](./billing.md)**.
+
+- `shared/types/billing.ts` — the plan catalog, moved out of `PricingSection.vue`
+  so the tier the landing page sells is the one `requirePlan()` enforces. Also
+  holds `PLAN_RANK` (entitlement is "at least this tier", never equality) and
+  `ENTITLED_STATUSES` (`active`/`trialing` only — `past_due` grants nothing).
+- `shared/utils/billing.ts` (+ spec) — subscription status → user-facing copy.
+- `server/utils/polar.ts` — SDK client and the `POLAR_PRODUCT_*` → tier map.
+  Nothing throws at import; billing is optional per deployment exactly like each
+  entry in `socialProviders()`.
+- `server/utils/billing-plugin.ts` — the `polar()/checkout()/portal()/webhooks()`
+  stack, split out of `auth.ts` both for size and to keep `subscriptions.ts`
+  free to be imported by `session.ts` without a cycle.
+- `server/db/schema/subscriptions.ts` — local mirror of Polar's state, keyed by
+  Polar's subscription id so redelivered webhooks converge. **Migration not
+  generated yet** (`pnpm db:generate && pnpm db:migrate` still owed).
+- `server/utils/subscriptions.ts` (+ spec) — `resolveBillingState` (pure, the
+  precedence rules) and `syncSubscription` (webhook upsert; declines and logs
+  on an unmapped product / unknown user rather than throwing).
+- `requirePlan(event, tier)` in `server/utils/session.ts`, beside `requireUser`.
+  402, not 403, so the client can tell "upgrade" from "forbidden".
+- `server/api/billing/subscription.get.ts` — Starter rather than 401 signed out.
+- Client: `app/composables/useBilling.ts`, `app/components/billing/*`,
+  `app/pages/settings/billing.vue`, a Billing entry in `accountLinks`.
+
+### What's owed before this can be called done
+
+1. **Free disk space, then `pnpm add @polar-sh/better-auth @polar-sh/sdk`.**
+   Nothing else can proceed first — `server/utils/polar.ts` and
+   `app/lib/auth-client.ts` both import packages that aren't installed, so the
+   app will not boot until this runs.
+2. `pnpm db:generate && pnpm db:migrate` for the `subscriptions` table.
+3. `pnpm typecheck`, `pnpm test`, `pnpm lint` — none were run.
+4. **`.env.example` was not updated** — this session's tool permissions denied
+   reading `.env*`. The eight `POLAR_*` vars are listed in billing.md §4 and
+   need copying across by hand.
+5. Polar dashboard setup (four products, one webhook) — can't be done from the
+   repo, product ids are per-organization. Steps in billing.md.
+6. End-to-end verification against Polar sandbox with a test card, including the
+   webhook → mirror → `/settings/billing` path. The redirect-beats-webhook race
+   is handled by a ~7s poll in `useCheckoutReturn`; that timing is a guess and
+   should be checked against a real sandbox checkout.
+
+### Deliberately not done
+
+- **Channel subscriptions** (viewer pays creator). It's a marketplace with
+  third-party payouts and KYC, and Polar has no native multi-seller split — see
+  ADR-026's rejection, which is longer than the others for that reason. Needs
+  its own ADR and phase.
+- **Nothing is gated yet.** `requirePlan` exists and is tested, but no endpoint
+  calls it — the tiers advertise 4K ingest, unlimited VOD retention and multiple
+  channels, none of which have enforcement points built. Selling a plan whose
+  features aren't yet gated is honest only for as long as the free tier isn't
+  gated either; wiring the first real gate is the natural next task.
+- The 14-day trial in the CTA copy is a Polar product setting, not code. If the
+  products are created without one, that copy is wrong.

@@ -26,9 +26,9 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  (e: 'toggle-save'): void
-  (e: 'save-later'): void
-  (e: 'feedback', value: HomeFeedback): void
+  'toggle-save': []
+  'save-later': []
+  feedback: [value: HomeFeedback]
 }>()
 
 const channelName = computed(() =>
@@ -61,8 +61,11 @@ const ITEM =
         :aria-label="`More actions for ${video.title}`"
         as-child
     >
+      <!-- 36px on touch, where this is the card's *only* visible action (the
+           save button beside it is pointer-only), matching the app bar's round
+           targets. 32px from `sm` up, where a cursor doesn't need the slack. -->
       <button
-          class="relative z-50 grid size-8 shrink-0 place-items-center rounded-full text-muted-foreground outline-none transition-colors hover:bg-surface-2 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring data-[state=open]:bg-surface-2 data-[state=open]:text-foreground"
+          class="relative z-50 grid size-9 shrink-0 touch-manipulation place-items-center rounded-full text-muted-foreground outline-none transition-colors hover:bg-surface-2 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring data-[state=open]:bg-surface-2 data-[state=open]:text-foreground sm:size-8"
           type="button"
           @pointerdown.stop
           @click.stop

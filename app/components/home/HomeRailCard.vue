@@ -108,12 +108,24 @@ const showProgress = computed(() => props.percent !== null && props.percent !== 
     </NuxtLink>
 
     <!-- Outside the anchor: a button nested in a link is invalid markup and
-         swallows the navigation. Same arrangement as `HomeVideoCard`. -->
+         swallows the navigation. Same arrangement as `HomeVideoCard`.
+
+         Visible from the start on touch, and only on hover from `sm` up. There
+         is no hover on a phone — Tailwind v4 gates the variant behind
+         `@media (hover: hover)` — so the reveal-on-hover version left this
+         permanently transparent *and* permanently clickable, which is worse
+         than showing it: an invisible target on the thumbnail's corner that
+         ate the tap meant for the video.
+
+         Every reveal is scoped to `sm:` alongside the `sm:opacity-0` it has to
+         beat. A bare `group-hover:opacity-100` would lose to it — breakpoint
+         utilities are emitted after unprefixed ones, so the hidden state would
+         win at every width. -->
     <DropdownMenu>
       <DropdownMenuTrigger as-child>
         <Button
           :aria-label="`More options for ${title}`"
-          class="absolute right-1 top-1 size-8 rounded-full bg-background/80 opacity-0 transition-opacity focus-visible:opacity-100 group-hover:opacity-100 data-[state=open]:opacity-100"
+          class="absolute right-1 top-1 size-9 rounded-full bg-background/80 backdrop-blur-sm transition-opacity sm:size-8 sm:opacity-0 sm:focus-visible:opacity-100 sm:group-hover:opacity-100 sm:data-[state=open]:opacity-100"
           size="icon"
           type="button"
           variant="ghost"

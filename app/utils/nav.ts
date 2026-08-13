@@ -4,6 +4,7 @@ import {
     CircleDollarSign,
     Clapperboard,
     Clock3,
+    CreditCard,
     GamepadDirectional,
     Grid2x2,
     Heart,
@@ -212,6 +213,7 @@ export const studioMobileLinks: NavLink[] = studioLinks
  */
 export const accountLinks: NavLink[] = [
     {label: 'Creator dashboard', to: '/dashboard', icon: LayoutDashboard},
+    {label: 'Billing', to: '/settings/billing', icon: CreditCard},
     {label: 'Security', to: '/settings/security', icon: ShieldCheck},
     {label: 'Two-factor auth', to: '/settings/two-factor', icon: ShieldHalf}
 ]
