@@ -134,6 +134,29 @@ export const VISIBILITY_COPY: Readonly<
   public: { label: 'Public', detail: 'Everyone can find it — search, your channel and the feeds.' }
 }
 
+/**
+ * Title → the clip id, which is also the `/watch/<id>` URL segment.
+ *
+ * Readable rather than a bare UUID because this string is the shareable
+ * address of the video, and `/watch/midnight-echo-a1b2c3` survives being
+ * pasted into a chat window in a way `/watch/9f1c…` doesn't. The suffix is
+ * what makes it unique — two videos called "Stream highlights" are ordinary,
+ * and neither creator should get an error about it.
+ *
+ * Non-ASCII titles collapse to nothing, hence the fallback: a Persian or
+ * Japanese title still gets a working URL instead of one starting with `-`.
+ */
+export function toClipSlug(title: string, suffix: string): string {
+  const base = title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60)
+    .replace(/-+$/, '')
+
+  return `${base || 'video'}-${suffix}`
+}
+
 function acceptFor(types: Readonly<Record<string, string>>): string {
   return Object.keys(types).join(',')
 }

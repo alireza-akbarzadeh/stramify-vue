@@ -1,5 +1,6 @@
 import type { H3Event } from 'h3'
 import type { z } from 'zod'
+import { logger } from './logger'
 import type { AiTier } from '#shared/types/ai'
 
 /**
@@ -19,12 +20,18 @@ import type { AiTier } from '#shared/types/ai'
 const API_ROOT = 'https://generativelanguage.googleapis.com/v1beta/models'
 
 /**
- * Free-tier default (ai.google.dev/gemini-api/docs/pricing lists it as "free
- * of charge" on the standard tier). Override with `GEMINI_MODEL` to move to a
- * paid model — `gemini-2.5-pro` is the intended upgrade and needs no code
- * change, only the env var and billing enabled on the key.
+ * Free-tier default. `gemini-2.5-flash` rather than the newer
+ * `gemini-3.5-flash`, which is also free but was returning Google's "currently
+ * experiencing high demand" 503 on every call when this was built — the newest
+ * flash model shares free-tier capacity with everyone who wants to try it, and
+ * a default that is usually busy is not a default. 2.5 is a generation older,
+ * amply provisioned, and more than enough to summarise a paragraph of metadata.
+ *
+ * Override with `GEMINI_MODEL` for either direction: `gemini-3.5-flash` when it
+ * has capacity, or `gemini-2.5-pro` to move to a paid model — that upgrade
+ * needs no code change, only the env var and billing enabled on the key.
  */
-const DEFAULT_MODEL = 'gemini-3.5-flash'
+const DEFAULT_MODEL = 'gemini-2.5-flash'
 
 /**
  * Models that bill nothing on the standard tier. Anything *not* listed is
@@ -165,18 +172,66 @@ async function generate(
   return text
 }
 
+/**
+ * Map an upstream failure onto our own status codes — and log the real one
+ * first.
+ *
+ * The logging is not incidental. The messages below are deliberately vague
+ * because they are read by viewers, and without this line a wrong model id, a
+ * key with the API disabled, and a malformed request all surface identically as
+ * "unavailable" with nothing to go on. Gemini puts the actual cause in
+ * `data.error.message` ("models/x is not found", "API key not valid"), so that
+ * is what gets logged, at `error` level, server-side only.
+ */
 function toGeminiError(error: unknown): ReturnType<typeof createError> {
   const status = (error as { status?: number; statusCode?: number })?.status ?? 0
+  const upstream = (error as { data?: { error?: { message?: string; status?: string } } })?.data
+    ?.error
+
+  logger.error(
+    { status, upstream: upstream?.message, reason: upstream?.status },
+    'Gemini request failed'
+  )
+
+  /**
+   * In dev the upstream message rides along in `data` as well, so the cause is
+   * visible in the network tab without tailing the server. Google's message
+   * names the problem ("models/x is not found", "API key not valid") and never
+   * echoes the key. Stripped in production, where the viewer gets the plain
+   * sentence and the detail stays in the log.
+   */
+  const detail = import.meta.dev && upstream?.message ? { data: { upstream: upstream.message } } : {}
+
   if (status === 429) {
     return createError({
       statusCode: 429,
-      statusMessage: 'The AI assistant is over its quota — try again shortly'
+      statusMessage: 'The AI assistant is over its quota — try again shortly',
+      ...detail
+    })
+  }
+  /**
+   * 503 from Google means the *model* is saturated, not that anything here is
+   * wrong — the free tier shares capacity and the newest flash models get busy.
+   * Worth its own message: "busy right now" tells someone to press the button
+   * again, where "unavailable" reads as broken and sends them to check a key
+   * that is fine. Passed straight through as a 503 so the client can tell the
+   * two apart without parsing prose.
+   */
+  if (status === 503) {
+    return createError({
+      statusCode: 503,
+      statusMessage: 'The model is busy right now — try again in a moment',
+      ...detail
     })
   }
   if ((error as { name?: string })?.name === 'TimeoutError') {
     return createError({ statusCode: 504, statusMessage: 'The AI assistant took too long' })
   }
-  return createError({ statusCode: 502, statusMessage: 'The AI assistant is unavailable' })
+  return createError({
+    statusCode: 502,
+    statusMessage: 'The AI assistant is unavailable',
+    ...detail
+  })
 }
 
 /** Free-text completion. */

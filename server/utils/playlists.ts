@@ -1,7 +1,7 @@
 import { and, asc, desc, eq, gt, lt, sql } from 'drizzle-orm'
 import { db } from '../db/client'
 import { clips, playlistItems, playlists } from '../db/schema'
-import { formatAge, formatDuration } from './format'
+import { formatAge } from './format'
 import { formatCount } from '#shared/utils/format'
 import type {
   PlaylistDetail,

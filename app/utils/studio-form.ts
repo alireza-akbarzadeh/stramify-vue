@@ -1,0 +1,38 @@
+import { toTypedSchema } from '@vee-validate/zod'
+import { z } from 'zod'
+import { CLIP_CATEGORIES } from '#shared/utils/category'
+import { STUDIO_DESCRIPTION_MAX, STUDIO_TITLE_MAX } from '#shared/types/studio'
+
+/**
+ * The one description of a valid video, for both forms that edit one — the
+ * upload wizard's details step and the edit page.
+ *
+ * It mirrors the server's schemas in `server/api/studio/uploads.post.ts` and
+ * `[id].patch.ts` rather than replacing them: this one exists to tell the
+ * creator what's wrong *while they type*, and the server's exists because the
+ * browser's opinion is not a control (CLAUDE.md §5). The limits both read from
+ * the same constants, so the two can't drift on the numbers — which is the
+ * part that would actually confuse someone.
+ *
+ * The messages are deliberately full sentences that say how to fix the
+ * problem, not "Invalid" (UX: `error-clarity`).
+ */
+export const studioDetailsSchema = z.object({
+  title: z
+    .string()
+    .trim()
+    .min(1, 'Give your video a title.')
+    .max(STUDIO_TITLE_MAX, `Keep the title under ${STUDIO_TITLE_MAX} characters.`),
+  description: z
+    .string()
+    .trim()
+    .max(STUDIO_DESCRIPTION_MAX, `Descriptions are limited to ${STUDIO_DESCRIPTION_MAX} characters.`)
+    .default(''),
+  category: z.enum(CLIP_CATEGORIES),
+  visibility: z.enum(['private', 'unlisted', 'public'])
+})
+
+export type StudioDetails = z.infer<typeof studioDetailsSchema>
+
+/** The `validationSchema` both forms hand to `useForm`. */
+export const studioDetailsValidation = toTypedSchema(studioDetailsSchema)

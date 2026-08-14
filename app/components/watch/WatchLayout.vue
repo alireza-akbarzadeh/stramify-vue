@@ -12,8 +12,8 @@ import WatchComments from './WatchComments.vue'
 import WatchChat from './WatchChat.vue'
 import WatchPlaylistQueue from './WatchPlaylistQueue.vue'
 import WatchUpNext from './WatchUpNext.vue'
-import WatchAiPanel from './ai/WatchAiPanel.vue'
 import WatchAiPicks from './ai/WatchAiPicks.vue'
+import WatchAiSheet from './ai/WatchAiSheet.vue'
 import { useTheaterMode, useTheaterShortcut } from '@/composables/useTheaterMode'
 
 /**
@@ -28,19 +28,18 @@ import { useTheaterMode, useTheaterShortcut } from '@/composables/useTheaterMode
  * passed as a function prop. The preview page sets the stores instead of
  * passing props.
  *
- * Layout: one column below `lg`, two at `lg`, three from `3xl` (1920px).
- * Below `lg` the grid children fall in DOM order — player, metadata, sidebar,
- * assistant, comments — which is what puts live chat directly under the video
- * on a phone and the comment list last.
+ * Layout: one column below `lg`, two columns at `lg` and up. Below `lg` the
+ * grid children fall in DOM order — player, metadata, sidebar, comments — which
+ * is what puts live chat directly under the video on a phone and the comment
+ * list last.
  *
- * The third column exists because two columns stop growing at about 1560px and
- * a 4K desktop or a TV then renders a page that is mostly margin. Rather than
- * stretch the player to fill it — a 2000px-wide video is not a better video —
- * the extra width buys a column: the AI assistant moves out of the main flow
- * and sits beside the player, where it can be read without scrolling past the
- * description. It starts at `3xl` rather than `2xl` because at 1536px three
- * columns leave the player around 600px, which is worse than the empty space.
- * The container's own `max-w` steps up in `WatchView` to match.
+ * Above 1920px the two columns keep their shape and simply get more room: the
+ * sidebar widens at `3xl`/`4xl` and the container's cap steps up in `WatchView`
+ * so a 4K desktop or a TV isn't mostly margin. A *third* column was tried and
+ * reverted — the only thing with a claim on it was the AI assistant, and a
+ * permanent panel that sat empty whenever no key was configured read as broken
+ * chrome. The assistant is a sheet behind a trigger in the actions row instead
+ * (`WatchAiSheet`), which costs nothing when it isn't wanted.
  *
  * On a phone the metadata cell is a *sheet*: it bleeds past the page's side
  * padding to the screen edges and rides up over the bottom of the video on a
@@ -61,11 +60,10 @@ import { useTheaterMode, useTheaterShortcut } from '@/composables/useTheaterMode
  * have to be cancelled before it could be overlapped.
  *
  * At `lg` and up each child is placed explicitly, because theater mode moves
- * three of them: the player grows from the first column to every column, and
- * the two asides drop from row 1 (beside the video) to row 2 (beside the
- * metadata). Keeping the player in its own cell rather than nested with the
- * metadata is what makes that a class change instead of a second copy of the
- * markup.
+ * two of them: the player grows from the first column to both, and the sidebar
+ * drops from row 1 (beside the video) to row 2 (beside the metadata). Keeping
+ * the player in its own cell rather than nested with the metadata is what makes
+ * that a two-class change instead of a second copy of the markup.
  */
 defineProps<{
   target: WatchTarget
@@ -127,13 +125,10 @@ function onProgress(currentTime: number) {
 
 <template>
   <div
-    class="grid grid-cols-1 gap-x-8 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-y-4 3xl:grid-cols-[minmax(0,1fr)_400px_400px] 4xl:gap-x-10 4xl:grid-cols-[minmax(0,1fr)_440px_440px]"
+    class="grid grid-cols-1 gap-x-8 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-y-4 3xl:gap-x-10 3xl:grid-cols-[minmax(0,1fr)_440px] 4xl:grid-cols-[minmax(0,1fr)_480px]"
     :data-theater="theater ? '' : undefined"
   >
-    <div
-      class="min-w-0 lg:row-start-1"
-      :class="theater ? 'lg:col-span-2 3xl:col-span-3' : 'lg:col-start-1'"
-    >
+    <div class="min-w-0 lg:row-start-1" :class="theater ? 'lg:col-span-2' : 'lg:col-start-1'">
       <WatchPlayer
         :target="target"
         :resume-at="resumeAt"
@@ -181,6 +176,11 @@ function onProgress(currentTime: number) {
             :slug="target.slug"
             :clip-id="target.id"
           />
+          <!-- The assistant, behind its own trigger rather than parked on the
+               page: it's something you reach for, and a permanent panel had to
+               be given width the page would rather spend on the video. Renders
+               nothing when no key is configured. -->
+          <WatchAiSheet :target="target" :playhead="() => playhead" />
         </div>
       </div>
       <WatchDescription
@@ -194,8 +194,8 @@ function onProgress(currentTime: number) {
     </div>
 
     <aside
-      class="mt-6 min-w-0 lg:col-start-2 lg:mt-0 3xl:col-start-3"
-      :class="theater ? 'lg:row-span-3 lg:row-start-2' : 'lg:row-span-4 lg:row-start-1'"
+      class="mt-6 min-w-0 lg:col-start-2 lg:mt-0"
+      :class="theater ? 'lg:row-span-2 lg:row-start-2' : 'lg:row-span-3 lg:row-start-1'"
     >
       <div class="space-y-6 lg:sticky lg:top-20">
         <WatchChat
@@ -225,26 +225,7 @@ function onProgress(currentTime: number) {
       </div>
     </aside>
 
-    <!--
-      The assistant. Placed after the sidebar in the DOM so that on a phone —
-      where the grid falls back to source order — live chat still lands
-      directly under the video, and pulled up to row 3 from `lg` where explicit
-      placement takes over. From `3xl` it leaves the main column entirely and
-      becomes the middle one, which is the whole reason that breakpoint exists.
-    -->
-    <div
-      class="mt-6 min-w-0 lg:col-start-1 lg:row-start-3 lg:mt-0 3xl:col-start-2 3xl:row-span-4"
-      :class="theater ? '3xl:row-start-2' : '3xl:row-start-1'"
-    >
-      <div class="3xl:sticky 3xl:top-20">
-        <WatchAiPanel :target="target" :playhead="() => playhead" />
-      </div>
-    </div>
-
-    <div
-      v-if="target.kind === 'clip'"
-      class="mt-8 min-w-0 lg:col-start-1 lg:row-start-4 lg:mt-0 3xl:row-start-3"
-    >
+    <div v-if="target.kind === 'clip'" class="mt-8 min-w-0 lg:col-start-1 lg:row-start-3 lg:mt-0">
       <WatchComments
         v-model:sort="sort"
         :comments="comments.items"

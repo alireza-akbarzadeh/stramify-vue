@@ -3,7 +3,7 @@ import { db } from '../db/client'
 import { clips, liveStreams } from '../db/schema'
 import { landscapeClips, publishedClips } from './discovery'
 import type { ClipRow, LiveStreamRow } from './discovery'
-import { formatAge, formatDuration, formatUptime } from './format'
+import { formatAge, formatUptime } from './format'
 import type { RelatedItem, WatchTarget } from '#shared/types/watch'
 
 /**

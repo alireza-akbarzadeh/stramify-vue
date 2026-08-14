@@ -187,13 +187,13 @@ function onShare() {
 
     The cap steps up twice above 1920px. Held at 1560 everywhere, a 4K monitor
     or a TV renders this page as a narrow strip with several hundred pixels of
-    dead margin either side; letting it grow is what gives `WatchLayout` room
-    for its third column. It is still capped rather than fluid — past about
-    2500px a full-bleed row of text is unreadable, and the player gets no
-    better for being wider than the room.
+    dead margin either side. The extra width goes to the player and the sidebar
+    — the layout stays two columns — and it stays capped rather than fluid,
+    because past about 2000px a full-bleed row of text is unreadable and the
+    player gets no better for being wider than the room.
   -->
   <div
-    class="mx-auto max-w-[1560px] px-4 pb-10 pt-3 sm:px-6 lg:mt-12 lg:px-8 lg:py-8 3xl:max-w-[2160px] 4xl:max-w-[2480px]"
+    class="mx-auto max-w-[1560px] px-4 pb-10 pt-3 sm:px-6 lg:mt-12 lg:px-8 lg:py-8 3xl:max-w-[1860px] 4xl:max-w-[2100px]"
   >
     <WatchSkeleton v-if="target.isPending.value" />
 

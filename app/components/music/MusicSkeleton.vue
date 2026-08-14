@@ -14,8 +14,13 @@ const CARDS = 7
 
 <template>
   <div aria-label="Loading music" class="space-y-12" role="status">
+    <!-- Ratios, floor, ceiling and corner all mirror `MusicHero`'s outer box.
+         The `min-h` is the one that's easy to forget and the one that shows:
+         below `sm` the hero's content stack is taller than `4/5` resolves to,
+         so a skeleton without it hands over a shorter box and the whole page
+         jumps down when the query lands. -->
     <div
-      class="aspect-[4/5] w-full animate-pulse rounded-2xl bg-muted sm:aspect-[16/10] lg:aspect-[21/9] 3xl:max-h-[720px] 4xl:max-h-[780px]"
+      class="aspect-[4/5] min-h-[26rem] w-full animate-pulse rounded-2xl bg-muted sm:aspect-[16/10] sm:min-h-[32rem] sm:rounded-3xl lg:aspect-[21/9] 3xl:max-h-[720px] 4xl:max-h-[780px]"
     />
 
     <div v-for="shelf in SHELVES" :key="shelf" class="min-w-0 space-y-4">

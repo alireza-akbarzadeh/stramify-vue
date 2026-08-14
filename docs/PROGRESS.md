@@ -1804,3 +1804,69 @@ enough for the insights JSON.
 - Real video understanding (Files API upload) belongs with Cloudflare Stream in
   Phase 6/7, not before — see the ADR for why the current grounding is
   structural rather than cautious.
+
+---
+
+## Music hero carousel session, 2026-08-14 (appended)
+
+Turned the `/music` hero from a static featured card into a rotating carousel
+and gave the page real motion. Full write-up in [music.md](./music.md) under
+"The hero is a carousel".
+
+### What changed
+
+- `app/composables/useSlideshow.ts` **(new, tested)** — generic rotation: dwell
+  timer, wrap in both directions, holds for pointer/focus/backgrounded tab/an
+  explicit pause, and opts out entirely under `prefers-reduced-motion`. Exposes
+  `cycle` so a progress bar can re-key with the timer instead of drifting
+  against it. Not music-specific; any other carousel can take it.
+- `app/components/music/MusicHero.vue` — rewritten. Rotates `[hero, ...queue]`
+  (six slides, 7s dwell) with `motion-v` crossfades and a staggered copy block.
+  **Scrim and copy are now theme-independent** (black gradient, white text):
+  the old `from-background` scrim inherited the theme and washed the whole hero
+  out to a pale blur in light mode, which is what prompted this.
+- `MusicHeroQueue.vue`, `MusicHeroControls.vue` **(new)** — the slide picker
+  (segments below `sm`, thumbnails above, `layoutId` ring travelling between
+  them) and prev/pause/next. The pause button is a WCAG 2.2.2 requirement, not
+  decoration — hovering is a pointer-only mechanism.
+- `app/composables/useAmbientVideo.ts` — clears `failed`/`playing` when the
+  source changes. One unplayable slide used to black-hole the loop for every
+  slide after it; that couldn't happen before, because the source never moved.
+- `app/app.vue` — wraps the app in `<MotionConfig reduced-motion="user">`.
+  **`motion-v` defaults to `reducedMotion: 'never'`**, so until this every
+  `motion-v` animation in the app ignored the viewer's system preference.
+  Global, and worth knowing about before adding more `motion-v`.
+- `app/components/home/HomeRail.vue` — spring press/hover on the arrow buttons
+  and a directional chevron nudge. Shared by every home/following shelf.
+- `main.css` — `dwell` and `ken-burns` keyframes.
+
+### Verified
+
+- `pnpm vitest run app/composables/useSlideshow.spec.ts
+  app/components/music/MusicHero.spec.ts` — 14 passing.
+- `npx eslint` clean on every touched file; `nuxt typecheck` reports nothing in
+  them (the repo's existing errors in `billing-plugin`, `media/[...key]`,
+  `useMusic`, `nuxt.config` are untouched and pre-existing).
+- In the browser at 1440×818: switching by arrow, by thumbnail and by wrap-around
+  all crossfade correctly, the counter/ring/dwell bar track the active slide,
+  and the copy column and strip don't collide at any width (the hero grew a
+  `min-h`, because a `21/9` ratio at 1024px is a ~300px box that the content
+  overflows).
+- Reduced-motion path confirmed end to end — the preview browser forces
+  `prefers-reduced-motion: reduce`, so what was verified there is the *static*
+  path: no ambient `<video>` in the DOM, both CSS animations suppressed, no
+  auto-rotation, controls still working.
+
+### Owed / next steps
+
+- **The suite can't be run whole right now.** `.claude/worktrees/` holds three
+  agent worktrees, each a full checkout with its own `node_modules`, and Vitest
+  doesn't read git excludes — `pnpm test` collects 192 specs from them against
+  56 real ones and they fail on contact with a second copy of Vue. Adding
+  `'**/.claude/**'` to `exclude` in `vitest.config.ts` fixes it (that edit was
+  made and then reverted during this session); until then, run specs by path.
+- Three specs fail at HEAD, unrelated to this work and pre-existing:
+  `HomeVideoCardMenu` (4), `ShortsActionRail` (1), `utils/nav` ("is exactly four
+  tabs"). They look like fallout from in-flight nav/save-label changes.
+- No E2E for the carousel. The keyboard path (arrow keys on the section) and the
+  auto-advance are only covered by unit tests.

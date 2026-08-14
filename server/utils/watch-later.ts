@@ -1,7 +1,6 @@
 import { and, desc, eq, sql } from 'drizzle-orm'
 import { db } from '../db/client'
 import { channels, clips, watchLater } from '../db/schema'
-import { formatDuration } from './format'
 import { formatCount } from '#shared/utils/format'
 import type { WatchLaterItem } from '#shared/types/library'
 

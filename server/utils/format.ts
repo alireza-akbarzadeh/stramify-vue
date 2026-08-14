@@ -1,12 +1,10 @@
-// `formatCount` lives in `shared/` because the watch page's like button
-// re-formats counts client-side after an optimistic update. Re-exported here
-// so every existing server import keeps working unchanged. Imported by
-// relative path, not the `#shared` alias, because `format.spec.ts` runs in
-// the plain vitest environment where Nuxt's aliases aren't applied.
-
-// `formatDuration` moved to `shared/` for the same reason and on the same
-// terms — see the note on it there.
-export { formatDuration } from '../../shared/utils/format'
+// `formatCount` and `formatDuration` both live in `shared/utils/format.ts`
+// because the browser needs them too — the watch page re-formats a count
+// client-side after an optimistic like, and Creator Studio's upload wizard
+// formats a duration it read off a `<video>` element before the server has
+// ever seen the file. Neither is re-exported here: Nuxt auto-imports
+// `shared/utils`, so server code calls them bare, and re-exporting would give
+// the same name two sources and make the resolution a coin toss.
 
 /**
  * How long a live session has been running, e.g. `"9m"`, `"3h 17m"`.
