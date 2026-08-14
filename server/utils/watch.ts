@@ -59,7 +59,7 @@ export function toWatchLive(row: LiveStreamRow): WatchTarget {
  * behaviour `/api/discovery/live/[streamer]` already has. Returns `null` for
  * an unknown slug so callers decide between 404 and a fallback.
  *
- * This is where `unlisted` earns its existence (ADR-028): browse surfaces drop
+ * This is where `unlisted` earns its existence (ADR-030): browse surfaces drop
  * unlisted and private alike, and resolution by id lets the unlisted one back
  * in. A private clip resolves for its owner only — so a creator can preview a
  * draft on the real watch page instead of a studio approximation of it — and

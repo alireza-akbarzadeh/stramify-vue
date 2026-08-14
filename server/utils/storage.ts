@@ -4,7 +4,7 @@ import { dirname, join, resolve } from 'node:path'
 import type { Readable } from 'node:stream'
 
 /**
- * Object storage for creator uploads — one seam, one implementation (ADR-029).
+ * Object storage for creator uploads — one seam, one implementation (ADR-031).
  *
  * The implementation writes to the local filesystem. That is a deliberate
  * choice and not a placeholder: Cloudflare R2 is the documented target

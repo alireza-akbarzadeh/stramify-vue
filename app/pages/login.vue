@@ -5,6 +5,7 @@ import {toast} from '@/components/ui/sonner'
 import {authClient} from '@/lib/auth-client'
 import {useAuthStore} from '@/stores/auth'
 
+definePageMeta({layout: 'auth'})
 useHead({title: 'Log in — Streamify'})
 
 const auth = useAuthStore()

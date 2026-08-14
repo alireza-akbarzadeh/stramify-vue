@@ -25,10 +25,22 @@ import type { StudioMediaKind } from '#shared/types/studio'
  * through the small `WizardForm` adapter below, which is the whole seam.
  */
 
-// `keepValuesOnUnmount` is irrelevant here (nothing unmounts mid-flow) but the
-// defaults matter: `visibility` starts private so a half-finished flow that
-// somehow submits can't publish, matching the server's refusal to default it.
+/**
+ * `keepValuesOnUnmount` is load-bearing, not a precaution.
+ *
+ * Each step is a `v-if`, so walking from Details to Visibility unmounts the
+ * title, description and category fields — and vee-validate's default is to
+ * drop a field's value when its component unmounts. Without this the review
+ * panel on the last step renders "Title —" and Publish posts an empty title,
+ * which the server correctly rejects as a 400. The wizard is one form spread
+ * across four screens; the values have to outlive the screen that collected
+ * them.
+ *
+ * `visibility` starts private so that a flow which somehow submits early
+ * can't publish, matching the server's refusal to default that field at all.
+ */
 const form = useForm<StudioDetails>({
+  keepValuesOnUnmount: true,
   validationSchema: studioDetailsValidation,
   initialValues: { title: '', description: '', category: 'Creative', visibility: 'private' }
 })
@@ -70,7 +82,7 @@ watch(wizard.kind, (kind) => {
 
 <template>
   <div class="mx-auto w-full max-w-4xl">
-    <UploadStepper :current="wizard.stepIndex.value"/>
+    <UploadStepper :current="wizard.stepIndex.value" @go="wizard.goTo"/>
 
     <!--
       `form` rather than a div: Enter in the title field should advance the

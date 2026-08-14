@@ -150,6 +150,19 @@ export function useUploadWizard(form: WizardForm) {
     if (stepIndex.value > 0) step.value = WIZARD_STEPS[stepIndex.value - 1]!
   }
 
+  /**
+   * Jump to an earlier step from the stepper.
+   *
+   * Backwards only, and clamped rather than trusted: a step you have already
+   * completed is safe to revisit, while a forward jump would land on a screen
+   * whose prerequisites the wizard hasn't checked. Also refused mid-upload —
+   * the transfer is in flight and its progress bar lives on the last step.
+   */
+  function goTo(index: number) {
+    if (uploading.value || index < 0 || index >= stepIndex.value) return
+    step.value = WIZARD_STEPS[index]!
+  }
+
   async function publish() {
     if (!file.value || !thumbnail.value) return
 
@@ -225,6 +238,7 @@ export function useUploadWizard(form: WizardForm) {
     setKind,
     next,
     back,
+    goTo,
     reset
   }
 }

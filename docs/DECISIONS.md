@@ -1465,3 +1465,119 @@ Phase 8. Titles and descriptions are user-supplied text entering a prompt, so
 the system instruction states that catalogue content is data rather than
 instructions, and nothing the model returns is executed, stored or used to
 build a request. Full write-up in [ai-assistant.md](./ai-assistant.md).
+
+---
+
+## ADR-030: Creator uploads are `clips` rows with an owner and a visibility, not a new table
+
+**Status**: Accepted · 2026-08-14
+
+**Context.** Creator Studio needed two things the catalogue had never had: a
+way to know whose video a row is, and a way for a creator to work on one
+before the world sees it. `clips` had neither — `creator` is a free-text
+handle with no account behind it, and every row was unconditionally visible to
+every browse surface.
+
+The obvious alternative was a separate `uploads` (or `drafts`) table that
+graduates into `clips` on publish. It was rejected for the same reason ADR-016
+rejected a `shorts` table: a studio upload *is* a clip. Comments key on
+`clips.id`, so do reactions, watch progress, watch-later, playlist items and
+`/watch/<slug>` resolution. A parallel table means either duplicating all of
+that or writing a migration path from one table to the other on every publish,
+and the moment a creator edits a published video the two shapes have to agree
+anyway.
+
+**Decision.** Two additive columns on `clips` (migration `0012`):
+
+- `owner_id` — nullable FK to `user`, `on delete set null`. Null is a real,
+  permanent state: every seeded row has no account behind it. The studio lists
+  and authorizes by this column and never by matching the session's name
+  against `creator`, which would hand a back catalogue to anyone who renamed
+  themselves after its creator.
+- `visibility` — `private | unlisted | public`, same values and order as
+  `playlist_visibility` so creators meet one vocabulary, not two. Added with
+  `default 'public'` specifically so the migration left every existing row as
+  visible as it was the day before; nothing relies on the default afterwards,
+  because the upload endpoint requires an explicit choice and 400s without one.
+
+Enforcement is one exported expression, `publishedClips` in
+`server/utils/discovery.ts` (plus `publishedClipsSql` for the four raw-SQL
+queries), applied to every browse surface: the clips grid, categories, the home
+feed, following, shorts, music, search, notifications, the channel directory
+and a channel's videos tab, up-next, and the platform-pulse counters.
+
+**The line between the three values lives in exactly two places.** Browse drops
+`private` and `unlisted` alike — that is `publishedClips`. Resolution by id in
+`resolveWatchTarget` lets `unlisted` back in, and lets `private` through for
+its owner only, which is what makes "preview my draft on the real watch page"
+work without a second player.
+
+**Deliberately not filtered**: liked, watch later, playlists, history and
+continue-watching. A clip only enters one of those by having been watchable
+when someone saved it, and dropping it the moment its owner unpublishes would
+silently edit a stranger's library rather than protect anything.
+
+**Consequences.** Twelve query sites gained one clause each, and a thirteenth
+that should have gained one is a bug this ADR makes findable — the rule has a
+name, so `grep publishedClips` answers "is this surface covered". A creator's
+own drafts still count in their own studio and dashboard numbers, and are
+excluded from the platform's. `owner_id` being nullable means a deleted
+account's uploads survive as unowned and unmanageable; that is accepted,
+because by then there is nobody left to manage them.
+
+---
+
+## ADR-031: Uploaded media is written to local disk behind a storage seam, served with byte ranges
+
+**Status**: Accepted · 2026-08-14
+
+**Context.** ADR-010 names Cloudflare R2 as the object store and Cloudflare
+Stream as the video pipeline, and `runtimeConfig` has carried the credentials
+for both since Phase 1. Neither is configured, both are paid, and Stream does
+not take audio at all — which the studio needs, since a track uploaded there is
+what puts a row on `/music`.
+
+An uploader that only works once someone has a paid bucket is an uploader
+nobody can run, and stubbing it would have meant a publish button that doesn't
+publish (CLAUDE.md §2).
+
+**Decision.** `server/utils/storage.ts` is the only module that knows where
+bytes live. It writes to `UPLOAD_DIR` (default `.data/uploads`, already
+gitignored) under keys of the shape `<video|audio|thumb>/<uuid>.<ext>`, and
+hands callers back a `key` and a `url`. `server/api/media/[...key].get.ts`
+serves them.
+
+This is a real store, not a placeholder: the bytes survive a restart, the
+extension is taken from a MIME allowlist rather than the uploaded filename, and
+playback is genuine playback. Swapping to R2 is `putObject`/`deleteObject`
+becoming S3 calls and `url` becoming a bucket URL — the upload endpoint, the
+database and every player are untouched.
+
+**The media route is handwritten rather than a static mount because of `Range`.**
+Seeking a video *is* that header: a browser asked to jump to 03:12 requests the
+bytes around it, and a server that answers 200-with-everything makes the
+scrubber unusable on anything longer than a few seconds. The route answers 206
+with `Content-Range`, 416 for a range past the end, and falls back to the whole
+body for the multi-range form no media element sends (RFC 9110 §14.2 permits
+this). The arithmetic is in `server/utils/range.ts` so it is testable without a
+socket, and it is — twelve cases.
+
+**Security.** Keys are matched against an exact pattern before they touch the
+filesystem, with a resolved-path prefix check behind it; `../../.env` is
+unrepresentable rather than merely rejected. Responses carry `nosniff`, because
+these are files a stranger uploaded. The route is public and unauthenticated
+on purpose: the URL is an unguessable UUID that ends up in a `<video>` tag and
+in shared links, so gating it would break unlisted distribution and buy
+nothing. Whether a *clip* is reachable is decided where clips are queried
+(ADR-030), not here.
+
+**Consequences.** The request body is buffered in memory by
+`readMultipartFormData`, so the size ceiling is also the per-request memory
+bound — checked against `Content-Length` before a byte is read. Local disk does
+not survive a container rebuild and does not work behind more than one
+instance; both are acceptable for a single-node deployment and both are the
+reason the seam exists. There is no transcoding: the file is served as
+uploaded, which is why the allowlist is limited to formats browsers play
+natively. Duration and orientation are measured in the browser
+(`app/utils/media-probe.ts`) because there is no server-side probe; they are
+treated as claims, clamped, and drive nothing but a label and a grid choice.

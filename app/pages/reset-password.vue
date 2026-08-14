@@ -3,6 +3,7 @@ import { Lock } from '@lucide/vue'
 import { Button } from '@/components/ui/button'
 import { authClient } from '@/lib/auth-client'
 
+definePageMeta({ layout: 'auth' })
 useHead({ title: 'Choose a new password — Streamify' })
 
 const route = useRoute()

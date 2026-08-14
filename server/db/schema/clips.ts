@@ -21,7 +21,7 @@ export const clipCategoryEnum = pgEnum('clip_category', ['Music', 'Gaming', 'Cre
 export const clipOrientationEnum = pgEnum('clip_orientation', ['landscape', 'vertical'])
 
 /**
- * Who may reach a clip (ADR-028). Deliberately the same three values, in the
+ * Who may reach a clip (ADR-030). Deliberately the same three values, in the
  * same order, as `playlist_visibility` — a creator who has met one of these
  * pickers should not have to learn a second vocabulary for the other.
  *
@@ -36,7 +36,7 @@ export const clipVisibilityEnum = pgEnum('clip_visibility', ['private', 'unliste
 /**
  * Real clips backing the discovery feed. `videoUrl` points at a directly
  * playable source (mp4/HLS) — for creator uploads it's a `/api/media/…` key
- * served out of object storage (ADR-029); for seeded rows it's an external
+ * served out of object storage (ADR-031); for seeded rows it's an external
  * URL. Nothing downstream cares which, which is the point.
  */
 export const clips = pgTable(

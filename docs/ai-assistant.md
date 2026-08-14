@@ -35,9 +35,18 @@ Two environment variables, both server-side only:
 # Required. Without it the feature is off — not broken, off.
 GEMINI_API_KEY=your-key-from-aistudio.google.com
 
-# Optional. Defaults to gemini-3.5-flash (free tier).
+# Optional. Defaults to gemini-2.5-flash (free tier).
 GEMINI_MODEL=gemini-2.5-pro
 ```
+
+**On the default model.** It is `gemini-2.5-flash`, not the newer
+`gemini-3.5-flash`. Both are free on the standard tier, but 3.5-flash returned
+Google's *"This model is currently experiencing high demand"* 503 on every call
+while this was being built — the newest flash model shares free capacity with
+everyone who wants to try it, and a default that is usually busy is not a
+default. 2.5-flash is a generation older, amply provisioned, and more than
+enough to summarise a paragraph of metadata. Switch with `GEMINI_MODEL` in
+either direction when that changes.
 
 They land in `runtimeConfig.gemini` (`nuxt.config.ts`), which sits **outside**
 `public`, so the key is never in the client bundle. The browser only ever talks
@@ -62,15 +71,28 @@ the only one who sees it.
 
 | Piece | Component | Endpoint |
 | --- | --- | --- |
+| "Ask AI" trigger + side sheet | `watch/ai/WatchAiSheet.vue` | `GET /api/ai/config` |
 | Summary, topics, opening questions | `watch/ai/WatchAiInsights.vue` | `GET /api/watch/[slug]/ai/insights` |
 | Conversation and composer | `watch/ai/WatchAiAsk.vue` | `POST /api/watch/[slug]/ai/ask` |
 | "Because you're watching this" | `watch/ai/WatchAiPicks.vue` | `GET /api/watch/[slug]/ai/picks` |
 
-`WatchAiPanel` (insights + ask) and `WatchAiPicks` are placed separately by
-`WatchLayout`: the panel is the middle column from `3xl`, the picks sit in the
-sidebar directly above "Up next". Both fetch their own data rather than taking
-props, the same way `WatchPlaylistQueue` and `WatchSaveToPlaylist` do — nothing
-else on the page reads a conversation.
+The assistant is a **sheet behind a trigger** in the actions row, next to Share
+and Save; the picks list sits in the sidebar directly above "Up next".
+
+It was first built as a permanent third column in `WatchLayout` above 1920px,
+and that was wrong twice over: it sat visibly empty on any deployment without a
+key, and it spent width the page would rather give the video. Asking about a
+video is something you reach for, not something you read alongside. The layout
+kept its two columns and simply got wider caps (`WatchView`), which fills a 4K
+screen without inventing a column to fill it with.
+
+The sheet's content is unmounted while closed, which is what stops the insights
+request — the one Gemini call this page would otherwise make unprompted — from
+firing on page load. Nobody spends quota by opening a watch page.
+
+Every piece fetches its own data rather than taking props, the same way
+`WatchPlaylistQueue` and `WatchSaveToPlaylist` do — nothing else on the page
+reads a conversation.
 
 The playhead reaches the panel as a **getter**, not a prop. Vidstack fires
 `time-update` several times a second and the value is read once, when someone
@@ -154,13 +176,24 @@ used to build a request.
 
 | Symptom | Cause | Where |
 | --- | --- | --- |
-| Panel missing entirely | No `GEMINI_API_KEY` | `WatchAiPanel` `v-if="enabled"` |
+| No "Ask AI" button | No `GEMINI_API_KEY` | `WatchAiSheet` `v-if="enabled"` |
 | 503 "not configured" | Key missing but a route was called directly | `requireGemini` |
-| 429 "over its quota" | Gemini's own limit | `toGeminiError` |
+| 503 "model is busy" | Google's capacity error — try again, or switch `GEMINI_MODEL` | `toGeminiError` |
+| 429 "over its quota" | Gemini's own rate limit | `toGeminiError` |
 | 429 "too many AI requests" | Our limiter | `enforceRateLimit`, `Retry-After` set |
 | 504 "took too long" | 20s timeout | `REQUEST_TIMEOUT_MS` |
 | 502 "unexpected shape" | Model ignored `responseSchema` | `generateJson` Zod check |
 | 422 "blocked by safety filters" | `promptFeedback.blockReason` | `generate` |
+| 502 "unavailable" | Anything else — **read the log** | `toGeminiError` |
+
+**Debugging a 502.** The viewer-facing messages are deliberately vague, so
+`toGeminiError` logs the real upstream cause at `error` level, and in dev also
+attaches it to the response as `data.upstream` (visible in the network tab).
+Google puts the cause in `data.error.message` — "models/x is not found", "API
+key not valid". If the body isn't Google's JSON at all the raw text is logged
+instead, truncated: a `<!DOCTYPE html>` there means something between this
+server and Google (a corporate proxy, a sandboxed egress) returned its own
+block page, and the key and model are not the problem.
 
 Insights failing does **not** take the ask box down — losing the summary is no
 reason to remove the thing the panel is named after. A failed question is put

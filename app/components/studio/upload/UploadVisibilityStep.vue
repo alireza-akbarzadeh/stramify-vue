@@ -4,7 +4,8 @@ import type { Choice } from '../StudioChoiceGroup.vue'
 import UploadProgress from './UploadProgress.vue'
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { formatDuration } from '#shared/utils/format'
-import { CLIP_VISIBILITIES, VISIBILITY_COPY } from '#shared/utils/studio'
+import { VISIBILITY_COPY } from '#shared/utils/studio'
+import { CLIP_VISIBILITIES } from '#shared/types/studio'
 import type { ClipVisibility, StudioMediaKind } from '#shared/types/studio'
 
 /**

@@ -185,13 +185,22 @@ async function generate(
  */
 function toGeminiError(error: unknown): ReturnType<typeof createError> {
   const status = (error as { status?: number; statusCode?: number })?.status ?? 0
-  const upstream = (error as { data?: { error?: { message?: string; status?: string } } })?.data
-    ?.error
+  const body = (error as { data?: unknown })?.data
+  const structured = (body as { error?: { message?: string; status?: string } } | undefined)?.error
 
-  logger.error(
-    { status, upstream: upstream?.message, reason: upstream?.status },
-    'Gemini request failed'
-  )
+  /**
+   * Google's JSON errors carry the cause in `data.error.message`, but the
+   * response is not always Google's — a corporate proxy or a sandboxed egress
+   * returns an HTML block page with its own status, and reading `.error` off a
+   * string yields `undefined`, which logs an empty line and looks like the API
+   * said nothing. So the fallback stringifies whatever did arrive, truncated:
+   * "<!DOCTYPE html>…" in the log is itself the answer.
+   */
+  const upstream =
+    structured?.message ??
+    (typeof body === 'string' ? body.slice(0, 200) : body ? JSON.stringify(body).slice(0, 200) : undefined)
+
+  logger.error({ status, upstream, reason: structured?.status }, 'Gemini request failed')
 
   /**
    * In dev the upstream message rides along in `data` as well, so the cause is
@@ -200,7 +209,7 @@ function toGeminiError(error: unknown): ReturnType<typeof createError> {
    * echoes the key. Stripped in production, where the viewer gets the plain
    * sentence and the detail stays in the log.
    */
-  const detail = import.meta.dev && upstream?.message ? { data: { upstream: upstream.message } } : {}
+  const detail = import.meta.dev && upstream ? { data: { upstream } } : {}
 
   if (status === 429) {
     return createError({

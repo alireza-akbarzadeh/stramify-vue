@@ -2,7 +2,7 @@ import { parseByteRange } from '../../utils/range'
 import { resolveObject } from '../../utils/storage'
 
 /**
- * Serves creator uploads out of object storage (ADR-029).
+ * Serves creator uploads out of object storage (ADR-031).
  *
  * Public and unauthenticated, on purpose. The URL is a UUID with no
  * enumerable structure, and it is the same URL that ends up in a `<video>`

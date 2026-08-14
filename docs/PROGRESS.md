@@ -6,7 +6,7 @@
 > have advanced it. See the concurrent-session note below for why that
 > caution is not hypothetical.
 
-**Last updated**: 2026-08-12.
+**Last updated**: 2026-08-14.
 
 > **This file drifted badly between 2026-08-05 and 2026-08-06** — it still
 > said "Phase 0 done, no `package.json`, no Nuxt scaffold" while the repo
@@ -1755,13 +1755,21 @@ Two things to be aware of:
 - `WatchUpNextCard` gained a `note` slot so the picks list reuses it instead of
   forking a near-identical card.
 
-**Layout**
+**Layout — read the correction below before trusting older notes**
 
-- `WatchLayout` goes to three columns at `3xl` (1920px): player+metadata,
-  assistant, sidebar. `WatchView`'s cap steps 1560 → 2160 (`3xl`) → 2480
-  (`4xl`). Theater mode still works at every breakpoint. Below `lg` the
-  assistant falls after the sidebar in source order so live chat stays directly
-  under the video on a phone.
+- The assistant is a **side sheet behind an "Ask AI" trigger** in the actions
+  row (`WatchAiSheet.vue`, with a hand-drawn four-point `GeminiIcon.vue`), not a
+  panel on the page.
+- It was *first* built as a permanent third column at `3xl`, and that was
+  reverted the same session on the user's feedback: with no key configured the
+  column rendered as a dead strip, and it spent width the page would rather give
+  the video. `WatchLayout` is back to two columns at every breakpoint.
+- What survived of the width work: the sidebar widens (400 → 440 at `3xl` → 480
+  at `4xl`) and `WatchView`'s cap steps 1560 → 1860 (`3xl`) → 2100 (`4xl`), so a
+  4K screen or a TV is no longer mostly margin — without inventing a column to
+  fill it with.
+- Because the sheet's content unmounts while closed, no Gemini call happens
+  until someone opens the assistant.
 
 ### Verified this session (toolchain actually ran)
 
@@ -1778,21 +1786,48 @@ Two things to be aware of:
   returns `{"enabled":false,...}` with no key set; three-column layout confirmed
   at 1920×1080 and 2560×1300; no horizontal overflow at 375×812.
 
-### ⚠️ Not verified — the live model path
+### ⚠️ Not verified — the live model path. Do this first.
 
-**No `GEMINI_API_KEY` was set in `.env` when this session ran**, so the disabled
-path is proven end to end and the *enabled* one is not. Nothing has ever called
-Gemini from this codebase. Before trusting the panel:
+A key was added to `.env` mid-session and `/api/ai/config` correctly flipped to
+`{"enabled":true,"model":"gemini-2.5-flash","tier":"free"}`. Beyond that the
+live path is **still unproven**, for two environmental reasons, neither of them
+a defect in this code:
 
-1. Add `GEMINI_API_KEY=...` to `.env` (get one at aistudio.google.com).
-2. Reload a watch page. `/api/ai/config` should report `enabled: true`.
-3. Check the summary and topics render, sign in, ask a question, and confirm
-   the picks list appears above "Up next" with a reason per row.
+1. **The agent session's egress is proxied.** Requests to
+   `generativelanguage.googleapis.com` from the sandboxed dev server came back
+   as an HTML `Error 403 (Forbidden)!!1` block page, not a Gemini response. The
+   *user's* own unsandboxed dev server did reach Google.
+2. **The one real Gemini response we got was a capacity error.** On the user's
+   server, `gemini-3.5-flash` returned Google's *"This model is currently
+   experiencing high demand"* 503 on five consecutive calls. That is why the
+   default model was changed to `gemini-2.5-flash` — a change that has itself
+   never been exercised against the real API.
 
-Specifically unproven: whether the free flash model honours `responseSchema`
-tightly enough that `generateJson`'s Zod check never trips (a 502 "unexpected
-shape" in the panel is the symptom), and whether `maxOutputTokens` is generous
-enough for the insights JSON.
+So nobody has yet seen a successful `generateContent` from this codebase.
+Before trusting the assistant, on a machine with direct internet access:
+
+1. `pnpm dev`, open a watch page, press **Ask AI**.
+2. Confirm the summary, topics and suggested questions render.
+3. Sign in and ask a question; confirm an answer and follow-ups come back.
+4. Confirm "Because you're watching this" appears above "Up next" with a reason
+   per row.
+5. If any of it 502s, read the server log — `toGeminiError` logs the real
+   upstream message, and in dev also returns it as `data.upstream`.
+
+Specifically unproven: whether the flash model honours `responseSchema` tightly
+enough that `generateJson`'s Zod check never trips (a 502 "unexpected shape" is
+the symptom), and whether `maxOutputTokens` is generous enough for the insights
+JSON.
+
+### ⚠️ Also not verified — the sheet in a browser
+
+The two-column layout and the absent-key state were confirmed in a real browser
+at 1920×1080, 2560×1300 and 375×812 (no horizontal overflow), and the reverted
+grid was re-confirmed in the SSR markup afterwards. The **sheet itself was never
+opened in a browser**: the agent's Browser pane went unresponsive, and for part
+of the session client hydration was broken by a concurrent session's in-flight
+move of `app/pages/studio/videos.vue` into a directory. Open it once and check
+the trigger, the header, the composer and the logged-out state.
 
 ### Owed / next steps
 
@@ -1870,3 +1905,150 @@ and gave the page real motion. Full write-up in [music.md](./music.md) under
   tabs"). They look like fallout from in-flight nav/save-label changes.
 - No E2E for the carousel. The keyboard path (arrow keys on the section) and the
   auto-advance are only covered by unit tests.
+
+---
+
+## Creator Studio session, 2026-08-14 (appended)
+
+Built the two studio surfaces that were still `ComingSoon`: the upload flow and
+the content manager. Phase 9 (Creator System) work, and the first time anything
+in this app writes a video rather than reading a seeded one.
+
+Full write-up: **[studio.md](./studio.md)**. Decisions: **ADR-030** (uploads are
+`clips` rows with an owner and a visibility) and **ADR-031** (local-disk object
+storage behind a seam, served with byte ranges).
+
+### What was built
+
+- **Migration `0012`** — two additive columns on `clips`: `owner_id` (nullable
+  FK to `user`, `on delete set null`) and `visibility`
+  (`private|unlisted|public`, `default 'public'` so every seeded row stayed
+  exactly as visible as it was). **Applied to the Neon DB this session.**
+- **`/studio/upload`** — four-step wizard (file → details → visibility → done).
+  Drag-and-drop that is also a real `<label>`+input, kind toggle for
+  video vs music, browser-side probing for duration/orientation/poster frame,
+  a real `XMLHttpRequest` progress bar, and a done screen with watch/copy-link/
+  upload-another.
+- **`/studio/videos`** — content manager with search, visibility chips, sort,
+  and four genuinely distinct states (loading / error+retry / never uploaded /
+  nothing matches filters). Optimistic delete behind an `AlertDialog`.
+- **`/studio/videos/[id]`** — edit title, description, category, visibility.
+  A route, not a sheet, so the URL is the thing being edited.
+- **Storage + media route** — `server/utils/storage.ts` (the only module that
+  knows where bytes live) and `server/api/media/[...key].get.ts` with real
+  `Range` support, so seeking works on an uploaded file.
+- **Visibility enforcement** — one exported `publishedClips` /
+  `publishedClipsSql`, applied across 12 browse query sites.
+- `formatDuration` moved to `shared/utils/format.ts` (the wizard needs it in
+  the browser), following the precedent `formatCount` set. The nine server
+  call sites now auto-import it; the re-export was removed because having two
+  sources for one auto-imported name makes resolution a coin toss.
+
+### Verified this session
+
+- **84 new tests across 9 files pass.** Pure logic (limits, rejection messages,
+  slug generation, byte-range parsing incl. 416 and the multi-range fallback,
+  progress arithmetic, the filter/sort matrix) *and* five mounted components —
+  `UploadWizard`, `StudioVideoEditor`, `StudioVideoList`, `StudioChoiceGroup`,
+  `StudioVisibilityBadge`. Full suite: 549 pass, only the 6 pre-existing
+  failures below.
+- **Mounting the components caught a real crash that no amount of typechecking
+  would have.** `@vee-validate/zod@4.15.1` calls `_def.defaultValue()` as a
+  function; in zod 4 (what this repo pins) it's a plain value, so the single
+  `.default('')` on `description` in `studioDetailsSchema` threw from inside
+  `useForm` and **took down both the upload wizard and the edit page on
+  mount**. Fixed by moving the empty string to `initialValues`. There is a
+  loud warning about this in [studio.md](./studio.md) — do not put `.default()`
+  back in that schema.
+- **Every browse surface still returns real data** after the visibility change,
+  checked against the running dev server: discovery clips (12), categories
+  (Music 7 / Creative 3 / Gaming 2), music (hero + 3 shelves), home feed (20
+  items), shorts (5), channels (13), search, watch page 200.
+- **Auth and traversal**: `/api/studio/videos` and `POST /api/studio/uploads`
+  both 401 signed out; `/api/media/../../.env` and an unknown key both 404.
+- Typecheck is clean for every file this session touched. Two real bugs it
+  caught and fixed: `CLIP_VISIBILITIES` imported from `#shared/utils/studio`
+  when it lives in `#shared/types/studio`, and `sendStream`/`Content-Length`
+  type mismatches in the media route.
+
+### Verified in a real browser, signed in (2026-08-14)
+
+Walked the whole flow on a live session at `localhost:3001`. A real WebM was
+generated in-page with `MediaRecorder` so the probe had an actual codec to read.
+
+- **Upload works end to end.** File → probe (duration `00:02` read off the file,
+  poster frame captured to canvas) → title auto-filled from the filename
+  (`Verified Upload_run-2.webm` → "Verified Upload run 2") → publish → done
+  screen, slug `/watch/verified-upload-run-2-5262e9`.
+- **The stored object is real and seekable.** `GET` on the uploaded
+  `/api/media/video/<uuid>.webm` with `Range: bytes=0-99` answers **206
+  `bytes 0-99/116517`**, `content-type: video/webm`. Thumbnail serves 200
+  `image/jpeg` at 640×360.
+- **Content page** lists the row with its duration badge, Public badge, counts
+  and Edit; filters, sort and the count all render.
+- **Mobile 375×812**: no horizontal overflow (`scrollWidth === innerWidth`),
+  row actions drop to their own line, tab bar intact.
+
+**Three real bugs were found this way and fixed** — none of which typecheck,
+lint or the pure unit tests would have caught. All three now have regression
+tests, and all three are written up in [studio.md](./studio.md):
+
+1. `.default('')` in the zod schema crashed `useForm` on mount (zod 4 vs
+   `@vee-validate/zod`), taking down the wizard *and* the edit page.
+2. Missing `keepValuesOnUnmount` meant the title was discarded when the details
+   step unmounted — Publish would have posted an empty title.
+3. Omitting `StepperTrigger` broke Reka's screen-reader announcement to
+   **"Step 4 of 0"**.
+
+### Still not done
+
+- No E2E; no second upload of the **music/audio** kind through the UI.
+- The poster frame lands on a dark early frame for `MediaRecorder`-produced
+  WebM, which has no seek index. Real camera/editor files carry one, so this is
+  a property of the synthetic test file rather than of `capture()` — worth
+  re-checking with a real mp4.
+
+### Deliberate limits (don't file these as bugs)
+
+- **The file uploads on the last step, not on drop.** One request, no orphaned
+  objects. Splitting it two-phase is the change if the wait becomes a
+  complaint.
+- **The media file can't be replaced on an existing upload** — it would change
+  what everyone who already commented was talking about. Delete and re-upload.
+- **No transcoding.** The format allowlist is limited to what browsers play
+  natively, and duration/orientation are browser-measured claims.
+- **Local disk** doesn't survive a container rebuild and won't work across
+  instances. That's what the seam is for.
+- The studio dashboard, analytics, comments, playlists, monetization,
+  customization and settings pages are all still `ComingSoon`.
+
+### Owed / next steps
+
+1. **Walk the flow signed in** (see the warning above): one real upload of each
+   kind, a scrub on the result, and a look at 375px.
+2. No E2E coverage for the studio at all.
+3. `/studio` itself is still a placeholder — the dashboard is the obvious next
+   piece now that there's owned content to summarise.
+4. A creator's `clips.creator` is still `user.name` via `channelHandle`. Renaming
+   an account silently re-attributes its uploads' display handle; `owner_id` is
+   unaffected, so nothing breaks, but it's worth a real channel link eventually.
+
+### Auth layout (same session)
+
+`/login`, `/signup`, `/forgot-password`, `/reset-password` and `/verify-email`
+set no `layout`, so all five fell through to `default.vue` and rendered
+`AppHeader` + `AppFooter` — a marketing nav (with its own "Log in" and "Start
+streaming" buttons) above a full-bleed auth screen that already carries its own
+wordmark and theme toggle from `AuthLayout.vue`, plus a footer of product links
+under the login form. Two brand marks, and a nav offering the page you were
+already on.
+
+New `app/layouts/auth.vue` renders nothing but the `#main-content` landmark, and
+all five pages now `definePageMeta({ layout: 'auth' })`. Verified on `/login`:
+header navs 0, footers 0, brand marks 1 (was 2), no "Start streaming" CTA,
+`#main-content` still present for the skip link. `AuthLayout.vue` is unchanged —
+it stays a component because it takes a per-page `title`/`subtitle`, which a
+layout can't.
+
+`settings/two-factor.vue` also uses `AuthLayout` but was deliberately left
+alone: it's an in-app settings page, not an entry point.

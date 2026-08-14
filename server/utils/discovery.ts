@@ -20,7 +20,7 @@ export const landscapeClips = eq(clips.orientation, 'landscape')
 
 /**
  * The filter every *browse* surface applies, now that creators can upload
- * (ADR-028): a clip appears in a feed, a grid, a shelf, a search result or a
+ * (ADR-030): a clip appears in a feed, a grid, a shelf, a search result or a
  * channel's tab only if its owner published it.
  *
  * `unlisted` is excluded here alongside `private` — that is the entire

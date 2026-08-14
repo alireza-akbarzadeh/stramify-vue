@@ -6,6 +6,15 @@
       "runtimeExecutable": "pnpm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000
+    },
+    {
+      "name": "nuxt-dev-3001",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        "PUBLIC_APP_URL=http://localhost:3001 exec npx nuxt dev --port 3001"
+      ],
+      "port": 3001
     }
   ]
 }

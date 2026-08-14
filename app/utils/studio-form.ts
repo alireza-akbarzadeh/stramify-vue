@@ -23,11 +23,22 @@ export const studioDetailsSchema = z.object({
     .trim()
     .min(1, 'Give your video a title.')
     .max(STUDIO_TITLE_MAX, `Keep the title under ${STUDIO_TITLE_MAX} characters.`),
+  /**
+   * Deliberately **not** `.default('')`, however natural that reads here.
+   *
+   * `@vee-validate/zod@4.15.1` walks the schema for defaults and calls
+   * `_def.defaultValue()` as a function; in zod 4 (which this project pins,
+   * ADR-025's lockfile) that property is a plain value, so a single `.default()`
+   * anywhere in this object throws `value._def.defaultValue is not a function`
+   * from inside `useForm` — taking down the upload wizard and the edit page on
+   * mount, before either renders. Empty is supplied through `initialValues` at
+   * both call sites instead, which is where the rest of the starting state
+   * already lives.
+   */
   description: z
     .string()
     .trim()
-    .max(STUDIO_DESCRIPTION_MAX, `Descriptions are limited to ${STUDIO_DESCRIPTION_MAX} characters.`)
-    .default(''),
+    .max(STUDIO_DESCRIPTION_MAX, `Descriptions are limited to ${STUDIO_DESCRIPTION_MAX} characters.`),
   category: z.enum(CLIP_CATEGORIES),
   visibility: z.enum(['private', 'unlisted', 'public'])
 })

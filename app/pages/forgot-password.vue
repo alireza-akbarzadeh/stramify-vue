@@ -3,6 +3,7 @@ import { Mail } from '@lucide/vue'
 import { Button } from '@/components/ui/button'
 import { authClient } from '@/lib/auth-client'
 
+definePageMeta({ layout: 'auth' })
 useHead({ title: 'Reset your password — Streamify' })
 
 const email = ref('')

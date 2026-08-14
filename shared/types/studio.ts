@@ -2,7 +2,7 @@ import type { ClipCategory, ClipOrientation } from './discovery'
 
 /**
  * Wire shapes for Creator Studio — the upload flow and the content manager
- * (ADR-028).
+ * (ADR-030).
  *
  * Everything here describes a row of `clips` that has an `owner_id`. There is
  * no separate uploads table: a studio upload *is* a clip, so the moment it is

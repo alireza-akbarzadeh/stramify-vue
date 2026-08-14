@@ -3,6 +3,7 @@ import { MailCheck } from '@lucide/vue'
 import { Button } from '@/components/ui/button'
 import { authClient } from '@/lib/auth-client'
 
+definePageMeta({ layout: 'auth' })
 useHead({ title: 'Verify your email — Streamify' })
 
 const route = useRoute()
