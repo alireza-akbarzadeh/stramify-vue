@@ -1,16 +1,16 @@
-# Graph Report - stramify  (2026-08-13)
+# Graph Report - stramify  (2026-08-15)
 
 ## Corpus Check
-- 1006 files · ~638,522 words
+- 1086 files · ~690,096 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 7144 nodes · 8556 edges · 825 communities (597 shown, 228 thin omitted)
-- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 156 edges (avg confidence: 0.65)
+- 7559 nodes · 9138 edges · 861 communities (622 shown, 239 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 162 edges (avg confidence: 0.65)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c1083542`
+- Built from commit: `689fda6a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -21,7 +21,7 @@
 - spacing
 - Track B - motion-v content animation
 - Slides Reference (Overview)
-- schema/auth.ts
+- clips
 - WatchView.vue
 - TestTailwindConfigGenerator
 - .claude/skills/ui-ux-pro-max/scripts/design_system.py
@@ -29,7 +29,7 @@
 - html-token-validator.py
 - BM25
 - FollowingView.vue
-- types/watch.ts
+- ClipCategory
 - sidebar/index.ts
 - BM25
 - _palette_is_dark
@@ -37,7 +37,7 @@
 - UI Styling Skill
 - generate-slide.py
 - TailwindConfigGenerator
-- schema/index.ts
+- UploadWizard.vue
 - color
 - test_design_system_mode.py
 - notifications.ts
@@ -53,7 +53,7 @@
 - ShadcnInstaller
 - MusicCard.vue
 - main
-- Master Prompt (product spec)
+- Progress / Handoff doc
 - Video Preview Modal
 - TooltipContent.vue
 - WatchChat.vue
@@ -64,13 +64,13 @@
 - search
 - DesignSystemGenerator
 - WatchLayout.vue
-- login.vue
+- StudioVideoList.vue
 - design-tokens-starter.json
 - Discovery Feed Page (Streamify)
 - design-system skill (token architecture + component specs + slides)
-- AppSidebar.vue
+- StudioVisibilityBadge.vue
 - WatchCommentComposer.vue
-- reset-password.vue
+- useUploadWizard.ts
 - two-factor.vue
 - validate-tokens.cjs
 - card
@@ -88,7 +88,7 @@
 - Architecture Decision Record (ADR log)
 - gray
 - ._base_config
-- settings/security.vue
+- AppSidebar.vue
 - logo/generate.py
 - generate-tokens.cjs
 - button
@@ -102,12 +102,12 @@
 - LiveDirectory.vue
 - SidebarMenuButton.vue
 - __fixtures__/watch.ts
-- signup.vue
-- verify-email.vue
+- login.vue
+- AnalyticsView.vue
 - zz-watch-preview.vue
 - radius
 - Watch API Surface
-- TrendChart.vue
+- StudioVideoFilters.vue
 - CategoryDetail.vue
 - Magnetic.vue
 - WatchUpNext.vue
@@ -115,18 +115,18 @@
 - detect_domain
 - _select_palette_for_mode
 - chat_messages Table
-- AuthFormField.vue
-- BackupCodeList.vue
-- SocialAuthButtons.vue
+- progress.ts
+- reset-password.vue
+- TrendChart.vue
 - ClipGrid.vue
 - WatchlistPanel.vue
-- AreaChart.vue
-- ChatShowcase.vue
+- picks.get.ts
+- schema/index.ts
 - CountUp.vue
 - ThemeToggle.vue
 - error.vue
-- forgot-password.vue
-- sm
+- WatchComments.vue
+- settings/security.vue
 - /graphify query BFS/DFS traversal flow
 - seed-live-streams.mjs
 - resolveWatchTarget
@@ -147,8 +147,8 @@
 - seed-comments.mjs
 - Brand Voice Framework
 - LiveChannelGrid.vue
-- DashboardShowcase.vue
-- HeroStudio.vue
+- signup.vue
+- storage.ts
 - Separator.vue
 - Skeleton.vue
 - Sonner.vue
@@ -164,9 +164,9 @@
 - validate_data.py
 - package.json
 - Card tokens (--card-bg, --card-shadow, ...)
-- AuthAlert.vue
-- OtpInput.vue
-- PricingSection.vue
+- StudioSidebar.vue
+- verify-email.vue
+- WatchAiAsk.vue
 - .agents/skills/design-system/scripts/slide_search_core.py
 - sidebar/utils.ts
 - Brand Guidelines v1.0
@@ -195,21 +195,23 @@
 - Table component spec (row states/alignment/spacing)
 - Primitive typography scale (font size/weight/line-height/tracking)
 - AppFooter.vue
-- AuthShowcase.vue
-- ChannelCarousel.vue
-- utils/watch-later.ts
-- BentoCard.vue
-- FaqSection.vue
-- GlassPanel.vue
-- LiveBadge.vue
-- StatsBand.vue
-- Testimonials.vue
-- TrustedBy.vue
+- DashboardOverview.vue
+- UploadDropzone.vue
+- session.ts
+- shared/utils/studio.ts
+- Creator Studio
+- SecurityStatusCard.vue
+- Databases
+- MusicHero.vue
+- AuthFormField.vue
+- BackupCodeList.vue
 - utils/dashboard.ts
 - SidebarGroupAction.vue
 - app/utils/following.ts
 - SidebarHeader.vue
 - SidebarMenuSub.vue
+- SocialAuthButtons.vue
+- forgot-password.vue
 - auth-client.ts
 - [username].vue
 - Following (`/following`)
@@ -227,7 +229,7 @@
 - Form & Input Components
 - .test_generate_typescript_config
 - Tailwind CSS Responsive Design
-- getSessionUser
+- server/utils/home.ts
 - .test_write_config_creates_content
 - Typography Specifications
 - stepper/index.ts
@@ -310,11 +312,24 @@
 - Alert component spec (variants/anatomy)
 - Primitive z-index scale
 - Brand-compliant slide system (design tokens + Chart.js + decision CSVs)
+- ChannelPanel.vue
+- DashboardWelcome.vue
+- uploads.post.ts
+- padding-y
+- md
+- 1. THE THREE DIALS (Core Configuration)
 - SKILL: Industrial Brutalism & Tactical Telemetry UI
-- PricingCard.vue
+- utils/auth.ts
+- WatchDescription.vue
+- padding-y
+- WatchAiPicks.vue
+- AI assistant (watch page)
+- none
+- media-probe.ts
 - Vue Best Practices Workflow
-- trend.ts
+- types/dashboard.ts
 - tasteskill: Anti-Slop Frontend Skill
+- PulseStrip.vue
 - graphify export graphml (--graphml)
 - graphify.serve MCP server (--mcp)
 - graphify export svg (--svg)
@@ -322,7 +337,7 @@
 - graphify export wiki (--wiki)
 - FAB formula (Features-Advantages-Benefits)
 - ADR-0009
-- ADR-0022
+- nuxt.config.ts
 - Nuxt Minimal Starter README
 - Appendix B - Canonical Sources (read these before reinventing)
 - Design System: Taste Standard
@@ -333,7 +348,7 @@
 - comments.spec.ts
 - nav.spec.ts
 - Dashboard
-- ClipCategory
+- UploadThumbnailPicker.vue
 - 4. DESIGN ENGINEERING DIRECTIVES (Bias Correction)
 - Directive Best Practices
 - Asset Approval Checklist
@@ -417,13 +432,18 @@
 - HomeView.vue
 - SYNC.md
 - CIP Deliverable Guide
+- 16
+- 1
 - stores/watchlist.ts
-- @better-auth/infra
+- 3
 - useHistory.ts
 - PWA (installability, app icons, service worker)
-- session.ts
-- utils/watch.ts
+- utils/subscriptions.ts
+- server/utils/comments.ts
+- destructive
 - CreateMenu.vue
+- destructive
+- AuthAlert.vue
 - BM25
 - States and Variants
 - What You Must Do When Invoked
@@ -554,7 +574,7 @@
 - UI/UX Pro Max - Design Intelligence
 - HomeRailCard.vue
 - HomeRail.vue
-- utils/library.ts
+- useWatchAi.ts
 - dropdown-menu/index.ts
 - Slides Reference
 - HTML Slide Template
@@ -581,7 +601,7 @@
 - Brand Guidelines Template
 - Notification Hooks
 - radius
-- sm
+- OtpInput.vue
 - ponytail-audit/SKILL.md
 - Ponytail Gain
 - ponytail-review/SKILL.md
@@ -589,7 +609,7 @@
 - Example Workflow
 - ChannelNotifyMenu.vue
 - ShortsView.vue
-- StudioSidebar.vue
+- auth/nuxt.config.ts
 - DropdownMenuCheckboxItem.vue
 - DropdownMenuContent.vue
 - DropdownMenuRadioItem.vue
@@ -599,7 +619,7 @@
 - useShortsActions.ts
 - notify.ts
 - Version Control & DevOps
-- padding-y
+- dashboard/nuxt.config.ts
 - xl
 - $type
 - useSavedVideos.spec.ts
@@ -619,16 +639,16 @@
 - useContinueWatching.ts
 - useHomeFeedback.ts
 - keyboard.spec.ts
-- none
+- ChatShowcase.vue
 - .agents/skills/brand/scripts/tests/test_sync_brand_to_tokens.py
 - main
 - useBilling.ts
 - useLiked.ts
-- Databases
+- analytics.get.ts
 - 8
-- destructive
+- MusicView.vue
 - BillingPlanGrid.vue
-- md
+- CORS (cross-origin API access)
 - WatchPlaylistQueue.vue
 - destructive-foreground
 - ring
@@ -637,7 +657,7 @@
 - .__init__
 - .temp_project
 - CoverStack.vue
-- StudioCreateMenu.vue
+- studio/nuxt.config.ts
 - DropdownMenuSeparator.vue
 - useSearchBox.ts
 - mix/[id].vue
@@ -648,7 +668,7 @@
 - 8
 - .temp_project
 - Switch.vue
-- shadcnVue
+- .mcp.json
 - slides-create.md
 - extraction-spec.md
 - create.md
@@ -675,9 +695,9 @@
 - .test_default_content_paths_react
 - .test_add_colors
 - CategoryScroller.vue
+- [id].patch.ts
 - MobileTabBar.vue
-- padding-y
-- 12
+- AuthShowcase.vue
 - SidebarMenu.vue
 - SidebarMenuAction.vue
 - SidebarMenuSubButton.vue
@@ -700,7 +720,7 @@
 - .test_default_content_paths_react
 - nuxt
 - useAutoplayGate.spec.ts
-- 4
+- ChannelCarousel.vue
 - vee-validate
 - vidstack
 - vue-router
@@ -708,11 +728,15 @@
 - probe.tmp.mjs
 - [slug]/index.get.ts
 - view.post.ts
+- videos/[id].delete.ts
+- AreaChart.vue
+- videos/[id].get.ts
+- zod
+- tailwindcss
+- HeroStudio.vue
 - NOTIFY_OFF_ICON
 - BillingStatusCard.vue
-- 6
 - billing.vue
-- 0
 - lg
 - @heroicons/vue
 - pino-pretty
@@ -721,14 +745,12 @@
 - typescript
 - vitest
 - 3
-- destructive
-- imagegen-frontend-web/SKILL.md
-- SidebarMenuBadge.vue
+- useHoverPreview.ts
+- MusicHero.spec.ts
 - BillingIntervalToggle.vue
 - SidebarGroupContent.vue
 - SidebarInset.vue
 - clsx
-- eslint
 - @nuxtjs/color-mode
 - @polar-sh/sdk
 - vue
@@ -736,6 +758,25 @@
 - @playwright/test
 - tw-animate-css
 - @vue/test-utils
+- PricingCard.vue
+- useSlideshow.spec.ts
+- StudioVideoEditor.vue
+- none
+- md
+- DashboardShowcase.vue
+- MusicHeroControls.vue
+- MusicHeroQueue.vue
+- 1
+- PricingSection.vue
+- LiveBadge.vue
+- SidebarFooter.vue
+- BentoCard.vue
+- FaqSection.vue
+- GlassPanel.vue
+- StatsBand.vue
+- Testimonials.vue
+- TrustedBy.vue
+- marketing/nuxt.config.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `TailwindConfigGenerator` - 60 edges
@@ -750,6 +791,8 @@
 10. `ShadcnInstaller` - 33 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `main()` --indirect_call--> `file()`  [INFERRED]
+  .agents/skills/design-system/scripts/validate-tokens.cjs → shared/utils/studio.spec.ts
 - `TestDomainDetection` --uses--> `BM25`  [INFERRED]
   .claude/skills/ui-ux-pro-max/scripts/tests/test_core.py → .agents/skills/design/scripts/cip/core.py
 - `TestPersistence` --uses--> `BM25`  [INFERRED]
@@ -757,8 +800,6 @@
 - `TestReasoningMatch` --uses--> `BM25`  [INFERRED]
   .claude/skills/ui-ux-pro-max/scripts/tests/test_core.py → .agents/skills/design/scripts/cip/core.py
 - `TestSearchDomains` --uses--> `BM25`  [INFERRED]
-  .claude/skills/ui-ux-pro-max/scripts/tests/test_core.py → .agents/skills/design/scripts/cip/core.py
-- `TestTokenizer` --uses--> `BM25`  [INFERRED]
   .claude/skills/ui-ux-pro-max/scripts/tests/test_core.py → .agents/skills/design/scripts/cip/core.py
 
 ## Import Cycles
@@ -780,7 +821,7 @@
 - **Watch page component tree** — docs_watch_page_watchview, docs_watch_page_watchlayout, docs_watch_page_props_only_layout, docs_watch_page_responsive_layout [EXTRACTED 1.00]
 - **Deliberate watch-page limitations** — docs_watch_page_readonly_comments_limit, docs_watch_page_chat_polling, docs_watch_page_category_only_upnext [EXTRACTED 1.00]
 
-## Communities (825 total, 228 thin omitted)
+## Communities (861 total, 239 thin omitted)
 
 ### Community 0 - "gray"
 Cohesion: 0.05
@@ -806,9 +847,9 @@ Nodes (34): Discrete confidence-score rubric, Graphify extraction subagent promp
 Cohesion: 0.09
 Nodes (33): Banner Sizes & Art Direction Styles Reference, CIP Deliverable Guide, CIP Design Reference, CIP Mockup Prompt Engineering, CIP Design Style Guide, Design Routing Guide, Icon Design Reference, Logo Color Psychology (+25 more)
 
-### Community 6 - "schema/auth.ts"
-Cohesion: 0.07
-Nodes (28): account, session, ADR-0007, twoFactor, user, verification, chatMessages, ADR-0015 (+20 more)
+### Community 6 - "clips"
+Cohesion: 0.06
+Nodes (40): account, session, ADR-0007, twoFactor, user, verification, chatMessages, ADR-0015 (+32 more)
 
 ### Community 7 - "WatchView.vue"
 Cohesion: 0.05
@@ -838,9 +879,9 @@ Nodes (19): BM25, _domain_keywords(), _get_bm25(), _load_csv(), _load_product_ke
 Cohesion: 0.06
 Nodes (19): busy, notify, { unfollow }, headingId, props, saved, to, props (+11 more)
 
-### Community 14 - "types/watch.ts"
-Cohesion: 0.17
-Nodes (14): ClipOrientation, Short, ShortsPage, ChatMessage, CommentDraft, CommentSort, ReactionSummary, ReactionValue (+6 more)
+### Community 14 - "ClipCategory"
+Cohesion: 0.09
+Nodes (35): CHANNEL_NOTIFY_MODES, CHANNEL_SORTS, CHANNEL_VIDEO_SORTS, ChannelIdentity, ChannelListItem, ChannelLiveSession, ChannelNotifyMode, ChannelProfile (+27 more)
 
 ### Community 15 - "sidebar/index.ts"
 Cohesion: 0.11
@@ -870,9 +911,9 @@ Nodes (19): _e(), generate_chart_slide(), generate_cta_slide(), generate_deck(),
 Cohesion: 0.11
 Nodes (10): Generate Tailwind CSS configuration files., Add full color palette (50-950 shades) for a base color. Args: name: Color name…, TailwindConfigGenerator, Test adding custom fonts., Test adding custom spacing., Test plugin recommendations., Test validating config with empty theme extensions., Test initialization for JavaScript config. (+2 more)
 
-### Community 22 - "schema/index.ts"
-Cohesion: 0.07
-Nodes (47): querySchema, paramsSchema, paramsSchema, bodySchema, paramsSchema, paramsSchema, paramsSchema, querySchema (+39 more)
+### Community 22 - "UploadWizard.vue"
+Cohesion: 0.08
+Nodes (19): Choice, columnClass, emit, name, props, choices, categoryChoices, locked (+11 more)
 
 ### Community 23 - "color"
 Cohesion: 0.11
@@ -917,7 +958,7 @@ Nodes (16): aliases, components, composables, lib, ui, utils, iconLibrary, $sche
 
 ### Community 32 - "devDependencies"
 Cohesion: 0.09
-Nodes (23): drizzle-kit, eslint-config-prettier, happy-dom, husky, @nuxt/eslint, @nuxt/test-utils, devDependencies, drizzle-kit (+15 more)
+Nodes (23): drizzle-kit, eslint, eslint-config-prettier, happy-dom, husky, @nuxt/eslint, @nuxt/test-utils, devDependencies (+15 more)
 
 ### Community 33 - "icon/generate.py"
 Cohesion: 0.20
@@ -932,16 +973,16 @@ Cohesion: 0.23
 Nodes (9): main(), Add all available shadcn/ui components. Args: overwrite: If True, overwrite…, Handle shadcn/ui component installation., List installed components. Returns: Tuple of (success, message with component…, Check if shadcn is initialized in project. Returns: True if components.json…, Get list of already installed components. Returns: List of installed component…, Read shadcn version from project package.json; fall back to a pinned default., Add shadcn/ui components. Args: components: List of component names to add… (+1 more)
 
 ### Community 36 - "MusicCard.vue"
-Cohesion: 0.11
-Nodes (10): { mounted, showVideo, progress, enter, leave, onLoadedMetadata, onTimeUpdate, onError }, props, to, { playing, allowed, onLoadedMetadata, onError }, props, to, { data, isPending, isError, refetch, isFetching }, hero (+2 more)
+Cohesion: 0.25
+Nodes (4): { mounted, showVideo, progress, enter, leave, onLoadedMetadata, onTimeUpdate, onError }, props, to, BARS
 
 ### Community 37 - "main"
 Cohesion: 0.12
 Nodes (8): main(), Add custom font families. Args: fonts: Dict of font_type: [font_names] e.g.,…, Add custom spacing values. Args: spacing: Dict of name: value e.g., {'18':…, Add custom breakpoints. Args: breakpoints: Dict of name: width e.g., {'3xl':…, Add plugin requirements. Args: plugins: List of plugin names e.g.,…, Get plugin recommendations based on configuration. Returns: List of recommended…, Validate configuration. Returns: Tuple of (valid, message), Add custom colors to theme. Args: colors: Dict of color_name: color_value Value…
 
-### Community 38 - "Master Prompt (product spec)"
-Cohesion: 0.14
-Nodes (21): ADR-012: Vidstack for clip playback; clips table replaces discovery fixtures, ADR-013: Real live_streams table backs /live; LiveSignal extended, Progress / Handoff doc, Current phase status (post-Phase 5, not phase-audited), Open questions (deployment target, Cloudflare Stream limits), Master Prompt (product spec), Phase 10 — Social System, Phase 11 — Admin (+13 more)
+### Community 38 - "Progress / Handoff doc"
+Cohesion: 0.20
+Nodes (14): Deployment architecture, ADR-012: Vidstack for clip playback; clips table replaces discovery fixtures, ADR-013: Real live_streams table backs /live; LiveSignal extended, Progress / Handoff doc, Current phase status (post-Phase 5, not phase-audited), Open questions (deployment target, Cloudflare Stream limits), Phase 2 — Design System, Phase 5 — Discovery (+6 more)
 
 ### Community 39 - "Video Preview Modal"
 Cohesion: 0.14
@@ -976,12 +1017,12 @@ Cohesion: 0.14
 Nodes (10): DesignSystemGenerator, Generates design system recommendations from aggregated searches., Load reasoning rules from CSV., Execute searches across multiple domains., Find matching reasoning rule for a category., Apply reasoning rules to search results., Select best matching result based on priority keywords., Extract results list from search result dict. (+2 more)
 
 ### Community 48 - "WatchLayout.vue"
-Cohesion: 0.17
-Nodes (12): AsyncPanel, ChatPanel, CommentsPanel, RelatedPanel, WatchEngagement, clippable, expanded, props (+4 more)
+Cohesion: 0.22
+Nodes (11): AsyncPanel, ChatPanel, CommentsPanel, RelatedPanel, WatchEngagement, emit, onProgress(), sort (+3 more)
 
-### Community 49 - "login.vue"
-Cohesion: 0.19
-Nodes (13): auth, backupCode, email, error, onSubmit(), otp, password, pending (+5 more)
+### Community 49 - "StudioVideoList.vue"
+Cohesion: 0.10
+Nodes (15): emit, { data: videos, isPending, isError, refetch }, pendingDelete, remove, { search, visibility, sort, filtered, filtering, clear }, state, STUDIO_VIDEOS_KEY, studioVideoKey() (+7 more)
 
 ### Community 50 - "design-tokens-starter.json"
 Cohesion: 0.15
@@ -995,17 +1036,17 @@ Nodes (13): Clip card pattern (thumbnail, duration badge, bookmark icon, title, 
 Cohesion: 0.20
 Nodes (12): Color system hierarchy (Primary/Secondary/Neutral/Semantic), Mission→Vision→Value Prop→Positioning→Key Messages→Proof Points chain, /brand:update command workflow, sync-brand-to-tokens.cjs script, design skill (unified: brand/tokens/UI/logo/CIP/slides/banners/icons/social photos), Sub-skill routing table (brand/design-system/ui-styling + built-ins), Component Specifications reference, Component Tokens reference (+4 more)
 
-### Community 53 - "AppSidebar.vue"
-Cohesion: 0.14
-Nodes (11): groups, {isAuthenticated}, isExpanded, {state, isMobile}, isActive, props, route, showLabel (+3 more)
+### Community 53 - "StudioVisibilityBadge.vue"
+Cohesion: 0.12
+Nodes (11): ICONS, label, props, TONES, emit, props, watchPath, editPath (+3 more)
 
 ### Community 54 - "WatchCommentComposer.vue"
-Cohesion: 0.10
-Nodes (20): auth, cancel(), canSubmit, draft, emit, field, focused, open (+12 more)
+Cohesion: 0.20
+Nodes (11): auth, cancel(), canSubmit, draft, emit, field, focused, open (+3 more)
 
-### Community 55 - "reset-password.vue"
-Cohesion: 0.17
-Nodes (10): confirm, confirmError, done, error, invalid, password, passwordError, pending (+2 more)
+### Community 55 - "useUploadWizard.ts"
+Cohesion: 0.24
+Nodes (12): titleFromFilename(), useUploadWizard(), WIZARD_STEPS, WizardForm, WizardStep, StudioDetails, buildUploadForm(), messageFrom() (+4 more)
 
 ### Community 56 - "two-factor.vue"
 Cohesion: 0.17
@@ -1041,7 +1082,7 @@ Nodes (11): Template: Color Palette section, Template: Logo Usage section, Brand
 
 ### Community 64 - "dependencies"
 Cohesion: 0.15
-Nodes (13): better-auth, @lucide/vue, dependencies, better-auth, @lucide/vue, @polar-sh/better-auth, @tanstack/vue-query, @vee-validate/zod (+5 more)
+Nodes (13): better-auth, @better-auth/infra, @lucide/vue, dependencies, better-auth, @better-auth/infra, @lucide/vue, @polar-sh/better-auth (+5 more)
 
 ### Community 65 - "inject-brand-context.cjs"
 Cohesion: 0.31
@@ -1064,8 +1105,8 @@ Cohesion: 0.08
 Nodes (15): noResults, props, props, to, watchedAt, clear, term, auth (+7 more)
 
 ### Community 70 - "Architecture Decision Record (ADR log)"
-Cohesion: 0.09
-Nodes (34): Streamify Architecture doc, Auth & authorization architecture, Backend architecture (Nitro domain routes), Database architecture, Deployment architecture, Observability architecture, Realtime architecture (chat, notifications, viewer counts), Architecture Research (Phase 0) (+26 more)
+Cohesion: 0.08
+Nodes (41): Streamify Architecture doc, Auth & authorization architecture, Backend architecture (Nitro domain routes), Database architecture, Observability architecture, Realtime architecture (chat, notifications, viewer counts), Architecture Research (Phase 0), Auth research (nuxt-auth-utils vs better-auth) (+33 more)
 
 ### Community 71 - "gray"
 Cohesion: 0.05
@@ -1075,9 +1116,9 @@ Nodes (53): $type, $value, $type, $value, $type, $value, $type, $value (+45 more
 Cohesion: 0.22
 Nodes (6): Any, Path, Initialize generator. Args: typescript: If True, generate .ts config, else .js…, Determine default output path., Create base configuration structure., Get default content paths for framework.
 
-### Community 73 - "settings/security.vue"
-Cohesion: 0.18
-Nodes (9): auth, current, error, next, nextError, pending, revokeOthers, saved (+1 more)
+### Community 73 - "AppSidebar.vue"
+Cohesion: 0.14
+Nodes (11): groups, {isAuthenticated}, isExpanded, {state, isMobile}, isActive, props, route, showLabel (+3 more)
 
 ### Community 74 - "logo/generate.py"
 Cohesion: 0.29
@@ -1131,29 +1172,29 @@ Nodes (6): SidebarMenuButtonVariants, delegatedProps, {isMobile, state}, props, 
 Cohesion: 0.25
 Nodes (7): channel, chatMessages, clipTarget, comments, liveTarget, reactions, relatedItems
 
-### Community 87 - "signup.vue"
-Cohesion: 0.28
-Nodes (8): auth, email, error, name, onSubmit(), password, passwordError, pending
+### Community 87 - "login.vue"
+Cohesion: 0.19
+Nodes (13): auth, backupCode, email, error, onSubmit(), otp, password, pending (+5 more)
 
-### Community 88 - "verify-email.vue"
-Cohesion: 0.25
-Nodes (6): email, error, failed, pending, route, sent
+### Community 88 - "AnalyticsView.vue"
+Cohesion: 0.17
+Nodes (6): { data, isPending, isError, refetch }, range, TINT, LABELS, model, useDashboardAnalytics()
 
 ### Community 89 - "zz-watch-preview.vue"
 Cohesion: 0.14
 Nodes (10): channel, chat, comments, engagement, mode, reactions, related, saved (+2 more)
 
 ### Community 90 - "radius"
-Cohesion: 0.19
-Nodes (14): $type, $value, $type, $value, $type, $value, primitive, radius (+6 more)
+Cohesion: 0.18
+Nodes (15): $type, $value, sm, $type, $value, primitive, radius, shadow (+7 more)
 
 ### Community 91 - "Watch API Surface"
 Cohesion: 0.25
 Nodes (8): Category-Only Up Next (no recommender), follows Table, Props-Only Layout Enables Fixture Preview, requireUser Server-Side Authorization, Watch Responsive Two-Column Layout, Watch API Surface, WatchLayout Presentational Shell, WatchView Container
 
-### Community 92 - "TrendChart.vue"
-Cohesion: 0.04
-Nodes (30): { data, isPending, isError, refetch }, range, TINT, creator, { data, isPending, isError, refetch }, firstName, greeting, initial (+22 more)
+### Community 92 - "StudioVideoFilters.vue"
+Cohesion: 0.21
+Nodes (9): emit, filters, sorts, COMPARATORS, catalogue, setup(), StudioSort, useStudioFilters() (+1 more)
 
 ### Community 93 - "CategoryDetail.vue"
 Cohesion: 0.29
@@ -1164,8 +1205,8 @@ Cohesion: 0.29
 Nodes (4): el, offset, props, reduced
 
 ### Community 95 - "WatchUpNext.vue"
-Cohesion: 0.11
-Nodes (14): emit, kind, props, query, saved, showFilters, visible, emit (+6 more)
+Cohesion: 0.14
+Nodes (11): emit, kind, props, query, saved, showFilters, visible, kind (+3 more)
 
 ### Community 96 - "live.ts"
 Cohesion: 0.33
@@ -1183,17 +1224,17 @@ Nodes (3): Pick the highest-ranked palette matching the resolved mode. Only the 
 Cohesion: 0.33
 Nodes (7): ADR-015 (chat polls, not WebSocket), chat_messages Table, Chat Polling (5s interval), comments Table, Denormalized author_name, Read-Only Comments Limitation, Seed Order Dependency
 
-### Community 100 - "AuthFormField.vue"
-Cohesion: 0.33
-Nodes (5): inputType, isPassword, modelValue, props, revealed
+### Community 100 - "progress.ts"
+Cohesion: 0.22
+Nodes (9): paramsSchema, bodySchema, paramsSchema, deleteWatchProgress(), ProgressRow, resumable(), selectContinueWatching(), toContinueItem() (+1 more)
 
-### Community 101 - "BackupCodeList.vue"
-Cohesion: 0.33
-Nodes (3): asText, copied, props
+### Community 101 - "reset-password.vue"
+Cohesion: 0.17
+Nodes (10): confirm, confirmError, done, error, invalid, password, passwordError, pending (+2 more)
 
-### Community 102 - "SocialAuthButtons.vue"
-Cohesion: 0.40
-Nodes (5): emit, LABELS, pending, providers, signIn()
+### Community 102 - "TrendChart.vue"
+Cohesion: 0.17
+Nodes (10): areaPath, coords, firstDate, gradientId, lastDate, linePath, peak, props (+2 more)
 
 ### Community 103 - "ClipGrid.vue"
 Cohesion: 0.29
@@ -1203,13 +1244,13 @@ Nodes (5): emit, categories, Category, emit, saved
 Cohesion: 0.29
 Nodes (5): emit, emit, { hydrated, savedClips, savedLive }, total, watchlist
 
-### Community 105 - "AreaChart.vue"
-Cohesion: 0.33
-Nodes (5): area, coords, line, max, props
+### Community 105 - "picks.get.ts"
+Cohesion: 0.08
+Nodes (43): ADR-0003, bodySchema, limiter, paramsSchema, cachedInsights, limiter, paramsSchema, cachedPickIds (+35 more)
 
-### Community 106 - "ChatShowcase.vue"
-Cohesion: 0.33
-Nodes (5): active, controls, messages, panel, { visible }
+### Community 106 - "schema/index.ts"
+Cohesion: 0.06
+Nodes (59): paramsSchema, paramsSchema, bodySchema, paramsSchema, paramsSchema, querySchema, paramsSchema, paramsSchema (+51 more)
 
 ### Community 107 - "CountUp.vue"
 Cohesion: 0.33
@@ -1223,13 +1264,13 @@ Nodes (3): colorMode, isDark, props
 Cohesion: 0.33
 Nodes (4): heading, isNotFound, message, props
 
-### Community 110 - "forgot-password.vue"
-Cohesion: 0.33
-Nodes (4): email, error, pending, sent
+### Community 110 - "WatchComments.vue"
+Cohesion: 0.20
+Nodes (9): auth, emit, replying, send(), auth, emit, props, sort (+1 more)
 
-### Community 111 - "sm"
-Cohesion: 0.60
-Nodes (5): sm, sm, sm, $type, $value
+### Community 111 - "settings/security.vue"
+Cohesion: 0.18
+Nodes (9): auth, current, error, next, nextError, pending, revokeOthers, saved (+1 more)
 
 ### Community 112 - "/graphify query BFS/DFS traversal flow"
 Cohesion: 0.53
@@ -1299,13 +1340,13 @@ Nodes (4): Template: Voice & Tone section, Voice consistency checklist (tone/lan
 Cohesion: 0.40
 Nodes (3): emit, emit, saved
 
-### Community 133 - "DashboardShowcase.vue"
-Cohesion: 0.50
-Nodes (3): metrics, upcoming, viewers
+### Community 133 - "signup.vue"
+Cohesion: 0.28
+Nodes (8): auth, email, error, name, onSubmit(), password, passwordError, pending
 
-### Community 134 - "HeroStudio.vue"
-Cohesion: 0.50
-Nodes (3): chat, { onMove, reset, layer }, stage
+### Community 134 - "storage.ts"
+Cohesion: 0.11
+Nodes (19): ADR-0010, ADR-0031, ByteRange, parseByteRange(), RFC-9110, RFC-9110, CONTENT_TYPES, contentTypeFor() (+11 more)
 
 ### Community 138 - "AccountAvatar.vue"
 Cohesion: 0.33
@@ -1350,6 +1391,18 @@ Nodes (6): name, zod, pnpm, overrides, private, type
 ### Community 149 - "Card tokens (--card-bg, --card-shadow, ...)"
 Cohesion: 0.67
 Nodes (3): Card component spec (variants/anatomy/spacing), Card tokens (--card-bg, --card-shadow, ...), Primitive shadow scale
+
+### Community 150 - "StudioSidebar.vue"
+Cohesion: 0.22
+Nodes (5): items, groups, isExpanded, {state, isMobile}, {user}
+
+### Community 151 - "verify-email.vue"
+Cohesion: 0.25
+Nodes (6): email, error, failed, pending, route, sent
+
+### Community 152 - "WatchAiAsk.vue"
+Cohesion: 0.06
+Nodes (25): auth, canSend, draft, emit, field, fieldEl, lastAttempt, log (+17 more)
 
 ### Community 153 - ".agents/skills/design-system/scripts/slide_search_core.py"
 Cohesion: 0.09
@@ -1407,17 +1460,61 @@ Nodes (30): 10. FINAL PRE-FLIGHT CHECK, 1. ACTIVE BASELINE CONFIGURATION, 2. DEF
 Cohesion: 0.67
 Nodes (3): Optimistic Reaction Update with Rollback, Polymorphic (target_id, target_kind) Reactions, reactions Table
 
-### Community 184 - "utils/watch-later.ts"
-Cohesion: 0.20
-Nodes (9): paramsSchema, querySchema, bodySchema, addToWatchLater(), removeFromWatchLater(), selectWatchLater(), selectWatchLaterIds(), toWatchLaterItem() (+1 more)
+### Community 182 - "DashboardOverview.vue"
+Cohesion: 0.29
+Nodes (3): { data, isPending, isError, refetch }, items, useDashboardOverview()
+
+### Community 183 - "UploadDropzone.vue"
+Cohesion: 0.32
+Nodes (7): dragging, emit, input, onDrop(), onPick(), props, rule
+
+### Community 184 - "session.ts"
+Cohesion: 0.10
+Nodes (19): BillingResponse, querySchema, paramsSchema, querySchema, paramsSchema, querySchema, bodySchema, paramsSchema (+11 more)
+
+### Community 185 - "shared/utils/studio.ts"
+Cohesion: 0.17
+Nodes (18): ClipVisibility, StudioMediaKind, acceptFor(), AUDIO_TYPES, categoryForKind(), describeType(), extensionOf(), formatBytes() (+10 more)
+
+### Community 186 - "Creator Studio"
+Cohesion: 0.12
+Nodes (15): 1. `keepValuesOnUnmount: true` is load-bearing, 2. Every step needs a `StepperTrigger`, even a non-interactive one, 3. Do not put `.default()` in `studioDetailsSchema`, API, Creator Studio, Failure modes, Limits, Storage (+7 more)
+
+### Community 187 - "SecurityStatusCard.vue"
+Cohesion: 0.29
+Nodes (6): checklist, complete, dashoffset, done, total, { user }
+
+### Community 188 - "Databases"
+Cohesion: 0.33
+Nodes (6): Convex MCP, Databases, Neon MCP, PostgreSQL MCP, Supabase MCP, Turso MCP
+
+### Community 189 - "MusicHero.vue"
+Cohesion: 0.14
+Nodes (11): active, CROSSFADE, EASE, { index, cycle, running, paused, next, prev, goTo, hold, release, toggle }, Keyframes, OUT, { playing, allowed, onLoadedMetadata, onError }, props (+3 more)
+
+### Community 190 - "AuthFormField.vue"
+Cohesion: 0.33
+Nodes (5): inputType, isPassword, modelValue, props, revealed
+
+### Community 191 - "BackupCodeList.vue"
+Cohesion: 0.33
+Nodes (3): asText, copied, props
 
 ### Community 192 - "utils/dashboard.ts"
-Cohesion: 0.15
-Nodes (23): querySchema, ADR-0014, channelHandle(), countCommentsOnClips(), countLikesOnClips(), EMPTY_ANALYTICS(), metric(), readCreatorOverview() (+15 more)
+Cohesion: 0.18
+Nodes (21): channelHandle(), countCommentsOnClips(), countLikesOnClips(), EMPTY_ANALYTICS(), metric(), readCreatorOverview(), readDashboardAnalytics(), readDashboardOverview() (+13 more)
 
 ### Community 194 - "app/utils/following.ts"
 Cohesion: 0.23
 Nodes (11): dropFollowedChannel(), dropFollowingShelf(), FOLLOWED_CHANNELS_KEY, FOLLOWING_ROOT_KEY, FOLLOWING_SHELVES_KEY, followingSummary(), setFollowedNotify(), storyRing (+3 more)
+
+### Community 201 - "SocialAuthButtons.vue"
+Cohesion: 0.40
+Nodes (5): emit, LABELS, pending, providers, signIn()
+
+### Community 204 - "forgot-password.vue"
+Cohesion: 0.33
+Nodes (4): email, error, pending, sent
 
 ### Community 209 - "Following (`/following`)"
 Cohesion: 0.15
@@ -1433,7 +1530,7 @@ Nodes (35): 1. Visual Communication First, 2. Minimal Text Integration, 3. Exper
 
 ### Community 220 - "utils/playlists.ts"
 Cohesion: 0.08
-Nodes (32): querySchema, bodySchema, paramsSchema, paramsSchema, bodySchema, paramsSchema, paramsSchema, bodySchema (+24 more)
+Nodes (31): querySchema, bodySchema, paramsSchema, paramsSchema, bodySchema, paramsSchema, paramsSchema, bodySchema (+23 more)
 
 ### Community 221 - "Form & Input Components"
 Cohesion: 0.06
@@ -1443,9 +1540,9 @@ Nodes (32): Accordion, Alert, Alert Dialog, Avatar, Badge, Button, Card, Checkbo
 Cohesion: 0.06
 Nodes (32): 1. Mobile-First Design, 2. Consistent Breakpoint Usage, 3. Test at Breakpoint Boundaries, 4. Use Container for Content Width, 5. Progressive Enhancement, 6. Avoid Too Many Breakpoints, Best Practices, Breakpoint System (+24 more)
 
-### Community 224 - "getSessionUser"
-Cohesion: 0.11
-Nodes (29): categorySlugs, querySchema, paramsSchema, notSuppressed(), groupByChannel(), listFollowingShelves(), ShelfRow, CANDIDATES (+21 more)
+### Community 224 - "server/utils/home.ts"
+Cohesion: 0.12
+Nodes (28): categorySlugs, querySchema, paramsSchema, notSuppressed(), groupByChannel(), listFollowingShelves(), ShelfRow, CANDIDATES (+20 more)
 
 ### Community 226 - "Typography Specifications"
 Cohesion: 0.06
@@ -1523,25 +1620,65 @@ Nodes (18): emits, forwarded, props, delegatedProps, props, delegatedProps, prop
 Cohesion: 0.07
 Nodes (18): emits, forwarded, props, props, delegatedProps, DialogContentProperties, emits, forwarded (+10 more)
 
+### Community 309 - "DashboardWelcome.vue"
+Cohesion: 0.40
+Nodes (4): firstName, greeting, initial, { user }
+
+### Community 311 - "padding-y"
+Cohesion: 0.67
+Nodes (4): padding-y, padding-y, $type, $value
+
+### Community 312 - "md"
+Cohesion: 0.67
+Nodes (4): $type, $value, md, md
+
+### Community 315 - "1. THE THREE DIALS (Core Configuration)"
+Cohesion: 0.50
+Nodes (4): 1.A Dial Inference (design read → dial values), 1.B Use-Case Presets, 1.C How the Dials Drive Output, 1. THE THREE DIALS (Core Configuration)
+
 ### Community 316 - "SKILL: Industrial Brutalism & Tactical Telemetry UI"
 Cohesion: 0.12
 Nodes (16): 1. Skill Meta, 2.1 Swiss Industrial Print, 2.2 Tactical Telemetry & CRT Terminal, 2. Visual Archetypes, 3.1 Macro-Typography (Structural Headers), 3.2 Micro-Typography (Data & Telemetry), 3.3 Textural Contrast (Artistic Disruption), 3. Typographic Architecture (+8 more)
 
-### Community 321 - "PricingCard.vue"
-Cohesion: 0.40
-Nodes (4): isFree, period, price, props
+### Community 317 - "utils/auth.ts"
+Cohesion: 0.14
+Nodes (15): allowedOrigins, auth, configuredProviders, crossOrigins, ENV_KEYS, SOCIAL_PROVIDERS, SocialProvider, ADR-0007 (+7 more)
+
+### Community 318 - "WatchDescription.vue"
+Cohesion: 0.50
+Nodes (3): clippable, expanded, props
+
+### Community 319 - "padding-y"
+Cohesion: 0.67
+Nodes (4): padding-y, padding-y, $type, $value
+
+### Community 320 - "WatchAiPicks.vue"
+Cohesion: 0.18
+Nodes (8): config, enabled, picks, props, saved, emit, clip, live
+
+### Community 321 - "AI assistant (watch page)"
+Cohesion: 0.18
+Nodes (10): AI assistant (watch page), Authorization, Caching and quota, Configuration, Failure modes, Grounding: how "more like this" stays real, Prompt injection, Testing (+2 more)
+
+### Community 325 - "none"
+Cohesion: 0.67
+Nodes (4): $type, $value, none, none
+
+### Community 326 - "media-probe.ts"
+Cohesion: 0.47
+Nodes (8): capture(), MediaProbe, once(), probeAudio(), probeMedia(), probeVideo(), toBlob(), toSeconds()
 
 ### Community 329 - "Vue Best Practices Workflow"
 Cohesion: 0.12
 Nodes (16): 1.1 Must-read core references (required), 1.2 Plan component boundaries before coding (required), 1) Confirm architecture before coding (required), 2) Apply essential Vue foundations (required), 3.1 Standard optional features, 3.2 Less-common optional features, 3) Consider optional features only when requirements call for them, 4) Run performance optimization after behavior is correct (+8 more)
 
-### Community 330 - "trend.ts"
-Cohesion: 0.24
-Nodes (13): AnalyticsRange, TrendPoint, TrendSeries, addSeries(), dayWindow(), fillDailySeries(), RANGE_DAYS, rangeToDays() (+5 more)
+### Community 330 - "types/dashboard.ts"
+Cohesion: 0.12
+Nodes (23): AnalyticsRange, CategoryShare, ClipPerformance, CreatorOverview, DashboardAnalytics, DashboardMetric, DashboardOverview, PlatformPulse (+15 more)
 
 ### Community 331 - "tasteskill: Anti-Slop Frontend Skill"
-Cohesion: 0.13
-Nodes (15): 0.A Read these signals first, 0.B Output a one-line "Design Read" before generating, 0. BRIEF INFERENCE (Read the Room Before Anything Else), 0.C If the brief is ambiguous, ask one question, do not guess, 0.D Anti-Default Discipline, 13. OUT OF SCOPE, 14. FINAL PRE-FLIGHT CHECK, 1.A Dial Inference (design read → dial values) (+7 more)
+Cohesion: 0.18
+Nodes (11): 0.A Read these signals first, 0.B Output a one-line "Design Read" before generating, 0. BRIEF INFERENCE (Read the Room Before Anything Else), 0.C If the brief is ambiguous, ask one question, do not guess, 0.D Anti-Default Discipline, 13. OUT OF SCOPE, 14. FINAL PRE-FLIGHT CHECK, 2.A When to reach for a real design system (use official packages) (+3 more)
 
 ### Community 357 - "Appendix B - Canonical Sources (read these before reinventing)"
 Cohesion: 0.13
@@ -1560,8 +1697,8 @@ Cohesion: 0.14
 Nodes (10): box, root, field, props, box, props, emit, ICONS (+2 more)
 
 ### Community 361 - "CORE DIRECTIVE: AWWWARDS-LEVEL IMAGE ART DIRECTION"
-Cohesion: 0.14
-Nodes (14): 10. SECTION RHYTHM RULE, 12. DENSITY & SPACING DISCIPLINE, 14. IMAGE / MEDIA DIRECTION, 16. MULTI-IMAGE CONSISTENCY RULE, 17. CLARITY CHECK, 19. RESPONSE BEHAVIOR, 1. ACTIVE BASELINE CONFIGURATION, 21. FINAL GOAL (+6 more)
+Cohesion: 0.12
+Nodes (16): 10. SECTION RHYTHM RULE, 12. DENSITY & SPACING DISCIPLINE, 14. IMAGE / MEDIA DIRECTION, 16. MULTI-IMAGE CONSISTENCY RULE, 17. CLARITY CHECK, 19. RESPONSE BEHAVIOR, 1. ACTIVE BASELINE CONFIGURATION, 21. FINAL GOAL (+8 more)
 
 ### Community 362 - "2. THE COMBINATORIAL VARIATION ENGINE"
 Cohesion: 0.14
@@ -1572,16 +1709,16 @@ Cohesion: 0.21
 Nodes (11): LikeResult, Snapshot, Thread, useWatchCommentMutations(), applyCommentLike(), countComments(), insertComment(), mapComment() (+3 more)
 
 ### Community 364 - "nav.spec.ts"
-Cohesion: 0.18
-Nodes (16): accountLinks, creatorLinks, discoverLinks, exploreLinks, headerLinks, isNavLinkActive(), libraryLinks, mobileNavLinks (+8 more)
+Cohesion: 0.15
+Nodes (17): accountLinks, creatorLinks, discoverLinks, exploreLinks, headerLinks, isNavLinkActive(), libraryLinks, mobileNavLinks (+9 more)
 
 ### Community 365 - "Dashboard"
 Cohesion: 0.15
 Nodes (12): API, Charts, Component tree, Dashboard, Failure modes, Filling the series, Known limits, Overlap with `server/utils/channels.ts` — read before extending (+4 more)
 
-### Community 366 - "ClipCategory"
-Cohesion: 0.11
-Nodes (23): CHANNEL_NOTIFY_MODES, CHANNEL_SORTS, CHANNEL_VIDEO_SORTS, ChannelIdentity, ChannelLiveSession, ChannelNotifyMode, ChannelProfile, ChannelSort (+15 more)
+### Community 366 - "UploadThumbnailPicker.vue"
+Cohesion: 0.67
+Nodes (3): emit, input, onPick()
 
 ### Community 367 - "4. DESIGN ENGINEERING DIRECTIVES (Bias Correction)"
 Cohesion: 0.17
@@ -1883,17 +2020,37 @@ Nodes (11): TITLE_WIDTHS, emit, feedback, saved, activeChip, activeId, chips, { 
 Cohesion: 0.08
 Nodes (24): Apparel, Business Card, Car/Sedan, CIP Deliverable Guide, Core Identity, Digital Assets, Email Signature, Envelope (+16 more)
 
+### Community 452 - "16"
+Cohesion: 0.67
+Nodes (3): $type, $value, 16
+
+### Community 453 - "1"
+Cohesion: 0.67
+Nodes (3): $type, $value, 1
+
+### Community 457 - "3"
+Cohesion: 0.67
+Nodes (3): $type, $value, 3
+
 ### Community 459 - "PWA (installability, app icons, service worker)"
 Cohesion: 0.25
 Nodes (7): Common failure modes, How it works, How to run / modify it, Icons, PWA (installability, app icons, service worker), What it is, What this does *not* do (yet)
 
-### Community 460 - "session.ts"
-Cohesion: 0.07
-Nodes (37): BillingResponse, auth, configuredProviders, ENV_KEYS, SOCIAL_PROVIDERS, SocialProvider, ADR-0007, ADR-0026 (+29 more)
+### Community 460 - "utils/subscriptions.ts"
+Cohesion: 0.12
+Nodes (24): billingPlugins(), SUBSCRIPTION_EVENTS, subscriptionHandlers(), ADR-0026, logger, availableSlugs(), isBillingConfigured(), isWebhookConfigured() (+16 more)
 
-### Community 461 - "utils/watch.ts"
-Cohesion: 0.07
-Nodes (39): paramsSchema, querySchema, paramsSchema, CommentLikeResult, paramsSchema, bodySchema, paramsSchema, paramsSchema (+31 more)
+### Community 461 - "server/utils/comments.ts"
+Cohesion: 0.16
+Nodes (15): paramsSchema, querySchema, CommentLikeResult, paramsSchema, bodySchema, paramsSchema, commentLikes, CommentRow (+7 more)
+
+### Community 464 - "destructive"
+Cohesion: 0.67
+Nodes (3): destructive, $type, $value
+
+### Community 468 - "destructive"
+Cohesion: 0.67
+Nodes (3): destructive, $type, $value
 
 ### Community 474 - "BM25"
 Cohesion: 0.12
@@ -1942,8 +2099,8 @@ Cohesion: 0.09
 Nodes (22): $type, $value, $type, $value, $type, $value, $type, $value (+14 more)
 
 ### Community 484 - "server/utils/history.ts"
-Cohesion: 0.19
-Nodes (10): querySchema, channels, ADR-0014, watchProgress, clearHistory(), HistoryQuery, HistoryRow, searchFilter() (+2 more)
+Cohesion: 0.21
+Nodes (9): querySchema, channels, ADR-0014, clearHistory(), HistoryQuery, HistoryRow, searchFilter(), selectHistory() (+1 more)
 
 ### Community 485 - "Hooks Recommendations"
 Cohesion: 0.10
@@ -2066,8 +2223,8 @@ Cohesion: 0.13
 Nodes (14): AIDA (Attention-Interest-Desire-Action), Before-After-Bridge, Contrast Patterns, Copywriting Formulas, Core Formulas, Cost of Inaction, FAB (Features-Advantages-Benefits), Formula-to-Slide Mapping (+6 more)
 
 ### Community 515 - "radius"
-Cohesion: 0.19
-Nodes (14): $type, $value, $type, $value, $type, $value, primitive, radius (+6 more)
+Cohesion: 0.18
+Nodes (15): $type, $value, sm, $type, $value, primitive, radius, shadow (+7 more)
 
 ### Community 516 - "Copywriting Formulas"
 Cohesion: 0.13
@@ -2126,8 +2283,8 @@ Cohesion: 0.14
 Nodes (13): 1. Create an organization and token, 2. Create four products, 3. Webhook, 4. Environment, 5. Migration, Billing, Common failure modes, Gating a feature (+5 more)
 
 ### Community 530 - "shared/utils/mix.ts"
-Cohesion: 0.25
-Nodes (12): FollowingShelf, HomeVideo, MixDetail, MixSeed, MixSummary, mixHref(), mixId(), mixReason (+4 more)
+Cohesion: 0.27
+Nodes (11): HomeVideo, MixDetail, MixSeed, MixSummary, mixHref(), mixId(), mixReason, mixSubtitle() (+3 more)
 
 ### Community 531 - "brand/references/update.md"
 Cohesion: 0.15
@@ -2186,8 +2343,8 @@ Cohesion: 0.13
 Nodes (14): auth, { data: channels, isPending: channelsPending }, { data: continueItems, isPending: continuePending }, { data: following, isPending: followingPending }, { data: mixes }, { data: playlists }, { data: shorts }, { data: watched, isPending: watchedPending } (+6 more)
 
 ### Community 545 - "server/utils/shorts.ts"
-Cohesion: 0.25
-Nodes (9): querySchema, COMMENT_STATS, myFollows(), myReactions(), REACTION_STATS, selectShortsPage(), ShortRow, ShortsPageOptions (+1 more)
+Cohesion: 0.27
+Nodes (9): publishedClipsSql, COMMENT_STATS, myFollows(), myReactions(), REACTION_STATS, selectShortsPage(), ShortRow, ShortsPageOptions (+1 more)
 
 ### Community 546 - "Tools"
 Cohesion: 0.17
@@ -2242,8 +2399,8 @@ Cohesion: 0.18
 Nodes (11): 10. Charts & Data (LOW), 1. Accessibility (CRITICAL), 2. Touch & Interaction (CRITICAL), 3. Performance (HIGH), 4. Style Selection (HIGH), 5. Layout & Responsive (HIGH), 6. Typography & Color (MEDIUM), 7. Animation (MEDIUM) (+3 more)
 
 ### Community 559 - "Music (`/music`)"
-Cohesion: 0.20
-Nodes (9): Common failure modes, Files, Hover-to-preview, How the shelves are built, Modifying it, Music (`/music`), The hero's ambient loop, The HLS caveat (read this before "fixing" a card that won't preview) (+1 more)
+Cohesion: 0.18
+Nodes (10): Common failure modes, Files, Hover-to-preview, How the shelves are built, Modifying it, Music (`/music`), The hero is a carousel, The hero's ambient loop (+2 more)
 
 ### Community 560 - "WatchSaveToPlaylist.vue"
 Cohesion: 0.20
@@ -2263,7 +2420,7 @@ Nodes (11): Component Docs, Examples, and Usage, Component Selection, Current Pr
 
 ### Community 564 - "server/utils/liked.ts"
 Cohesion: 0.13
-Nodes (17): paramsSchema, querySchema, bodySchema, querySchema, addLike(), LikedQuery, LikedRow, orderFor() (+9 more)
+Nodes (18): paramsSchema, querySchema, bodySchema, querySchema, addLike(), LikedQuery, LikedRow, orderFor() (+10 more)
 
 ### Community 565 - "Brand"
 Cohesion: 0.20
@@ -2322,8 +2479,8 @@ Cohesion: 0.20
 Nodes (9): active, { count }, emit, loaded, loop, { muted, paused, held, repeat }, props, shorts (+1 more)
 
 ### Community 579 - "types/library.ts"
-Cohesion: 0.13
-Nodes (18): ChannelListItem, ContinueWatchingItem, LikedItem, LikedPage, LikedSort, PlaylistDetail, PlaylistDraft, PlaylistItem (+10 more)
+Cohesion: 0.09
+Nodes (25): AiAnswer, AiAskRequest, AiConfig, AiPick, AiTier, AiTopic, AiTurn, ADR-0029 (+17 more)
 
 ### Community 580 - ".agents/skills/brand/scripts/sync-brand-to-tokens.cjs"
 Cohesion: 0.33
@@ -2370,8 +2527,8 @@ Cohesion: 0.22
 Nodes (7): emit, isPaused, { muted, paused }, player, PlayerElement, props, shorts
 
 ### Community 591 - "WatchPlayer.vue"
-Cohesion: 0.17
-Nodes (10): emit, live, onTimeUpdate(), player, props, resumed, { theater }, activeCard (+2 more)
+Cohesion: 0.25
+Nodes (7): emit, live, onTimeUpdate(), player, props, resumed, { theater }
 
 ### Community 592 - "app/utils/home.spec.ts"
 Cohesion: 0.42
@@ -2414,12 +2571,12 @@ Cohesion: 0.15
 Nodes (5): props, to, remove, props, showProgress
 
 ### Community 603 - "HomeRail.vue"
-Cohesion: 0.15
-Nodes (6): props, to, props, track, props, to
+Cohesion: 0.14
+Nodes (7): props, to, PRESS, props, track, props, to
 
-### Community 604 - "utils/library.ts"
-Cohesion: 0.42
-Nodes (7): formatRemaining(), isResumable(), movedPlaylistItems(), playlistCountLabel(), playlistWatchHref(), progressPercent(), resumeHref()
+### Community 604 - "useWatchAi.ts"
+Cohesion: 0.29
+Nodes (3): ADR-0029, useWatchAsk(), WatchAskOptions
 
 ### Community 605 - "dropdown-menu/index.ts"
 Cohesion: 0.25
@@ -2466,8 +2623,8 @@ Cohesion: 0.33
 Nodes (9): IDS_KEY, LIST_KEY, patchSavedIds(), useRemoveFromWatchLater(), useSaveToWatchLater(), useWatchLaterIds(), useWatchLaterToggle(), WATCH_LATER_KEY (+1 more)
 
 ### Community 616 - "shared/utils/history.ts"
-Cohesion: 0.32
-Nodes (9): HistoryItem, HistoryPage, groupHistoryByDay(), historyDayKey(), historyDayLabel(), HistoryGroup, historyHref(), historyProgressLabel() (+1 more)
+Cohesion: 0.19
+Nodes (16): HistoryItem, HistoryPage, groupHistoryByDay(), historyDayKey(), historyDayLabel(), HistoryGroup, historyHref(), historyProgressLabel() (+8 more)
 
 ### Community 617 - "generate-pwa-icons.mjs"
 Cohesion: 0.22
@@ -2521,10 +2678,6 @@ Nodes (5): Available Matchers, Example Configuration, Idle Notifications, Notifi
 Cohesion: 0.60
 Nodes (5): radius, radius, radius, $type, $value
 
-### Community 631 - "sm"
-Cohesion: 0.60
-Nodes (5): sm, sm, sm, $type, $value
-
 ### Community 632 - "ponytail-audit/SKILL.md"
 Cohesion: 0.40
 Nodes (4): Boundaries, Hunt, Output, Tags
@@ -2552,10 +2705,6 @@ Nodes (4): current, emit, muted, props
 ### Community 638 - "ShortsView.vue"
 Cohesion: 0.40
 Nodes (3): props, { query, items }, shorts
-
-### Community 639 - "StudioSidebar.vue"
-Cohesion: 0.40
-Nodes (4): groups, isExpanded, {state, isMobile}, {user}
 
 ### Community 640 - "DropdownMenuCheckboxItem.vue"
 Cohesion: 0.40
@@ -2588,10 +2737,6 @@ Nodes (3): NOTIFY_OPTIONS, notifyConfirmation(), NotifyOption
 ### Community 648 - "Version Control & DevOps"
 Cohesion: 0.50
 Nodes (4): GitHub MCP, GitLab MCP, Linear MCP, Version Control & DevOps
-
-### Community 649 - "padding-y"
-Cohesion: 0.67
-Nodes (4): padding-y, padding-y, $type, $value
 
 ### Community 650 - "xl"
 Cohesion: 0.67
@@ -2653,9 +2798,9 @@ Nodes (3): emits, forwarded, props
 Cohesion: 0.43
 Nodes (3): canPreviewSource(), previewStartTime(), stripQuery()
 
-### Community 669 - "none"
-Cohesion: 0.67
-Nodes (4): $type, $value, none, none
+### Community 669 - "ChatShowcase.vue"
+Cohesion: 0.29
+Nodes (6): active, controls, messages, panel, { visible }, useTickingList()
 
 ### Community 672 - "useBilling.ts"
 Cohesion: 0.25
@@ -2665,25 +2810,21 @@ Nodes (3): BILLING_KEY, BillingResponse, ADR-0026
 Cohesion: 0.29
 Nodes (4): LIKED_ROOT, parseSort(), useLikedFilters(), LIKED_SORTS
 
-### Community 674 - "Databases"
-Cohesion: 0.33
-Nodes (6): Convex MCP, Databases, Neon MCP, PostgreSQL MCP, Supabase MCP, Turso MCP
-
 ### Community 675 - "8"
 Cohesion: 0.67
 Nodes (3): $type, $value, 8
 
-### Community 676 - "destructive"
-Cohesion: 0.67
-Nodes (3): destructive, $type, $value
+### Community 676 - "MusicView.vue"
+Cohesion: 0.29
+Nodes (3): { data, isPending, isError, refetch, isFetching }, hero, shelves
 
 ### Community 677 - "BillingPlanGrid.vue"
 Cohesion: 0.40
 Nodes (5): ctaFor(), { data: billing }, isAvailable(), props, { start, pending }
 
-### Community 678 - "md"
-Cohesion: 0.67
-Nodes (4): $type, $value, md, md
+### Community 678 - "CORS (cross-origin API access)"
+Cohesion: 0.29
+Nodes (6): Cookies, CORS (cross-origin API access), Failure modes, How it works, What it is, Why it's an allowlist and not `*`
 
 ### Community 679 - "WatchPlaylistQueue.vue"
 Cohesion: 0.50
@@ -2717,37 +2858,29 @@ Nodes (3): $type, $value, 8
 Cohesion: 0.33
 Nodes (4): delegatedProps, emits, forwarded, props
 
-### Community 728 - "padding-y"
-Cohesion: 0.67
-Nodes (4): padding-y, padding-y, $type, $value
-
-### Community 729 - "12"
-Cohesion: 0.67
-Nodes (3): $type, $value, 12
+### Community 699 - ".mcp.json"
+Cohesion: 0.50
+Nodes (3): npx, nuxt, shadcnVue
 
 ### Community 757 - "useAutoplayGate.spec.ts"
 Cohesion: 0.40
 Nodes (3): Harness, mounted, useAutoplayGate()
 
-### Community 758 - "4"
-Cohesion: 0.67
-Nodes (3): $type, $value, 4
+### Community 771 - "AreaChart.vue"
+Cohesion: 0.33
+Nodes (5): area, coords, line, max, props
+
+### Community 787 - "HeroStudio.vue"
+Cohesion: 0.40
+Nodes (4): chat, { onMove, reset, layer }, stage, usePointerParallax()
 
 ### Community 794 - "BillingStatusCard.vue"
 Cohesion: 0.40
 Nodes (4): { open, opening }, props, summary, TONE_CLASS
 
-### Community 795 - "6"
-Cohesion: 0.67
-Nodes (3): $type, $value, 6
-
 ### Community 796 - "billing.vue"
 Cohesion: 0.40
 Nodes (4): { confirming }, { data: billing, isPending, isError, refetch }, interval, yearly
-
-### Community 797 - "0"
-Cohesion: 0.67
-Nodes (3): $type, $value, 0
 
 ### Community 798 - "lg"
 Cohesion: 0.60
@@ -2761,9 +2894,37 @@ Nodes (3): $type, $value, 16
 Cohesion: 0.67
 Nodes (3): $type, $value, 3
 
-### Community 806 - "destructive"
+### Community 806 - "useHoverPreview.ts"
+Cohesion: 0.40
+Nodes (4): enter(), activeCard, PreviewState, useHoverPreview()
+
+### Community 825 - "PricingCard.vue"
+Cohesion: 0.40
+Nodes (4): isFree, period, price, props
+
+### Community 826 - "useSlideshow.spec.ts"
+Cohesion: 0.60
+Nodes (3): count, harness(), useSlideshow()
+
+### Community 827 - "StudioVideoEditor.vue"
+Cohesion: 0.12
+Nodes (14): ADR-0025, { handleSubmit, meta, resetForm }, initialValues, onSubmit, pendingDelete, props, remove, mount() (+6 more)
+
+### Community 830 - "none"
 Cohesion: 0.67
-Nodes (3): destructive, $type, $value
+Nodes (4): $type, $value, none, none
+
+### Community 834 - "md"
+Cohesion: 0.67
+Nodes (4): $type, $value, md, md
+
+### Community 835 - "DashboardShowcase.vue"
+Cohesion: 0.50
+Nodes (3): metrics, upcoming, viewers
+
+### Community 840 - "1"
+Cohesion: 0.67
+Nodes (3): $type, $value, 1
 
 ## Ambiguous Edges - Review These
 - `Design Skill Routing System` → `graphify Knowledge Graph Pipeline`  [AMBIGUOUS]
@@ -2776,9 +2937,9 @@ Nodes (3): destructive, $type, $value
   .scratch/modal.png · relation: measures_render_time_of
 
 ## Knowledge Gaps
-- **3537 isolated node(s):** `fs`, `path`, `fs`, `path`, `fs` (+3532 more)
+- **3738 isolated node(s):** `fs`, `path`, `fs`, `path`, `fs` (+3733 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **228 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **239 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -2791,9 +2952,9 @@ _Questions this graph is uniquely positioned to answer:_
   _Edge tagged AMBIGUOUS (relation: suggests_realtime_streaming_infrastructure_for) - confidence is low._
 - **What is the exact relationship between `Video Preview Modal` and `Dev Performance Indicator ('44 ms' render badge, bottom center)`?**
   _Edge tagged AMBIGUOUS (relation: measures_render_time_of) - confidence is low._
+- **Why does `ClipCategory` connect `ClipCategory` to `category.ts`, `types/dashboard.ts`, `shared/utils/mix.ts`, `shared/utils/studio.ts`, `types/discovery.ts`?**
+  _High betweenness centrality (0.003) - this node is a cross-community bridge._
+- **Why does `toCategorySlug()` connect `category.ts` to `server/utils/home.ts`, `ClipCategory`?**
+  _High betweenness centrality (0.003) - this node is a cross-community bridge._
 - **Why does `DesignSystemGenerator` connect `DesignSystemGenerator` to `detect_domain`, `detect_domain`, `_select_palette_for_mode`, `_select_palette_for_mode`, `.claude/skills/ui-ux-pro-max/scripts/design_system.py`, `BM25`, `.agents/skills/ui-ux-pro-max/scripts/tests/test_design_system_mode.py`, `search`, `search`, `.generate`, `DesignSystemGenerator`, `_palette_is_dark`, `test_design_system_mode.py`, `.agents/skills/ui-ux-pro-max/scripts/design_system.py`, `BM25`?**
   _High betweenness centrality (0.002) - this node is a cross-community bridge._
-- **Why does `primitive` connect `radius` to `spacing`, `gray`, `.agents/skills/design-system/templates/design-tokens-starter.json`, `fontSize`, `duration`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `toCategorySlug()` connect `category.ts` to `getSessionUser`, `ClipCategory`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
