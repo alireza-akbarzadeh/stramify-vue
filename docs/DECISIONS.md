@@ -1581,3 +1581,150 @@ uploaded, which is why the allowlist is limited to formats browsers play
 natively. Duration and orientation are measured in the browser
 (`app/utils/media-probe.ts`) because there is no server-side probe; they are
 treated as claims, clamped, and drive nothing but a label and a grid choice.
+
+## ADR-032: Domain layers live in `~~/layers`, and the root `app/` stays the base layer
+
+**Status**: Accepted · 2026-08-15
+
+**Context.** `app/` had grown to 57 pages, ~300 components across 22 domain
+folders, 64 composables and 32 utils, with `server/api/` mirroring the same
+domains. Nothing was broken, but "where does this file go" had stopped having
+an obvious answer and every domain's components sat in one flat namespace.
+Nuxt layers (`~~/layers`, auto-registered since 3.12, named `#layers/*`
+aliases since 3.16 — we're on 4.5.1) are the framework's own answer to this,
+and are explicitly recommended for DDD-style organisation in large projects.
+
+**Decision.** Each product domain becomes a layer under `~~/layers/<name>`
+carrying its own `app/pages`, `app/components`, `app/composables` and
+`server/`. **The root `app/` is not emptied — it *is* the base layer.**
+
+That second half is the load-bearing part, and it is forced by how aliases
+resolve. Per Nuxt's Layer Author Guide, `~/` and `@/` used inside a layer
+resolve against the **consuming project**, not the layer directory. This
+codebase has ~244 explicit cross-domain imports pointing at shared
+infrastructure — `~/components/ui` (167), `~/stores/auth` (46), `~/lib/*`
+(31) — plus 400+ `#shared/*` imports spanning app and server. Leaving that
+infrastructure in the root `app/` and `shared/` means every one of those
+imports keeps working untouched from inside any layer. Moving it into a
+`layers/base` would have meant rewriting all of them to `#layers/base/…` for
+no functional gain.
+
+So the rule is: **shared spine at the root, domains in layers, and layers may
+depend on the root but never on each other.**
+
+**Two things bite, and both are verified rather than assumed.**
+
+*Component naming.* The root config sets `components: [{ path: '~/components',
+pathPrefix: false }]`. That does **not** carry into a layer — Nuxt scans a
+layer's `app/components` with its default `pathPrefix: true`. Moving
+`components/landing/` into a layer silently re-registered `GlassPanel.vue` as
+`<LandingGlassPanel>`, `BentoCard.vue` as `<LandingBentoCard>`, and so on,
+which would have broken every template that used them. Confirmed by reading
+`.nuxt/components.d.ts` after `nuxt prepare`. **Every layer therefore needs its
+own `components` entry with `pathPrefix: false`**, and the path must be
+absolute (`join(currentDir, 'app/components')`) because relative paths in a
+*layer's* `nuxt.config` also resolve against the consuming project.
+
+*Intra-layer imports.* A file moved into a layer can no longer be reached at
+`@/composables/useX` — that alias still points at the root `app/`. Imports
+between files inside one layer use relative paths, which is what the Layer
+Author Guide recommends.
+
+**A component with consumers outside its domain does not belong to that
+domain.** Extracting the marketing layer surfaced `LiveBadge` (10 consumers
+across home, discovery, watch, channel, following and search) and `PricingCard`
+(billing) sitting in `components/landing/`. Both were promoted to the root
+`app/components/` rather than carried into the layer; keeping them would have
+made half the app depend on the marketing layer. Because `pathPrefix: false`
+was already in force at the root, the registered names did not change and no
+template needed editing. Expect this check — "who actually consumes this?" —
+to move a handful of components on every subsequent layer extraction.
+
+**Rejected: a `layers/base` holding the design system.** Architecturally
+tidier and it is what most layer tutorials show, but it buys nothing here and
+costs ~244 import rewrites, each a chance to break a working page. The root
+project already has the highest priority in Nuxt's layer order, which is
+exactly the semantics a base layer wants.
+
+**Rejected: splitting `shared/` per layer.** `#shared/types/*` is imported
+400+ times from both the Vue app and Nitro, and the types describe API
+contracts that cross domain boundaries by nature. Fragmenting it would create
+import cycles between layers, which is precisely what the layering is meant to
+prevent.
+
+**Consequences.** Migration is `git mv` plus a per-layer `nuxt.config.ts`; no
+runtime behaviour changes, and auto-imports are merged across layers so
+component and composable call sites are untouched. The `pathPrefix` trap is
+silent — a mis-registered component fails at render, not at build — so each
+extraction must be checked against `.nuxt/components.d.ts` and the affected
+routes actually loaded. Layers are being taken one at a time, `marketing`
+first as the lowest-risk pilot.
+
+**Superseded in part by ADR-033**, which fixes the final list of layers at
+four (this ADR left it open) and adds the server-side alias rule.
+
+## ADR-033: Only auth, dashboard and studio become layers; the viewer-facing app stays at the root
+
+**Status**: Accepted · 2026-08-15
+
+**Context.** ADR-032 established *how* to build a layer but left the inventory
+open, and the working assumption was eight: `marketing`, `auth`, `studio`,
+`dashboard`, `watch`, `shorts`, `library` and `discovery`.
+
+**Decision.** Four layers — `marketing`, `auth`, `dashboard`, `studio`.
+Everything viewer-facing — the home feed at `/`, watch, shorts, discovery,
+channels, following, history, playlists, watch-later, liked, music, search —
+**stays in the root `app/`.** It is not a leftover; it is the main
+application, and the root is the base layer.
+
+The three that became layers share a property the others don't: they are
+*bounded workspaces* a user deliberately enters, with their own shell and
+their own reason to exist. `/studio` and `/dashboard` have their own layouts
+and sidebars; `auth` is the signed-out surface. Their components have no
+consumers elsewhere — verified, not assumed: every component under
+`components/{auth,studio}` is used only by pages in its own domain.
+
+The viewer-facing domains are the opposite. They are one continuous product
+and they interleave constantly: the watch page's up-next rail is discovery's
+ranking, the home feed mixes clips, live sessions and shorts in a single
+scored query, library reuses `watch_progress` written by the player, and
+`LiveBadge` alone is rendered by home, discovery, watch, channel, following
+and search. Splitting them would not produce independent layers; it would
+produce a cycle, which is the failure mode layering exists to prevent. A
+layer boundary is only worth drawing where a real seam already exists.
+
+**A layer must not own the application shell.** Extracting `dashboard`
+surfaced that `app/components/dashboard/` held two unrelated things. Seven of
+its files were app shell — `AppSidebar`, `DashboardTopBar`, `MobileTabBar`,
+`SidebarNavItem`, `SidebarUserMenu`, `CreateMenu`, `DashboardShell` — used by
+`layouts/dashboard.vue`, which **30 pages across every domain** render;
+`/stream` uses `DashboardShell` and studio's own sidebar reuses
+`SidebarNavItem` and `SidebarUserMenu`. Had those moved into the layer, the
+home feed, watch, discovery and studio would all have depended on the
+dashboard layer. They were moved to `app/components/shell/` instead, and
+`layouts/dashboard.vue` stays at the root for the same reason. The layer keeps
+only the widgets. `pathPrefix: false` meant no registered name changed, so
+this cost nine import rewrites and no template edits.
+
+**Server routes need `~~/`, not relative paths.** ADR-032 covered the client
+alias trap and missed the server one. Root routes import their utilities
+relatively (`from '../../utils/session'`, the convention in 34 files). Moving
+a route into `layers/<name>/server/api/` silently repoints that at
+`layers/<name>/server/utils/`, which does not exist — **19 imports broke this
+way across the three layers**, and nothing in the build complains, because
+Nitro resolves at request time. Layer server routes use the root-anchored
+`~~/server/utils/…` (`~~/*` → project root in `.nuxt/tsconfig.server.json`).
+`server/utils`, `server/db`, `server/middleware` and `server/plugins` all stay
+at the root; only the routes move.
+
+**Rejected: moving `stores/auth.ts` and `middleware/auth.ts` into the auth
+layer.** They look like auth code, but the store has 46 import sites and the
+middleware guards pages in every domain. Moving them would make every
+protected page in the app depend on the auth layer. Only the sign-in
+*surface* is a layer; the session primitives are root infrastructure.
+
+**Consequences.** The root `app/` keeps 53 pages and stays the largest part of
+the tree — by design. Four layers, ~130 files moved, no runtime behaviour
+change. The check that matters on any future extraction is not "is this
+domain named X" but "who consumes this, and does moving it invert a
+dependency?" — it moved nine components on these three layers alone.

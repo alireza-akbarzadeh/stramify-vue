@@ -2052,3 +2052,162 @@ layout can't.
 
 `settings/two-factor.vue` also uses `AuthLayout` but was deliberately left
 alone: it's an in-app settings page, not an entry point.
+
+## Nuxt layers — marketing pilot, 2026-08-15 (appended)
+
+Started splitting the app into Nuxt layers, one domain at a time. Decisions in
+**ADR-032**. This session did the mechanics research and **one** layer;
+seven more are planned but not started.
+
+### Why the root `app/` did not get emptied
+
+`~/` and `@/` used *inside* a layer resolve against the **consuming project**,
+not the layer (Nuxt Layer Author Guide, "Relative Paths and Aliases"). There
+are ~244 explicit imports of `~/components/ui` (167), `~/stores/auth` (46) and
+`~/lib/*` (31), plus 400+ `#shared/*`. Keeping that infrastructure at the root
+means all of them keep working untouched from inside any layer. **The root
+`app/` is the base layer.** Domains go in `~~/layers/*`; a layer may depend on
+the root, never on another layer.
+
+### Built
+
+- **`layers/marketing/`** — `/marketing`, `/about`, `/careers`, `/security`,
+  the 15 remaining `components/landing/*`, and `useTickingList` /
+  `usePointerParallax` (both used only by landing).
+- **`LiveBadge` and `PricingCard` promoted to root `app/components/`.** They
+  were in `components/landing/` but have consumers all over the app —
+  `LiveBadge` in home, discovery, watch, channel, following and search (11
+  explicit imports, all rewritten), `PricingCard` in billing. Carrying them
+  into the layer would have made half the app depend on marketing.
+- **`.mcp.json`** gained the Nuxt MCP server (`https://nuxt.com/mcp`, type
+  `http`). Needs approval + a restart before its tools appear.
+
+### The trap that will bite every future layer
+
+The root config's `components: [{ pathPrefix: false }]` **does not carry into a
+layer.** Nuxt scans a layer's `app/components` with its default
+`pathPrefix: true`, so the first `nuxt prepare` registered `GlassPanel.vue` as
+`<LandingGlassPanel>`, `BentoCard.vue` as `<LandingBentoCard>`, `AreaChart.vue`
+as `<LandingAreaChart>` — every template using them would have broken at
+render, not at build. **Every layer needs its own `components` entry with
+`pathPrefix: false` and an absolute path** (`join(currentDir, 'app/components')`
+— relative paths in a layer's `nuxt.config` also resolve against the project).
+Check `.nuxt/components.d.ts` after each extraction; do not trust the build.
+
+Second, smaller trap: a file moved into a layer is no longer at
+`@/composables/useX`. Intra-layer imports must be relative.
+
+### Verified (the toolchain actually ran this session)
+
+- **Typecheck: 27 errors before, 27 after — none new.** A baseline was captured
+  at HEAD via `git stash -u` and diffed. Worth knowing: this repo already
+  carries 27 typecheck errors on `master`, including
+  `PricingSection.vue(6,33) TS1355` (`as const` on a ternary) and the same
+  shape in `pages/settings/billing.vue(13,33)`. Not this session's, not fixed.
+- **Tests: 6 failed / 549 passed, identical to HEAD.** The three failing files
+  (`app/utils/nav.spec.ts`, `shorts/ShortsActionRail.spec.ts`,
+  `home/HomeVideoCardMenu.spec.ts`) fail the same way at HEAD — confirmed by
+  running them against a stashed tree. All pre-existing.
+- `eslint` clean on `layers/` and both promoted components.
+- `.nuxt/components.d.ts` re-checked after the config fix: all 15 landing
+  components back to their original names; `#layers/marketing` alias generated.
+- Dev server: `/marketing`, `/about`, `/careers`, `/security` all 200. Rendered
+  `/marketing` in a browser — hero, TrustedBy marquee, and the pricing section
+  with real plan cards (layer's `PricingSection` → root `BillingPlanGrid` →
+  promoted root `PricingCard`). On a clean tab the only console error is a 500
+  from `/api/billing/subscription`, which is Polar being unconfigured in this
+  env (the server logs "billing is disabled" at boot) — unrelated.
+
+### Not done
+
+- **Seven layers remain**: `auth`, `studio`, `dashboard`, `watch`, `shorts`,
+  `library` (watch-later/liked/history/playlists), `discovery`. Sizing and the
+  proposed contents are in ADR-032's context; none are started.
+- Only `e2e/marketing.spec.ts` was run (passes, 3.8s). The rest of the e2e
+  suite was not exercised against the move.
+
+## Nuxt layers — auth, dashboard, studio, 2026-08-15 (appended, same day)
+
+Three more layers, and the layer inventory is now **final at four**. Decisions
+in **ADR-033** (which supersedes ADR-032's open-ended list).
+
+### The split, settled
+
+Layers: `marketing`, `auth`, `dashboard`, `studio`. **Everything viewer-facing
+stays in the root `app/`** — home feed, watch, shorts, discovery, channels,
+following, history, playlists, watch-later, liked, music, search. That is the
+main application, not a leftover. Those domains interleave far too much to
+separate (watch's up-next *is* discovery's ranking; the home feed mixes clips,
+live and shorts in one scored query); splitting them would create cycles, not
+layers.
+
+### Built
+
+- **`layers/auth/`** — login, signup, forgot/reset password, verify-email,
+  `settings/security`, `settings/two-factor`, 12 components, `layouts/auth.vue`,
+  `server/api/auth/`. **Zero import rewrites** — it only ever reached for
+  `@/lib/auth-client`, `@/components/ui/*` and `@/stores/auth`, all of which
+  stay at the root and resolve there from inside a layer.
+- **`layers/dashboard/`** — `/dashboard`, `/analytics`, 17 widget components,
+  `useDashboard{Overview,Analytics}`, `server/api/dashboard/`.
+- **`layers/studio/`** — 11 pages, 19 components, `layouts/studio.vue`, four
+  composables, `utils/{upload,studio-form}`, `server/api/studio/` (49 files).
+- **`app/components/shell/` is new** — see below.
+- `app/utils/nav.spec.ts` now discovers page dirs across the root *and* every
+  layer. It walked only `app/pages`, so after the move it reported 18 live
+  pages as dead links. The assertion is valuable (it has caught six real dead
+  links before), so it was taught about layers rather than weakened.
+
+### Two traps this session, both silent
+
+**1. A layer must not own the app shell.** `app/components/dashboard/` held
+two unrelated things. Seven files were *application shell* —`AppSidebar`,
+`DashboardTopBar`, `MobileTabBar`, `SidebarNavItem`, `SidebarUserMenu`,
+`CreateMenu`, `DashboardShell` — and `layouts/dashboard.vue` is rendered by
+**30 pages across every domain**, `/stream` uses `DashboardShell`, and studio's
+sidebar reuses two of them. Moving them into the dashboard layer would have
+made home, watch, discovery and studio all depend on it. They now live in
+**`app/components/shell/`**; `layouts/dashboard.vue` stays at the root too.
+Nine import rewrites, no template edits (`pathPrefix: false` keeps names).
+
+**2. Server routes broke silently — 19 of them.** Root routes import utils
+relatively (`from '../../utils/session'`, the convention in 34 files). Moved
+into `layers/<name>/server/api/`, that resolves to a
+`layers/<name>/server/utils/` that doesn't exist. **Nothing in the build says
+so** — Nitro resolves at request time, so every moved endpoint would have
+500'd on first call. Layer server routes now use `~~/server/utils/…`
+(`~~/*` → project root in `.nuxt/tsconfig.server.json`). If you add a route to
+a layer, do not copy the relative-import style from `server/api/`.
+
+`server/utils`, `server/db`, `server/middleware`, `server/plugins`,
+`stores/auth.ts`, `lib/auth-client.ts` and `middleware/auth.ts` all stay at the
+root — see ADR-033 for why moving the last three would invert the dependency.
+
+### Verified (toolchain ran)
+
+- **Typecheck: 27 → 27, zero new errors** (baseline captured at HEAD with
+  `git stash -u` and diffed, layer paths normalised).
+- **Tests: 6 failed / 549 passed — identical to HEAD.** The three failing
+  files are the same pre-existing ones. `nav.spec.ts` briefly went to 19
+  failures; that was the page-dir bug above, now fixed and back to its single
+  documented failure ("is exactly four tabs").
+- `eslint` clean on `layers/` and `app/components/shell/`.
+- `.nuxt/components.d.ts`: **63 layer components, all correctly named**, none
+  path-prefixed. All four `#layers/*` aliases generated. Layouts merged —
+  `default`/`dashboard` from the root, `auth`/`studio` from their layers.
+- Routes smoke-tested; protected ones correctly 302 to
+  `/login?redirect=…` when signed out, which also confirms the **root**
+  middleware still guards pages that now live in layers.
+- In a browser, signed in: `/` (shell + real feed), `/login` (auth layout +
+  social buttons), `/dashboard` (real "Platform pulse" + channel numbers),
+  `/studio/videos` (real video row, filters, sort). `/api/auth/get-session`
+  and `/api/studio/videos` both 200 — the moved server routes work.
+- Only console error anywhere is a 500 from `/api/billing/subscription`;
+  that endpoint is at the **root**, untouched, and the server logs
+  "polar: no access token or products configured — billing is disabled" at
+  boot. Pre-existing and unrelated.
+
+### Not done
+
+- Only `e2e/marketing.spec.ts` has been run against any of the layer work.
+- Nothing is committed; the whole layer migration is one working tree.
