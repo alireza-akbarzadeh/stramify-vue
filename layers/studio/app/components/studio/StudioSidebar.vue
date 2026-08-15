@@ -15,8 +15,8 @@ import {
 } from '@/components/ui/sidebar'
 
 import AccountAvatar from '@/components/account/AccountAvatar.vue'
-import SidebarNavItem from '@/components/dashboard/SidebarNavItem.vue'
-import SidebarUserMenu from '@/components/dashboard/SidebarUserMenu.vue'
+import SidebarNavItem from '@/components/shell/SidebarNavItem.vue'
+import SidebarUserMenu from '@/components/shell/SidebarUserMenu.vue'
 
 import type {NavLink} from '@/utils/nav'
 import {studioLinks, studioManageLinks, studioSettingsLink} from '@/utils/nav'

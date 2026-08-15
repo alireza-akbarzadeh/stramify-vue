@@ -10,9 +10,9 @@ import UploadStepper from './UploadStepper.vue'
 import UploadThumbnailPicker from './UploadThumbnailPicker.vue'
 import UploadVisibilityStep from './UploadVisibilityStep.vue'
 import { Button } from '@/components/ui/button'
-import { studioDetailsValidation } from '@/utils/studio-form'
-import type { StudioDetails } from '@/utils/studio-form'
-import { useUploadWizard } from '@/composables/useUploadWizard'
+import { studioDetailsValidation } from '../../../utils/studio-form'
+import type { StudioDetails } from '../../../utils/studio-form'
+import { useUploadWizard } from '../../../composables/useUploadWizard'
 import type { StudioMediaKind } from '#shared/types/studio'
 
 /**

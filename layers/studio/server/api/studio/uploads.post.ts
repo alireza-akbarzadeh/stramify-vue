@@ -1,10 +1,10 @@
 import { z } from 'zod'
-import { db } from '../../db/client'
-import { clips } from '../../db/schema'
-import { channelHandle } from '../../utils/dashboard'
-import { requireUser } from '../../utils/session'
-import { putObject } from '../../utils/storage'
-import { toStudioVideo } from '../../utils/studio'
+import { db } from '~~/server/db/client'
+import { clips } from '~~/server/db/schema'
+import { channelHandle } from '~~/server/utils/dashboard'
+import { requireUser } from '~~/server/utils/session'
+import { putObject } from '~~/server/utils/storage'
+import { toStudioVideo } from '~~/server/utils/studio'
 import { CLIP_CATEGORIES } from '#shared/utils/category'
 import {
   IMAGE_RULE,

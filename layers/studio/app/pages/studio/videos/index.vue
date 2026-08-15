@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { MonitorUp } from '@lucide/vue'
-import StudioPageHeader from '@/components/studio/StudioPageHeader.vue'
-import StudioVideoList from '@/components/studio/videos/StudioVideoList.vue'
+import StudioPageHeader from '../../../components/studio/StudioPageHeader.vue'
+import StudioVideoList from '../../../components/studio/videos/StudioVideoList.vue'
 import { Button } from '@/components/ui/button'
 
 definePageMeta({middleware: 'auth', layout: 'studio'})

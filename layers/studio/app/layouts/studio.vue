@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import MobileTabBar from '@/components/dashboard/MobileTabBar.vue'
-import StudioSidebar from '@/components/studio/StudioSidebar.vue'
-import StudioTopBar from '@/components/studio/StudioTopBar.vue'
+import MobileTabBar from '@/components/shell/MobileTabBar.vue'
+import StudioSidebar from '../components/studio/StudioSidebar.vue'
+import StudioTopBar from '../components/studio/StudioTopBar.vue'
 import {SidebarInset, SidebarProvider} from '@/components/ui/sidebar'
 import {studioMobileLinks} from '@/utils/nav'
 

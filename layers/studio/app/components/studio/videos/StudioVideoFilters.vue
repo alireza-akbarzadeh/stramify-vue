@@ -3,7 +3,7 @@ import { Search } from '@lucide/vue'
 import { Input } from '@/components/ui/input'
 import { VISIBILITY_COPY } from '#shared/utils/studio'
 import type { ClipVisibility } from '#shared/types/studio'
-import type { StudioSort, VisibilityFilter } from '@/composables/useStudioFilters'
+import type { StudioSort, VisibilityFilter } from '../../../composables/useStudioFilters'
 
 /**
  * Search, a visibility filter and a sort, above the content list.

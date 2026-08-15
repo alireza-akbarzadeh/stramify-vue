@@ -1,5 +1,5 @@
-import { listStudioVideos } from '../../../utils/studio'
-import { requireUser } from '../../../utils/session'
+import { listStudioVideos } from '~~/server/utils/studio'
+import { requireUser } from '~~/server/utils/session'
 import type { StudioVideo } from '#shared/types/studio'
 
 /**

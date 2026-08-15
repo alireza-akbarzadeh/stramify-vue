@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import StudioPageHeader from '@/components/studio/StudioPageHeader.vue'
-import UploadWizard from '@/components/studio/upload/UploadWizard.vue'
+import StudioPageHeader from '../../components/studio/StudioPageHeader.vue'
+import UploadWizard from '../../components/studio/upload/UploadWizard.vue'
 
 definePageMeta({middleware: 'auth', layout: 'studio'})
 useHead({title: 'Upload — Streamify Studio'})

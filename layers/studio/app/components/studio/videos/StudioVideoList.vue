@@ -6,8 +6,8 @@ import StudioVideoRow from './StudioVideoRow.vue'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { toast } from '@/components/ui/sonner'
-import { useStudioFilters } from '@/composables/useStudioFilters'
-import { useDeleteStudioVideo, useStudioVideos } from '@/composables/useStudioVideos'
+import { useStudioFilters } from '../../../composables/useStudioFilters'
+import { useDeleteStudioVideo, useStudioVideos } from '../../../composables/useStudioVideos'
 import type { StudioVideo } from '#shared/types/studio'
 
 /**

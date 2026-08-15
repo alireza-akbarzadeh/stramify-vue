@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { uploadPercent } from './upload'
-import { titleFromFilename } from '@/composables/useUploadWizard'
+import { titleFromFilename } from '../composables/useUploadWizard'
 
 describe('uploadPercent', () => {
   it('reports whole percentages', () => {

@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { readStudioVideo } from '../../../utils/studio'
-import { requireUser } from '../../../utils/session'
+import { readStudioVideo } from '~~/server/utils/studio'
+import { requireUser } from '~~/server/utils/session'
 import type { StudioVideo } from '#shared/types/studio'
 
 const paramsSchema = z.object({ id: z.string().min(1).max(200) })

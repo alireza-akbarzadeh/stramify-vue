@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { ArrowLeft, TriangleAlert } from '@lucide/vue'
-import StudioPageHeader from '@/components/studio/StudioPageHeader.vue'
-import StudioVideoEditor from '@/components/studio/videos/StudioVideoEditor.vue'
+import StudioPageHeader from '../../../components/studio/StudioPageHeader.vue'
+import StudioVideoEditor from '../../../components/studio/videos/StudioVideoEditor.vue'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useStudioVideo } from '@/composables/useStudioVideos'
+import { useStudioVideo } from '../../../composables/useStudioVideos'
 
 /**
  * Edit one of your uploads.

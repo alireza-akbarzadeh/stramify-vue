@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { updateStudioVideo } from '../../../utils/studio'
-import { requireUser } from '../../../utils/session'
+import { updateStudioVideo } from '~~/server/utils/studio'
+import { requireUser } from '~~/server/utils/session'
 import { CLIP_CATEGORIES } from '#shared/utils/category'
 import { STUDIO_DESCRIPTION_MAX, STUDIO_TITLE_MAX } from '#shared/types/studio'
 import type { StudioVideo } from '#shared/types/studio'

@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { deleteStudioVideo } from '../../../utils/studio'
-import { requireUser } from '../../../utils/session'
+import { deleteStudioVideo } from '~~/server/utils/studio'
+import { requireUser } from '~~/server/utils/session'
 
 const paramsSchema = z.object({ id: z.string().min(1).max(200) })
 
