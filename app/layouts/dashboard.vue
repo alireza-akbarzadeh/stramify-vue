@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import AppSidebar from '@/components/dashboard/AppSidebar.vue'
-import DashboardTopBar from '@/components/dashboard/DashboardTopBar.vue'
-import MobileTabBar from '@/components/dashboard/MobileTabBar.vue'
+import AppSidebar from '@/components/shell/AppSidebar.vue'
+import DashboardTopBar from '@/components/shell/DashboardTopBar.vue'
+import MobileTabBar from '@/components/shell/MobileTabBar.vue'
 import {SidebarInset, SidebarProvider} from '@/components/ui/sidebar'
 
 /**

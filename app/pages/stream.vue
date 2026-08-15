@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DashboardShell from '@/components/dashboard/DashboardShell.vue'
+import DashboardShell from '@/components/shell/DashboardShell.vue'
 
 definePageMeta({ middleware: 'auth', layout: 'dashboard' })
 useHead({ title: 'Go live — Streamify' })
