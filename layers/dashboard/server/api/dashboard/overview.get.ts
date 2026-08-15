@@ -1,5 +1,5 @@
-import { requireUser } from '../../utils/session'
-import { readDashboardOverview } from '../../utils/dashboard'
+import { requireUser } from '~~/server/utils/session'
+import { readDashboardOverview } from '~~/server/utils/dashboard'
 import type { DashboardOverview } from '#shared/types/dashboard'
 
 /**

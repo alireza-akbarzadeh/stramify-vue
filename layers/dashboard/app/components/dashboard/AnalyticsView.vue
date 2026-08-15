@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { BarChart3 } from '@lucide/vue'
-import { useDashboardAnalytics } from '@/composables/useDashboardAnalytics'
+import { useDashboardAnalytics } from '../../composables/useDashboardAnalytics'
 import CategoryMixBar from './CategoryMixBar.vue'
 import DashboardError from './DashboardError.vue'
 import DashboardSkeleton from './DashboardSkeleton.vue'

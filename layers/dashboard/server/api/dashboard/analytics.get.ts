@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { requireUser } from '../../utils/session'
-import { channelHandle, readDashboardAnalytics } from '../../utils/dashboard'
+import { requireUser } from '~~/server/utils/session'
+import { channelHandle, readDashboardAnalytics } from '~~/server/utils/dashboard'
 import { ANALYTICS_RANGES } from '#shared/utils/trend'
 import type { DashboardAnalytics } from '#shared/types/dashboard'
 

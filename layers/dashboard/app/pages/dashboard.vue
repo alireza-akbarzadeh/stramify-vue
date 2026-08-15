@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import DashboardOverview from '@/components/dashboard/DashboardOverview.vue'
-import DashboardShell from '@/components/dashboard/DashboardShell.vue'
+import DashboardOverview from '../components/dashboard/DashboardOverview.vue'
+import DashboardShell from '@/components/shell/DashboardShell.vue'
 
 definePageMeta({ middleware: 'auth', layout: 'dashboard' })
 useHead({ title: 'Dashboard — Streamify' })

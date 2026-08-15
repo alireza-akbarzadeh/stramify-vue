@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import AnalyticsView from '@/components/dashboard/AnalyticsView.vue'
-import DashboardShell from '@/components/dashboard/DashboardShell.vue'
+import AnalyticsView from '../components/dashboard/AnalyticsView.vue'
+import DashboardShell from '@/components/shell/DashboardShell.vue'
 
 definePageMeta({ middleware: 'auth', layout: 'dashboard' })
 useHead({ title: 'Analytics — Streamify' })

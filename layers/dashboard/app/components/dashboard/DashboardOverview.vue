@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useDashboardOverview } from '@/composables/useDashboardOverview'
+import { useDashboardOverview } from '../../composables/useDashboardOverview'
 import ActivityPanel from './ActivityPanel.vue'
 import ChannelPanel from './ChannelPanel.vue'
 import DashboardError from './DashboardError.vue'
