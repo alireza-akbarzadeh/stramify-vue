@@ -2,7 +2,7 @@
 import { ArrowLeft, ArrowRight, Play } from '@lucide/vue'
 import type { LiveSignal } from '#shared/types/discovery'
 import { Button } from '@/components/ui/button'
-import LiveBadge from '@/components/landing/LiveBadge.vue'
+import LiveBadge from '@/components/LiveBadge.vue'
 import { useSavedVideos } from '@/composables/useSavedVideos'
 import { liveToItem } from '@/utils/watchlist'
 import SaveButton from './SaveButton.vue'

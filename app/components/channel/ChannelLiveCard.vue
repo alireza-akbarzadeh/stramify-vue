@@ -2,7 +2,7 @@
 import { Play, Users } from '@lucide/vue'
 import type { ChannelLiveSession } from '#shared/types/channel'
 import { Button } from '@/components/ui/button'
-import LiveBadge from '@/components/landing/LiveBadge.vue'
+import LiveBadge from '@/components/LiveBadge.vue'
 
 /** The session this channel is running right now — the page's loudest element. */
 defineProps<{ session: ChannelLiveSession; name: string }>()

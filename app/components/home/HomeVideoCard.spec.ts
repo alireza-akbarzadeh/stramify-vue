@@ -1,7 +1,7 @@
 // @vitest-environment nuxt
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import { describe, expect, it } from 'vitest'
-import LiveBadge from '@/components/landing/LiveBadge.vue'
+import LiveBadge from '@/components/LiveBadge.vue'
 import HomeVideoCard from './HomeVideoCard.vue'
 import type { HomeVideo } from '#shared/types/home'
 

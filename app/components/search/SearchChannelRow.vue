@@ -2,7 +2,7 @@
 import { BadgeCheck } from '@lucide/vue'
 import type { ChannelListItem } from '#shared/types/channel'
 import ChannelAvatar from '@/components/ChannelAvatar.vue'
-import LiveBadge from '@/components/landing/LiveBadge.vue'
+import LiveBadge from '@/components/LiveBadge.vue'
 import { toChannelPath, toChannelTag } from '#shared/utils/channel'
 import { formatCount } from '#shared/utils/format'
 

@@ -2,7 +2,7 @@
 import { BadgeCheck, UserMinus } from '@lucide/vue'
 import ChannelAvatar from '@/components/ChannelAvatar.vue'
 import ChannelNotifyMenu from '@/components/channel/ChannelNotifyMenu.vue'
-import LiveBadge from '@/components/landing/LiveBadge.vue'
+import LiveBadge from '@/components/LiveBadge.vue'
 import { Button } from '@/components/ui/button'
 import { videoCountLabel } from '@/utils/following'
 import { toChannelPath, toChannelTag } from '#shared/utils/channel'

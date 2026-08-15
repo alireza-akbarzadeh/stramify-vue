@@ -2,7 +2,7 @@
 import { BookmarkCheck, Play } from '@lucide/vue'
 import type { WatchlistItem } from '#shared/types/discovery'
 import { Button } from '@/components/ui/button'
-import LiveBadge from '@/components/landing/LiveBadge.vue'
+import LiveBadge from '@/components/LiveBadge.vue'
 
 defineProps<{ item: WatchlistItem; live?: boolean }>()
 const emit = defineEmits<{ (e: 'open' | 'remove'): void }>()

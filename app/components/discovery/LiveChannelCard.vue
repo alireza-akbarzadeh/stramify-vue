@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { LiveSignal } from '#shared/types/discovery'
-import LiveBadge from '@/components/landing/LiveBadge.vue'
+import LiveBadge from '@/components/LiveBadge.vue'
 import { Play, Users } from '@lucide/vue'
 import SaveButton from './SaveButton.vue'
 

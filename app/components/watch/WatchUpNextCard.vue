@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { RelatedItem } from '#shared/types/watch'
-import LiveBadge from '@/components/landing/LiveBadge.vue'
+import LiveBadge from '@/components/LiveBadge.vue'
 import SaveButton from '@/components/discovery/SaveButton.vue'
 
 defineProps<{ item: RelatedItem; saved: boolean }>()

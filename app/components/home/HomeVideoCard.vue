@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ChannelAvatar from '@/components/ChannelAvatar.vue'
 import SaveButton from '@/components/discovery/SaveButton.vue'
-import LiveBadge from '@/components/landing/LiveBadge.vue'
+import LiveBadge from '@/components/LiveBadge.vue'
 import { cn } from '@/lib/utils'
 import HomeVideoCardMenu from './HomeVideoCardMenu.vue'
 import { homeReasonLabel } from '#shared/utils/home'

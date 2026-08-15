@@ -2,7 +2,7 @@
 import { Loader2 } from '@lucide/vue'
 import type { MediaTimeUpdateEvent } from 'vidstack'
 import type { WatchTarget } from '#shared/types/watch'
-import LiveBadge from '@/components/landing/LiveBadge.vue'
+import LiveBadge from '@/components/LiveBadge.vue'
 import { useTheaterMode } from '@/composables/useTheaterMode'
 import PlayerControls from './player/PlayerControls.vue'
 
