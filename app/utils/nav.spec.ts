@@ -4,7 +4,7 @@
 // default (happy-dom) `import.meta.url` is not a file: URL, so the
 // `fileURLToPath` below threw at import time and the whole file was collected
 // as "0 test" — which is why the dead-link check never caught anything.
-import {readdirSync} from 'node:fs'
+import {existsSync, readdirSync} from 'node:fs'
 import {join} from 'node:path'
 import {fileURLToPath} from 'node:url'
 import {describe, expect, it} from 'vitest'
@@ -24,10 +24,28 @@ import {
     studioSettingsLink
 } from './nav'
 
-const pagesDir = fileURLToPath(new URL('../pages', import.meta.url))
+const layersDir = fileURLToPath(new URL('../../layers', import.meta.url))
+
+/**
+ * Every directory the file-based router scans. Since ADR-032 that is the root
+ * `app/pages` *plus* one per domain layer (`layers/<name>/app/pages`) — auth,
+ * dashboard, studio and marketing pages all live outside `app/` now. Scanning
+ * only the root would make this suite report a live page as a dead link, so
+ * the layer dirs are discovered rather than listed: a new layer is covered the
+ * moment it exists.
+ */
+function pageDirs(): string[] {
+    const dirs = [fileURLToPath(new URL('../pages', import.meta.url))]
+    for (const entry of readdirSync(layersDir, {withFileTypes: true})) {
+        if (!entry.isDirectory()) continue
+        const dir = join(layersDir, entry.name, 'app', 'pages')
+        if (existsSync(dir)) dirs.push(dir)
+    }
+    return dirs
+}
 
 /** Every static route the file-based router will produce, e.g. `/settings/security`. */
-function staticRoutes(dir = pagesDir, prefix = ''): string[] {
+function staticRoutes(dir: string, prefix = ''): string[] {
     return readdirSync(dir, {withFileTypes: true}).flatMap((entry) => {
         if (entry.isDirectory()) return staticRoutes(join(dir, entry.name), `${prefix}/${entry.name}`)
         if (!entry.name.endsWith('.vue') || entry.name.includes('[')) return []
@@ -36,7 +54,7 @@ function staticRoutes(dir = pagesDir, prefix = ''): string[] {
     })
 }
 
-const routes = staticRoutes()
+const routes = pageDirs().flatMap((dir) => staticRoutes(dir))
 
 /**
  * Every exported group belongs here. `exploreLinks` was missing from this list

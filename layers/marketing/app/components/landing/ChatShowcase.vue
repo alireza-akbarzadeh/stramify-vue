@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useElementVisibility } from '@vueuse/core'
 import { Ban, Clock, Crown, ShieldCheck } from '@lucide/vue'
-import { useTickingList } from '@/composables/useTickingList'
+// Relative, not `@/composables/...`: inside a layer the `~`/`@` aliases
+// resolve against the root project, which no longer holds this composable.
+import { useTickingList } from '../../composables/useTickingList'
 
 const panel = ref<HTMLElement | null>(null)
 const active = useElementVisibility(panel)

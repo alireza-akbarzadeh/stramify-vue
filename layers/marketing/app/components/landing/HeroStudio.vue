@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Eye, Signal, Users } from '@lucide/vue'
-import { usePointerParallax } from '@/composables/usePointerParallax'
+// Relative, not `@/composables/...`: inside a layer the `~`/`@` aliases
+// resolve against the root project, which no longer holds this composable.
+import { usePointerParallax } from '../../composables/usePointerParallax'
 
 const stage = ref<HTMLElement | null>(null)
 const { onMove, reset, layer } = usePointerParallax(stage)
