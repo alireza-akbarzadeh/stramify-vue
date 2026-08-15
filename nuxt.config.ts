@@ -173,20 +173,7 @@ export default defineNuxtConfig({
     }
   },
   vite: {
-    // Spread, not `[tailwindcss()]`. `tailwindcss()` returns `Plugin[]`, and
-    // Vite does flatten a nested array at runtime — but two copies of Vite are
-    // installed here (a hoisted `node_modules/vite` at 8.2.0 that Nuxt's own
-    // config types resolve to, and 8.2.1 under `.pnpm` that `@tailwindcss/vite`
-    // is typed against). Nesting makes TypeScript compare `Plugin[]` from one
-    // copy against the *recursive* `PluginOption` union from the other, which
-    // it cannot do — that was `nuxt.config.ts(4,16): error TS2321 Excessive
-    // stack depth`, plus a TS2345 underneath it. Spreading compares `Plugin`
-    // to `PluginOption` directly, which resolves immediately.
-    //
-    // This treats the symptom. The cause is the duplicate Vite; dedupe it
-    // (a `pnpm.overrides` pin on `vite` + a clean install) and the nesting
-    // would type-check too. Until then, do not "simplify" this back.
-    plugins: [...tailwindcss()]
+    plugins: [tailwindcss()]
   },
   runtimeConfig: {
     // Server-only — never exposed to the client bundle.

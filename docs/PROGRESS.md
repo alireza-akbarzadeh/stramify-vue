@@ -2211,3 +2211,51 @@ root — see ADR-033 for why moving the last three would invert the dependency.
 
 - Only `e2e/marketing.spec.ts` has been run against any of the layer work.
 - Nothing is committed; the whole layer migration is one working tree.
+
+## Vite deduped — 13 typecheck errors were one stale directory, 2026-08-15
+
+`nuxt.config.ts` reported `TS2321 Excessive stack depth comparing types ... and
+InputConfig<NuxtConfig, ConfigLayerMeta>`. The real complaint was underneath
+it: `Plugin<any>[]` not assignable to `PluginOption`.
+
+**Cause: two copies of Vite.** `node_modules/vite` was a *real directory* at
+8.2.0, dated 5 Aug, left behind by an early `npm install` — the giveaway was
+`node_modules/.package-lock.json` (an npm artifact) sitting beside pnpm's
+`.modules.yaml`. pnpm had installed 8.2.1 into `.pnpm/` but could not put its
+symlink at `node_modules/vite` because the real directory was squatting there.
+So `@tailwindcss/vite` was typed against 8.2.1 while Nuxt's own `vite` config
+field resolved to 8.2.0, and TypeScript had to reconcile two distinct copies of
+the *recursive* `PluginOption` union. It cannot, so it bailed.
+
+**Fix**: `rm -rf node_modules/vite node_modules/.package-lock.json` then
+`pnpm install --frozen-lockfile`. No dependency change, no lockfile change —
+`pnpm-lock.yaml` is byte-identical. Nothing in the graph wants two versions:
+`vite` is not in `package.json` at all and only `@nuxt/vite-builder` requires
+it (`^8.1.5`), so no override or pin was needed.
+
+**It was costing far more than that one file — typecheck went 27 → 14.** The
+duplicate was exhausting TypeScript's type-instantiation budget, which is why
+these were all failing with `TS2590 "union type too complex to represent"` and
+neighbouring `TS2345`s, in files that had nothing to do with Vite:
+`motion/CountUp.vue`, `motion/Reveal.vue`, `search/AppSearch.vue`,
+`shorts/ShortsReel.vue`, `watch/WatchChat.vue`, `landing/ChatShowcase.vue`,
+`landing/HeroStudio.vue`. All 13 are gone; no new errors; tests unchanged at
+6 failed / 549 passed.
+
+`nuxt.config.ts` is back to the plain `plugins: [tailwindcss()]` — the nesting
+was never wrong, the environment was.
+
+**If this comes back**, it means npm has been run in this repo again. Check
+`ls -l node_modules/vite` — it should be a **symlink** into `.pnpm/`. A real
+directory there, or the reappearance of `node_modules/.package-lock.json`,
+means the tree is mixed. Note `.npmrc` still carries `legacy-peer-deps=true`,
+which is an npm-only flag pnpm ignores; it is a leftover from that era and is
+kept only because the Zod 3/4 peer conflict it documents is still real.
+
+### Still open (the 14 remaining typecheck errors, all pre-existing)
+
+`liked/LikedToolbar.vue`, `motion/PopBurst.vue`, `ui/sonner/Sonner.vue` (×2),
+`watch/WatchActions.vue` (×3), `composables/useMusic.ts`,
+`pages/settings/billing.vue` and `landing/PricingSection.vue` (both `as const`
+on a ternary — TS1355, a genuine bug in both), the two studio `.spec.ts`
+files, and `server/utils/billing-plugin.ts` (×2, the Polar plugin type).
