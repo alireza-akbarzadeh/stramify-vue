@@ -1,0 +1,200 @@
+/* ==========================================================================
+   Rendered markdown — `.news-prose`
+   ==========================================================================
+
+   `<ContentRenderer>` emits plain `<h2>`, `<p>`, `<pre>` and friends, so this
+   cannot be a scoped block on the article component and it cannot be Tailwind
+   utilities either — there is no template to put them on. One class on the
+   wrapper, element selectors underneath it.
+
+   Written by hand rather than with `@tailwindcss/typography`: the plugin ships
+   its own colour scale that would have to be re-mapped onto every token in
+   `main.css` to stop an article looking like a different product than the page
+   around it. That re-map is longer than this file.
+
+   Every colour here is one of the app's tokens, so both themes follow the
+   palette automatically. Syntax highlighting is the exception — Shiki emits
+   its own `html.dark .shiki span { … }` rules alongside the markup, which is
+   why only the `<pre>` container is styled below and never the spans in it.
+   ========================================================================== */
+
+.news-prose {
+    color: var(--foreground);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+}
+
+/* The reading measure. Wider than the classic 65ch because the type is set
+   large; narrower than the page, because a full-width line of body copy is
+   where a reader loses their place returning to the left edge. */
+.news-prose > * {
+    max-width: 68ch;
+}
+
+.news-prose > * + * {
+    margin-top: 1.25em;
+}
+
+/* --- Headings ----------------------------------------------------------- */
+
+.news-prose h2,
+.news-prose h3 {
+    color: var(--foreground);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    /* The gap above a heading is deliberately much larger than the one below
+       it: that asymmetry is what makes a heading read as belonging to the text
+       under it rather than floating between two sections. */
+    scroll-margin-top: 6rem;
+}
+
+.news-prose h2 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+    margin-top: 2.5em;
+    margin-bottom: 0.6em;
+}
+
+.news-prose h3 {
+    font-size: 1.2rem;
+    line-height: 1.4;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+}
+
+.news-prose h2 + *,
+.news-prose h3 + * {
+    margin-top: 0;
+}
+
+/* --- Inline ------------------------------------------------------------- */
+
+.news-prose strong {
+    color: var(--foreground);
+    font-weight: 600;
+}
+
+.news-prose a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    border-radius: 2px;
+}
+
+.news-prose a:hover {
+    text-decoration-thickness: 2px;
+}
+
+.news-prose a:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+}
+
+/* Inline code only. The `:not(.shiki *)` guard keeps this off the spans inside
+   a highlighted block, which carry their own colours. */
+.news-prose :not(pre) > code {
+    background: var(--surface-3);
+    border-radius: var(--radius-sm, 0.625rem);
+    padding: 0.15em 0.4em;
+    font-size: 0.875em;
+    font-weight: 500;
+}
+
+/* --- Lists -------------------------------------------------------------- */
+
+.news-prose ul,
+.news-prose ol {
+    padding-left: 1.35em;
+}
+
+.news-prose ul {
+    list-style: disc;
+}
+
+.news-prose ol {
+    list-style: decimal;
+}
+
+.news-prose li::marker {
+    color: var(--muted-foreground);
+}
+
+.news-prose li + li {
+    margin-top: 0.5em;
+}
+
+/* Nested content inside a list item shouldn't inherit the top-level rhythm. */
+.news-prose li > * + * {
+    margin-top: 0.5em;
+}
+
+/* --- Blocks ------------------------------------------------------------- */
+
+.news-prose blockquote {
+    border-left: 3px solid var(--primary);
+    padding-left: 1.1em;
+    color: var(--muted-foreground);
+    font-style: italic;
+}
+
+.news-prose hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin-top: 2.5em;
+    margin-bottom: 2.5em;
+}
+
+.news-prose pre {
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md, 0.8125rem);
+    padding: 1rem 1.1rem;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    /* Code is the one thing on the page allowed past the reading measure — a
+       wrapped identifier is harder to read than a scrollbar. */
+    max-width: 100%;
+}
+
+.news-prose img {
+    border-radius: var(--radius-md, 0.8125rem);
+    border: 1px solid var(--border);
+    max-width: 100%;
+    height: auto;
+}
+
+.news-prose table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.news-prose th,
+.news-prose td {
+    border: 1px solid var(--border);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+}
+
+.news-prose th {
+    background: var(--surface-2);
+    font-weight: 600;
+}
+
+/* --- Callout ------------------------------------------------------------ */
+
+/* `components/content/Callout.vue` supplies its own padding, so the first and
+   last paragraph inside it must not add their own margins on top. */
+.news-prose .callout-body > :first-child {
+    margin-top: 0;
+}
+
+.news-prose .callout-body > :last-child {
+    margin-bottom: 0;
+}
+
+.news-prose .callout-body > * {
+    max-width: none;
+}

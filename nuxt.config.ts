@@ -1,4 +1,5 @@
 import tailwindcss from '@tailwindcss/vite'
+import { readingMinutes } from './shared/utils/news'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -53,7 +54,11 @@ export default defineNuxtConfig({
     // wears our own skin (`assets/css/player.css`) over Vidstack's headless
     // elements, so the default layout's styles would only fight it.
     'vidstack/player/styles/base.css',
-    '~/assets/css/player.css'
+    '~/assets/css/player.css',
+    // Element styles for rendered markdown. Global rather than scoped to a
+    // component because `<ContentRenderer>` emits plain `<h2>`/`<p>`/`<pre>`
+    // that no `<style scoped>` on the page can reach.
+    '~/assets/css/news.css'
   ],
   modules: [
     '@pinia/nuxt',
@@ -63,8 +68,44 @@ export default defineNuxtConfig({
     // `@nuxtjs/pwa` (pwa.nuxtjs.org) is Nuxt 2 only — its registry entry
     // declares `compatibility: ^2.0.0` and it targets the Nuxt 2 module API.
     // `@vite-pwa/nuxt` is the maintained Nuxt 3/4 equivalent. See ADR-022.
-    '@vite-pwa/nuxt'
+    '@vite-pwa/nuxt',
+    // Backs `/news` only (ADR-034). Collections are declared in
+    // `content.config.ts`; the module compiles `content/` into a SQLite index
+    // at build time, which is why it needs `better-sqlite3` as a real
+    // dependency rather than a dev one — Nitro queries that index at runtime.
+    '@nuxt/content'
   ],
+  content: {
+    build: {
+      markdown: {
+        // Depth 3 keeps `###` out of the article aside. Two levels is the most
+        // a sidebar can show without becoming a second article.
+        toc: { depth: 2, searchDepth: 2 },
+        highlight: {
+          // Two themes, switched by the `.dark` class Shiki emits variables
+          // for — see the `.news-prose` block in `assets/css/news.css`. A
+          // single theme would leave code blocks glowing white in dark mode,
+          // which is the app's default.
+          theme: { default: 'github-light', dark: 'github-dark' }
+        }
+      }
+    }
+  },
+  hooks: {
+    /**
+     * Reading time, computed once per file while the index is built.
+     *
+     * It lives here rather than in a `content.build.transformers` entry
+     * because a transformer runs *after* the markdown is parsed and only ever
+     * sees the compiled AST. This hook still has `file.body` — the raw source
+     * — which is what `readingMinutes()` wants, and it costs one regex pass
+     * per article at build time and nothing at runtime.
+     */
+    'content:file:afterParse'(ctx) {
+      if (ctx.collection.name !== 'news') return
+      ctx.content.readingMinutes = readingMinutes(ctx.file.body)
+    }
+  },
   // classSuffix: '' → applies a bare `.dark` / `.light` class on <html>, which is
   // what main.css's `.dark { ... }` block and the `dark:` variant expect.
   colorMode: { classSuffix: '', preference: 'dark', fallback: 'dark' },
