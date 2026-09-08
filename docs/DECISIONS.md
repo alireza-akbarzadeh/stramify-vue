@@ -1728,3 +1728,42 @@ the tree — by design. Four layers, ~130 files moved, no runtime behaviour
 change. The check that matters on any future extraction is not "is this
 domain named X" but "who consumes this, and does moving it invert a
 dependency?" — it moved nine components on these three layers alone.
+
+## ADR-034: Tailwind scans `layers/` via explicit `@source`, not auto-detection
+
+**Status**: Accepted · 2026-09-08
+
+**Context.** Tailwind v4 replaced the v3 `content` array with automatic source
+detection. `@tailwindcss/vite` roots that scan at the **Vite root**, which
+under Nuxt 4 is `srcDir` — `app/`. ADR-032/033 then moved four domains out to
+`~~/layers`, which put them outside the scanned tree. Nothing failed loudly:
+Tailwind generated the utilities it found under `app/`, so a class used by a
+layer worked *if and only if* some root-app file happened to use it too.
+
+The auth screen is where this surfaced. `AuthShowcase`'s `hidden lg:flex` had
+no `lg:flex` rule, so the entire showcase column was `display:none` at every
+width; `AuthLayout`'s `lg:hidden` mobile header had no rule either, so it
+rendered on desktop. `lg:grid-cols-2` *did* work, because a root-app file uses
+it. The result read as random broken layout rather than a missing scan path,
+and it degraded silently across all four layers, not just auth.
+
+**Decision.** Declare the layer roots explicitly in `app/assets/css/main.css`:
+
+```css
+@source "../../../layers";
+@source "../../../shared";
+```
+
+Auto-detection still covers `app/`; these only add what it cannot see.
+
+**Rejected.** *Moving the stylesheet to the repo root* so auto-detection covers
+everything — it would also sweep `docs/`, `scripts/` and `graphify-out/` into
+the scan. *Setting Vite's `root`* — it is Nuxt's to own. *A safelist* — it
+treats the symptom and has to be maintained per utility.
+
+**Consequences.** **Adding a top-level source directory now requires adding an
+`@source` line.** A layer whose utilities are all also used by `app/` will look
+fine until the day the root app stops using one, so the failure is silent and
+arrives late. This is the standing cost of ADR-032's layout, and it is the
+first thing to check when a layer's styling is wrong in a way that looks like
+a breakpoint bug.

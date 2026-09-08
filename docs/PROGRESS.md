@@ -2259,3 +2259,155 @@ kept only because the Zod 3/4 peer conflict it documents is still real.
 `pages/settings/billing.vue` and `landing/PricingSection.vue` (both `as const`
 on a ternary — TS1355, a genuine bug in both), the two studio `.spec.ts`
 files, and `server/utils/billing-plugin.ts` (×2, the Polar plugin type).
+
+## Session — 2026-09-08 · Auth flow design pass
+
+**The headline finding is not a design issue.** `/login` looked unfinished
+because most of it was not rendering: Tailwind v4 auto-detects sources from the
+Vite root (`app/` under Nuxt 4), so **nothing under `layers/` was ever
+scanned**. Any utility used *only* by a layer was silently never generated.
+Fixed with explicit `@source` directives — see **ADR-034**, which also records
+the standing constraint this creates for future layers.
+
+What that was doing to auth specifically:
+
+- `AuthShowcase` — `hidden lg:flex` with no `lg:flex` rule, so the whole
+  showcase column was `display:none` at every width. The page was a lone card
+  in the left half of an otherwise empty screen.
+- `AuthLayout` — the `lg:hidden` mobile header rendered on desktop.
+- `lg:grid-cols-2` worked, because a root-app file also uses it — which is why
+  the symptom looked like a random layout bug rather than a missing scan path.
+
+This affected all four layers, not just auth. Marketing, dashboard and studio
+are worth re-checking visually now that their utilities actually generate.
+
+### Design changes (auth)
+
+- **Removed the 3D `ChannelCarousel`** (and `ChannelCard`; both were used only
+  here, both recoverable from git). It was layered behind the showcase copy at
+  opacity-25 and put legible card titles across the headline. Every alternative
+  placement failed too — anchored bottom it hung off the viewport, bled right
+  it was hard-cropped mid-card. The column reads stronger without it, and the
+  sign-in screen no longer runs a permanent 3D transform.
+- **Wordmark on desktop.** From `lg` up the auth screen carried *no logo at
+  all* — `AuthLayout`'s is `lg:hidden`. On an auth page that is a trust cue,
+  not decoration. Added to `AuthShowcase`.
+- **Light mode was over-saturated.** The backdrop blooms used one opacity for
+  both themes; /20 of the primary on `#fafafb` read as poster paint. Light now
+  runs ~half intensity, dark is unchanged.
+- **The card had no edge in light mode** — 70% white glass, 8%-alpha border and
+  a `.08` shadow on a near-white page. Light now derives its drop shadow from
+  `--foreground` via `color-mix` (still token-driven); dark keeps
+  `--shadow-color`.
+- **Inputs blended into the card.** They were `bg-surface` inside a glass panel
+  over `--surface`. Now `bg-surface-2`, returning to `--surface` on focus.
+- Showcase column: `justify-center` on the content block instead of
+  `justify-between` on the column, which had pinned the testimonial to the
+  bottom and left a dead band in the middle.
+
+### Flow / correctness
+
+- **Focus on mount** for the first field of each form, and for the OTP boxes
+  when the two-factor step appears (codes expire; hunting for the caret costs
+  the user their window). Done imperatively, not via the `autofocus`
+  attribute — that only fires during initial HTML parse, so it would have
+  worked on a cold load of `/login` and done nothing when the page was reached
+  by client-side navigation. Skipped on coarse pointers.
+- **The two-factor step was a dead end.** Its footer offered "Don't have an
+  account? Sign up" — at a point where the password has already matched an
+  account — and there was no way back short of reloading. Now "Log in as
+  someone else", which resets the step.
+- Login's password placeholder was `••••••••`, which renders as a *filled*
+  field; it misread as "there is already a password here". Now real text.
+- Signup's terms line had an orphaned `.` on its own line.
+
+### Verification
+
+Rendered and checked at 390 / 768 / 1024 / 1440 in both themes, across login,
+signup, forgot-password, verify-email and the two-factor step (driven by
+stubbing `sign-in/email` to return `twoFactorRedirect`).
+
+`eslint .` clean — 0 errors. Typecheck and tests are **unchanged from the
+pre-session baseline**: the same 14 typecheck errors listed above, and the same
+`34 failed / 32 passed` test files. None are in touched files. The bulk of the
+test-file failures are one root cause worth its own session — a
+`@vite-plugin-pwa` virtual module (`virtual:pwa-register/vue`) failing to
+resolve under Vitest, which takes down 33 files before they run. The single
+genuine assertion failure is `app/utils/nav.spec.ts` expecting 4 mobile nav
+tabs against 5.
+
+### Left undone
+
+`AuthCard.vue` is now unused — superseded by `AuthLayout.vue`. Left in place
+rather than deleted, since unlike the carousel it is not harming anything;
+flagged for a decision.
+
+## Session — 2026-09-08 · `db:studio` failure, and a leaked credential behind it
+
+**Reported:** `pnpm db:studio` failing with
+`Please provide required params for Postgres driver: [x] url: ''`.
+
+**Cause: there was no `.env`.** The root held `.env.example` and a stray `.env.env`
+— a *byte-identical copy* of the template (verified with `cmp`), almost certainly a
+Windows "save as" that appended a second extension. It was invisible in `git status`
+because `.gitignore` covers `.env.*`.
+
+Worth recording, because it is counter-intuitive: **drizzle-kit does load `.env`
+itself.** It bundles dotenv 16.5.0 and side-effect imports `dotenv/config`, which
+resolves `<cwd>/.env`. So the config never needed to read the file — there was simply
+nothing on disk. `drizzle.config.ts`'s `?? ''` then turned "variable missing" into
+`url: ''`, which is why the error described the symptom two layers below the cause.
+
+### Two things found on the way that mattered more
+
+1. **Live credentials were committed and pushed to a public repo.** `.env.example` is
+   deliberately not gitignored (`!.env.example`) and carried a real Neon Postgres
+   password and better-auth key, added in `a96adb9` — a commit literally titled "update
+   database connection string and add better auth API key". The file's own first line
+   said "Never commit .env". This broke CLAUDE.md §5.
+
+   Scope was verified and is small: both secrets entered in that **one commit** and only
+   ever lived in that **one file**. `.env.example` has been rewritten to placeholders.
+
+   **Still open — rotation has not been done.** Scrubbing the template only stops future
+   exposure; the values remain in history and on a public remote and should be assumed
+   harvested. Reset the `neondb_owner` password in the Neon console, and regenerate
+   `BETTER_AUTH_SECRET` (`openssl rand -base64 32`, which signs out existing sessions).
+   An optional `git filter-repo --replace-text` + force-push would clear history, but it
+   rewrites every SHA from `a96adb9` forward and breaks clones and open PRs — and it is
+   hygiene, not the remedy, since GitHub keeps old commits reachable by SHA until GC.
+
+2. **`BETTER_AUTH_SECRET` was misnamed in the template.** `server/utils/auth.ts:59` and
+   `nuxt.config.ts:223` both read `process.env.BETTER_AUTH_SECRET`, but `.env.example`
+   defined `BETTER_AUTH_API_KEY`. A `.env` copied straight from the template would have
+   fixed the database and left better-auth with `secret: undefined` — the next failure
+   in line. The template now uses the name the code reads.
+
+### Fail-fast on missing env
+
+All nine `process.env.DATABASE_URL ?? ''` call sites now throw
+`DATABASE_URL is not set. Copy .env.example to .env and fill it in.`
+
+- `server/utils/env.ts` — `requireEnv()`, used by `server/db/client.ts`
+- `scripts/require-env.mjs` — same function, for the seven `seed-*.mjs` scripts. The
+  duplication is a runtime boundary, not an oversight: those are plain `.mjs` run by
+  `node` and cannot import the TypeScript one.
+- `drizzle.config.ts` throws inline rather than importing, so a root-level config that
+  drizzle-kit runs through its own tsx loader stays self-contained.
+
+`nuxt.config.ts`'s `runtimeConfig` was left alone — those keys are intentionally
+optional (see the Gemini comment: "absent key = feature off, not broken").
+
+### Verification
+
+`pnpm db:studio` connects and serves. With `DATABASE_URL` cleared, both drizzle-kit and
+`node scripts/seed-clips.mjs` print the named error instead of an empty-url failure.
+
+### Left undone
+
+- **Credential rotation** (above) — the one genuinely outstanding item.
+- `README.md` now documents the `.env` step, which it never had; that omission is why
+  this was hit at all.
+- CLAUDE.md §7 expects `docs/database.md`, `auth.md`, `deployment.md`, `security.md` and
+  `testing.md`. **None exist.** Out of scope here, but the security one has just earned
+  its keep.

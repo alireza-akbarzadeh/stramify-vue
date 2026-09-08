@@ -16,8 +16,9 @@
 // Requires the channels/clips/live seeds to have run first (handles must match).
 // Run with: npm run db:seed:follows
 import postgres from 'postgres'
+import { requireEnv } from './require-env.mjs'
 
-const sql = postgres(process.env.DATABASE_URL ?? '', { max: 1 })
+const sql = postgres(requireEnv('DATABASE_URL'), { max: 1 })
 
 const DEMO_USERS = 120
 

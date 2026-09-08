@@ -17,6 +17,26 @@ pnpm install
 See [ADR-025](./docs/DECISIONS.md) for why, and `docs/PROGRESS.md` for the
 migration's remaining steps — the lockfile swap itself hasn't been run yet.
 
+## Environment
+
+Nothing runs without this — not `pnpm dev`, not `pnpm db:studio`, not the seed
+scripts. `.env` is gitignored and is never created for you.
+
+```bash
+cp .env.example .env
+```
+
+Then fill in two values:
+
+- **`DATABASE_URL`** — any Postgres connection string (Neon, Supabase, local
+  Docker). Required from Phase 3 onward; auth does not work without it.
+- **`BETTER_AUTH_SECRET`** — generate with `openssl rand -base64 32`.
+
+Everything else in the template is optional and off by default — an absent
+Cloudflare, Sentry or OAuth key disables that feature rather than breaking the
+app. `.env.example` holds **placeholders only**; never put a working credential
+in it, because it is committed.
+
 ## Development Server
 
 Start the development server on `http://localhost:3000`:

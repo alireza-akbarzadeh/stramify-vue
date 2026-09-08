@@ -2,6 +2,18 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Tailwind v4 auto-detects source files from the Vite root, which under Nuxt 4
+   is `srcDir` — i.e. `app/`. Everything in `layers/` therefore went unscanned,
+   so any utility used *only* by a layer was silently never generated: the auth
+   showcase column (`hidden lg:flex`) stayed display:none at every width, and
+   the mobile-only header (`lg:hidden`) rendered on desktop. Utilities that
+   happened to also appear somewhere under `app/` worked, which is what made
+   the breakage look like random layout bugs rather than a missing scan path.
+
+   These paths are relative to this file. Auto-detection still covers `app/`. */
+@source "../../../layers";
+@source "../../../shared";
+
 /* Tailwind v4 defaults `dark:` to prefers-color-scheme. We drive the theme
    from a `.dark` class on <html> (set by @nuxtjs/color-mode), so the variant
    has to be redefined to match — otherwise `dark:` utilities ignore the

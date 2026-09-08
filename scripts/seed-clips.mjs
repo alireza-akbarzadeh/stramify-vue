@@ -6,8 +6,9 @@
 // 403s, so don't reintroduce it without re-checking.
 // Run with: npm run db:seed:clips (or npm run db:seed for every seed script)
 import postgres from 'postgres'
+import { requireEnv } from './require-env.mjs'
 
-const sql = postgres(process.env.DATABASE_URL ?? '', { max: 1 })
+const sql = postgres(requireEnv('DATABASE_URL'), { max: 1 })
 
 const placeholder = (seed) => `https://picsum.photos/seed/${seed}/960/540`
 const hoursAgo = (h) => new Date(Date.now() - h * 60 * 60 * 1000)

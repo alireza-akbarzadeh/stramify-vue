@@ -13,8 +13,9 @@
 // once uploading exists.
 // Run with: npm run db:seed:channels
 import postgres from 'postgres'
+import { requireEnv } from './require-env.mjs'
 
-const sql = postgres(process.env.DATABASE_URL ?? '', { max: 1 })
+const sql = postgres(requireEnv('DATABASE_URL'), { max: 1 })
 
 const banner = (seed) => `https://picsum.photos/seed/${seed}-banner/1920/480`
 const avatar = (seed) => `https://picsum.photos/seed/${seed}-avatar/200/200`

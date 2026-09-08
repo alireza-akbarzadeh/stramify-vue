@@ -8,8 +8,9 @@
 // live playback will hand us.
 // Run with: npm run db:seed:live
 import postgres from 'postgres'
+import { requireEnv } from './require-env.mjs'
 
-const sql = postgres(process.env.DATABASE_URL ?? '', { max: 1 })
+const sql = postgres(requireEnv('DATABASE_URL'), { max: 1 })
 
 const placeholder = (seed) => `https://picsum.photos/seed/${seed}/960/540`
 const minutesAgo = (m) => new Date(Date.now() - m * 60 * 1000)

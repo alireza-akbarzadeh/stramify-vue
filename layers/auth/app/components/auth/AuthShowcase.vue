@@ -9,20 +9,32 @@ const features = [
 </script>
 
 <template>
-  <div class="relative hidden flex-col justify-between overflow-hidden p-10 lg:flex xl:p-14 lg:mt-9">
+  <!--
+    The persuasion column, shown opposite the form from `lg` up.
 
-    <div class="relative isolate py-10">
-      <!--
-        Carousel sits behind the copy, dimmed so the text keeps contrast.
-        `isolate` on the parent scopes the negative z-index to this stacking
-        context — without it the layer drops behind the page background and
-        disappears entirely.
-      -->
-      <div
-          class="pointer-events-none absolute inset-0 -z-10 flex translate-x-28 items-center justify-center opacity-25">
-        <ChannelCarousel/>
-      </div>
+    It used to carry a 3D `ChannelCarousel` — a spinning cylinder of channel
+    cards — layered behind this copy at opacity-25. It was removed rather than
+    repositioned: the left column is ~640px at `lg` and the copy already claims
+    `max-w-md` of it, so there was no placement that worked. Behind the text it
+    put legible card titles ("Building a renderer", "12.8K watching") across the
+    headline; anchored bottom it hung off the viewport as a lone half-card;
+    bled off the right it was hard-cropped mid-card by the column's
+    `overflow-hidden`. It also ran a permanent 3D transform on the one screen
+    where the user's attention belongs on a form.
 
+    `justify-center` on the inner block rather than `justify-between` on the
+    column: the latter pinned the testimonial to the bottom of a full-height
+    column and left a dead band in the middle at common desktop heights.
+
+    The wordmark is here because `AuthLayout`'s copy of it is `lg:hidden` — so
+    from `lg` up the sign-in screen carried no logo at all. On an auth page
+    that is not just branding: the wordmark is the cue that tells someone they
+    are typing a password into the site they think they are.
+  -->
+  <div class="relative hidden flex-col overflow-hidden p-10 lg:flex xl:p-14">
+    <BrandMark/>
+
+    <div class="flex flex-1 flex-col justify-center gap-12 xl:gap-14">
       <Reveal>
         <h1 class="max-w-md text-balance text-4xl font-semibold leading-[1.1] tracking-tight text-foreground xl:text-5xl">
           All your streaming.
@@ -36,7 +48,7 @@ const features = [
       </Reveal>
 
       <Reveal :delay="0.1">
-        <ul class="mt-9 space-y-5">
+        <ul class="space-y-5">
           <li v-for="f in features" :key="f.title" class="flex items-start gap-3.5">
             <span
                 class="grid size-10 shrink-0 place-items-center rounded-xl border border-border bg-glass text-primary backdrop-blur">
@@ -49,18 +61,18 @@ const features = [
           </li>
         </ul>
       </Reveal>
-    </div>
 
-    <Reveal :delay="0.16">
-      <figure class="max-w-sm rounded-2xl border border-border bg-glass p-5 backdrop-blur-xl">
-        <blockquote class="text-sm leading-relaxed text-foreground">
-          “Setup took one paste of the ingest URL into OBS. Chat didn't fall over when a raid
-          landed — that's the part I actually cared about.”
-        </blockquote>
-        <figcaption class="mt-3 text-xs text-muted-foreground">
-          Early access creator · feedback from the private beta
-        </figcaption>
-      </figure>
-    </Reveal>
+      <Reveal :delay="0.16">
+        <figure class="max-w-sm rounded-2xl border border-border bg-glass p-5 backdrop-blur-xl">
+          <blockquote class="text-sm leading-relaxed text-foreground">
+            “Setup took one paste of the ingest URL into OBS. Chat didn't fall over when a raid
+            landed — that's the part I actually cared about.”
+          </blockquote>
+          <figcaption class="mt-3 text-xs text-muted-foreground">
+            Early access creator · feedback from the private beta
+          </figcaption>
+        </figure>
+      </Reveal>
+    </div>
   </div>
 </template>

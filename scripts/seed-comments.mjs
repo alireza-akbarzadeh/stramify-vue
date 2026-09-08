@@ -13,8 +13,9 @@
 // just `npm run db:seed`, which orders them correctly).
 // Run with: npm run db:seed:comments
 import postgres from 'postgres'
+import { requireEnv } from './require-env.mjs'
 
-const sql = postgres(process.env.DATABASE_URL ?? '', { max: 1 })
+const sql = postgres(requireEnv('DATABASE_URL'), { max: 1 })
 
 const minutesAgo = (m) => new Date(Date.now() - m * 60 * 1000)
 

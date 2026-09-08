@@ -45,6 +45,16 @@ async function onSubmit() {
   await auth.completeSignIn()
 }
 
+/** Abandon the second-factor challenge and go back to the credentials form. */
+function restartSignIn() {
+  step.value = 'credentials'
+  password.value = ''
+  otp.value = []
+  backupCode.value = ''
+  useBackupCode.value = false
+  error.value = ''
+}
+
 async function verifyTotp(code: string) {
   error.value = ''
   pending.value = true
@@ -91,6 +101,7 @@ async function verifyBackup() {
           v-model="email"
           :icon="Mail"
           autocomplete="email"
+          autofocus
           label="Email"
           placeholder="you@example.com"
           type="email"
@@ -101,7 +112,7 @@ async function verifyBackup() {
           :icon="Lock"
           autocomplete="current-password"
           label="Password"
-          placeholder="••••••••"
+          placeholder="Your password"
           type="password"
       />
 
@@ -169,9 +180,25 @@ async function verifyBackup() {
       </form>
     </div>
 
+    <!--
+      The footer follows the step. Offering "Don't have an account? Sign up"
+      during the TOTP challenge is an answer to a question nobody is asking —
+      at that point the password has already matched an account — and it was
+      the only way out of the step short of reloading the page.
+    -->
     <template #footer>
-      Don't have an account?
-      <NuxtLink class="font-medium text-primary hover:underline" to="/signup">Sign up</NuxtLink>
+      <template v-if="step === 'credentials'">
+        Don't have an account?
+        <NuxtLink class="font-medium text-primary hover:underline" to="/signup">Sign up</NuxtLink>
+      </template>
+      <button
+          v-else
+          class="cursor-pointer rounded font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          type="button"
+          @click="restartSignIn"
+      >
+        Log in as someone else
+      </button>
     </template>
   </AuthLayout>
 </template>

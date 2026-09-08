@@ -51,6 +51,7 @@ async function onSubmit() {
           v-model="name"
           :icon="User"
           autocomplete="name"
+          autofocus
           label="Name"
           placeholder="Your display name"
       />
@@ -84,8 +85,7 @@ async function onSubmit() {
         By creating an account you agree to our
         <NuxtLink class="text-foreground hover:underline" to="/terms">Terms</NuxtLink>
         and
-        <NuxtLink class="text-foreground hover:underline" to="/privacy">Privacy Policy</NuxtLink>
-        .
+        <NuxtLink class="text-foreground hover:underline" to="/privacy">Privacy Policy</NuxtLink>.
       </p>
     </form>
 

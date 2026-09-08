@@ -15,8 +15,9 @@
 //
 // Run with: npm run db:seed:shorts (or npm run db:seed for every seed script)
 import postgres from 'postgres'
+import { requireEnv } from './require-env.mjs'
 
-const sql = postgres(process.env.DATABASE_URL ?? '', { max: 1 })
+const sql = postgres(requireEnv('DATABASE_URL'), { max: 1 })
 
 const video = (id) => `https://assets.mixkit.co/videos/${id}/${id}-360.mp4`
 const poster = (id) => `https://assets.mixkit.co/videos/${id}/${id}-thumb-360-0.jpg`
